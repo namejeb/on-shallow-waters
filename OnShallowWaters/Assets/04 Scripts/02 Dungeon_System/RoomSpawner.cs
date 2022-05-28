@@ -17,8 +17,8 @@ public class Room
 
 public class RoomSpawner : MonoBehaviour
 {
-    [SerializeField] private List<Room> rooms;
-
+    [SerializeField] private RoomListSO roomListSo;
+    
     private List<Room> southEntranceRooms = new List<Room>();
     private List<Room> eastEntranceRooms = new List<Room>();
     
@@ -31,7 +31,7 @@ public class RoomSpawner : MonoBehaviour
 
     private void SortRooms()
     {
-        foreach(Room room in rooms){
+        foreach(Room room in roomListSo.rooms){
             if (room.roomEntranceDir == RoomEntranceDir.SOUTH)
             {
                 southEntranceRooms.Add(room);
@@ -61,6 +61,8 @@ public class RoomSpawner : MonoBehaviour
             roomIndex = Random.Range(0, eastEntranceRooms.Count);
             room = eastEntranceRooms[roomIndex].roomPrefab;
         }
-        Instantiate(room, Vector3.zero, room.transform.rotation);
+
+        Transform roomTransform = room.transform;
+        Instantiate(room, roomTransform.position, roomTransform.rotation);
     }
 }
