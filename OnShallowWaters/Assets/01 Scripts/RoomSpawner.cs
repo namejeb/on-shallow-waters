@@ -19,11 +19,11 @@ public class RoomSpawner : MonoBehaviour
 {
     [SerializeField] private List<Room> rooms;
 
-    private List<Room> southEntranceRooms;
-    private List<Room> eastEntranceRooms;
+    private List<Room> southEntranceRooms = new List<Room>();
+    private List<Room> eastEntranceRooms = new List<Room>();
     
     private Dictionary<RoomEntranceDir, List<Room>> roomDict = new Dictionary<RoomEntranceDir, List<Room>>();
-    private Dictionary<string, Room> rd = new Dictionary<string, Room>();
+
     private void Awake()
     {
         SortRooms();
@@ -44,11 +44,6 @@ public class RoomSpawner : MonoBehaviour
         
         roomDict.Add(RoomEntranceDir.SOUTH, southEntranceRooms);
         roomDict.Add(RoomEntranceDir.EAST, eastEntranceRooms);
-
-        Room r = new Room();
-        rd.Add("s", r);
-        
-        print(rd["s"]);
     }
 
     private void SpawnRoom(RoomEntranceDir dir)
@@ -69,5 +64,3 @@ public class RoomSpawner : MonoBehaviour
         Instantiate(room, Vector3.zero, room.transform.rotation);
     }
 }
-
-
