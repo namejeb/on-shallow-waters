@@ -23,7 +23,7 @@ public class RoomSpawner : MonoBehaviour
     private List<Room> eastEntranceRooms;
     
     private Dictionary<RoomEntranceDir, List<Room>> roomDict = new Dictionary<RoomEntranceDir, List<Room>>();
-
+    private Dictionary<string, Room> rd = new Dictionary<string, Room>();
     private void Awake()
     {
         SortRooms();
@@ -44,6 +44,11 @@ public class RoomSpawner : MonoBehaviour
         
         roomDict.Add(RoomEntranceDir.SOUTH, southEntranceRooms);
         roomDict.Add(RoomEntranceDir.EAST, eastEntranceRooms);
+
+        Room r = new Room();
+        rd.Add("s", r);
+        
+        print(rd["s"]);
     }
 
     private void SpawnRoom(RoomEntranceDir dir)
