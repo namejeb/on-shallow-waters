@@ -2,21 +2,23 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [SerializeField] protected int Hp ;
+    [SerializeField] protected int hp ;
     protected int _currHp;
     
-    [SerializeField] protected Stat Atk;
-    [SerializeField] protected Stat Def;
+    [SerializeField] protected Stat atk;
+    [SerializeField] protected Stat def;
     
-
+    public Stat Atk { get => atk; }
+    public Stat Def { get => def; }
+    
     public float CurrHpPercentage
     {
-        get => (float) _currHp / Hp;
+        get => (float) _currHp / hp;
     }
     
     private void Awake()
     {
-        _currHp = Hp;
+        _currHp = hp;
     }
 
     public void TakeDamage(int dmg)

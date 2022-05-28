@@ -44,4 +44,9 @@ public class Stat
     {
         _modifiers.Remove(modifier);
     }
+
+    public void ModifyBaseValue(int amount)
+    {
+        this.baseValue = amount;
+    }
 }
