@@ -28,11 +28,6 @@ public class Stat
         }
     }
 
-    // public Stat()
-    // {
-    //     this.baseValue = 0;
-    // }
-    //
     
     public Stat(int baseValue)
     {
@@ -42,17 +37,11 @@ public class Stat
     //Main functions to modify stats
     public void AddModifier(int modifier)
     {
-        if (modifier != 0)
-        {
-            _modifiers.Add(modifier);
-        }
+        _modifiers.Add(modifier);
     }
 
     public void RemoveModifier(int modifier)
     {
-        if (modifier != 0)
-        {
-            _modifiers.Add(modifier);
-        }
+        _modifiers.Remove(modifier);
     }
 }

@@ -7,6 +7,7 @@ public class CharacterStats : MonoBehaviour
     
     [SerializeField] protected Stat Atk;
     [SerializeField] protected Stat Def;
+    
 
     public float CurrHpPercentage
     {
@@ -34,5 +35,15 @@ public class CharacterStats : MonoBehaviour
     public virtual void Die()
     {
         //implement different die functionalities      
+    }
+
+    public void AddModifier(Stat statToModify, int modifier)
+    {
+        statToModify.AddModifier(modifier);
+    }
+
+    public void RemoveModifier(Stat statToModify, int modifier)
+    {
+        statToModify.RemoveModifier(modifier);
     }
 }
