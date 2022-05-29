@@ -5,7 +5,7 @@ using System;
 public enum CurrencyType
 {
     SOULS,
-    GOLD
+    GOLD,
 }
 
 public class CurrencySystem : MonoBehaviour
@@ -16,7 +16,7 @@ public class CurrencySystem : MonoBehaviour
 
     private void OnDestroy()
     {
-        OnCurrencyChanged -= Print;
+       // OnCurrencyChanged -= Print;
     }
     
     private void Awake()
