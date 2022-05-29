@@ -27,7 +27,6 @@ public class Stat
             return currentValue;
         }
     }
-
     
     public Stat(int baseValue)
     {

@@ -12,7 +12,13 @@ public class CurrencySystem : MonoBehaviour
 {
     public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType,int>();
 
-    //public static event Action OnCurrencyChanged;
+    public static event Action OnCurrencyChanged;
+
+    private void OnDestroy()
+    {
+        OnCurrencyChanged -= Print;
+    }
+    
     private void Awake()
     {
         currencyDict.Clear();
@@ -22,49 +28,38 @@ public class CurrencySystem : MonoBehaviour
         {
             currencyDict.Add((CurrencyType) i, 0);
         }
+
+        // AddCurrency(CurrencyType.GOLD, 50);
+        // AddCurrency(CurrencyType.SOULS, 80);
+        // Print();
+        // OnCurrencyChanged += Print;
+    }
+    
+    public static void AddCurrency(CurrencyType currencyType, int amount)
+    {
+        currencyDict[currencyType] += amount;
+        
+        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
     }
 
-    public void AddGold(int amount)
+    //Main function for shop systems
+    public static void RemoveCurrency(CurrencyType currencyType, int amount)
     {
-        currencyDict[CurrencyType.GOLD] += amount;
-        
-      //  if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
-    }
-    
-    public void RemoveGold(int amount)
-    {
-        int currAmt = currencyDict[CurrencyType.GOLD];
+        int currAmt = currencyDict[currencyType];
         if (currAmt - amount > 0)
         {
-            currencyDict[CurrencyType.GOLD] -= amount;
+            currencyDict[currencyType] -= amount;
         }
         else
         {
-            currencyDict[CurrencyType.GOLD] = 0;
+            currencyDict[currencyType] = 0;
         }
-        
-      //  if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
     }
-    
-    public void AddSouls(int amount)
+
+    private void Print()
     {
-        currencyDict[CurrencyType.SOULS] += amount;
-        
-     //   if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
-    }
-    
-    public void RemoveSouls(int amount)
-    {
-        int currAmt = currencyDict[CurrencyType.SOULS];
-        if (currAmt - amount > 0)
-        {
-            currencyDict[CurrencyType.SOULS] -= amount;
-        }
-        else
-        {
-            currencyDict[CurrencyType.SOULS] = 0;
-        }
-        
-    //    if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+        print("Current GOLD: " + currencyDict[CurrencyType.GOLD]);
+        print("Current SOULS: " + currencyDict[CurrencyType.SOULS]);
     }
 }

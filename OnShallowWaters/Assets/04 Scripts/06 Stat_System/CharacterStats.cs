@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [SerializeField] protected int hp ;
+    [SerializeField] protected int hp = 5;
     protected int _currHp;
     
     [SerializeField] protected Stat atk;
