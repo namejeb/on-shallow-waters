@@ -12,9 +12,11 @@ public class CurrencySystem : MonoBehaviour
 {
     public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType,int>();
 
-    public static event Action OnCurrencyChanged;
+    //public static event Action OnCurrencyChanged;
     private void Awake()
     {
+        currencyDict.Clear();
+        
         //initialise dictionary
         for (int i = 0; i < 2; i++)
         {
@@ -26,7 +28,7 @@ public class CurrencySystem : MonoBehaviour
     {
         currencyDict[CurrencyType.GOLD] += amount;
         
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+      //  if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
     }
     
     public void RemoveGold(int amount)
@@ -41,14 +43,14 @@ public class CurrencySystem : MonoBehaviour
             currencyDict[CurrencyType.GOLD] = 0;
         }
         
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+      //  if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
     }
     
     public void AddSouls(int amount)
     {
         currencyDict[CurrencyType.SOULS] += amount;
         
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+     //   if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
     }
     
     public void RemoveSouls(int amount)
@@ -63,6 +65,6 @@ public class CurrencySystem : MonoBehaviour
             currencyDict[CurrencyType.SOULS] = 0;
         }
         
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+    //    if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
     }
 }

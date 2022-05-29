@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -8,6 +9,8 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] protected Stat atk;
     [SerializeField] protected Stat def;
     
+    public static Dictionary<Stat, int> statsDict = new Dictionary<Stat, int>();
+
     public Stat Atk { get => atk; }
     public Stat Def { get => def; }
     
