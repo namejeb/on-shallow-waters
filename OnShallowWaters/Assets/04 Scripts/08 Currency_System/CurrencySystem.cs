@@ -54,7 +54,7 @@ public class CurrencySystem : MonoBehaviour
         {
             currencyDict[currencyType] = 0;
         }
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();   
     }
 
     private void Print()
