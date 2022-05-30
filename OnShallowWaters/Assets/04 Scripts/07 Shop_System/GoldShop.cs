@@ -5,7 +5,7 @@ public class GoldShop : Shop
     {
         CreateShopButton(ShopItem.ItemType.HP, CurrencyType.GOLD, ShopItem.GetSprite(ShopItem.ItemType.HP), "hp", 1, 0);
         CreateShopButton(ShopItem.ItemType.ATK, CurrencyType.GOLD, ShopItem.GetSprite(ShopItem.ItemType.ATK), "atk", 1, 1);
-        CreateShopButton(ShopItem.ItemType.DEF, CurrencyType.SOULS,ShopItem.GetSprite(ShopItem.ItemType.DEF), "def", 1, 2);
+        CreateShopButton(ShopItem.ItemType.DEF, CurrencyType.GOLD,ShopItem.GetSprite(ShopItem.ItemType.DEF), "def", 1, 2);
         
         //Hide Shop when start
     }

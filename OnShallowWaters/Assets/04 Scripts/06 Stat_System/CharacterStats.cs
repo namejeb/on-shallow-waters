@@ -3,14 +3,15 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [SerializeField] protected int hp = 5;
+    [SerializeField] private int hp = 5;
     protected int _currHp;
     
-    [SerializeField] protected Stat atk;
-    [SerializeField] protected Stat def;
+    [SerializeField] private Stat atk;
+    [SerializeField] private Stat def;
     
     public static Dictionary<Stat, int> statsDict = new Dictionary<Stat, int>();
 
+    public int Hp { get; protected set ; }
     public Stat Atk { get => atk; }
     public Stat Def { get => def; }
     

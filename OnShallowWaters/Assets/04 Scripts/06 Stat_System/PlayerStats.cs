@@ -22,7 +22,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
 
     private void IncreaseMaxHp(int amount)
     {
-        hp += amount;
+        Hp += amount;
     }
 
     public void BoughtItem(ShopItem.ItemType itemType, CurrencyType currencyType)
@@ -71,8 +71,8 @@ public class PlayerStats : CharacterStats, IShopCustomer
     
     private void UpgradeAtk()
     {
-        int newValue = atk.BaseValue + 5;
-        atk.ModifyBaseValue(newValue);
+        int newValue = Atk.BaseValue + atkUpgradeAmt;
+        Atk.ModifyBaseValue(newValue);
         
        // save to file
     }
