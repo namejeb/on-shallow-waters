@@ -27,7 +27,7 @@ public class Button_UI : MonoBehaviour
         ClickEvent = Event_Click;
     }
 
-    public void Event_Click(UnityAction clickAction)
+    private void Event_Click(UnityAction clickAction)
     {
         _button.onClick.AddListener(clickAction);
     }

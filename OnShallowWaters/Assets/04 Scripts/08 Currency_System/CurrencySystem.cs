@@ -16,7 +16,7 @@ public class CurrencySystem : MonoBehaviour
 
     private void OnDestroy()
     {
-       // OnCurrencyChanged -= Print;
+        OnCurrencyChanged -= Print;
     }
     
     private void Awake()
@@ -29,10 +29,10 @@ public class CurrencySystem : MonoBehaviour
             currencyDict.Add((CurrencyType) i, 0);
         }
 
-        // AddCurrency(CurrencyType.GOLD, 50);
-        // AddCurrency(CurrencyType.SOULS, 80);
-        // Print();
-        // OnCurrencyChanged += Print;
+        AddCurrency(CurrencyType.GOLD, 50);
+        AddCurrency(CurrencyType.SOULS, 80);
+         Print();
+         OnCurrencyChanged += Print;
     }
     
     public static void AddCurrency(CurrencyType currencyType, int amount)

@@ -20,8 +20,6 @@ public class Shop : MonoBehaviour
         _shopCustomer = PlayerStats.Instance;
     }
     
-
-    
     protected void CreateShopButton(ShopItem.ItemType itemType, CurrencyType currencyType, Sprite itemSprite, string itemName, int itemCost, int positionIndex)
     {
         Transform newShopButtonTransform = Instantiate(_shopButtonTemplate, _container);
