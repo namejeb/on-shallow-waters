@@ -5,7 +5,7 @@ using UnityEngine;
 public class TextureTiling : MonoBehaviour
 {
     [SerializeField] private Material material;
-    [SerializeField] private float tileSize = 1f;
+    [SerializeField] private float textureTileSize = 1f;
     
     private MeshRenderer _meshRenderer;
     
@@ -33,7 +33,7 @@ public class TextureTiling : MonoBehaviour
     {
         Material tempMat = new Material(material);
 
-        tempMat.mainTextureScale = transform.localScale * tileSize;
+        tempMat.mainTextureScale = transform.localScale * textureTileSize;
         _meshRenderer.material = tempMat;
     }
 }
