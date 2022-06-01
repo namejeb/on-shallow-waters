@@ -28,12 +28,12 @@ public class WaveSpawner : MonoBehaviour
     }
 
     [Header("Wave Settings")]
-    [SerializeField] private float waveCounddown;
+    [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
     [SerializeField] private List<Transform> spawnPoints;
     private float _searchCountdown = 1f;
     private int _nextWave = 0;
-    private bool isEnd;
+    private bool _isEnd;
 
     [Header("Enemy Initialization")]
     public Wave[] waves;
@@ -49,13 +49,13 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
-        waveCounddown = waveIntervalTime;
+        waveCountdown = waveIntervalTime;
     }
 
     private void Update()
     {
 		// Spawn start when player step into room
-        if (state == SpawnState.NOTHING && dt.doorTriggerd && !isEnd)
+        if (state == SpawnState.NOTHING && dt.doorTriggerd && !_isEnd)
         {
             state = SpawnState.WAITING;
         }
@@ -65,7 +65,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if (!EnemyIsAlive())
             {
-                if (isEnd)
+                if (_isEnd)
                 {
                     state = SpawnState.NOTHING;
                     dt.SetWallStatus(false);
@@ -78,23 +78,23 @@ public class WaveSpawner : MonoBehaviour
         }
 		
 		// Rest time between wave
-        if (waveCounddown <= 0)
+        if (waveCountdown <= 0)
         {
             if (state != SpawnState.SPAWNING)
             {
-                StartCoroutine(SpwanWave(waves[_nextWave]));
+                StartCoroutine(SpawnWave(waves[_nextWave]));
             }
         }
         else if (state == SpawnState.NOTHING)
             return;
         else
-            waveCounddown -= Time.deltaTime;
+            waveCountdown -= Time.deltaTime;
     }
 
     void WaveCompleted(Wave wave)
     {
         state = SpawnState.COUNTING;
-        waveCounddown = waveIntervalTime;
+        waveCountdown = waveIntervalTime;
     }
 
     bool EnemyIsAlive()
@@ -109,22 +109,22 @@ public class WaveSpawner : MonoBehaviour
         return true;
     }
 	
-    IEnumerator SpwanWave(Wave _wave)
+    IEnumerator SpawnWave(Wave wave)
     {
         state = SpawnState.SPAWNING;
 
-		SpawnLoop(_wave.enemies.count1, _wave.enemies.enemy1);
-		SpawnLoop(_wave.enemies.count2, _wave.enemies.enemy2);
-		SpawnLoop(_wave.enemies.count3, _wave.enemies.enemy3);
-		SpawnLoop(_wave.enemies.count4, _wave.enemies.enemy4);
+		SpawnLoop(wave.enemies.count1, wave.enemies.enemy1);
+		SpawnLoop(wave.enemies.count2, wave.enemies.enemy2);
+		SpawnLoop(wave.enemies.count3, wave.enemies.enemy3);
+		SpawnLoop(wave.enemies.count4, wave.enemies.enemy4);
 		
 		// Determine are every waves go through already or not
         if (_nextWave < waves.Length - 1)
             _nextWave++;
         else
         {
-            waveCounddown = 5;
-            isEnd = true;
+            waveCountdown = 5;
+            _isEnd = true;
         }
 
         state = SpawnState.WAITING;
@@ -139,17 +139,17 @@ public class WaveSpawner : MonoBehaviour
 		}
 	}
 
-    void SpawnEnemy(Transform _enemy)
+    void SpawnEnemy(Transform enemy)
     {
         // Random Position in square
 
         int spawnIndex = Random.Range(0, spawnPoints.Count);
 		
 		//Spawn enemy (not Object Pooler)
-        //Transform enemy = Instantiate(_enemy, pos, transform.rotation);
+        //Transform e = Instantiate(enemy, pos, transform.rotation);
 		
 		//Spawn enemy (Object Pooler)
-		// Transform enemy = enemyPooler.GetFromPool();
-		// enemy.position = spawnPoints[spawnIndex];
+		// Transform e = enemyPooler.GetFromPool();
+		// e.position = spawnPoints[spawnIndex];
     }
 }
