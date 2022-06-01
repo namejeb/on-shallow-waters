@@ -9,21 +9,15 @@ public class WaveSpawner : MonoBehaviour
     [System.Serializable]
     public class Enemies
     {
-        public Transform enemy1;
-        public int count1;
-        public Transform enemy2;
-        public int count2;
-        public Transform enemy3;
-        public int count3;
-        public Transform enemy4;
-        public int count4;
+        public EnemyPooler.EnemyPoolType enemy;
+        public int count;
     }
 
     [System.Serializable]
     public class Wave
     {
         public string name;
-        public Enemies enemies;
+        public List<Enemies> enemies;
         //public float rate;
     }
 
@@ -31,6 +25,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
     [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private EnemyPooler enemyPooler;
     private float _searchCountdown = 1f;
     private int _nextWave = 0;
     private bool _isEnd;
@@ -113,10 +108,13 @@ public class WaveSpawner : MonoBehaviour
     {
         state = SpawnState.SPAWNING;
 
-		SpawnLoop(wave.enemies.count1, wave.enemies.enemy1);
-		SpawnLoop(wave.enemies.count2, wave.enemies.enemy2);
-		SpawnLoop(wave.enemies.count3, wave.enemies.enemy3);
-		SpawnLoop(wave.enemies.count4, wave.enemies.enemy4);
+		for (int i = 0; i < wave.enemies.Count; i++)
+		{
+			for (int j = 0; j < wave.enemies[i].count; i++)
+			{
+				SpawnEnemy(wave.enemies[i].enemy);
+			}
+		}
 		
 		// Determine are every waves go through already or not
         if (_nextWave < waves.Length - 1)
@@ -131,25 +129,13 @@ public class WaveSpawner : MonoBehaviour
         yield break;
     }
 	
-	void SpawnLoop(int waveCount, Transform enemy)
-	{
-		for (int i = 0; i < waveCount; i++)
-		{
-			SpawnEnemy(enemy);
-		}
-	}
-
-    void SpawnEnemy(Transform enemy)
+    void SpawnEnemy(EnemyPooler.EnemyPoolType enemyType)
     {
-        // Random Position in square
-
+        // Random Spawn points
         int spawnIndex = Random.Range(0, spawnPoints.Count);
-		
-		//Spawn enemy (not Object Pooler)
-        //Transform e = Instantiate(enemy, pos, transform.rotation);
-		
-		//Spawn enemy (Object Pooler)
-		// Transform e = enemyPooler.GetFromPool();
-		// e.position = spawnPoints[spawnIndex];
+
+		//Spawn enemy (Object Pooling)
+		Transform e = enemyPooler.GetFromPool(enemyType);
+		e.position = spawnPoints[spawnIndex].position;
     }
 }
