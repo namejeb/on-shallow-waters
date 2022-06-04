@@ -110,7 +110,7 @@ public class WaveSpawner : MonoBehaviour
 
 		for (int i = 0; i < wave.enemies.Count; i++)
 		{
-			for (int j = 0; j < wave.enemies[i].count; i++)
+			for (int j = 0; j < wave.enemies[i].count; j++)
 			{
 				SpawnEnemy(wave.enemies[i].enemy);
 			}
@@ -136,6 +136,7 @@ public class WaveSpawner : MonoBehaviour
 
 		//Spawn enemy (Object Pooling)
 		Transform e = enemyPooler.GetFromPool(enemyType);
+        e.gameObject.SetActive(true);
 		e.position = spawnPoints[spawnIndex].position;
     }
 }
