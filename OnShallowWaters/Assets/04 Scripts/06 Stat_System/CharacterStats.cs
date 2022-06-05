@@ -24,7 +24,7 @@ public class CharacterStats : MonoBehaviour
     {
         _currHp = hp;
     }
-
+    
     public void TakeDamage(int dmg)
     {
         if (_currHp - dmg < 0) return;  //prevent dying again
@@ -40,7 +40,7 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void Die()
     {
-        //implement different die functionalities      
+        // implement different die functionalities      
     }
 
     public void AddModifier(Stat statToModify, int modifier)

@@ -31,8 +31,8 @@ public class CurrencySystem : MonoBehaviour
 
         AddCurrency(CurrencyType.GOLD, 50);
         AddCurrency(CurrencyType.SOULS, 80);
-         Print();
-         OnCurrencyChanged += Print;
+        Print();
+        OnCurrencyChanged += Print;
     }
     
     public static void AddCurrency(CurrencyType currencyType, int amount)
