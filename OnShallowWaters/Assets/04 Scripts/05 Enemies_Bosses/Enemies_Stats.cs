@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class Enemies_Stats : MonoBehaviour{
     //Attributes
-    public int health;
-    public int damage;
-    public float movement;
+    //public int health;
+    //public int damage;
+    //public float movement;
+
+    [SerializeField] private Stat health, damage, speed, armour;
+
+    public Stat Speed { get { return speed; } }
 
     public bool getBuff;
 
