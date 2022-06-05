@@ -3,18 +3,15 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats, IShopCustomer
 {
-     [SerializeField] private int atkUpgradeAmt = 3;
-     [SerializeField] private int defUpgradeAmt = 3;
-
-
+    [SerializeField] private int atkUpgradeAmt = 3;
+    [SerializeField] private int defUpgradeAmt = 3;
     
     public static PlayerStats Instance;
     private void Awake()
     {
         Instance = this;
     }
-
-
+    
     public override void Die()
     {
         //game end logics
@@ -24,10 +21,10 @@ public class PlayerStats : CharacterStats, IShopCustomer
     {
         Hp += amount;
     }
-
+    
     public void BoughtItem(ShopItem.ItemType itemType, CurrencyType currencyType)
     {
-        print("Buying item: " + itemType);
+        //print("Buying item: " + itemType);
 
         if (currencyType == CurrencyType.GOLD)
         {
@@ -37,9 +34,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
         {
             HandleSoulShopUpgrades(itemType);
         }
-     
     }
-
     public bool TrySpendCurrency(CurrencyType currencyType, int amountToSpend)
     {
         if (CurrencySystem.currencyDict[currencyType] > amountToSpend)
@@ -93,21 +88,26 @@ public class PlayerStats : CharacterStats, IShopCustomer
     
     
     //Testing
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown("t"))
-    //     {
-    //         AddModifier(atk, 3);
-    //     }
-    //
-    //     if (Input.GetKeyDown("r"))
-    //     {
-    //         RemoveModifier(atk, 4);
-    //     }
-    //
-    //     if (Input.GetKeyDown("f"))
-    //     {
-    //         print("Curr Atk: " + Atk.CurrentValue);
-    //     }
-    // }
+    private void Update()
+    {
+        if (Input.GetKeyDown("t"))
+        {
+            AddModifier(Atk, 3);
+        }
+    
+        if (Input.GetKeyDown("y"))
+        {
+            AddModifier(Atk, 4);
+        }
+    
+        if (Input.GetKeyDown("r"))
+        {
+            RemoveModifier(Atk, 4);
+        }
+    
+        if (Input.GetKeyDown("f"))
+        {
+            print("Curr Atk: " + Atk.CurrentValue);
+        }
+    }
 }

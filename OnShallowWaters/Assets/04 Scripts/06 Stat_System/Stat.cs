@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    [SerializeField] private int baseValue;
+    [SerializeField] private int baseValue = 0;
 
     private List<int> _modifiers = new List<int>();
     

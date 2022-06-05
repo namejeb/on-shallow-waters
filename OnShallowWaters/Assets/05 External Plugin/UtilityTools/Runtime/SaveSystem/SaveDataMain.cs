@@ -4,13 +4,11 @@ using System.Collections.Generic;
 
 
 [System.Serializable]
-public class SaveDataMain 
+public class SaveDataMain : ISaveData
 {
     #region Singleton
 
     private static SaveDataMain _current;
-
-
     public static SaveDataMain Current
     {
         get
@@ -35,8 +33,5 @@ public class SaveDataMain
     
    
     public PlayerData PlayerData { get; set; }
-
-    
     public List<EnemyData> EnemyData { get; set; }
-
 }

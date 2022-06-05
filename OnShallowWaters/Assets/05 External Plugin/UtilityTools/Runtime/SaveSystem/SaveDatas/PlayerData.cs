@@ -9,7 +9,6 @@ namespace NamejebTools.SaveSystem
     {
         private const string SaveName = "PlayerProfile";
         
-        
         public Vector3 PlayerLocation { get; private set; }
         public Quaternion PlayerRotation { get; private set; }
 
@@ -24,7 +23,7 @@ namespace NamejebTools.SaveSystem
         {
             ISaveData.SaveData(SaveName, this);
         }
-
+        
         public static void Load()
         {
             SaveDataMain.Current.PlayerData  = (PlayerData) ISaveData.LoadData(SaveName);
