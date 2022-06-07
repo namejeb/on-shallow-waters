@@ -17,6 +17,7 @@ public class DashNAttack : MonoBehaviour
 
     void Start()
     {
+        startPos = transform.position;
         isDash = false;
     }
     void Update()
@@ -34,7 +35,7 @@ public class DashNAttack : MonoBehaviour
         elapsedTime += Time.deltaTime;
         float percentComplete = elapsedTime / dashDuration;
         //Vector3 dash = new Vector3(transform.position.x * dashSpeed, 0f, transform.position.z * dashSpeed);
-        transform.position = Vector3.Lerp(startPos, endPos, percentComplete);
+        transform.forward = Vector3.Lerp(startPos, endPos, percentComplete);
         Debug.Log("dash");
 
         if (percentComplete > 1.0f)
