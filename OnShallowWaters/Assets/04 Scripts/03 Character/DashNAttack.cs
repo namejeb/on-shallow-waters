@@ -35,7 +35,7 @@ public class DashNAttack : MonoBehaviour
             _isDash = false;
             playerMovement.enabled = true;
         }
-        
+
         Debug.Log("dash");
     }
 
@@ -46,6 +46,7 @@ public class DashNAttack : MonoBehaviour
         
         _startPos = transform.position;
         _endPos = (transform.forward + transform.position) * range;
+
         _endTime = Time.time + dashDuration;
     }
 }
