@@ -9,13 +9,15 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float range;
     [SerializeField] private float speed;
     
+    private bool _isDash = false;
+ 
     private Vector3 _startPos;
     private Vector3 _endPos;
-    private float _elapsedTime;
 
-    private bool _isDash = false;
+    private float _elapsedTime;
     private float _endTime = 0f;
-    
+
+
     private void Update()
     {
         if (_isDash)
@@ -40,7 +42,6 @@ public class DashNAttack : MonoBehaviour
     public void ActivateDash()
     {
         _isDash = true;
-
         playerMovement.enabled = false;
         
         _startPos = transform.position;
