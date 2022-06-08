@@ -1,48 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
 
 public class DashNAttack : MonoBehaviour
 {
-    PlayerMovement moveScript;
-
-    [SerializeField] private Button dashButton;
-
-    private Vector3 startPos;
-    private Vector3 endPos;
-    private float elapsedTime;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private CharacterController controller;
+    
     [SerializeField] private float dashDuration = 3f;
-    private bool isDash;
+    [SerializeField] private float range;
+    [SerializeField] private float speed;
+    
+    private Vector3 _startPos;
+    private Vector3 _endPos;
+    private float _elapsedTime;
 
-    void Start()
+    private bool _isDash = false;
+    private float _endTime = 0f;
+    
+    private void Update()
     {
-        startPos = transform.position;
-        isDash = false;
-    }
-    void Update()
-    {
-        if (isDash)
+        if (_isDash)
         {
             Dash();
-            
         }
     }
 
-    public void Dash()
+    private void Dash()
     {
-        isDash = true;
-        elapsedTime += Time.deltaTime;
-        float percentComplete = elapsedTime / dashDuration;
-        //Vector3 dash = new Vector3(transform.position.x * dashSpeed, 0f, transform.position.z * dashSpeed);
-        transform.forward = Vector3.Lerp(startPos, endPos, percentComplete);
-        Debug.Log("dash");
+        controller.Move((_endPos - _startPos) * speed * Time.deltaTime);
 
-        if (percentComplete > 1.0f)
+        if (Time.time > _endTime)
         {
-            isDash = false;
+            _isDash = false;
+            playerMovement.enabled = true;
         }
         
+        Debug.Log("dash");
+    }
 
+    public void ActivateDash()
+    {
+        _isDash = true;
+
+        playerMovement.enabled = false;
+        
+        _startPos = transform.position;
+        _endPos = (transform.forward + transform.position) * range;
+        _endTime = Time.time + dashDuration;
     }
 }
