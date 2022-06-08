@@ -40,13 +40,13 @@ public class RoomSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        Boon.OnChangeRoom -= SpawnRoom;
+        ExitRoom.OnChangeRoom -= SpawnRoom;
     }
     
     private void Awake()
     {
         SortRooms();
-        Boon.OnChangeRoom += SpawnRoom;
+        ExitRoom.OnChangeRoom += SpawnRoom;
 
         GameObject roomBasic = roomListSo.roomBasic;
         _prevRoom = Instantiate(roomBasic.transform, roomBasic.transform.position, roomBasic.transform.rotation);
