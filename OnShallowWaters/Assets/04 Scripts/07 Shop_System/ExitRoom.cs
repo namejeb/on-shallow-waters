@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class Boon : MonoBehaviour
+public class ExitRoom : MonoBehaviour
 {
     [SerializeField] private RoomEntranceDir nextRoomEntranceDir;
 
