@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Boss_FSM : MonoBehaviour
 {
     private enum BossAttackMode { BOSS1, BOSS2 }
-
     public float inStateTimer;
+    public float speed;
 
     [Header("Chase Settings")]
     [SerializeField] private Transform target;
@@ -16,27 +17,35 @@ public class Boss_FSM : MonoBehaviour
     public float chaseTimeout = 5f;
 
     [Header("Melee Settings")] 
-    public Vector3 offset;
-    public Vector3 hitboxSize;
+    [SerializeField] private GameObject meleeHitbox;
+    public bool attacked;
     public LayerMask enemyLayer;
+
+    [Header("Rest Settings")] 
+    public float restTimeout = 3f;
 
     private Boss_BaseState _currentState;
     private NavMeshAgent _agent;
+    private Animator _animator;
 
     public Transform Target { get { return target; } }
     public NavMeshAgent Agent { get { return _agent; } }
+    public Animator Anim { get { return _animator; }}
 
     //assign default as boss 1, or can go for null check 
     public Boss_AttackState attackState = new Boss1_Attack();
     public readonly Boss_Chase chaseState = new Boss_Chase();
+    public readonly Boss_Rest restState = new Boss_Rest();
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
     {
+        _agent.speed = speed;
         DoBossAttack(bam);
         SetState(chaseState); 
     }
@@ -71,10 +80,15 @@ public class Boss_FSM : MonoBehaviour
         //! This will invoke the Update of whatever class it morphed into
         attackState.Update(this);
     }
-    
-    void OnDrawGizmos()
+
+    public void HitBoxOn()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + offset, hitboxSize);
+        attacked = true;
+        meleeHitbox.SetActive(true);
+    }
+    
+    public void HitBoxOff()
+    {
+        meleeHitbox.SetActive(false);
     }
 }

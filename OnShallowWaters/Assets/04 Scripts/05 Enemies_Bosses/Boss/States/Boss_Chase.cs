@@ -15,7 +15,7 @@ public class Boss_Chase : Boss_BaseState
         if (boss.inStateTimer > boss.chaseTimeout)
         {
             boss.inStateTimer = 0;
-            boss.SetState(boss.attackState);
+            boss.SetState(boss.restState);
             //boss.BossRandomState();
         }
 
