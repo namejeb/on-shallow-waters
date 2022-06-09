@@ -6,6 +6,7 @@ public class Boss_Chase : Boss_BaseState
 {
     public override void EnterState(Boss_FSM boss)
     {
+        Debug.Log("Boss Chase State");
         boss.Agent.stoppingDistance = boss.chaseMinDistance;
     }
 
@@ -19,12 +20,12 @@ public class Boss_Chase : Boss_BaseState
             //boss.BossRandomState();
         }
 
-        if (Vector3.Distance(boss.transform.position, boss.Target.position) <= boss.chaseMinDistance)
+        if (Vector3.Distance(boss.transform.position, boss.Target.position) <= boss.chaseMinDistance + boss.attackDistOffset)
         {
-            // Perform to attack melee state
             boss.SetState(boss.attackState);
         }
 
-        boss.Agent.destination = new Vector3(boss.Target.position.x, boss.transform.position.y, boss.Target.position.z);
+        Vector3 position = boss.Target.position;
+        boss.Agent.destination = new Vector3(position.x, boss.transform.position.y, position.z);
     }
 }

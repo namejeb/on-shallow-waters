@@ -8,13 +8,13 @@ public class Boss_FSM : MonoBehaviour
 {
     private enum BossAttackMode { BOSS1, BOSS2 }
     public float inStateTimer;
-    public float speed;
 
     [Header("Chase Settings")]
     [SerializeField] private Transform target;
     [SerializeField] private BossAttackMode bam;
     public float chaseMinDistance;
     public float chaseTimeout = 5f;
+    public float attackDistOffset = 1f;
 
     [Header("Melee Settings")] 
     [SerializeField] private GameObject meleeHitbox;
@@ -45,7 +45,6 @@ public class Boss_FSM : MonoBehaviour
 
     private void Start()
     {
-        _agent.speed = speed;
         DoBossAttack(bam);
         SetState(chaseState); 
     }
@@ -83,12 +82,24 @@ public class Boss_FSM : MonoBehaviour
 
     public void HitBoxOn()
     {
+        if (meleeHitbox == null)
+        {
+            Debug.LogWarning("MeleeHitbox not assisgned");
+            return;
+        }
+
         attacked = true;
         meleeHitbox.SetActive(true);
     }
     
     public void HitBoxOff()
     {
+        if (meleeHitbox == null)
+        {
+            Debug.LogWarning("MeleeHitbox not assisgned");
+            return;
+        }
+        
         meleeHitbox.SetActive(false);
     }
 }

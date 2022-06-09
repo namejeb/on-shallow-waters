@@ -8,7 +8,7 @@ public class Boss_Rest : Boss_BaseState
     public override void EnterState(Boss_FSM boss)
     {
         Debug.Log("Boss1 Rest State");
-        boss.Agent.speed = 0;
+        boss.Agent.isStopped = true;
     }
 
     public override void Update(Boss_FSM boss)
@@ -17,7 +17,7 @@ public class Boss_Rest : Boss_BaseState
         if (boss.inStateTimer > boss.restTimeout)
         {
             boss.inStateTimer = 0;
-            boss.Agent.speed = boss.speed;
+            boss.Agent.isStopped = false;
             boss.SetState(boss.chaseState);
         }
     }
