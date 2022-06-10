@@ -7,23 +7,21 @@ using UnityEngine.AI;
 public class Boss_FSM : MonoBehaviour
 {
     public enum BossMode { BOSS1, BOSS2 }
+    
+    [SerializeField] private BossMode bam;
+    [SerializeField] private Transform target;
     public float inStateTimer;
 
     private List<Boss_BaseState> stateList;
 
-    [Header("Chase Settings")]
-    [SerializeField] private Transform target;
-    [SerializeField] private BossMode bam;
-    public float chaseMinDistance;
-    public float chaseTimeout = 5f;
-    public float attackDistOffset = 1f;
-
     [Header("Melee Settings")] 
     [SerializeField] private GameObject meleeHitbox;
+    public float chaseMinDistance;
+    public float chaseTimeout = 5f;
+    public float attackDistOffset = 0.5f;
+    public int speed;
     public bool isAttacking;
     public bool isAttackFin;
-    public int speed;
-    public LayerMask enemyLayer;
 
     [Header("Rest Settings")] 
     public float restTimeout = 3f;

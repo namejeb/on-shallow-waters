@@ -25,7 +25,7 @@ public class Boss1_Attack : Boss_AttackState
         if (boss.Agent.speed != 0)
             boss.Agent.SetDestination(boss.Target.position);
 
-        if (Vector3.Distance(boss.transform.position, boss.Target.position) < (boss.Agent.stoppingDistance + 0.5) && !boss.isAttacking)
+        if (Vector3.Distance(boss.transform.position, boss.Target.position) < (boss.Agent.stoppingDistance + boss.attackDistOffset) && !boss.isAttacking)
         {
             boss.isAttacking = true;
             boss.Agent.speed = 0;
