@@ -11,8 +11,9 @@ public class MeleeHitbox : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            if (Vector3.Distance(transform.position, col.transform.position) < 1)
-                Debug.Log("Player Damaged" + damage);
+            // WARNING - Maybe in the future need modify the distance check if have any problem, cuz its hardcoded currently
+            //if (Vector3.Distance(transform.position, col.transform.position) < 1)
+            Debug.Log("Player Damaged" + damage);    
         }
     }
 }

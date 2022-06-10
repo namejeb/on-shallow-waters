@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,8 +23,9 @@ public class Boss_FSM : MonoBehaviour
     public bool isAttackFin;
 
     [Header("Range Settings")] 
-    [SerializeField] private Transform aimDirection;
-    [SerializeField] private GameObject shootPrefab;
+    public Transform aimDirection; 
+    public Transform aimDirection2;
+    public List<GameObject> shootPrefab;
     public float rotationSpeed;
     public int shootCount;
     public float shootInterval = 3f;
@@ -44,6 +44,7 @@ public class Boss_FSM : MonoBehaviour
     //assign default as boss 1, or can go for null check 
     public Boss_Move1 move1State = new Boss1_SlicingClaws();
     public Boss_Move2 move2State = new Boss1_ThrustHand();
+    public Boss_Move3 move3State = new Boss1_SlamGround();
     public readonly Boss_Rest restState = new Boss_Rest();
 
     private void Awake()
@@ -56,7 +57,7 @@ public class Boss_FSM : MonoBehaviour
     {
         _agent.speed = speed;
         DoBossAttack(bam);
-        SetState(move2State); 
+        SetState(move3State); 
     }
 
     private void Update()
@@ -72,20 +73,23 @@ public class Boss_FSM : MonoBehaviour
 
     public void BossRandomState(BossMode mode)
     {
-        
+        int randNum = Random.Range(0, stateList.Count);
+        SetState(stateList[randNum]);
     }
 
     private void BossStateList(BossMode mode)
     {
+        stateList.Add(move1State);
+        stateList.Add(move2State);
+        stateList.Add(move3State);
+        stateList.Add(restState);
+        
+        //ONLY ADD SPECIAL MOVE IN SWITCH
         switch(mode)
         {
             case BossMode.BOSS1:
-                stateList.Add(move1State);
-                stateList.Add(restState);
                 break;
             case BossMode.BOSS2:
-                stateList.Add(move1State);
-                stateList.Add(restState);
                 break;
         }
         
@@ -134,13 +138,22 @@ public class Boss_FSM : MonoBehaviour
         meleeHitbox.SetActive(false);
     }
 
-    public void ShootProjectile()
+    public void ShootProjectile(GameObject shootPb, Transform aimer)
     {
-        Vector3 targetDirection = (target.position - aimDirection.position).normalized;
+        Vector3 targetDirection = (target.position - aimer.position).normalized;
         float angle = Mathf.Atan2(targetDirection.z, targetDirection.x) * Mathf.Rad2Deg;
         // aimDirection.eulerAngles = new Vector3(0, angle, 0);
+        Debug.Log(aimer.position);
+        GameObject bullet = Instantiate(shootPb, aimer.position, aimer.rotation);
         
-        GameObject bullet = Instantiate(shootPrefab, aimDirection.position, aimDirection.rotation);
-        bullet.GetComponent<Projectile>().SetDirection(target);
+        if (bullet.GetComponent<Projectile>() != null)
+            bullet.GetComponent<Projectile>().SetDirection(target);
+    }
+    
+    public void ShootProjectile2(GameObject shootPb, Transform aimer)
+    {
+
+        GameObject bullet = Instantiate(shootPb, aimer.position, transform.rotation);
+
     }
 }

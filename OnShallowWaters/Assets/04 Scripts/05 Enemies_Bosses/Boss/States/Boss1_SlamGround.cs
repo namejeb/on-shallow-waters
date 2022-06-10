@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss1_ThrustHand : Boss_Move2
+public class Boss1_SlamGround : Boss_Move3
 {
     public override void EnterState(Boss_FSM boss)
     {
@@ -16,17 +16,18 @@ public class Boss1_ThrustHand : Boss_Move2
         {
             boss.shootCount += 1;
             boss.inStateTimer = 0;
-            boss.ShootProjectile(boss.shootPrefab[0], boss.aimDirection);
+            boss.ShootProjectile2(boss.shootPrefab[1], boss.aimDirection2);
         }
-        else if (boss.shootCount >= 3)
+        else if (boss.shootCount >= 1)
         {
             boss.shootCount = 0;
             boss.inStateTimer = 0;
             boss.Agent.speed = boss.speed;
             boss.SetState(boss.restState);
         }
-
-        RotateTowards(boss.Target, boss);
+        
+        if (boss.inStateTimer > boss.shootInterval - 2)
+            RotateTowards(boss.Target, boss);
     }
     
     private void RotateTowards(Transform target, Boss_FSM boss)
