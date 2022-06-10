@@ -6,19 +6,23 @@ using UnityEngine.AI;
 
 public class Boss_FSM : MonoBehaviour
 {
-    private enum BossAttackMode { BOSS1, BOSS2 }
+    public enum BossMode { BOSS1, BOSS2 }
     public float inStateTimer;
+
+    private List<Boss_BaseState> stateList;
 
     [Header("Chase Settings")]
     [SerializeField] private Transform target;
-    [SerializeField] private BossAttackMode bam;
+    [SerializeField] private BossMode bam;
     public float chaseMinDistance;
     public float chaseTimeout = 5f;
     public float attackDistOffset = 1f;
 
     [Header("Melee Settings")] 
     [SerializeField] private GameObject meleeHitbox;
-    public bool attacked;
+    public bool isAttacking;
+    public bool isAttackFin;
+    public int speed;
     public LayerMask enemyLayer;
 
     [Header("Rest Settings")] 
@@ -34,8 +38,7 @@ public class Boss_FSM : MonoBehaviour
 
     //assign default as boss 1, or can go for null check 
     public Boss_AttackState attackState = new Boss1_Attack();
-    public readonly Boss_Chase chaseState = new Boss_Chase();
-    public readonly Boss_Rest restState = new Boss_Rest();
+    public Boss_Rest restState = new Boss_Rest();
 
     private void Awake()
     {
@@ -46,7 +49,7 @@ public class Boss_FSM : MonoBehaviour
     private void Start()
     {
         DoBossAttack(bam);
-        SetState(chaseState); 
+        SetState(restState); 
     }
 
     private void Update()
@@ -60,22 +63,43 @@ public class Boss_FSM : MonoBehaviour
         _currentState.EnterState(this);
     }
 
-    public void BossRandomState()
+    public void BossRandomState(BossMode mode)
     {
+        
+    }
 
+    private void BossStateList(BossMode mode)
+    {
+        switch(mode)
+        {
+            case BossMode.BOSS1:
+                stateList.Add(attackState);
+                stateList.Add(restState);
+                break;
+            case BossMode.BOSS2:
+                break;
+        }
+        
     }
 
     /// <summary>
-    /// Choose Boss Attack Mode
+    /// Switch between Boss Mode
     /// </summary>
-    /// <param name="attackMode"></param>
-    private void DoBossAttack(BossAttackMode attackMode)
+    /// <param name="mode"></param>
+    private void DoBossAttack(BossMode mode)
     {
-        switch (attackMode)
+        switch (mode)
         {
-            case BossAttackMode.BOSS1: attackState = new Boss1_Attack(); break;
-            case BossAttackMode.BOSS2: attackState = new Boss2_Attack(); break;
+            case BossMode.BOSS1: 
+                attackState = new Boss1_Attack();
+                break;
+            case BossMode.BOSS2: 
+                attackState = new Boss2_Attack(); 
+                break;
         }
+        
+        
+        
         //! This will invoke the Update of whatever class it morphed into
         attackState.Update(this);
     }
@@ -87,8 +111,6 @@ public class Boss_FSM : MonoBehaviour
             Debug.LogWarning("MeleeHitbox not assisgned");
             return;
         }
-
-        attacked = true;
         meleeHitbox.SetActive(true);
     }
     
@@ -99,7 +121,7 @@ public class Boss_FSM : MonoBehaviour
             Debug.LogWarning("MeleeHitbox not assisgned");
             return;
         }
-        
+        isAttackFin = true;
         meleeHitbox.SetActive(false);
     }
 }
