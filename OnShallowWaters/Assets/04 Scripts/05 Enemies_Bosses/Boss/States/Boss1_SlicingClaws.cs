@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss1_Attack : Boss_AttackState
+public class Boss1_SlicingClaws : Boss_Move1
 {
     private static readonly int MeleeAttack1 = Animator.StringToHash("MeleeAttack1");
 

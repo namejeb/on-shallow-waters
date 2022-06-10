@@ -18,7 +18,7 @@ public class Boss_Rest : Boss_BaseState
         {
             boss.inStateTimer = 0;
             boss.Agent.speed = boss.speed;
-            boss.SetState(boss.attackState);
+            boss.SetState(boss.move1State);
         }
     }
 }

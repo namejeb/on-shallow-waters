@@ -23,6 +23,13 @@ public class Boss_FSM : MonoBehaviour
     public bool isAttacking;
     public bool isAttackFin;
 
+    [Header("Range Settings")] 
+    [SerializeField] private Transform aimDirection;
+    [SerializeField] private GameObject shootPrefab;
+    public float rotationSpeed;
+    public int shootCount;
+    public float shootInterval = 3f;
+
     [Header("Rest Settings")] 
     public float restTimeout = 3f;
 
@@ -35,8 +42,9 @@ public class Boss_FSM : MonoBehaviour
     public Animator Anim { get { return _animator; }}
 
     //assign default as boss 1, or can go for null check 
-    public Boss_AttackState attackState = new Boss1_Attack();
-    public Boss_Rest restState = new Boss_Rest();
+    public Boss_Move1 move1State = new Boss1_SlicingClaws();
+    public Boss_Move2 move2State = new Boss1_ThrustHand();
+    public readonly Boss_Rest restState = new Boss_Rest();
 
     private void Awake()
     {
@@ -46,8 +54,9 @@ public class Boss_FSM : MonoBehaviour
 
     private void Start()
     {
+        _agent.speed = speed;
         DoBossAttack(bam);
-        SetState(restState); 
+        SetState(move2State); 
     }
 
     private void Update()
@@ -71,10 +80,12 @@ public class Boss_FSM : MonoBehaviour
         switch(mode)
         {
             case BossMode.BOSS1:
-                stateList.Add(attackState);
+                stateList.Add(move1State);
                 stateList.Add(restState);
                 break;
             case BossMode.BOSS2:
+                stateList.Add(move1State);
+                stateList.Add(restState);
                 break;
         }
         
@@ -89,17 +100,17 @@ public class Boss_FSM : MonoBehaviour
         switch (mode)
         {
             case BossMode.BOSS1: 
-                attackState = new Boss1_Attack();
+                move1State = new Boss1_SlicingClaws();
                 break;
             case BossMode.BOSS2: 
-                attackState = new Boss2_Attack(); 
+                move1State = new Boss2_Attack(); 
                 break;
         }
         
         
         
         //! This will invoke the Update of whatever class it morphed into
-        attackState.Update(this);
+        move1State.Update(this);
     }
 
     public void HitBoxOn()
@@ -121,5 +132,15 @@ public class Boss_FSM : MonoBehaviour
         }
         isAttackFin = true;
         meleeHitbox.SetActive(false);
+    }
+
+    public void ShootProjectile()
+    {
+        Vector3 targetDirection = (target.position - aimDirection.position).normalized;
+        float angle = Mathf.Atan2(targetDirection.z, targetDirection.x) * Mathf.Rad2Deg;
+        // aimDirection.eulerAngles = new Vector3(0, angle, 0);
+        
+        GameObject bullet = Instantiate(shootPrefab, aimDirection.position, aimDirection.rotation);
+        bullet.GetComponent<Projectile>().SetDirection(target);
     }
 }

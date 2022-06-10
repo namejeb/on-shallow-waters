@@ -338,6 +338,7 @@ Transform:
   m_Children:
   - {fileID: 1099166765}
   - {fileID: 820261009}
+  - {fileID: 359020404}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -391,18 +392,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915e5b56150c3f343b5df20f730cd214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inStateTimer: 0
-  target: {fileID: 1735247762}
   bam: 0
+  target: {fileID: 1735247762}
+  inStateTimer: 0
+  meleeHitbox: {fileID: 820261008}
   chaseMinDistance: 2
   chaseTimeout: 5
   attackDistOffset: 0.5
-  meleeHitbox: {fileID: 820261008}
-  isAttackFin: 0
   speed: 5
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  isAttacking: 0
+  isAttackFin: 0
+  aimDirection: {fileID: 359020404}
+  shootPrefab: {fileID: 1819356346454786101, guid: fc1a410727257834c91d3b7aa94e4b52, type: 3}
+  rotationSpeed: 360
+  shootCount: 0
+  shootRate: 0
+  shooted: 0
   restTimeout: 3
 --- !u!95 &281077327
 Animator:
@@ -522,6 +527,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &359020403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 359020404}
+  m_Layer: 0
+  m_Name: AimDirection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &359020404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359020403}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 281077323}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &361605022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,7 +1572,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735247758}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09, y: 1, z: 1.78}
+  m_LocalPosition: {x: 6.86, y: 1, z: 6.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

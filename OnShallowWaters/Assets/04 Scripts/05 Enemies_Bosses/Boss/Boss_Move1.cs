@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss_AttackState : Boss_BaseState
+public class Boss_Move1 : Boss_BaseState
 {
     public override void EnterState(Boss_FSM boss)
     {
