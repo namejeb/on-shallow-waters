@@ -8,7 +8,7 @@ public class Boss1_Dash : Boss_Move4
     
     public override void EnterState(Boss_FSM boss)
     {
-        Debug.Log("dash");
+        Debug.Log("B1_Move_4");
         boss.Agent.enabled = false;
         _direction = (boss.Target.position - boss.transform.position).normalized;
     }

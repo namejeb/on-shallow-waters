@@ -6,6 +6,7 @@ public class Boss1_ThrustHand : Boss_Move2
 {
     public override void EnterState(Boss_FSM boss)
     {
+        Debug.Log("B1_Move_2");
         boss.Agent.speed = 0;
     }
 

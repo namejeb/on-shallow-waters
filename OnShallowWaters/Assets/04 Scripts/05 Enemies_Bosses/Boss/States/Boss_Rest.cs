@@ -7,7 +7,7 @@ public class Boss_Rest : Boss_BaseState
 {
     public override void EnterState(Boss_FSM boss)
     {
-        Debug.Log("Boss1 Rest State");
+        Debug.Log("Boss1_Rest");
         boss.Agent.speed = 0;
     }
 
@@ -18,10 +18,10 @@ public class Boss_Rest : Boss_BaseState
         {
             boss.inStateTimer = 0;
             boss.Agent.speed = boss.speed;
-            boss.SetState(boss.move4State);
+            boss.BossRandomState();
         }
 
-        RotateTowards(boss.Target, boss);
+        //RotateTowards(boss.Target, boss);
     }
     
     private void RotateTowards(Transform target, Boss_FSM boss)

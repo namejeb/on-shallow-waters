@@ -6,6 +6,7 @@ public class Boss1_SlamGround : Boss_Move3
 {
     public override void EnterState(Boss_FSM boss)
     {
+        Debug.Log("B1_Move_3");
         boss.Agent.speed = 0;
     }
 

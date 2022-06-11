@@ -8,7 +8,7 @@ public class Boss1_SlicingClaws : Boss_Move1
 
     public override void EnterState(Boss_FSM boss)
     {
-        Debug.Log("Boss1 Attack State");
+        Debug.Log("B1_Move_1");
         boss.Agent.stoppingDistance = boss.chaseMinDistance; 
     }
 
@@ -19,7 +19,6 @@ public class Boss1_SlicingClaws : Boss_Move1
         {
             boss.inStateTimer = 0;
             boss.SetState(boss.restState);
-            //boss.BossRandomState();
         }
         
         if (boss.Agent.speed != 0)

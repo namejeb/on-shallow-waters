@@ -11,7 +11,7 @@ public class Boss_FSM : MonoBehaviour
     [SerializeField] private Transform target;
     public float inStateTimer;
 
-    private List<Boss_BaseState> stateList;
+    private List<Boss_BaseState> _stateList;
 
     [Header("Melee Settings")] 
     [SerializeField] private GameObject meleeHitbox;
@@ -62,7 +62,8 @@ public class Boss_FSM : MonoBehaviour
     {
         _agent.speed = speed;
         DoBossAttack(bam);
-        SetState(move4State); 
+        BossStateList(bam);
+        SetState(restState); 
     }
 
     private void Update()
@@ -76,27 +77,42 @@ public class Boss_FSM : MonoBehaviour
         _currentState.EnterState(this);
     }
 
-    public void BossRandomState(BossMode mode)
+    public void BossRandomState()
     {
-        int randNum = Random.Range(0, stateList.Count);
-        SetState(stateList[randNum]);
+        int randNum = Random.Range(0, 5);
+
+        switch (randNum)
+        {
+            case 0:
+                SetState(restState);
+                break;
+            case 1:
+                SetState(move1State);
+                break;
+            case 2:
+                SetState(move2State);
+                break;
+            case 3:
+                SetState(move3State);
+                break;
+            case 4:
+                SetState(move4State);
+                break;
+        }
     }
 
     private void BossStateList(BossMode mode)
     {
-        stateList.Add(move1State);
-        stateList.Add(move2State);
-        stateList.Add(move3State);
-        stateList.Add(restState);
-        
+
+
         //ONLY ADD SPECIAL MOVE IN SWITCH
-        switch(mode)
-        {
-            case BossMode.BOSS1:
-                break;
-            case BossMode.BOSS2:
-                break;
-        }
+        // switch(mode)
+        // {
+        //     case BossMode.BOSS1:
+        //         break;
+        //     case BossMode.BOSS2:
+        //         break;
+        // }
         
     }
 
@@ -112,16 +128,20 @@ public class Boss_FSM : MonoBehaviour
                 move1State = new Boss1_SlicingClaws();
                 move2State = new Boss1_ThrustHand();
                 move3State = new Boss1_SlamGround();
+                move4State = new Boss1_Dash();
                 break;
             case BossMode.BOSS2: 
                 move1State = new Boss2_Attack(); 
                 break;
         }
         
-        
+
         
         //! This will invoke the Update of whatever class it morphed into
         move1State.Update(this);
+        move2State.Update(this);
+        move3State.Update(this);
+        move4State.Update(this);
     }
 
     public void HitBoxOn()
