@@ -412,6 +412,8 @@ MonoBehaviour:
   shootCount: 0
   shootInterval: 3
   restTimeout: 3
+  dashTimeout: 1
+  dashSpeed: 30
 --- !u!95 &281077327
 Animator:
   serializedVersion: 4
@@ -425,7 +427,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 11b0ca2eef118a14a9262ea228493e6e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1576,7 +1578,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735247758}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1, z: 4.73}
+  m_LocalPosition: {x: 6.98, y: 1, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1610,7 +1612,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &1791581243
 GameObject:

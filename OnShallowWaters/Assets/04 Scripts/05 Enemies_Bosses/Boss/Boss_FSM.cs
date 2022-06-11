@@ -33,6 +33,10 @@ public class Boss_FSM : MonoBehaviour
     [Header("Rest Settings")] 
     public float restTimeout = 3f;
 
+    [Header("Boss 1 Config")]
+    public float dashTimeout = 3f;
+    public float dashSpeed;
+
     private Boss_BaseState _currentState;
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -45,6 +49,7 @@ public class Boss_FSM : MonoBehaviour
     public Boss_Move1 move1State = new Boss1_SlicingClaws();
     public Boss_Move2 move2State = new Boss1_ThrustHand();
     public Boss_Move3 move3State = new Boss1_SlamGround();
+    public Boss_Move4 move4State = new Boss1_Dash();
     public readonly Boss_Rest restState = new Boss_Rest();
 
     private void Awake()
@@ -57,7 +62,7 @@ public class Boss_FSM : MonoBehaviour
     {
         _agent.speed = speed;
         DoBossAttack(bam);
-        SetState(move3State); 
+        SetState(move4State); 
     }
 
     private void Update()
@@ -96,7 +101,7 @@ public class Boss_FSM : MonoBehaviour
     }
 
     /// <summary>
-    /// Switch between Boss Mode
+    /// Switch Boss Attack State Machine
     /// </summary>
     /// <param name="mode"></param>
     private void DoBossAttack(BossMode mode)
@@ -105,6 +110,8 @@ public class Boss_FSM : MonoBehaviour
         {
             case BossMode.BOSS1: 
                 move1State = new Boss1_SlicingClaws();
+                move2State = new Boss1_ThrustHand();
+                move3State = new Boss1_SlamGround();
                 break;
             case BossMode.BOSS2: 
                 move1State = new Boss2_Attack(); 
@@ -119,21 +126,11 @@ public class Boss_FSM : MonoBehaviour
 
     public void HitBoxOn()
     {
-        if (meleeHitbox == null)
-        {
-            Debug.LogWarning("MeleeHitbox not assisgned");
-            return;
-        }
         meleeHitbox.SetActive(true);
     }
     
     public void HitBoxOff()
     {
-        if (meleeHitbox == null)
-        {
-            Debug.LogWarning("MeleeHitbox not assisgned");
-            return;
-        }
         isAttackFin = true;
         meleeHitbox.SetActive(false);
     }
@@ -142,8 +139,6 @@ public class Boss_FSM : MonoBehaviour
     {
         Vector3 targetDirection = (target.position - aimer.position).normalized;
         float angle = Mathf.Atan2(targetDirection.z, targetDirection.x) * Mathf.Rad2Deg;
-        // aimDirection.eulerAngles = new Vector3(0, angle, 0);
-        Debug.Log(aimer.position);
         GameObject bullet = Instantiate(shootPb, aimer.position, aimer.rotation);
         
         if (bullet.GetComponent<Projectile>() != null)
