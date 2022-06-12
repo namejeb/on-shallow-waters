@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ScreenFade : MonoBehaviour
 {
-    private RectTransform image;
+    private RectTransform _image;
 
     private void OnDestroy()
     {
@@ -13,27 +13,30 @@ public class ScreenFade : MonoBehaviour
         RoomSpawner.OnRoomChangeFinish -= FadeOut;
     }
 
+    private void Awake()
+    {
+        _image = GetComponent<RectTransform>();
+    }
+
     private void Start()
     {
-        image = GetComponent<RectTransform>();
         RoomSpawner.OnRoomChangeStart += FadeIn;
         RoomSpawner.OnRoomChangeFinish += FadeOut;
     }
     
     private void FadeIn()
     {
-        LeanTween.alpha(image, 1f, .5f).setIgnoreTimeScale(true);
+        LeanTween.alpha(_image, 1f, .5f).setIgnoreTimeScale(true);
     }
 
     private void FadeOut()
     {
-        StartCoroutine(cFadeOut());
-        //LeanTween.alpha(image, 0f, .5f).setIgnoreTimeScale(true);
+        StartCoroutine(CFadeOut());
     }
 
-    private IEnumerator cFadeOut()
+    private IEnumerator CFadeOut()
     {
         yield return new WaitForSeconds(.5f);
-        LeanTween.alpha(image, 0f, .5f).setIgnoreTimeScale(true);
+        LeanTween.alpha(_image, 0f, .5f).setIgnoreTimeScale(true);
     }
 }
