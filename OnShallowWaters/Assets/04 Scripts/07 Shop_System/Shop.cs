@@ -14,7 +14,7 @@ public class Shop : MonoBehaviour
     private void Awake()
     {
         _container = transform.Find("container");
-        _shopButtonTemplate = _container.Find("shopButtonTemplate");
+        _shopButtonTemplate = _container.Find("gShopButtonTemplate");
         _shopButtonTemplate.gameObject.SetActive(false);
 
         _shopCustomer = PlayerStats.Instance;
