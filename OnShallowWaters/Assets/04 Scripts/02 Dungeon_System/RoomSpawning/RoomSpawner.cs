@@ -35,7 +35,9 @@ public class RoomSpawner : MonoBehaviour
     private Dictionary<RoomEntranceDir, List<Room>> roomDict = new Dictionary<RoomEntranceDir, List<Room>>();
 
     private static Transform _prevRoom;
-    public static event Action<Transform> OnRoomChanged;
+    public static event Action OnRoomChangeStart;
+    public static event Action OnRoomChangeFinish;
+    public static event Action<Transform> OnResetPlayerPos;
 
 
     private void OnDestroy()
@@ -96,18 +98,29 @@ public class RoomSpawner : MonoBehaviour
             room = westEntranceRooms[roomIndex];
         }
         
-   
+        
+        
+        if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
+        
+
+
+        StartCoroutine(SpawnNewRoom(room));
+    }
+
+    private IEnumerator SpawnNewRoom(Room room)
+    {
+        yield return new WaitForSeconds(1f);
+        
         //Remove old room
         Destroy(_prevRoom.gameObject);
         
         //Spawn new room
         Transform roomTransform = room.roomPrefab.transform;
         _prevRoom = Instantiate(roomTransform, roomTransform.position, roomTransform.rotation);
-
+        
+        if (OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
+        
         //Set player position to spawn point
-        if (OnRoomChanged != null)
-        {
-            OnRoomChanged.Invoke(Room.FindSpawnPoint(_prevRoom));
-        }
+        if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
     }
 }

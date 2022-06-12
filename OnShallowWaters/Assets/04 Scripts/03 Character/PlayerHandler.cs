@@ -10,13 +10,13 @@ public class PlayerHandler : MonoBehaviour
 
     private void OnDestroy()
     {
-        RoomSpawner.OnRoomChanged -= ResetPosition;
+        RoomSpawner.OnResetPlayerPos -= ResetPosition;
     }
 
     private void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
-        RoomSpawner.OnRoomChanged += ResetPosition;
+        RoomSpawner.OnResetPlayerPos += ResetPosition;
     }
     
     public void SavePlayer()
