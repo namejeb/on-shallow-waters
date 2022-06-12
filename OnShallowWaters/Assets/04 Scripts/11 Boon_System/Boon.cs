@@ -55,8 +55,7 @@ public class Boon : MonoBehaviour
             boonItemsList.Add(boonItem);
         }
     }
-
-
+    
     private void ActivateBoonEffect(int effectIndex)
     {
         switch (effectIndex)
@@ -74,7 +73,6 @@ public class Boon : MonoBehaviour
         }
     }
     
-    
     private void RandomiseBoonItems()
     {
         BoonItem[] boonItems = new BoonItem[3];
@@ -88,7 +86,7 @@ public class Boon : MonoBehaviour
         }
         _boonItems = boonItems;
     }
-
+    
     private void InitButtons()
     {
         for (int i = 0; i < 3; i++)
