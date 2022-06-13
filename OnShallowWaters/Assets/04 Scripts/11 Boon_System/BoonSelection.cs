@@ -11,6 +11,8 @@ public class BoonSelection : MonoBehaviour
     
     [Space][Space]
     [SerializeField] private Image background;
+    [SerializeField] private TextMeshProUGUI testClickFunc;
+    
 
     private List<BoonItem> boonItemsList = new List<BoonItem>();
     
@@ -105,6 +107,7 @@ public class BoonSelection : MonoBehaviour
             //Add new clickEvent
             buttonUI.ClickEvent(() => ActivateBoonEffect(boonItem.id) );
             buttonUI.ClickEvent(() => CloseBoonSelection());
+            buttonUI.ClickEvent(() => UpdateText(boonItem.title, boonItem.description));
         }
     }
     
@@ -149,5 +152,10 @@ public class BoonSelection : MonoBehaviour
         
         //open invi door
         if(OnSelectedBoon != null) OnSelectedBoon.Invoke();
+    }
+
+    private void UpdateText(string title, string desc)
+    {
+        testClickFunc.text = $"Chosen => {title}: {desc}";
     }
 }
