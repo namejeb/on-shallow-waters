@@ -19,7 +19,7 @@ public class Room
     
     public static Transform FindSpawnPoint(Transform room)
     {
-        Transform playerSpawnPoint = room.Find("ref_Entrance");
+        Transform playerSpawnPoint = room.Find("refs").Find("ref_Entrance");
         return playerSpawnPoint;
     }
 }
@@ -36,19 +36,19 @@ public class RoomSpawner : MonoBehaviour
 
     private static Transform _prevRoom;
     public static event Action OnRoomChangeStart;
-    public static event Action OnRoomChangeFinish;
+    public static event Action OnRoomChangeFinish;  
     public static event Action<Transform> OnResetPlayerPos;
 
 
     private void OnDestroy()
     {
-        ChangeRoomTrigger.OnChangeRoom -= SpawnRoom;
+        ExitRoomTrigger.OnExitRoom -= SpawnRoom;
     }
     
     private void Awake()
     {
         SortRooms();
-        ChangeRoomTrigger.OnChangeRoom += SpawnRoom;
+        ExitRoomTrigger.OnExitRoom += SpawnRoom;
 
         GameObject roomBasic = roomListSo.roomBasic;
         _prevRoom = Instantiate(roomBasic.transform, roomBasic.transform.position, roomBasic.transform.rotation);
@@ -114,9 +114,10 @@ public class RoomSpawner : MonoBehaviour
         Transform roomTransform = room.roomPrefab.transform;
         _prevRoom = Instantiate(roomTransform, roomTransform.position, roomTransform.rotation);
         
-        if (OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
-        
         //Set player position to spawn point
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
+        
+        if (OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
+
     }
 }

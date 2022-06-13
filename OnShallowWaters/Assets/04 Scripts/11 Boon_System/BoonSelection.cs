@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using System;
 
 
 public class BoonSelection : MonoBehaviour
@@ -15,6 +16,8 @@ public class BoonSelection : MonoBehaviour
 
     private Transform[] _buttons = new Transform[3];
     private BoonItem[] _boonItems = new BoonItem[3];
+
+    public static event Action OnSelectedBoon;
 
     #region Singleton
     public static BoonSelection Instance;
@@ -67,7 +70,7 @@ public class BoonSelection : MonoBehaviour
         BoonItem[] boonItems = new BoonItem[3];
         for (int i = 0; i < 3; i++)
         {
-            int index = Random.Range(0, boonItemsList.Count);
+            int index = UnityEngine.Random.Range(0, boonItemsList.Count);
             BoonItem bI = boonItemsList[index];
 
             boonItems[i] = bI;
@@ -136,6 +139,8 @@ public class BoonSelection : MonoBehaviour
     private void CloseBoonSelection()
     {
         SetBoonButtonsActive(false);
+        
         //open invi door
+        if(OnSelectedBoon != null) OnSelectedBoon.Invoke();
     }
 }

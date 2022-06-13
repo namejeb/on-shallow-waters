@@ -8,7 +8,7 @@ public class BoonTrigger : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             BoonSelection.Instance.RollBoons();
-            //disable self
+            Destroy(gameObject);
         }
     }
 }
