@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 
 
-public class Boon : MonoBehaviour
+public class BoonSelection : MonoBehaviour
 {
     [SerializeField] private BoonItemsSO boomItemsSo;
     [SerializeField] private float offsetX;
@@ -15,6 +15,15 @@ public class Boon : MonoBehaviour
 
     private Transform[] _buttons = new Transform[3];
     private BoonItem[] _boonItems = new BoonItem[3];
+
+    #region Singleton
+    public static BoonSelection Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+    #endregion
     
     private void Start()
     {
@@ -22,21 +31,18 @@ public class Boon : MonoBehaviour
         _boonButtonTemplate = _container.Find("boonButtonTemplate");
         _boonButtonTemplate.gameObject.SetActive(false);
         
+        //create 3 buttons at the start
         for (int i = 0; i < 3; i++)
         {
-            _buttons[i] = CreateShopButton(i);
+            _buttons[i] = CreateShopButton(i);      
         }
-        
-        PopulateBoonItemsPool();
-        RandomiseBoonItems();
-        InitButtons();
     }
+
     
     //Create buttons at start, only change info and onClick functions of these buttons afterwards
     private Transform CreateShopButton(int positionIndex)
     {
         Transform newShopButtonTransform = Instantiate(_boonButtonTemplate, _container);
-        newShopButtonTransform.gameObject.SetActive(true);
         RectTransform newShopButtonRectTransform = newShopButtonTransform.GetComponent<RectTransform>();
 
         float shopButtonWidth = newShopButtonRectTransform.rect.width;
@@ -56,23 +62,6 @@ public class Boon : MonoBehaviour
         }
     }
     
-    private void ActivateBoonEffect(int effectIndex)
-    {
-        switch (effectIndex)
-        {
-            case 0: print("fireball jutsu");
-                break;
-            case 1: print("kagebunshin no jutsu");
-                break;
-            case 2:
-                print("fist");
-                break;
-            case 3:
-                print("raiken");
-                break;
-        }
-    }
-    
     private void RandomiseBoonItems()
     {
         BoonItem[] boonItems = new BoonItem[3];
@@ -89,10 +78,12 @@ public class Boon : MonoBehaviour
     
     private void InitButtons()
     {
+        SetBoonButtonsActive(true);
+        
         for (int i = 0; i < 3; i++)
         {
             BoonItem boonItem = _boonItems[i];
-            
+
             //Set info
             _buttons[i].Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
             _buttons[i].Find("descText").GetComponent<TextMeshProUGUI>().SetText(boonItem.description);
@@ -105,6 +96,46 @@ public class Boon : MonoBehaviour
             
             //Add new clickEvent
             buttonUI.ClickEvent(() => ActivateBoonEffect(boonItem.id) );
+            buttonUI.ClickEvent(() => CloseBoonSelection());
         }
+    }
+    
+        
+    private void ActivateBoonEffect(int effectIndex)
+    {
+        switch (effectIndex)
+        {
+            case 0: print("fireball jutsu");
+                break;
+            case 1: print("kagebunshin no jutsu");
+                break;
+            case 2:
+                print("fist");
+                break;
+            case 3:
+                print("raiken");
+                break;
+        }
+    }
+
+    public void RollBoons()
+    {
+        PopulateBoonItemsPool();
+        RandomiseBoonItems();
+        InitButtons();
+    }
+    
+    private void SetBoonButtonsActive(bool status)
+    {
+        for (int i = 0; i < _buttons.Length; i++)
+        {
+            _buttons[i].gameObject.SetActive(status);
+        }
+    }
+    
+    private void CloseBoonSelection()
+    {
+        SetBoonButtonsActive(false);
+        //open invi door
     }
 }

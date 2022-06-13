@@ -19,7 +19,7 @@ public class Room
     
     public static Transform FindSpawnPoint(Transform room)
     {
-        Transform playerSpawnPoint = room.Find("Entrance temp");
+        Transform playerSpawnPoint = room.Find("ref_Entrance");
         return playerSpawnPoint;
     }
 }
@@ -97,13 +97,9 @@ public class RoomSpawner : MonoBehaviour
             roomIndex = UnityEngine.Random.Range(0, westEntranceRooms.Count);
             room = westEntranceRooms[roomIndex];
         }
-        
-        
-        
+
         if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
         
-
-
         StartCoroutine(SpawnNewRoom(room));
     }
 
