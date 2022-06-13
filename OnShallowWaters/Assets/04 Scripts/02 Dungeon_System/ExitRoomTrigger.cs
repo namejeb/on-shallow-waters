@@ -1,17 +1,14 @@
 using UnityEngine;
 using System;
 
-<<<<<<<< HEAD:OnShallowWaters/Assets/04 Scripts/07 Shop_System/ChangeRoomTrigger.cs
-public class ChangeRoomTrigger : MonoBehaviour
-========
-public class ExitRoom : MonoBehaviour
->>>>>>>> development:OnShallowWaters/Assets/04 Scripts/07 Shop_System/ExitRoom.cs
+
+public class ExitRoomTrigger : MonoBehaviour
 {
     [SerializeField] private RoomEntranceDir nextRoomEntranceDir;
 
     private bool isTriggered = false;
 
-    public static event Action<RoomEntranceDir> OnChangeRoom;
+    public static event Action<RoomEntranceDir> OnExitRoom;
     
     private void OnTriggerEnter(Collider other)
     {
@@ -19,10 +16,10 @@ public class ExitRoom : MonoBehaviour
         {
             //if (isTriggered) return;
 
-            if (OnChangeRoom != null)
+            if (OnExitRoom != null)
             {
                 //isTriggered = true;
-                OnChangeRoom.Invoke(nextRoomEntranceDir);
+                OnExitRoom.Invoke(nextRoomEntranceDir);
             }
         }
     }
@@ -31,7 +28,8 @@ public class ExitRoom : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-           // playerEntered = false;
+            // playerEntered = false;
         }
     }
+    
 }
