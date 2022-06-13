@@ -5,6 +5,9 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Transform midBar;
     [SerializeField] private Transform frontBar;
 
+    private Camera _cam;
+    private Quaternion _camRot;
+    
     private void OnDestroy()
     {
         LeanTween.reset();
@@ -12,12 +15,14 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        Camera cam = Camera.main;
-        Quaternion camRot = cam.transform.rotation;
-        
-        transform.LookAt(transform.position + camRot * Vector3.forward, camRot * Vector3.up);
-        
-       // UpdateHealthBar(.5f);
+        _cam = Camera.main;
+        //UpdateHealthBar(.3f);
+    }
+
+    private void Update()
+    {
+        _camRot = _cam.transform.rotation;
+        transform.LookAt(transform.position + _camRot * Vector3.forward, _camRot * Vector3.up);
     }
 
     private void UpdateHealthBar(float percentage)

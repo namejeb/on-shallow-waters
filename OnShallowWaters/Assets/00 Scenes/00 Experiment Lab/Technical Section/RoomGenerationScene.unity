@@ -4580,11 +4580,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765290012}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &768330322 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6940109731748590179, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
-  m_PrefabInstance: {fileID: 1449288211}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &801893560
 GameObject:
   m_ObjectHideFlags: 0
@@ -6476,38 +6471,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6940109731748590204, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
   m_PrefabInstance: {fileID: 1449288211}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1368967218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768330322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e316826d5da42d1aa127712f40887f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 5
-  atk:
-    baseValue: 0
-  def:
-    baseValue: 0
-  atkUpgradeAmt: 3
-  defUpgradeAmt: 3
---- !u!114 &1368967219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768330322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e997c92d847ef024ca82cb88923fc43a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerStats: {fileID: 1368967218}
 --- !u!114 &1384527511 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5006584103747639530, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
@@ -6750,25 +6713,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6940109730752749265, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940109730952001429, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940109730952001429, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 6940109731748590179, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
       propertyPath: m_Name
       value: Player_Temp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940109731748590179, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6940109731748590204, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
       propertyPath: m_RootOrder
@@ -9617,41 +9564,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844949650}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1864998724 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6940109730952001429, guid: 38aa5eb0e287dc049b9dd24947bb1e82, type: 3}
-  m_PrefabInstance: {fileID: 1449288211}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1864998726
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1864998724}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &1864998730
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1864998724}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!1 &1909819238
 GameObject:
   m_ObjectHideFlags: 0
