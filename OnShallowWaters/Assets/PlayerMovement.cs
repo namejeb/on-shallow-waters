@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
-
     public Joystick joystick;
 
     public float speed = 6f;
     public float turnSmooth = 0.1f;
     float turnSmoothVelocity;
+
+
     void Update()
     {
         float horizontal = joystick.Horizontal;
@@ -23,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             controller.Move(direction * speed * Time.deltaTime);
-        } 
-
+        }
     }
 }
