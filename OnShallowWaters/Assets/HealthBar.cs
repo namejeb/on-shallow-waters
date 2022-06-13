@@ -25,7 +25,7 @@ public class HealthBar : MonoBehaviour
         transform.LookAt(transform.position + _camRot * Vector3.forward, _camRot * Vector3.up);
     }
 
-    private void UpdateHealthBar(float percentage)
+    public void UpdateHealthBar(float percentage)
     {
         LeanTween.scaleX(frontBar.gameObject, percentage, .01f);
         LeanTween.scaleX(midBar.gameObject, percentage, .3f);
