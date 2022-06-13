@@ -60,7 +60,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
         //print("Soul Shop not implemented yet");
         switch (itemType)
         {
-            //souls shop upgrades
+            //souls shop upgrades   
         }
     }
     
@@ -88,26 +88,26 @@ public class PlayerStats : CharacterStats, IShopCustomer
     
     
     //Testing
-    private void Update()
-    {
-        if (Input.GetKeyDown("t"))
-        {
-            AddModifier(Atk, 3);
-        }
-    
-        if (Input.GetKeyDown("y"))
-        {
-            AddModifier(Atk, 4);
-        }
-    
-        if (Input.GetKeyDown("r"))
-        {
-            RemoveModifier(Atk, 4);
-        }
-    
-        if (Input.GetKeyDown("f"))
-        {
-            print("Curr Atk: " + Atk.CurrentValue);
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown("t"))
+    //     {
+    //         AddModifier(Atk, 3);
+    //     }
+    //
+    //     if (Input.GetKeyDown("y"))
+    //     {
+    //         AddModifier(Atk, 4);
+    //     }
+    //
+    //     if (Input.GetKeyDown("r"))
+    //     {
+    //         RemoveModifier(Atk, 4);
+    //     }
+    //
+    //     if (Input.GetKeyDown("f"))
+    //     {
+    //         print("Curr Atk: " + Atk.CurrentValue);
+    //     }
+    // }
 }

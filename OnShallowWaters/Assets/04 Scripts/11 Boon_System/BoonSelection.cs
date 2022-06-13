@@ -2,13 +2,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using System;
-
+using UnityEngine.UI;
 
 public class BoonSelection : MonoBehaviour
 {
     [SerializeField] private BoonItemsSO boomItemsSo;
     [SerializeField] private float offsetX;
     
+    [Space][Space]
+    [SerializeField] private Image background;
+
     private List<BoonItem> boonItemsList = new List<BoonItem>();
     
     private Transform _container;
@@ -33,6 +36,8 @@ public class BoonSelection : MonoBehaviour
         _container = transform.Find("container");
         _boonButtonTemplate = _container.Find("boonButtonTemplate");
         _boonButtonTemplate.gameObject.SetActive(false);
+
+        background.enabled = false;
         
         //create 3 buttons at the start
         for (int i = 0; i < 3; i++)
@@ -123,6 +128,7 @@ public class BoonSelection : MonoBehaviour
 
     public void RollBoons()
     {
+        background.enabled = true;
         PopulateBoonItemsPool();
         RandomiseBoonItems();
         InitButtons();
@@ -139,6 +145,7 @@ public class BoonSelection : MonoBehaviour
     private void CloseBoonSelection()
     {
         SetBoonButtonsActive(false);
+        background.enabled = false;
         
         //open invi door
         if(OnSelectedBoon != null) OnSelectedBoon.Invoke();
