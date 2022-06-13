@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +18,17 @@ public class EnemyPooler : MonoBehaviour
 	
     
 	[SerializeField] private List<PoolInfo> listOfPool;
-	
+
+	#region Singleton
+	public static EnemyPooler Instance;
+
+	private void Awake()
+	{
+		Instance = this;
+		DontDestroyOnLoad(gameObject);
+	}
+	#endregion
+
 	void Start()
 	{
 		for (int i = 0; i < listOfPool.Count; i++)

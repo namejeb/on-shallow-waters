@@ -25,7 +25,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
     [SerializeField] private List<Transform> spawnPoints;
-    [SerializeField] private EnemyPooler enemyPooler;
+    private EnemyPooler _enemyPooler;
     private float _searchCountdown = 1f;
     private int _nextWave = 0;
     private bool _isEnd;
@@ -35,22 +35,17 @@ public class WaveSpawner : MonoBehaviour
 
     [Header("Game State")]
     public SpawnState state = SpawnState.NOTHING;
-	private DoorTrigger dt;
-
-    private void Awake()
-    {
-        dt = GetComponentInChildren<DoorTrigger>();
-    }
-
+    
     private void Start()
     {
-        waveCountdown = waveIntervalTime;
+        _enemyPooler = EnemyPooler.Instance;
+        waveCountdown = 0f;
     }
 
     private void Update()
     {
 		// Spawn start when player step into room
-        if (state == SpawnState.NOTHING && dt.doorTriggerd && !_isEnd)
+        if (state == SpawnState.NOTHING && !_isEnd)
         {
             state = SpawnState.WAITING;
         }
@@ -63,7 +58,6 @@ public class WaveSpawner : MonoBehaviour
                 if (_isEnd)
                 {
                     state = SpawnState.NOTHING;
-                    dt.SetWallStatus(false);
                 }
                 else
                     WaveCompleted(waves[_nextWave]);
@@ -135,7 +129,7 @@ public class WaveSpawner : MonoBehaviour
         int spawnIndex = Random.Range(0, spawnPoints.Count);
 
 		//Spawn enemy (Object Pooling)
-		Transform e = enemyPooler.GetFromPool(enemyType);
+		Transform e = _enemyPooler.GetFromPool(enemyType);
         e.gameObject.SetActive(true);
 		e.position = spawnPoints[spawnIndex].position;
     }
