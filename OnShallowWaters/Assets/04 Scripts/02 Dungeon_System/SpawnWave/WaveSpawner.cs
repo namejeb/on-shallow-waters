@@ -24,7 +24,7 @@ public class WaveSpawner : MonoBehaviour
     [Header("Wave Settings")]
     [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
-    [SerializeField] private List<Transform> spawnPoints;
+    private List<Transform> _spawnPoints = new List<Transform>();
     private EnemyPooler _enemyPooler;
     private float _searchCountdown = 1f;
     private int _nextWave = 0;
@@ -38,6 +38,12 @@ public class WaveSpawner : MonoBehaviour
     
     private void Start()
     {
+        _spawnPoints.Clear();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            _spawnPoints.Add(transform.GetChild(i));
+        }
+        
         _enemyPooler = EnemyPooler.Instance;
         waveCountdown = 0f;
     }
@@ -126,11 +132,11 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(EnemyPooler.EnemyPoolType enemyType)
     {
         // Random Spawn points
-        int spawnIndex = Random.Range(0, spawnPoints.Count);
+        int spawnIndex = Random.Range(0, _spawnPoints.Count);
 
 		//Spawn enemy (Object Pooling)
 		Transform e = _enemyPooler.GetFromPool(enemyType);
         e.gameObject.SetActive(true);
-		e.position = spawnPoints[spawnIndex].position;
+		e.position = _spawnPoints[spawnIndex].position;
     }
 }

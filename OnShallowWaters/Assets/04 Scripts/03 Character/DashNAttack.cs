@@ -4,6 +4,7 @@ public class DashNAttack : MonoBehaviour
 {
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private CharacterController controller;
+    [SerializeField] private Animator animator;
     
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
@@ -48,5 +49,11 @@ public class DashNAttack : MonoBehaviour
         _endPos = (transform.forward + transform.position) * range;
 
         _endTime = Time.time + dashDuration;
+    }
+
+    public void Attack()
+    {
+        
+        animator.SetTrigger("Attack");
     }
 }
