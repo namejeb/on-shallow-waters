@@ -2,25 +2,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Stat
-{
+public class Stat{
     [SerializeField] private int baseValue = 0;
 
     private List<int> _modifiers = new List<int>();
     
-    public int BaseValue 
-    { 
+    public int BaseValue { 
         get => baseValue; 
     }
 
-    public int CurrentValue
-    {
-        get
-        {
+    public int CurrentValue{
+        get{
             int currentValue = baseValue;
             
-            foreach (int modifier in _modifiers)
-            {
+            foreach (int modifier in _modifiers){
                 currentValue += modifier;
             }
 
@@ -28,24 +23,20 @@ public class Stat
         }
     }
     
-    public Stat(int baseValue)
-    {
+    public Stat(int baseValue){
         this.baseValue = baseValue;
     }
 
     //Main functions to modify stats
-    public void AddModifier(int modifier)
-    {
+    public void AddModifier(int modifier){
         _modifiers.Add(modifier);
     }
 
-    public void RemoveModifier(int modifier)
-    {
+    public void RemoveModifier(int modifier){
         _modifiers.Remove(modifier);
     }
 
-    public void ModifyBaseValue(int amount)
-    {
+    public void ModifyBaseValue(int amount){
         this.baseValue = amount;
     }
 }
