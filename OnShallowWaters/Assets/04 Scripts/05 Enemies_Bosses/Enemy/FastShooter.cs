@@ -1,38 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FastShooter : Enemies_Core{
-    private Color tintColor = Color.green;
-    public GameObject projectile;
-    public bool fireOnce;
+namespace _04_Scripts._05_Enemies_Bosses.Enemy {
+    public sealed class FastShooter : EnemiesCore{
+        public GameObject projectile;
+        public bool fireOnce;
 
-    void Awake(){
-        behaviour = core_stage.Move;
-    }
+        protected override void Attack(){
+            RaycastSingle();
+        }
 
-    protected override void Update(){
-        base.Update();
-        RaycastSingle();
-    }
-
-    private void RaycastSingle(){
-        Vector3 origin = transform.position;
-        Vector3 dirct = transform.forward;
-        float maxDist = 5f;
-
-        Debug.DrawRay(origin, dirct * maxDist, Color.red);
-        Ray ray = new Ray(origin, dirct);
-
-        bool result = Physics.Raycast(ray, out RaycastHit hitInfo, maxDist);
-
-        if(result && hitInfo.collider.CompareTag("Player")){
-            hitInfo.collider.GetComponent<Renderer>().material.color = tintColor;
-            if(fireOnce) return;
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        private void RaycastSingle(){
+            var transform1 = transform;
+            var position = transform1.position;
             
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Vector3 origin = position;
+            Vector3 direction = transform1.forward;
+            float maxDist = 5f;
+
+            Vector3 directionA = puppet.position - position;
+            float x = Random.Range(-5, 5);
+            float y = Random.Range(-5, 5);
+            Vector3 directionB = directionA + new Vector3(x, y, 0);
+
+            Ray ray = new Ray(origin, direction);
+            bool result = Physics.Raycast(ray, out RaycastHit hitInfo, maxDist);
+
+            if (!result || !hitInfo.collider.CompareTag("Player") || fireOnce) return;
+            GameObject currentBullet = Instantiate(projectile, transform.position, Quaternion.identity);
+            currentBullet.transform.forward = directionB.normalized;
             fireOnce = true;
         }
     }

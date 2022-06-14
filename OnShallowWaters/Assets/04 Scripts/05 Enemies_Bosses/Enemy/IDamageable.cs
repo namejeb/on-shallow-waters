@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IDamageable{
-    void Damage(int damageAmount);
+namespace _04_Scripts._05_Enemies_Bosses.Enemy {
+    public interface IDamageable{
+        void Damage(int damageAmount);
+    }
 }
