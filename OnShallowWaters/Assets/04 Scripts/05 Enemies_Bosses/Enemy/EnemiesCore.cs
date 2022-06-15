@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -15,10 +16,15 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
         [FormerlySerializedAs("_dist")] public float dist;
         public float detectRange = 10;
         public float attackRange = 5;
-    
+        //! Field of View
+        [Range(0, 30)]public float radius;
+        [Range(0, 360)] public float angle;
+        public LayerMask targetMask;
+        public LayerMask obstructionMask;
+
         //Enemies Stats
         public int coreHealth;
-        public float coreSpeed;
+        public float coreSpeed = 4;
         public float coreDamage;
         #endregion
 
@@ -32,6 +38,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
             rb3d = GetComponent<Rigidbody>();
             puppet = GameObject.Find("Puppet").transform;
             agent.speed = coreSpeed;
+            //StartCoroutine(FOVRoutine());
         }
 
         protected virtual void Update(){
@@ -56,8 +63,31 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
         }
 
         protected virtual void Detection(){
-            if(dist < detectRange * detectRange){
-                behaviour = CoreStage.Move;
+            FieldOfViewCheck();
+        }
+
+        // private IEnumerator FOVRoutine(){
+        //     WaitForSeconds wait = new WaitForSeconds(0.2f);
+        //     while (true) {
+        //         yield return wait;
+        //         FieldOfViewCheck();
+        //     }
+        // }
+
+        private void FieldOfViewCheck(){
+            Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
+
+            if (rangeChecks.Length != 0) {
+                Transform target = rangeChecks[0].transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+                if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2){
+                    float distanceToTarget = Vector3.Distance(transform.position, target.position);
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask)) {
+                        behaviour = CoreStage.Move;
+                        print("Found");
+                    }
+                }
             }
         }
 

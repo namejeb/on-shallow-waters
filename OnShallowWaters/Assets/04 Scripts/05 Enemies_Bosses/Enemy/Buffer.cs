@@ -4,7 +4,7 @@ using UnityEngine.SocialPlatforms.GameCenter;
 
 namespace _04_Scripts._05_Enemies_Bosses.Enemy {
     public class Buffer : EnemiesCore{
-        [SerializeField] private float radius;
+        [SerializeField] private float r;
         private bool _once;
 
         protected override void Attack(){
@@ -14,17 +14,12 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
         private void AreaBuff(){
             if (_once) return;
             _once = true;
-            Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, r);
             foreach (var hitCollider in colliders){
                 if (hitCollider.CompareTag("Enemy")){
                     hitCollider.GetComponent<EnemiesCore>().ReceivedBuff();
                 }
             }
-        }
-
-        private void OnDrawGizmos(){
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, radius);
         }
 
         // void OnCollisionEnter(Collision c){
