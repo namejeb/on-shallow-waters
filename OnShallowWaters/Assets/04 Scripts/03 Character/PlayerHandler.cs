@@ -4,9 +4,22 @@ using System.Collections;
 
 public class PlayerHandler : MonoBehaviour
 {
-    [SerializeField] private PlayerStats playerStats;
-    private PlayerMovement _playerMovement;
+    [SerializeField] private Transform cameraTarget;
+
+    private static PlayerStats _playerStats;
+    private static PlayerMovement _playerMovement;
     
+    public PlayerStats PlayerStats
+    {
+        get => _playerStats; 
+    }
+
+    public Transform CameraTarget
+    {
+        get => cameraTarget;
+    }
+
+    public static PlayerHandler Instance;
 
     private void OnDestroy()
     {
@@ -15,8 +28,12 @@ public class PlayerHandler : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+        
         _playerMovement = GetComponent<PlayerMovement>();
         RoomSpawner.OnResetPlayerPos += ResetPosition;
+
+        _playerStats = GetComponent<PlayerStats>();
     }
     
     public void SavePlayer()
@@ -28,7 +45,7 @@ public class PlayerHandler : MonoBehaviour
     public void LoadPlayer()
     {
         PlayerData.Load();
-        print(SaveDataMain.Current.PlayerData.PlayerLocation);
+       // print(SaveDataMain.Current.PlayerData.PlayerLocation);
     }
 
     private void ResetPosition(Transform spawnPoint)

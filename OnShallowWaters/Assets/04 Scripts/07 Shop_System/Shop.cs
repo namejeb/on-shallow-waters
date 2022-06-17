@@ -17,7 +17,7 @@ public class Shop : MonoBehaviour
         _shopButtonTemplate = _container.Find("gShopButtonTemplate");
         _shopButtonTemplate.gameObject.SetActive(false);
 
-        _shopCustomer = PlayerStats.Instance;
+        _shopCustomer = PlayerHandler.Instance.PlayerStats;
     }
     
     protected void CreateShopButton(ShopItem.ItemType itemType, CurrencyType currencyType, Sprite itemSprite, string itemName, int itemCost, int positionIndex)

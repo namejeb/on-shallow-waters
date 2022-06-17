@@ -6,12 +6,6 @@ public class PlayerStats : CharacterStats, IShopCustomer
     [SerializeField] private int atkUpgradeAmt = 3;
     [SerializeField] private int defUpgradeAmt = 3;
     
-    public static PlayerStats Instance;
-    private void Awake()
-    {
-        Instance = this;
-    }
-    
     public override void Die()
     {
         //game end logics
