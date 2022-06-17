@@ -65,7 +65,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
         //print("Soul Shop not implemented yet");
         switch (itemType)
         {
-            //souls shop upgrades
+            case ShopItem.ItemType.KopiOPeng: UpgradeAtk(); break;
         }
     }
     
