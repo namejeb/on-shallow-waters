@@ -6,6 +6,7 @@ public class SpawnBoonTrigger : MonoBehaviour
 
     public void Spawn()
     {
-        Instantiate(boonTrigger.gameObject, PlayerStats.Instance.transform.position + new Vector3(0f, 0f, 3f), Quaternion.identity);
+        PlayerStats playerStats = PlayerHandler.Instance.PlayerStats;
+        Instantiate(boonTrigger.gameObject, playerStats.transform.position + new Vector3(0f, 0f, 3f), Quaternion.identity);
     }
 }

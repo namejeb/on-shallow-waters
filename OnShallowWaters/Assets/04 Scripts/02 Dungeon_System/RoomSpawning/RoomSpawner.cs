@@ -114,6 +114,8 @@ public class RoomSpawner : MonoBehaviour
         Transform roomTransform = room.roomPrefab.transform;
         _prevRoom = Instantiate(roomTransform, roomTransform.position, roomTransform.rotation);
         
+        //if(OnSetCameraBounds != null) OnSetCameraBounds.Invoke();
+        
         //Set player position to spawn point
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
         
