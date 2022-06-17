@@ -2,12 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Stat
+public class Stat 
 {
-    [SerializeField] private int baseValue = 0;
-
+    [SerializeField] private int baseValue = 1;
     private List<int> _modifiers = new List<int>();
-    
+
+    [Space][Space]
+    [Header("Caps:")]
+    [SerializeField] private bool hasCap;
+    [SerializeField] [Range(1f, 20f)] private float cap = 1;
+
+    public int PrevModifierByBoon { get; set; }
+
     public int BaseValue 
     { 
         get => baseValue; 
@@ -17,11 +23,12 @@ public class Stat
     {
         get
         {
+            
             int currentValue = baseValue;
             
-            foreach (int modifier in _modifiers)
+            for (int i = 0; i < _modifiers.Count; i++)
             {
-                currentValue += modifier;
+                currentValue += _modifiers[i];
             }
 
             return currentValue;
@@ -36,6 +43,14 @@ public class Stat
     //Main functions to modify stats
     public void AddModifier(int modifier)
     {
+        bool isOverCap = (this.CurrentValue / (float) this.baseValue) > cap;
+        
+        if (hasCap && isOverCap)
+        {
+            Debug.LogError("exceed cap");
+            return;
+        }
+        
         _modifiers.Add(modifier);
     }
 
@@ -46,6 +61,14 @@ public class Stat
 
     public void ModifyBaseValue(int amount)
     {
+        bool isOverCap = (this.baseValue + amount / baseValue) > cap;
+
+        if (hasCap && isOverCap)
+        {
+            Debug.LogError("base cannot be over cap");
+            return;
+        }
+        
         this.baseValue = amount;
     }
 }

@@ -6,6 +6,8 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] private int hp = 5;
     protected int _currHp;
     
+    [Space][Space]
+    [Header("Stats:")]
     [SerializeField] private Stat atk;
     [SerializeField] private Stat def;
     
