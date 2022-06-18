@@ -21,7 +21,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
     public Stat CritDamage { get => critDamage; }
     public Stat MovementSpeed { get => movementSpeed; }
     
-    public override void Die()
+    protected override void Die()
     {
         //game end logics
     }
@@ -100,7 +100,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
     // {
     //     if (Input.GetKeyDown("t"))
     //     {
-    //         //AddModifier(Atk, 3);
+    //         AddModifier(Atk, 3);
     //         //UpgradeAtk();
     //     }
     //

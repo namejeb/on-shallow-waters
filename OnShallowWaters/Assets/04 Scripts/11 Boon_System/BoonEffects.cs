@@ -36,6 +36,8 @@ public class BoonEffects : MonoBehaviour
     {
         UpgradeStat(_playerStats.Atk, atkIncreaseAmounts, _atkTracker);
         _atkTracker++;
+        
+        print("atk:" + _playerStats.Atk.CurrentValue);
     }
 
     public void UpgradeAtkSpd()

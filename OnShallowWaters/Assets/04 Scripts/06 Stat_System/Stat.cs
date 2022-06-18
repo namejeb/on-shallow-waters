@@ -5,7 +5,9 @@ using UnityEngine;
 public class Stat 
 {
     [SerializeField] private int baseValue = 1;
-    private List<int> _modifiers = new List<int>();
+    
+    //[HideInInspector]
+    [SerializeField] private List<int> modifiers =  new List<int>();
 
     [Space][Space]
     [Header("Caps:")]
@@ -23,14 +25,13 @@ public class Stat
     {
         get
         {
-            
             int currentValue = baseValue;
             
-            for (int i = 0; i < _modifiers.Count; i++)
+            for (int i = 0; i < modifiers.Count; i++)
             {
-                currentValue += _modifiers[i];
-            }
-
+                currentValue += modifiers[i];
+            }   
+            
             return currentValue;
         }
     }
@@ -51,12 +52,12 @@ public class Stat
             return;
         }
         
-        _modifiers.Add(modifier);
+        modifiers.Add(modifier);
     }
 
     public void RemoveModifier(int modifier)
     {
-        _modifiers.Remove(modifier);
+        modifiers.Remove(modifier);
     }
 
     public void ModifyBaseValue(int amount)

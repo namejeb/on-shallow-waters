@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -9,13 +8,10 @@ public class CharacterStats : MonoBehaviour
     [Space][Space]
     [Header("Stats:")]
     [SerializeField] private Stat atk;
-    [SerializeField] private Stat def;
     
-    public static Dictionary<Stat, int> statsDict = new Dictionary<Stat, int>();
-
     public int Hp { get; protected set ; }
     public Stat Atk { get => atk; }
-    public Stat Def { get => def; }
+    
     
     public float CurrHpPercentage
     {
@@ -30,7 +26,6 @@ public class CharacterStats : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         if (_currHp - dmg < 0) return;  //prevent dying again
-        
         _currHp -= dmg;
         
         if (_currHp <= 0)
@@ -40,7 +35,7 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    public virtual void Die()
+    protected virtual void Die()
     {
         // implement different die functionalities      
     }
