@@ -35,7 +35,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
         if (currencyType == CurrencyType.GOLD)
         {
             HandleGoldShopUpgrades(itemType);
-        }
+        } 
         else
         {
             HandleSoulShopUpgrades(itemType);
