@@ -44,7 +44,6 @@ public class DashNAttack : MonoBehaviour
 
     public void ActivateDash()
     {
- 
         _isDash = true;
         playerMovement.enabled = false;
         

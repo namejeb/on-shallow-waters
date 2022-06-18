@@ -54,10 +54,12 @@ MonoBehaviour:
     enemies:
     - enemy: 0
       count: 5
+    totalEnemies: 0
   - name: wave2
     enemies:
     - enemy: 0
       count: 5
+    totalEnemies: 0
   state: 0
 --- !u!1 &252047614
 GameObject:
@@ -146,6 +148,7 @@ MonoBehaviour:
     enemies:
     - enemy: 0
       count: 5
+    totalEnemies: 0
   state: 0
 --- !u!1 &5015392656641273832
 GameObject:
@@ -817,6 +820,10 @@ PrefabInstance:
     - target: {fileID: 6304674131379979418, guid: 43e0759992639f14a87521f68c816654, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6304674131379979419, guid: 43e0759992639f14a87521f68c816654, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6304674131379979420, guid: 43e0759992639f14a87521f68c816654, type: 3}
       propertyPath: m_Name
