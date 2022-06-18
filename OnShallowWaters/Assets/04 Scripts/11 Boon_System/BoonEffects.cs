@@ -1,8 +1,7 @@
 using UnityEngine;
 
 
-public class BoonEffects : MonoBehaviour
-{
+public class BoonEffects : MonoBehaviour {
     private PlayerStats _playerStats;
     
     [Header("Increase Amounts: ")]
@@ -17,22 +16,24 @@ public class BoonEffects : MonoBehaviour
     
     [SerializeField] private float[] critDamageIncreaseAmounts = new float[3];
     private int _critDamageTracker;
-
+    
     private void OnValidate()
     {
         for (int i = 0; i < 3; i++)
         {
             atkIncreaseAmounts[i] = Mathf.Clamp(atkIncreaseAmounts[i], 1, float.MaxValue);
+            atkSpeedIncreaseAmounts[i] = Mathf.Clamp(atkSpeedIncreaseAmounts[i], 1, float.MaxValue);
+            critChanceIncreaseAmounts[i] = Mathf.Clamp(critChanceIncreaseAmounts[i], 1, float.MaxValue);
+            critDamageIncreaseAmounts[i] = Mathf.Clamp(critDamageIncreaseAmounts[i], 1, float.MaxValue);
         }
     }
-
     private void Start()
     {
         _playerStats = PlayerHandler.Instance.PlayerStats;
     }
     
     //------Combat------
-    public void UpgradeAtk()
+    public void UpgradeAtk()                        //---5
     {
         UpgradeStat(_playerStats.Atk, atkIncreaseAmounts, _atkTracker);
         _atkTracker++;
@@ -40,62 +41,56 @@ public class BoonEffects : MonoBehaviour
         print("atk:" + _playerStats.Atk.CurrentValue);
     }
 
-    public void UpgradeAtkSpd()
+    public void UpgradeAtkSpd()                     //---5
     {
         UpgradeStat(_playerStats.AtkSpeed, atkSpeedIncreaseAmounts, _atkSpeedTracker);
         _atkSpeedTracker++;
     }
     
-    public void UpgradeCritDamage()
+    public void UpgradeCritDamage()                 //---5
     {
         UpgradeStat(_playerStats.CritDamage, critDamageIncreaseAmounts, _critDamageTracker);
         _critDamageTracker++;
     }
     
-    public void UpgradeCritChance()
+    public void UpgradeCritChance()                 //---5
     {
         UpgradeStat(_playerStats.CritChance, critChanceIncreaseAmounts, _critChanceTracker);
         _critChanceTracker++;
     }
-
-    //Last heavy attack becomes AOE (or bigger range)
-    public void LastHeavyAtkAOE()
-    {
-        
-    }
-
+    
     //Increase 5% damage every time you attack
-    public void SequentialDmgIncrease()
+    public void SequentialDmgIncrease()             //---2
     {
         
     }
 
     //Deal dmg when enemy's armor break
-    public void DmgWhenArmorBreak()
+    public void DmgWhenArmorBreak()                 //---4
     {
         
     }
 
     //Deal 50% more dmg to enemy's armor
-    public void DamageToArmorIncrease()
+    public void DamageToArmorIncrease()             //---3 
     {
         
     }
     
     //Deal 30% more dmg when there is only one enemy
-    public void SingleEnemyDmgIncrease()
+    public void SingleEnemyDmgIncrease()            //---3 
     {
         
     }
     
     //Deal 25% more dmg when you are 40% hp or lower
-    public void NearDeathDmgIncrease()
+    public void NearDeathDmgIncrease()              //---2
     {
         
     }
     
     //Undamaged enemies will receive 100% more damage
-    public void FirstTimeDmgBonus()
+    public void FirstTimeDmgBonus()                 //---3 
     {
         
     }
@@ -103,25 +98,25 @@ public class BoonEffects : MonoBehaviour
     //------Survival------
     
     //Increase max hp by 25
-    public void IncreaseMaxHp()
+    public void IncreaseMaxHp()                     //---5 
     {
         
     }
 
     //Increase speed by 20%/50%/70%
-    public void IncreaseMovementSpeed()
+    public void IncreaseMovementSpeed()             //---5 
     {
         
     }
 
     //Increase dodge chance 10%/20%/25%
-    public void IncreaseDodgeChance()           //---\
+    public void IncreaseDodgeChance()               //---\
     {
         
     }
 
     //Reduce damage taken by 10%/20%/30%
-    public void ReduceDamageTaken()
+    public void ReduceDamageTaken()                 //---2
     {
         
     }
@@ -133,19 +128,19 @@ public class BoonEffects : MonoBehaviour
     }
 
     //Resist 20%/50%
-    public void ReduceDOTDmg()
+    public void ReduceDOTDmg()                  //---\
     {
         
     }
 
     //Reduce 50% dmg taken while 30% hp or lower
-    public void ReduceDamageWhenHpLow()
+    public void ReduceDamageWhenHpLow()         //---2
     {
         
     }
 
     //Killing an enemy heals 10hp
-    public void LifeSteal()
+    public void LifeSteal()                     //---4 (* art asset)
     {
         
     }
@@ -153,48 +148,47 @@ public class BoonEffects : MonoBehaviour
     
     //------Bonus------
     //Increase souls received by 30%/50%/70%
-    public void GetMoreSouls()
+    public void GetMoreSouls()              //---4
     {
         
     }
 
     //Increase gold received by 30%/50%/70
-    public void GetMoreGold()
+    public void GetMoreGold()               //---4
     {
         
     }
 
     //Shop 15%/25% discount
-    public void ShopDiscount()                           //---\
+    public void ShopDiscount()                           //---1 (* art asset)
     {
         
     }
 
     //30% chance to encounter a treasure chest
-    public void IncreaseTreasureChestChance()            //---x
+    public void IncreaseTreasureChestChance()            //---\
     {
         
     }
 
     //20% chance to encounter a challenge statue
-    public void IncreaseChallengeStatueChance()         //---x
+    public void IncreaseChallengeStatueChance()         //---\
     {
         
     }
     
     //Deal bonus damage based on amount of souls you got
-    public void BonusDmgBasedOnSouls()
+    public void BonusDmgBasedOnSouls()                  //---3
     {
         
     }
     
     //20% increase spawning coin vase
-    public void IncreaseCoinVaseChance()
+    public void IncreaseCoinVaseChance()            //---\
     {
         
     }
 
-    
     
     //Utility
     private void UpgradeStat(Stat stat, float[] increaseAmounts, int tracker)
