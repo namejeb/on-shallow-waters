@@ -12,7 +12,6 @@ public class PlayerStats : CharacterStats, IShopCustomer
     
     [Space][Space]
     [Header("Upgrade Amount:")]
-    //Upgrade amount
     [SerializeField] private int atkUpgradeAmt = 3;
     [SerializeField] private int defUpgradeAmt = 3;
     
