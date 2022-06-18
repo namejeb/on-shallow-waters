@@ -58,6 +58,8 @@ public class DashNAttack : MonoBehaviour
     {
         animator.SetTrigger("Attack");
 
+        
+        //temp damage to test WaveSpawner, will remove
         Collider[] enemies = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
 
         for (int i = 0; i < enemies.Length; i++)
