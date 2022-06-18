@@ -17,13 +17,18 @@ public class CharacterStats : MonoBehaviour
     {
         get => (float) _currHp / hp;
     }
+
+    private void OnDisable()
+    {
+        _currHp = hp;
+    }
     
     private void Awake()
     {
         _currHp = hp;
     }
     
-    public void TakeDamage(int dmg)
+    protected void TakeDamage(int dmg)
     {
         if (_currHp - dmg < 0) return;  //prevent dying again
         _currHp -= dmg;

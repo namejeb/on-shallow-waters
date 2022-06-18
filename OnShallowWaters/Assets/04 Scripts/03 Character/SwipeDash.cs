@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SwipeDash : MonoBehaviour
@@ -7,8 +5,7 @@ public class SwipeDash : MonoBehaviour
 
     [SerializeField] private float swipeRange;
     [SerializeField] private float tapRange;
-
-    [SerializeField] private CharacterController controller;
+    
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Animator animator;
     private DashNAttack dna;
@@ -51,14 +48,7 @@ public class SwipeDash : MonoBehaviour
                     dna.ActivateDash();
                     animator.SetBool("Dash", false);
                 }
-
-                
             }
-            
-
         }
-
     }
-
-
 }

@@ -99,7 +99,7 @@ public class RoomSpawner : MonoBehaviour
         }
 
         if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
-        
+        room = southEntranceRooms[1];
         StartCoroutine(SpawnNewRoom(room));
     }
 
@@ -113,9 +113,7 @@ public class RoomSpawner : MonoBehaviour
         //Spawn new room
         Transform roomTransform = room.roomPrefab.transform;
         _prevRoom = Instantiate(roomTransform, roomTransform.position, roomTransform.rotation);
-        
-        //if(OnSetCameraBounds != null) OnSetCameraBounds.Invoke();
-        
+
         //Set player position to spawn point
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
         

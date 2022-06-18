@@ -3,12 +3,14 @@ using UnityEngine;
 public class DashNAttack : MonoBehaviour
 {
     [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private CharacterController controller;
     [SerializeField] private Animator animator;
     
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
     [SerializeField] private float speed;
+
+    [SerializeField] private LayerMask enemyLayer;
+    
     
     private bool _isDash = false;
  
@@ -29,7 +31,7 @@ public class DashNAttack : MonoBehaviour
 
     private void Dash()
     {
-        controller.Move((_endPos - _startPos) * speed * Time.deltaTime);
+        playerMovement.Move((_endPos - _startPos), speed);
 
         if (Time.time > _endTime)
         {
@@ -42,6 +44,7 @@ public class DashNAttack : MonoBehaviour
 
     public void ActivateDash()
     {
+ 
         _isDash = true;
         playerMovement.enabled = false;
         
@@ -53,7 +56,16 @@ public class DashNAttack : MonoBehaviour
 
     public void Attack()
     {
-        
         animator.SetTrigger("Attack");
+
+        Collider[] enemies = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (enemies[i] != null)
+            {
+                enemies[i].GetComponent<EnemyHandler>().Damage(5);
+            }
+        }
     }
 }

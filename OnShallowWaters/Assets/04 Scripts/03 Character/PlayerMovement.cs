@@ -1,8 +1,9 @@
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
     public Joystick joystick;
 
     public float speed = 6f;
@@ -10,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothVelocity;
 
 
-    void Update()
+    private void Update()
     {
         float horizontal = joystick.Horizontal;
         float vertical = joystick.Vertical;
@@ -21,7 +22,13 @@ public class PlayerMovement : MonoBehaviour
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            controller.Move(direction * speed * Time.deltaTime);
+
+            Move(direction, speed);
         }
+    }
+
+    public void Move(Vector3 direction, float speed)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, direction * 100, speed * Time.deltaTime);
     }
 }

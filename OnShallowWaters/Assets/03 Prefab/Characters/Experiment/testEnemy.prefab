@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 202274338452503838}
   - component: {fileID: 5503540064776744071}
   - component: {fileID: 157487083573309903}
-  m_Layer: 0
+  - component: {fileID: 489212650485867900}
+  m_Layer: 6
   m_Name: testEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,10 +112,29 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &489212650485867900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108699635585412751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 031cea885d70afa45918f49f78957116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 15
+  atk:
+    baseValue: 0
+    modifiers: 
+    hasCap: 0
+    cap: 0
+  healthBar: {fileID: 4293882905830535436}
 --- !u!1001 &6206596605425640098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -189,3 +209,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6260325012609432350, guid: 028b5588413b4df43aef4b36fb1b02ee, type: 3}
   m_PrefabInstance: {fileID: 6206596605425640098}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4293882905830535436 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7905133986373751726, guid: 028b5588413b4df43aef4b36fb1b02ee, type: 3}
+  m_PrefabInstance: {fileID: 6206596605425640098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c816af4803d78548b5df441397bb129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

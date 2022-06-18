@@ -1,7 +1,7 @@
 
 public static class GameSettings
 {
-    private static InputMode _mode = InputMode.BUTTONLESS;
+    private static InputMode _mode = InputMode.BUTTONS;
 
     public static InputMode InputMode
     {
