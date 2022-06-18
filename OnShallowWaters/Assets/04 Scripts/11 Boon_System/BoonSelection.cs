@@ -6,13 +6,15 @@ using UnityEngine.UI;
 
 public class BoonSelection : MonoBehaviour
 {
+    [SerializeField] private BoonEffects boonEffects;
+    
+    
+    [Space][Space]
     [SerializeField] private BoonItemsSO boomItemsSo;
     [SerializeField] private float offsetX;
     
     [Space][Space]
     [SerializeField] private Image background;
-    [SerializeField] private TextMeshProUGUI testClickFunc;
-    
 
     private List<BoonItem> boonItemsList = new List<BoonItem>();
     
@@ -107,7 +109,6 @@ public class BoonSelection : MonoBehaviour
             //Add new clickEvent
             buttonUI.ClickEvent(() => ActivateBoonEffect(boonItem.id) );
             buttonUI.ClickEvent(() => CloseBoonSelection());
-            buttonUI.ClickEvent(() => UpdateText(boonItem.title, boonItem.description));
         }
     }
     
@@ -116,16 +117,10 @@ public class BoonSelection : MonoBehaviour
     {
         switch (effectIndex)
         {
-            case 0: print("fireball jutsu");
-                break;
-            case 1: print("kagebunshin no jutsu");
-                break;
-            case 2:
-                print("fist");
-                break;
-            case 3:
-                print("raiken");
-                break;
+            case 0: boonEffects.UpgradeAtk();         break;
+            case 1: boonEffects.UpgradeAtkSpd();      break;
+            case 2: boonEffects.UpgradeCritChance();  break;
+            case 3: boonEffects.UpgradeCritDamage();  break;
         }
     }
 
@@ -154,8 +149,4 @@ public class BoonSelection : MonoBehaviour
         if(OnSelectedBoon != null) OnSelectedBoon.Invoke();
     }
 
-    private void UpdateText(string title, string desc)
-    {
-        testClickFunc.text = $"Chosen => {title}: {desc}";
-    }
 }

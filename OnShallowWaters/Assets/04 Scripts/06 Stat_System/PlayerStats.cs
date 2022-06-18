@@ -3,10 +3,24 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats, IShopCustomer
 {
+ 
+    [SerializeField] private Stat atkSpeed;
+    [SerializeField] private Stat critChance;
+    [SerializeField] private Stat critDamage;
+    [SerializeField] private Stat movementSpeed;
+    
+    
+    [Space][Space]
+    [Header("Upgrade Amount:")]
     [SerializeField] private int atkUpgradeAmt = 3;
     [SerializeField] private int defUpgradeAmt = 3;
     
-    public override void Die()
+    public Stat AtkSpeed { get => atkSpeed; }
+    public Stat CritChance { get => critChance; }
+    public Stat CritDamage { get => critDamage; }
+    public Stat MovementSpeed { get => movementSpeed; }
+    
+    protected override void Die()
     {
         //game end logics
     }
@@ -18,8 +32,6 @@ public class PlayerStats : CharacterStats, IShopCustomer
     
     public void BoughtItem(ShopItem.ItemType itemType, CurrencyType currencyType)
     {
-        //print("Buying item: " + itemType);
-
         if (currencyType == CurrencyType.GOLD)
         {
             HandleGoldShopUpgrades(itemType);
@@ -45,7 +57,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
     {
         switch (itemType)
         {
-            case ShopItem.ItemType.ATK: UpgradeAtk(); break;
+            //case ShopItem.ItemType.ATK: UpgradeAtk(); break;
         }
     }
 
@@ -58,13 +70,14 @@ public class PlayerStats : CharacterStats, IShopCustomer
         }
     }
     
-    private void UpgradeAtk()
-    {
-        int newValue = Atk.BaseValue + atkUpgradeAmt;
-        Atk.ModifyBaseValue(newValue);
-        
-       // save to file
-    }
+    // private void UpgradeAtk()
+    // {
+    //     int newValue = Atk.BaseValue + atkUpgradeAmt;
+    //     Atk.ModifyBaseValue(newValue);
+    //     
+    //    // save to file
+    // }
+    
     
     
     // public void UpgradeDef()
@@ -82,11 +95,12 @@ public class PlayerStats : CharacterStats, IShopCustomer
     
     
     //Testing
-    // private void Update()
+    //  private void Update()
     // {
     //     if (Input.GetKeyDown("t"))
     //     {
     //         AddModifier(Atk, 3);
+    //         //UpgradeAtk();
     //     }
     //
     //     if (Input.GetKeyDown("y"))
@@ -103,5 +117,5 @@ public class PlayerStats : CharacterStats, IShopCustomer
     //     {
     //         print("Curr Atk: " + Atk.CurrentValue);
     //     }
-    // }
+    // } 
 }
