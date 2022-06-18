@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class ShopItem 
+public class SoulShopItem
 {
-    public enum ItemType {
-        HP,
-        ATK,
-        DEF,
+    public enum ItemType
+    {
         HealthPotion,
         SomePotion,
         BooBooPotion,
@@ -21,9 +19,6 @@ public class ShopItem
         switch (itemType)
         {
             default:
-            case ItemType.HP:   return 30;
-            case ItemType.ATK:  return 20;
-            case ItemType.DEF:  return 10;
             case ItemType.HealthPotion: return 30;
             case ItemType.SomePotion: return 20;
             case ItemType.BooBooPotion: return 10;
@@ -42,9 +37,7 @@ public class ShopItem
         switch (itemType)
         {
             default:
-            case ItemType.HP:   return ga.gShop_Hp;
-            case ItemType.ATK:  return ga.gShop_Atk;
-            case ItemType.DEF:  return ga.gShop_Def;
+         
             case ItemType.HealthPotion: return ga.gShop_Hp;
             case ItemType.SomePotion: return ga.gShop_Hp;
             case ItemType.BooBooPotion: return ga.gShop_Hp;
