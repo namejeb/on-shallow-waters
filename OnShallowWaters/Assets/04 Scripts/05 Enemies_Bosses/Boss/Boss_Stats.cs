@@ -12,14 +12,16 @@ public class Boss_Stats : CharacterStats, IDamageable
 
     private Boss_FSM _bossFsm;
 
-    private void Awake()
+    private new void Awake()
     {
         _bossFsm = GetComponent<Boss_FSM>();
+        base.Awake();
     }
     
     private void Start()
     {
         currArmour = maxArmour;
+        print($"{currHp}/{MaxHp}");
     }
 
     public void Damage(int damageAmount)
