@@ -23,7 +23,7 @@ public class OpenWeaponMenu : MonoBehaviour
     [SerializeField] private MeshFilter modelMesh;
 
     private float _maxVal = 10f;
-    
+
     public void OpenMenu()
     {
         menu.gameObject.SetActive(true);
@@ -31,7 +31,7 @@ public class OpenWeaponMenu : MonoBehaviour
 
     public void GetCutlass()
     {
-        //GetWeaponElements(0);
+        // GetWeaponElements(0);
         LoadWepScene();
     }
 
