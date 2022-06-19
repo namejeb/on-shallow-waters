@@ -17,7 +17,7 @@ public class Boss1_SlamGround : Boss_Move3
         {
             boss.shootCount += 1;
             boss.inStateTimer = 0;
-            boss.ShootProjectile2(boss.shootPrefab[1], boss.aimDirection2);
+            boss.ShootProjectile2(boss.shootPrefab[1], boss.aimDirection[1]);
         }
         else if (boss.shootCount >= 1)
         {

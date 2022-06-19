@@ -251,7 +251,9 @@ GameObject:
   - component: {fileID: 281077321}
   - component: {fileID: 281077320}
   - component: {fileID: 281077324}
+  - component: {fileID: 281077329}
   - component: {fileID: 281077326}
+  - component: {fileID: 281077328}
   - component: {fileID: 281077325}
   - component: {fileID: 281077327}
   m_Layer: 0
@@ -396,24 +398,28 @@ MonoBehaviour:
   bam: 0
   target: {fileID: 1735247762}
   inStateTimer: 0
-  meleeHitbox: {fileID: 820261008}
+  rotationSpeed: 360
+  meleeHitbox:
+  - {fileID: 820261008}
   chaseMinDistance: 2
   chaseTimeout: 5
   attackDistOffset: 0.5
   speed: 5
   isAttacking: 0
   isAttackFin: 0
-  aimDirection: {fileID: 359020404}
-  aimDirection2: {fileID: 2128173278}
+  aimDirection:
+  - {fileID: 359020404}
+  - {fileID: 2128173278}
   shootPrefab:
   - {fileID: 1819356346454786101, guid: fc1a410727257834c91d3b7aa94e4b52, type: 3}
   - {fileID: 1218389041355205325, guid: 3d4e888e94a9aa449b063da027daa715, type: 3}
-  rotationSpeed: 360
   shootCount: 0
   shootInterval: 1.5
   restTimeout: 3
-  dashTimeout: 1
-  dashSpeed: 30
+  stuntTimeout: 5
+  value:
+  - 0
+  - 0
 --- !u!95 &281077327
 Animator:
   serializedVersion: 4
@@ -434,6 +440,41 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &281077328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281077319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff91341b9f79b1248bed3071802ccbbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashTimeout: 3
+  dashSpeed: 0
+--- !u!114 &281077329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281077319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89d99b6be8f1054ba8f9753dc217daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  atk:
+    baseValue: 15
+    modifiers: 000000000000000000000000
+    hasCap: 0
+    cap: 1
+  maxArmour: 100
+  currArmour: 0
+  armState: 0
 --- !u!1 &336270006
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,16 +909,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveCountdown: 0
   waveIntervalTime: 3
-  spawnPoints:
-  - {fileID: 1645199668}
-  - {fileID: 1850369630}
-  - {fileID: 1872418552}
-  - {fileID: 1646906704}
-  - {fileID: 451768420}
-  - {fileID: 397805699}
-  - {fileID: 2120602001}
-  - {fileID: 122256348}
-  enemyPooler: {fileID: 525766554}
   waves:
   - name: Wave1
     enemies:
@@ -885,18 +916,21 @@ MonoBehaviour:
       count: 3
     - enemy: 1
       count: 2
+    totalEnemies: 0
   - name: Wave2
     enemies:
     - enemy: 0
       count: 1
     - enemy: 1
       count: 1
+    totalEnemies: 0
   - name: Wave3
     enemies:
     - enemy: 0
       count: 5
     - enemy: 1
       count: 6
+    totalEnemies: 0
   state: 0
 --- !u!4 &525766553
 Transform:

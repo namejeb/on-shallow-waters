@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MeleeHitbox : MonoBehaviour
 {
-    [SerializeField] private int damage;
+    public int damage;
 
     private void OnTriggerEnter(Collider col)
     {
