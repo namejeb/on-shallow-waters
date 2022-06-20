@@ -23,7 +23,7 @@ public class Boss1_Config : MonoBehaviour
         {
             _percentage -= 0.3f;
             _bs.armState = true;
-            Debug.Log(_bs.CurrHpPercentage + " Dectected 1");
+            Debug.Log(_bs.CurrHpPercentage + "Dectected 1");
         }
     }
 }

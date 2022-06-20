@@ -10,6 +10,8 @@ public class Boss_Stats : CharacterStats, IDamageable
     public int currArmour;
     public bool armState;
 
+    public int hhp;
+
     private Boss_FSM _bossFsm;
 
     private new void Awake()
@@ -21,7 +23,22 @@ public class Boss_Stats : CharacterStats, IDamageable
     private void Start()
     {
         currArmour = maxArmour;
-        print($"{currHp}/{MaxHp}");
+    }
+
+    private void Update()
+    {
+        //just for debug purposes, will be removed
+        if (hhp != currHp)
+        {
+            currHp = hhp;
+        }
+
+        if (currArmour <= 0 && armState)
+        {
+            currArmour = 0;
+            armState = false;
+            _bossFsm.SetState(_bossFsm.stuntState);
+        }
     }
 
     public void Damage(int damageAmount)
@@ -31,12 +48,6 @@ public class Boss_Stats : CharacterStats, IDamageable
             if (currArmour > 0)
             {
                 currArmour -= damageAmount;    
-            }
-            else
-            {
-                currArmour = 0;
-                armState = false;
-                _bossFsm.SetState(_bossFsm.stuntState);
             }
         }
         else

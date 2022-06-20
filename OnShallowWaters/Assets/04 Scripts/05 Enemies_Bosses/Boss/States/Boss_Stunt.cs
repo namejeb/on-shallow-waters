@@ -6,8 +6,7 @@ public class Boss_Stunt : Boss_BaseState
 {
     public override void EnterState(Boss_FSM boss)
     {
-        Debug.Log("Boss1_Rest");
-        boss.Agent.enabled = true;
+        boss.Agent.enabled = false;
         // play stunt animation
         Debug.Log("Dectected 2");
     }
@@ -18,7 +17,7 @@ public class Boss_Stunt : Boss_BaseState
         if (boss.inStateTimer > boss.stuntTimeout)
         {
             boss.inStateTimer = 0;
-            boss.Agent.enabled = false;
+            boss.Agent.enabled = true;
             boss.BossRandomState();
         }
     }
