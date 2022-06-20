@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _04_Scripts._05_Enemies_Bosses;
 using _04_Scripts._05_Enemies_Bosses.Enemy;
 using UnityEngine;
 

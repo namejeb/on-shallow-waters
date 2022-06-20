@@ -1,15 +1,19 @@
 using UnityEngine;
 
-namespace _04_Scripts._05_Enemies_Bosses.Enemy {
+namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
     public sealed class FastShooter : EnemiesCore{
         public GameObject projectile;
         public bool fireOnce;
+
+        protected override void Movement(){
+            
+        }
 
         protected override void Attack(){
             RaycastSingle();
         }
 
-        private void RaycastSingle(){
+        private bool RaycastSingle(){
             var transform1 = transform;
             var position = transform1.position;
             
@@ -25,10 +29,11 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
             Ray ray = new Ray(origin, direction);
             bool result = Physics.Raycast(ray, out RaycastHit hitInfo, maxDist);
 
-            if (!result || !hitInfo.collider.CompareTag("Player") || fireOnce) return;
+            if (!result || !hitInfo.collider.CompareTag("Player") || fireOnce) return false;
             GameObject currentBullet = Instantiate(projectile, transform.position, Quaternion.identity);
             currentBullet.transform.forward = directionB.normalized;
             fireOnce = true;
+            return true;
         }
     }
 }

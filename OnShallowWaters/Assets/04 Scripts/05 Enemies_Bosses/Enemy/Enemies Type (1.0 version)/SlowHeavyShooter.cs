@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace _04_Scripts._05_Enemies_Bosses.Enemy {
+namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
     public sealed class SlowHeavyShooter : EnemiesCore{
         public GameObject firePoint;
         // public List<GameObject> vfx = new List<GameObject>();
@@ -12,13 +12,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
         private Quaternion _rotate;
         private Vector3 _pos;
 
-        public float maxShield = 10;
-        public float currentShield;
-        
-        public int stunTimer = 3;
-        public bool shieldRecover;
-        public bool shieldDestroy;
-
         protected override void Start(){
             base.Start();
             //_effectToSpawn = vfx[0];
@@ -26,11 +19,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
             currentShield = maxShield;
             HealthBar(10);
             _enemiesProjectile = effectToSpawn.GetComponent<EnemiesProjectile>();
-        }
-
-        protected override void Update(){
-            ShieldRecover();
-            base.Update();
         }
 
         protected override void Movement(){
@@ -52,37 +40,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
                 timeToFire = Time.time + (1 / _enemiesProjectile.fireRate);
                 Quaternion rotation = _rotate;
                 Instantiate(effectToSpawn, transform.position, rotation);
-            }
-        }
-
-        protected override void HealthBar(int dmg){
-            switch (shieldDestroy){
-                case true: 
-                    base.HealthBar(dmg);
-                    return;
-                case false:
-                    currentShield -= dmg;
-                    if (currentShield <= 0){
-                        shieldDestroy = true;
-                        rb3d.AddForce(25, 0, 25, ForceMode.Impulse);
-                        StartCoroutine(WaitForStaggerToEnd());
-                    }
-                    return;
-            }
-        }
-
-        private IEnumerator WaitForStaggerToEnd(){
-            yield return new WaitForSeconds(stunTimer);
-            shieldRecover = false;
-        }
-
-        private void ShieldRecover(){
-            if (shieldRecover) return;
-            currentShield += 2 * Time.deltaTime;
-            
-            if (currentShield >= maxShield){
-                shieldRecover = true;
-                shieldDestroy = false;
             }
         }
     }
