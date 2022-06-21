@@ -1,4 +1,4 @@
-namespace _04_Scripts._05_Enemies_Bosses.Enemy {
+namespace _04_Scripts._05_Enemies_Bosses {
     public interface IDamageable{
         void Damage(int damageAmount);
     }

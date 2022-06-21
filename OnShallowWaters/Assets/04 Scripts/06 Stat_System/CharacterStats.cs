@@ -2,40 +2,44 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [SerializeField] private int hp = 5;
-    protected int _currHp;
+    [SerializeField] private int maxHp = 5;
+    protected int currHp;
     
     [Space][Space]
     [Header("Stats:")]
     [SerializeField] private Stat atk;
-    
-    public int Hp { get; protected set ; }
+
+    public int MaxHp
+    {
+        get => maxHp; 
+        protected set => maxHp = value;
+    }
     public Stat Atk { get => atk; }
     
     
     public float CurrHpPercentage
     {
-        get => (float) _currHp / hp;
+        get => (float) currHp / MaxHp;
     }
 
     private void OnDisable()
     {
-        _currHp = hp;
+        currHp = maxHp;
     }
     
-    private void Awake()
+    protected void Awake()
     {
-        _currHp = hp;
+        currHp = maxHp;
     }
     
     protected void TakeDamage(int dmg)
     {
-        if (_currHp - dmg < 0) return;  //prevent dying again
-        _currHp -= dmg;
+        if (currHp - dmg < 0) return;  //prevent dying again
+        currHp -= dmg;
         
-        if (_currHp <= 0)
+        if (currHp <= 0)
         {
-            _currHp = 0;
+            currHp = 0;
             Die();
         }
     }

@@ -16,7 +16,6 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         _cam = Camera.main;
-        //UpdateHealthBar(.3f);
     }
 
     private void Update()

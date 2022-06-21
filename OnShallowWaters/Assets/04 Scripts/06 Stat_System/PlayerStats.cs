@@ -27,7 +27,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
 
     private void IncreaseMaxHp(int amount)
     {
-        Hp += amount;
+        MaxHp += amount;
     }
     
     public void BoughtItem(ShopItem.ItemType itemType, CurrencyType currencyType)

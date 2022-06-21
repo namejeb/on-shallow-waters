@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace _04_Scripts._05_Enemies_Bosses.Enemy {
+namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
     public class EnemiesCore : MonoBehaviour, IDamageable{
         #region Basic Attributes
         public NavMeshAgent agent;
         public Transform puppet;
         public Rigidbody rb3d;
+        public bool armourType;
 
         //Enemies Detection & AttackRange
         [FormerlySerializedAs("_dist")] public float dist;
@@ -22,9 +24,17 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
         public LayerMask targetMask;
         public LayerMask obstructionMask;
 
+        public float maxShield = 10;
+        public float currentShield;
+        
+        public int stunTimer = 3;
+        public bool shieldRecover;
+        public bool shieldDestroy;
+        
         //Enemies Stats
-        public int coreHealth;
-        public float coreSpeed = 4;
+        public float maxHealth;
+        private float _coreHealth;
+        private float _coreSpeed;
         public float coreDamage;
         #endregion
 
@@ -37,12 +47,15 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
             agent = GetComponent<NavMeshAgent>();
             rb3d = GetComponent<Rigidbody>();
             puppet = GameObject.Find("Puppet").transform;
-            agent.speed = coreSpeed;
-            //StartCoroutine(FOVRoutine());
+            
+            _coreHealth = maxHealth;
+            agent.speed = _coreSpeed;
         }
 
         protected virtual void Update(){
             dist = (puppet.position - transform.position).sqrMagnitude;
+            ShieldRecover();
+            
             switch(behaviour){
                 case CoreStage.Idle: Detection(); break;
                 case CoreStage.Move: transform.LookAt(puppet); Movement(); break;
@@ -65,14 +78,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
         protected virtual void Detection(){
             FieldOfViewCheck();
         }
-
-        // private IEnumerator FOVRoutine(){
-        //     WaitForSeconds wait = new WaitForSeconds(0.2f);
-        //     while (true) {
-        //         yield return wait;
-        //         FieldOfViewCheck();
-        //     }
-        // }
 
         private void FieldOfViewCheck(){
             Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
@@ -98,36 +103,71 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
         }
 
         protected virtual void UniqueMove(){
-            //For Unique Behaviour
+            //Temporary
         }
         #endregion
     
         #region Basic Buff, Health and Damage
 
         public virtual void ReceivedBuff(){
-            int randomBuff = Random.Range(0, 3);
-            switch (randomBuff){
-                case 0: coreHealth += 20; break;
-                case 1:
-                    coreSpeed += 10;
-                    agent.speed = coreSpeed;
-                    break;
-                case 2:
-                    coreDamage += 20;
-                    break;
+            if (_coreHealth + maxHealth * 0.2f < maxHealth){
+                _coreHealth += maxHealth * 0.2f;
+                return;
+            }
+
+            int buff = Random.Range(0,2);
+            switch (buff){
+                case 0 when _coreSpeed < 10: agent.speed = _coreSpeed *= 0.2f; return;
+                case 1 when coreDamage < 30: coreDamage *= 0.2f; return;
             }
         }
 
         protected virtual void HealthBar(int dmg){
-            coreHealth -= dmg;
+            _coreHealth -= dmg;
+            //Set Health UI
 
-            if(coreHealth <= 0){
-                print("Dead");
+            if (_coreHealth > 0) return;
+            StartCoroutine(Death());
+        }
+
+        private IEnumerator Death(){
+            yield return new WaitForSeconds(3f);
+        }
+
+        private void ShieldBar(int damage) {
+            switch (shieldDestroy){
+                case true: HealthBar(damage); return;
+                case false:
+                    currentShield -= damage;
+                    if (currentShield <= 0){
+                        shieldDestroy = true;
+                        rb3d.AddForce(25, 0, 25, ForceMode.Impulse);
+                        StartCoroutine(WaitForStaggerToEnd());
+                    }
+                    return;
             }
+        }
+        
+        private void ShieldRecover(){
+            if (armourType) return;
+            if (shieldRecover) return;
+            currentShield += 2 * Time.deltaTime;
+
+            if (!(currentShield >= maxShield)) return;
+            shieldRecover = true;
+            shieldDestroy = false;
+        }
+        
+        private IEnumerator WaitForStaggerToEnd(){
+            yield return new WaitForSeconds(stunTimer);
+            shieldRecover = false;
         }
 
         public void Damage(int damageAmount){
-            HealthBar(damageAmount);
+            switch (armourType){
+                case true: HealthBar(damageAmount); break;
+                case false: ShieldBar(damageAmount); break;
+            }
         }
         #endregion
     }

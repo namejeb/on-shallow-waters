@@ -10,11 +10,10 @@ public class Boss_FSM : MonoBehaviour
     [SerializeField] private BossMode bam;
     [SerializeField] private Transform target;
     public float inStateTimer;
-
-    private List<Boss_BaseState> _stateList;
-
-    [Header("Melee Settings")] 
-    [SerializeField] private GameObject meleeHitbox;
+    public float rotationSpeed;
+    
+    [Header("Melee Settings")]
+    [SerializeField] private List<GameObject> meleeHitbox;
     public float chaseMinDistance;
     public float chaseTimeout = 5f;
     public float attackDistOffset = 0.5f;
@@ -22,28 +21,26 @@ public class Boss_FSM : MonoBehaviour
     public bool isAttacking;
     public bool isAttackFin;
 
-    [Header("Range Settings")] 
-    public Transform aimDirection; 
-    public Transform aimDirection2;
+    [Header("Range Settings")]
+    public List<Transform> aimDirection;
     public List<GameObject> shootPrefab;
-    public float rotationSpeed;
     public int shootCount;
     public float shootInterval = 3f;
 
-    [Header("Rest Settings")] 
+    [Header("Default Settings")]
     public float restTimeout = 3f;
+    public float stuntTimeout = 5f;
 
-    [Header("Boss 1 Config")]
-    public float dashTimeout = 3f;
-    public float dashSpeed;
+    [Header("Boss Value Configuration")] 
+    public List<float> value;
 
     private Boss_BaseState _currentState;
     private NavMeshAgent _agent;
     private Animator _animator;
 
-    public Transform Target { get { return target; } }
-    public NavMeshAgent Agent { get { return _agent; } }
-    public Animator Anim { get { return _animator; }}
+    public Transform Target => target;
+    public NavMeshAgent Agent => _agent;
+    public Animator Anim => _animator;
 
     //assign default as boss 1, or can go for null check 
     public Boss_Move1 move1State = new Boss1_SlicingClaws();
@@ -51,6 +48,7 @@ public class Boss_FSM : MonoBehaviour
     public Boss_Move3 move3State = new Boss1_SlamGround();
     public Boss_Move4 move4State = new Boss1_Dash();
     public readonly Boss_Rest restState = new Boss_Rest();
+    public readonly Boss_Stunt stuntState = new Boss_Stunt();
 
     private void Awake()
     {
@@ -62,7 +60,6 @@ public class Boss_FSM : MonoBehaviour
     {
         _agent.speed = speed;
         DoBossAttack(bam);
-        BossStateList(bam);
         SetState(restState); 
     }
 
@@ -83,37 +80,12 @@ public class Boss_FSM : MonoBehaviour
 
         switch (randNum)
         {
-            case 0:
-                SetState(restState);
-                break;
-            case 1:
-                SetState(move1State);
-                break;
-            case 2:
-                SetState(move2State);
-                break;
-            case 3:
-                SetState(move3State);
-                break;
-            case 4:
-                SetState(move4State);
-                break;
+            case 0: SetState(restState); break;
+            case 1: SetState(move1State); break;
+            case 2: SetState(move2State); break;
+            case 3: SetState(move3State); break;
+            case 4: SetState(move4State); break;
         }
-    }
-
-    private void BossStateList(BossMode mode)
-    {
-
-
-        //ONLY ADD SPECIAL MOVE IN SWITCH
-        // switch(mode)
-        // {
-        //     case BossMode.BOSS1:
-        //         break;
-        //     case BossMode.BOSS2:
-        //         break;
-        // }
-        
     }
 
     /// <summary>
@@ -134,9 +106,7 @@ public class Boss_FSM : MonoBehaviour
                 move1State = new Boss2_Attack(); 
                 break;
         }
-        
 
-        
         //! This will invoke the Update of whatever class it morphed into
         move1State.Update(this);
         move2State.Update(this);
@@ -144,15 +114,15 @@ public class Boss_FSM : MonoBehaviour
         move4State.Update(this);
     }
 
-    public void HitBoxOn()
+    public void HitBoxOn(int i)
     {
-        meleeHitbox.SetActive(true);
+        meleeHitbox[i].SetActive(true);
     }
     
-    public void HitBoxOff()
+    public void HitBoxOff(int i)
     {
         isAttackFin = true;
-        meleeHitbox.SetActive(false);
+        meleeHitbox[i].SetActive(false);
     }
 
     public void ShootProjectile(GameObject shootPb, Transform aimer)
@@ -167,8 +137,6 @@ public class Boss_FSM : MonoBehaviour
     
     public void ShootProjectile2(GameObject shootPb, Transform aimer)
     {
-
         GameObject bullet = Instantiate(shootPb, aimer.position, transform.rotation);
-
     }
 }

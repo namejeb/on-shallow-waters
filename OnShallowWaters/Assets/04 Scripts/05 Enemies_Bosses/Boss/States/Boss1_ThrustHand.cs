@@ -17,7 +17,7 @@ public class Boss1_ThrustHand : Boss_Move2
         {
             boss.shootCount += 1;
             boss.inStateTimer = 0;
-            boss.ShootProjectile(boss.shootPrefab[0], boss.aimDirection);
+            boss.ShootProjectile(boss.shootPrefab[0], boss.aimDirection[0]);
         }
         else if (boss.shootCount >= 3)
         {
