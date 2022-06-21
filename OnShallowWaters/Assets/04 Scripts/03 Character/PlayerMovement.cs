@@ -26,11 +26,17 @@ public class PlayerMovement : MonoBehaviour
 
             Move(direction, speed);
         }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
 
     public void Move(Vector3 direction, float speed)
     {
         //transform.position = Vector3.MoveTowards(transform.position, direction * 100, speed * Time.deltaTime);
-        rb.MovePosition(Vector3.MoveTowards(transform.position, direction * 100, speed * Time.deltaTime));
+        direction.Normalize();
+        rb.velocity = new Vector3(direction.x, 0f, direction.z) * speed;
+        
     }
 }
