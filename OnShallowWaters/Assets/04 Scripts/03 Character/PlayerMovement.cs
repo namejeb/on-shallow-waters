@@ -5,6 +5,7 @@ using Vector3 = UnityEngine.Vector3;
 public class PlayerMovement : MonoBehaviour
 {
     public Joystick joystick;
+    public Rigidbody rb;
 
     public float speed = 6f;
     public float turnSmooth = 0.1f;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector3 direction, float speed)
     {
-        transform.position = Vector3.MoveTowards(transform.position, direction * 100, speed * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(transform.position, direction * 100, speed * Time.deltaTime);
+        rb.MovePosition(Vector3.MoveTowards(transform.position, direction * 100, speed * Time.deltaTime));
     }
 }
