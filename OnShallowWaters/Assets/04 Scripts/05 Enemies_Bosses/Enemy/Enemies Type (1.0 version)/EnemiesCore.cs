@@ -34,7 +34,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         //Enemies Stats
         public float maxHealth;
         private float _coreHealth;
-        private float _coreSpeed;
+        [FormerlySerializedAs("_coreSpeed")] public float coreSpeed;
         public float coreDamage;
         #endregion
 
@@ -49,7 +49,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             puppet = GameObject.Find("Puppet").transform;
             
             _coreHealth = maxHealth;
-            agent.speed = _coreSpeed;
+            agent.speed = coreSpeed;
         }
 
         protected virtual void Update(){
@@ -90,7 +90,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
                     float distanceToTarget = Vector3.Distance(transform.position, target.position);
                     if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask)) {
                         behaviour = CoreStage.Move;
-                        print("Found");
                     }
                 }
             }
@@ -117,7 +116,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
             int buff = Random.Range(0,2);
             switch (buff){
-                case 0 when _coreSpeed < 10: agent.speed = _coreSpeed *= 0.2f; return;
+                case 0 when coreSpeed < 10: agent.speed = coreSpeed *= 0.2f; return;
                 case 1 when coreDamage < 30: coreDamage *= 0.2f; return;
             }
         }
@@ -149,7 +148,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         }
         
         private void ShieldRecover(){
-            if (armourType) return;
+            if (!armourType) return;
             if (shieldRecover) return;
             currentShield += 2 * Time.deltaTime;
 
@@ -165,8 +164,8 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
         public void Damage(int damageAmount){
             switch (armourType){
-                case true: HealthBar(damageAmount); break;
-                case false: ShieldBar(damageAmount); break;
+                case false: HealthBar(damageAmount); break;
+                case true: ShieldBar(damageAmount); break;
             }
         }
         #endregion

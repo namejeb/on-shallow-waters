@@ -9,8 +9,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         protected override void Attack(){
             
         }
-        
-         
 
         private void AreaBuff() {
             Collider[] c = Physics.OverlapSphere(transform.position, r, allyMask);
@@ -20,11 +18,5 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
                 nearbyAllies.GetComponent<EnemiesCore>().ReceivedBuff();
             }
         }
-
-        // void OnCollisionEnter(Collision c){
-        //     foreach (ContactPoint contact in c.contacts){
-        //         print("c: " + contact.point);
-        //     }
-        // }
     }
 }
