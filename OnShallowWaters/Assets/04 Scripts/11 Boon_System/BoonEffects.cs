@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 
 
@@ -210,22 +211,22 @@ public class BoonEffects : MonoBehaviour {
 
         if (tracker > 0)
         {
-            float lastMultipliedValue = increaseAmounts[tracker - 1] ;
-            revertedValue = stat.CurrentValue / lastMultipliedValue;
+            float lastMultiplier = increaseAmounts[tracker - 1] ;
+            revertedValue = stat.CurrentValue / lastMultiplier;
 
-            modifierToRemove = Mathf.RoundToInt(stat.PrevModifierByBoon);
+            float valWithLastMultiplier = revertedValue * lastMultiplier;
+            modifierToRemove = Mathf.RoundToInt(GetDifference(revertedValue, valWithLastMultiplier));
         }
         float newValue = revertedValue * increaseAmounts[tracker];
         
         int modifierToAdd =  Mathf.RoundToInt(GetDifference(newValue, revertedValue));
-        stat.PrevModifierByBoon = modifierToAdd;
 
         Vector2Int modifierValues = new Vector2Int(modifierToAdd, modifierToRemove);
         return modifierValues;
     }
 
-    private float GetDifference(float newValue, float revertedValue)
+    private float GetDifference(float val1, float val2)
     {
-        return newValue - revertedValue;
+        return Mathf.Abs(val1 - val2);
     }
 }
