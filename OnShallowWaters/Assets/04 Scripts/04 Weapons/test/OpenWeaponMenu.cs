@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class OpenWeaponMenu : MonoBehaviour
@@ -22,7 +23,7 @@ public class OpenWeaponMenu : MonoBehaviour
     [SerializeField] private MeshFilter modelMesh;
 
     private float _maxVal = 10f;
-    
+
     public void OpenMenu()
     {
         menu.gameObject.SetActive(true);
@@ -31,11 +32,13 @@ public class OpenWeaponMenu : MonoBehaviour
     public void GetCutlass()
     {
         GetWeaponElements(0);
+        //LoadWepScene();
     }
 
     public void GetDagger()
     {
         GetWeaponElements(1);
+       //UnloadWepScene();
     }
 
     private void GetWeaponElements(int index)
@@ -60,5 +63,15 @@ public class OpenWeaponMenu : MonoBehaviour
     private void SetBar(Slider slider, float value)
     {
         slider.value = value;
+    }
+
+    private void LoadWepScene()
+    {
+        SceneManager.LoadSceneAsync("Choose_weapon", LoadSceneMode.Additive);
+    }
+
+    private void UnloadWepScene()
+    {
+        SceneManager.UnloadSceneAsync("Choose_weapon");
     }
 }
