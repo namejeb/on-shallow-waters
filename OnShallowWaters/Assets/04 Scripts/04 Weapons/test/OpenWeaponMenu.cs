@@ -31,14 +31,14 @@ public class OpenWeaponMenu : MonoBehaviour
 
     public void GetCutlass()
     {
-        // GetWeaponElements(0);
-        LoadWepScene();
+        GetWeaponElements(0);
+        //LoadWepScene();
     }
 
     public void GetDagger()
     {
-       // GetWeaponElements(1);
-       UnloadWepScene();
+        GetWeaponElements(1);
+       //UnloadWepScene();
     }
 
     private void GetWeaponElements(int index)
