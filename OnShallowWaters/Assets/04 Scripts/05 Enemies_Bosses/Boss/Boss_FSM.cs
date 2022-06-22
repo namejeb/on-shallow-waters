@@ -54,6 +54,7 @@ public class Boss_FSM : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        
     }
 
     private void Start()

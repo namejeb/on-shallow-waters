@@ -11,13 +11,13 @@ public class Boss_Stats : CharacterStats, IDamageable
     public int currArmour;
     public bool armState;
 
-    public int hhp;
-
     private Boss_FSM _bossFsm;
+    private BossUiManager _uiManager;
 
     private new void Awake()
     {
         _bossFsm = GetComponent<Boss_FSM>();
+        _uiManager = FindObjectOfType<BossUiManager>();
         base.Awake();
     }
     
@@ -28,32 +28,44 @@ public class Boss_Stats : CharacterStats, IDamageable
 
     private void Update()
     {
-        //just for debug purposes, will be removed
-        if (hhp != currHp)
-        {
-            currHp = hhp;
-        }
+        
 
-        if (currArmour <= 0 && armState)
-        {
-            currArmour = 0;
-            armState = false;
-            _bossFsm.SetState(_bossFsm.stuntState);
-        }
+
     }
 
     public void Damage(int damageAmount)
     {
+
+        Debug.Log("damgae");
         if (armState)
         {
+            if (!_uiManager.IsActive(1))
+            {
+                _uiManager.EnableSlider(1);
+            }
+
             if (currArmour > 0)
             {
-                currArmour -= damageAmount;    
+                currArmour -= damageAmount;
+                float currArmPercentage = (float)currArmour / (float)maxArmour;
+                _uiManager.UpdateSlider(1, currArmPercentage);
+            }
+
+
+            if (currArmour <= 0)
+            {
+                currArmour = 0;
+                armState = false;
+                _uiManager.DisableSlider(1);
+                currArmour = maxArmour;
+                _bossFsm.SetState(_bossFsm.stuntState);
             }
         }
         else
         {
+            
             TakeDamage(damageAmount);
+            _uiManager.UpdateSlider(0, CurrHpPercentage);
         }
     }
 }
