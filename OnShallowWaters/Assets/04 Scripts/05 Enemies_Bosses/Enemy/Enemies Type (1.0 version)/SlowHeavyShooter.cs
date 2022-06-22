@@ -17,7 +17,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             //_effectToSpawn = vfx[0];
             shieldRecover = true;
             currentShield = maxShield;
-            HealthBar(10);
+            
             _enemiesProjectile = effectToSpawn.GetComponent<EnemiesProjectile>();
         }
 
