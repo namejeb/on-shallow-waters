@@ -26,17 +26,8 @@ public class Boss_Stats : CharacterStats, IDamageable
         currArmour = maxArmour;
     }
 
-    private void Update()
-    {
-        
-
-
-    }
-
     public void Damage(int damageAmount)
     {
-
-        Debug.Log("damgae");
         if (armState)
         {
             if (!_uiManager.IsActive(1))
@@ -67,5 +58,11 @@ public class Boss_Stats : CharacterStats, IDamageable
             TakeDamage(damageAmount);
             _uiManager.UpdateSlider(0, CurrHpPercentage);
         }
+    }
+
+    protected override void Die()
+    {
+        _bossFsm.SetState(_bossFsm.dieState);
+        _uiManager.DisableSlider(0);
     }
 }

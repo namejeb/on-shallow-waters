@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Boss_FSM : MonoBehaviour
 {
     public enum BossMode { BOSS1, BOSS2 }
-    
+
     [SerializeField] private BossMode bam;
     [SerializeField] private Transform target;
     public float inStateTimer;
@@ -49,6 +49,7 @@ public class Boss_FSM : MonoBehaviour
     public Boss_Move4 move4State = new Boss1_Dash();
     public readonly Boss_Rest restState = new Boss_Rest();
     public readonly Boss_Stunt stuntState = new Boss_Stunt();
+    public readonly Boss_Die dieState = new Boss_Die();
 
     private void Awake()
     {
