@@ -67,11 +67,14 @@ public class DashNAttack : MonoBehaviour
         {
             if (enemies[i] != null)
             {
-                if (enemies[i].GetComponent<EnemyHandler>() != null)
-                    enemies[i].GetComponent<EnemyHandler>().Damage(5);
+                EnemyHandler enemyHandler = enemies[i].GetComponent<EnemyHandler>();
+                IDamageable damagable = enemies[i].GetComponent<IDamageable>();
 
-                if (enemies[i].GetComponent<IDamageable>() != null)
-                    enemies[i].GetComponent<IDamageable>().Damage(5);
+                if (enemyHandler != null)
+                    enemyHandler.Damage(5);
+
+                if (damagable != null)
+                    damagable.Damage(5);
 
             }
         }
