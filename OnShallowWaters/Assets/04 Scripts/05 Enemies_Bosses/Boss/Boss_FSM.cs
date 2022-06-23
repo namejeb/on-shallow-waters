@@ -7,7 +7,7 @@ public class Boss_FSM : MonoBehaviour
 {
     public enum BossMode { BOSS1, BOSS2 }
 
-    [SerializeField] private BossMode bam;
+    [SerializeField] private BossMode bossType;
     [SerializeField] private Transform target;
     public float inStateTimer;
     public float rotationSpeed;
@@ -61,7 +61,7 @@ public class Boss_FSM : MonoBehaviour
     private void Start()
     {
         _agent.speed = speed;
-        DoBossAttack(bam);
+        DoBossAttack(bossType);
         SetState(restState); 
     }
 
@@ -91,7 +91,7 @@ public class Boss_FSM : MonoBehaviour
     }
 
     /// <summary>
-    /// Switch Boss Attack State Machine
+    /// Switch Boss State Machine Through enum bossType
     /// </summary>
     /// <param name="mode"></param>
     private void DoBossAttack(BossMode mode)
