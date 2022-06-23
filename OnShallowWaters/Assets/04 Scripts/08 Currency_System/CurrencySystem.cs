@@ -13,7 +13,7 @@ public class CurrencySystem : MonoBehaviour
     public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType,int>();
 
     public static event Action OnCurrencyChanged;
-
+    
     private void OnDestroy()
     {
         OnCurrencyChanged -= Print;
@@ -42,6 +42,13 @@ public class CurrencySystem : MonoBehaviour
         if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
     }
 
+    //Overload for adding in a range
+    public static void AddCurrency(CurrencyType currencyType, int minAmount, int maxAmount)
+    {
+        int amountToAdd = UnityEngine.Random.Range(minAmount, maxAmount);
+        AddCurrency(currencyType, amountToAdd);
+    }
+    
     //Main function for shop systems
     public static void RemoveCurrency(CurrencyType currencyType, int amount)
     {
@@ -56,6 +63,7 @@ public class CurrencySystem : MonoBehaviour
         }
         if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();   
     }
+
 
     private void Print()
     {
