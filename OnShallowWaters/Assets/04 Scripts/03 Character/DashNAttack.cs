@@ -1,4 +1,5 @@
 using UnityEngine;
+using _04_Scripts._05_Enemies_Bosses;
 
 public class DashNAttack : MonoBehaviour
 {
@@ -58,6 +59,7 @@ public class DashNAttack : MonoBehaviour
         animator.SetTrigger("Attack");
 
         
+
         //temp damage to test WaveSpawner, will remove
         Collider[] enemies = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
 
@@ -65,7 +67,12 @@ public class DashNAttack : MonoBehaviour
         {
             if (enemies[i] != null)
             {
-                enemies[i].GetComponent<EnemyHandler>().Damage(5);
+                if (enemies[i].GetComponent<EnemyHandler>() != null)
+                    enemies[i].GetComponent<EnemyHandler>().Damage(5);
+
+                if (enemies[i].GetComponent<IDamageable>() != null)
+                    enemies[i].GetComponent<IDamageable>().Damage(5);
+
             }
         }
     }
