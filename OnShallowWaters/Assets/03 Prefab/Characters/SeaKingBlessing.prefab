@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 9072489134436314683}
   - component: {fileID: 9072489134436314680}
   - component: {fileID: 9072489134436314681}
+  - component: {fileID: 446067808}
+  - component: {fileID: 4628798456070265571}
   m_Layer: 0
   m_Name: Statue_2
   m_TagString: Untagged
@@ -27,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9072489134436314687}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 155.72073, y: 123.44702, z: -0.78}
+  m_LocalPosition: {x: 155.72073, y: 123.44702, z: -2.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -95,8 +97,50 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1}
+  m_Size: {x: 4.01, y: 1, z: 2.09}
   m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!114 &446067808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134436314687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3590a3aa10f7aca4f9d37f1287f7f8d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blessName: Hp, Arm Regen
+  blessDesc: regen the hp and armour every x seconds
+  time: 5
+  requiredSoul: 35
+  BlessUI: {fileID: 0}
+  bg: {fileID: 0}
+  blessNameText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  equipButton: {fileID: 0}
+  exitButton: {fileID: 0}
+  skbButton: {fileID: 0}
+  blessType: 1
+--- !u!114 &4628798456070265571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134436314687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.94274926, b: 0, a: 1}
+  outlineWidth: 0
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &9072489134458369555
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,6 +153,8 @@ GameObject:
   - component: {fileID: 9072489134458369551}
   - component: {fileID: 9072489134458369548}
   - component: {fileID: 9072489134458369549}
+  - component: {fileID: 853167221}
+  - component: {fileID: 3624833193463806788}
   m_Layer: 0
   m_Name: Statue_5
   m_TagString: Untagged
@@ -124,7 +170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9072489134458369555}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 155.72073, y: 123.44702, z: 7.6099997}
+  m_LocalPosition: {x: 155.72073, y: 123.44702, z: 11.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,8 +238,50 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1}
+  m_Size: {x: 4.01, y: 1, z: 2.09}
   m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!114 &853167221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134458369555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3590a3aa10f7aca4f9d37f1287f7f8d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blessName: Kill Everyone
+  blessDesc: Kill all the enemies on screen
+  time: 0.5
+  requiredSoul: 60
+  BlessUI: {fileID: 0}
+  bg: {fileID: 0}
+  blessNameText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  equipButton: {fileID: 0}
+  exitButton: {fileID: 0}
+  skbButton: {fileID: 0}
+  blessType: 4
+--- !u!114 &3624833193463806788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134458369555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.94274926, b: 0, a: 1}
+  outlineWidth: 0
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &9072489134817212768
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +294,8 @@ GameObject:
   - component: {fileID: 9072489134817212764}
   - component: {fileID: 9072489134817212765}
   - component: {fileID: 9072489134817212770}
+  - component: {fileID: 470441963}
+  - component: {fileID: 6289817230185337714}
   m_Layer: 0
   m_Name: Statue_4
   m_TagString: Untagged
@@ -221,7 +311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9072489134817212768}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 155.72073, y: 123.44702, z: 4.89}
+  m_LocalPosition: {x: 155.72073, y: 123.44702, z: 6.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -289,8 +379,50 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1}
+  m_Size: {x: 4.01, y: 1, z: 2.09}
   m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!114 &470441963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134817212768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3590a3aa10f7aca4f9d37f1287f7f8d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blessName: Execution
+  blessDesc: Excecute enemy if enemy hp is lower than 10%
+  time: 0.5
+  requiredSoul: 25
+  BlessUI: {fileID: 0}
+  bg: {fileID: 0}
+  blessNameText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  equipButton: {fileID: 0}
+  exitButton: {fileID: 0}
+  skbButton: {fileID: 0}
+  blessType: 3
+--- !u!114 &6289817230185337714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134817212768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.94274926, b: 0, a: 1}
+  outlineWidth: 0
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &9072489134927509125
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +435,8 @@ GameObject:
   - component: {fileID: 9072489134927509121}
   - component: {fileID: 9072489134927509126}
   - component: {fileID: 9072489134927509127}
+  - component: {fileID: 1890794160}
+  - component: {fileID: 7330861551001583485}
   m_Layer: 0
   m_Name: Statue_3
   m_TagString: Untagged
@@ -386,8 +520,50 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1}
+  m_Size: {x: 4.01, y: 1, z: 2.09}
   m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!114 &1890794160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134927509125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3590a3aa10f7aca4f9d37f1287f7f8d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blessName: Slowmotion
+  blessDesc: Slow down the time
+  time: 3
+  requiredSoul: 60
+  BlessUI: {fileID: 0}
+  bg: {fileID: 0}
+  blessNameText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  equipButton: {fileID: 0}
+  exitButton: {fileID: 0}
+  skbButton: {fileID: 0}
+  blessType: 2
+--- !u!114 &7330861551001583485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134927509125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.94274926, b: 0, a: 1}
+  outlineWidth: 0
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &9072489134956591655
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +576,8 @@ GameObject:
   - component: {fileID: 9072489134956591651}
   - component: {fileID: 9072489134956591648}
   - component: {fileID: 9072489134956591649}
+  - component: {fileID: 2060387002}
+  - component: {fileID: 8222297056300897614}
   m_Layer: 0
   m_Name: Statue_1
   m_TagString: Untagged
@@ -415,7 +593,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9072489134956591655}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 155.72073, y: 123.44702, z: -3.258354}
+  m_LocalPosition: {x: 155.72073, y: 123.44702, z: -6.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -483,8 +661,50 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1}
+  m_Size: {x: 4.01, y: 1, z: 2.09}
   m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!114 &2060387002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134956591655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3590a3aa10f7aca4f9d37f1287f7f8d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blessName: ATK, MVS STONKS
+  blessDesc: increase atk and mv spd
+  time: 10
+  requiredSoul: 50
+  BlessUI: {fileID: 0}
+  bg: {fileID: 0}
+  blessNameText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  equipButton: {fileID: 0}
+  exitButton: {fileID: 0}
+  skbButton: {fileID: 0}
+  blessType: 0
+--- !u!114 &8222297056300897614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072489134956591655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.94274926, b: 0, a: 1}
+  outlineWidth: 0
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &9072489135131994939
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +728,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9072489135131994939}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -162.68074, y: -122.94702, z: -0.051646292}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

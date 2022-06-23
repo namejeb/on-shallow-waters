@@ -9,7 +9,7 @@ public class Boss1_Config : MonoBehaviour
     public float dashSpeed;
 
   // private decimal _percentage = 0.7M;
-    private float _percentage = .7f;
+    
     private Boss_Stats _bs;
 
     private float[] _percentages = {.7f, .4f, .1f};
