@@ -22,7 +22,7 @@ public class DashNAttack : MonoBehaviour
     private float _endTime = 0f;
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_isDash)
         {
@@ -32,7 +32,8 @@ public class DashNAttack : MonoBehaviour
 
     private void Dash()
     {
-        playerMovement.Move((_endPos - _startPos), speed);
+        //playerMovement.Move((_endPos - _startPos), speed); 
+        playerMovement.Move(transform.forward, speed);
 
         if (Time.time > _endTime)
         {
@@ -48,8 +49,8 @@ public class DashNAttack : MonoBehaviour
         _isDash = true;
         playerMovement.enabled = false;
         
-        _startPos = transform.position;
-        _endPos = (transform.forward + transform.position) * range;
+        // _startPos = transform.position;
+        // _endPos = (transform.forward + transform.position) * range;
 
         _endTime = Time.time + dashDuration;
     }

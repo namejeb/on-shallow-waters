@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FollowPlayer : MonoBehaviour
+public class MoveToFollowPoint : MonoBehaviour
 {
     [SerializeField] private Transform followPoint;
 
