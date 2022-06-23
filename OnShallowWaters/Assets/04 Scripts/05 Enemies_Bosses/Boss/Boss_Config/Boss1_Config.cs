@@ -22,7 +22,7 @@ public class Boss1_Config : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Current Hp percentage: " + _bs.CurrHpPercentage + "\nTriggerPercentage: " + _percentage);
+        //Debug.Log("Current Hp percentage: " + _bs.CurrHpPercentage + "\nTriggerPercentage: " + _percentage);
         // if ((decimal)_bs.CurrHpPercentage <= _percentage && !_bs.armState)
         // {
         //     _percentage -= 0.3M;
@@ -31,8 +31,11 @@ public class Boss1_Config : MonoBehaviour
 
         if (_bs.CurrHpPercentage <= _percentages[_index] && !_bs.armState)
         {
-            _index++;
-            _bs.armState = true;
+            if (_index < 2)
+            {
+                _index++;
+                _bs.armState = true;
+            }
         }
         
         // if (_bs.CurrHpPercentage <= _percentage && !_bs.armState)

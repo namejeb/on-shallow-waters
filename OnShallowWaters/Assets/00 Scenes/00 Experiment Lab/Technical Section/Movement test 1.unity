@@ -151,7 +151,7 @@ RectTransform:
   m_GameObject: {fileID: 24672059}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.158279, y: 4.158279, z: 4.158279}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1393889680}
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1948713383}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DashNAttack, Assembly-CSharp
         m_MethodName: Attack
         m_Mode: 1
@@ -290,7 +290,7 @@ Transform:
   m_Children:
   - {fileID: 1970566682}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &97481713
 MonoBehaviour:
@@ -304,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93ba297178143b48afc89b92d325686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   joystick: {fileID: 278739891}
   speed: 10
   turnSmooth: 0.1
@@ -635,15 +636,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.7956
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.7956
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.7956
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_LocalPosition.x
@@ -779,7 +780,7 @@ RectTransform:
   m_GameObject: {fileID: 355484142}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 3.0186193, y: 3.0186193, z: 3.0186193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2053018517}
@@ -788,7 +789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -666, y: 166}
+  m_AnchoredPosition: {x: -312.1, y: 166}
   m_SizeDelta: {x: 95.8297, y: 89.9531}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &355484144
@@ -835,7 +836,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1948713383}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DashNAttack, Assembly-CSharp
         m_MethodName: ActivateDash
         m_Mode: 1
@@ -1221,7 +1222,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 29.758, y: -44.707, z: -7.423}
 --- !u!1 &963194225
 GameObject:
@@ -1491,7 +1492,7 @@ RectTransform:
   m_GameObject: {fileID: 1192439994}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.158279, y: 4.158279, z: 4.158279}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1393294009}
@@ -1500,7 +1501,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -292.64645, y: 323.3486}
+  m_AnchoredPosition: {x: -205.4, y: 243.5}
   m_SizeDelta: {x: 95.8297, y: 89.9531}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1192439996
@@ -1547,7 +1548,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1948713383}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DashNAttack, Assembly-CSharp
         m_MethodName: Attack
         m_Mode: 1
@@ -1901,12 +1902,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1952,7 +1953,7 @@ RectTransform:
   - {fileID: 355484143}
   - {fileID: 1078293776}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2290,7 +2291,7 @@ Transform:
   - {fileID: 1745713466}
   - {fileID: 217449703}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 22.097, y: 0, z: 0}
 --- !u!1 &1516535772
 GameObject:
@@ -2495,7 +2496,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1745713464
 GameObject:
@@ -2738,17 +2739,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1e89f27dbc953d4b8ac62f5d0b79f49, type: 3}
---- !u!114 &1948713383 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4028039544555071574, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
-  m_PrefabInstance: {fileID: 4028039543814449649}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed1b68068e47d754592a3e4afbecd35a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1948713389 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3489376991222979368, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
@@ -3063,9 +3053,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093336465, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 278739891}
     - target: {fileID: 3489376991222979368, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3489376991222979368, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: m_LocalPosition.x
