@@ -1,4 +1,3 @@
-using Unity.Collections;
 using UnityEngine;
 
 
@@ -6,8 +5,8 @@ public class BoonEffects : MonoBehaviour {
     private PlayerStats _playerStats;
     
     [Header("Increase Amounts: ")]
-    [SerializeField] private float[] atkIncreaseAmounts = new float[3];
-    [SerializeField] private int _atkTracker;
+    [SerializeField] private float[] atkBonusIncreaseAmounts = new float[3];
+    [SerializeField] private int _atkBonusTracker;
 
     [SerializeField] private float[] atkSpeedIncreaseAmounts = new float[3];
     private int _atkSpeedTracker;
@@ -22,7 +21,7 @@ public class BoonEffects : MonoBehaviour {
     {
         for (int i = 0; i < 3; i++)
         {
-            atkIncreaseAmounts[i] = Mathf.Clamp(atkIncreaseAmounts[i], 1, float.MaxValue);
+            atkBonusIncreaseAmounts[i] = Mathf.Clamp(atkBonusIncreaseAmounts[i], 1, float.MaxValue);
             atkSpeedIncreaseAmounts[i] = Mathf.Clamp(atkSpeedIncreaseAmounts[i], 1, float.MaxValue);
             critChanceIncreaseAmounts[i] = Mathf.Clamp(critChanceIncreaseAmounts[i], 1, float.MaxValue);
             critDamageIncreaseAmounts[i] = Mathf.Clamp(critDamageIncreaseAmounts[i], 1, float.MaxValue);
@@ -36,7 +35,7 @@ public class BoonEffects : MonoBehaviour {
     //------Combat------
     public void UpgradeAtk()                        //---5
     {
-        UpgradeStat(_playerStats.Atk, atkIncreaseAmounts, ref _atkTracker);
+        UpgradeStat(_playerStats.Atk, atkBonusIncreaseAmounts, ref _atkBonusTracker);
         print("atk:" + _playerStats.Atk.CurrentValue);
     }
 
