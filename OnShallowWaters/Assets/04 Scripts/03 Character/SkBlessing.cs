@@ -4,14 +4,44 @@ using UnityEngine;
 
 public class SkBlessing : MonoBehaviour
 {
+    [SerializeField] private int atkAdd, mvSpeedAdd, hpRegenAdd, armRegenAdd;
+    [SerializeField] private float duration;
+    private float timer;
+    private bool startCountdown;
+
+    private PlayerStats playerStats;
+
+    private void Awake()
+    {
+        playerStats = GetComponent<PlayerStats>();
+    }
+
+    private void Update()
+    {
+        if (startCountdown)
+        {
+            timer -= Time.deltaTime;
+            if (timer < 0)
+            {
+                timer = duration;
+                startCountdown = false;
+            }
+        }
+    }
+
     public void SKB1()
     {
-        Debug.Log("increase atk and mv spd");
+        playerStats.Atk.AddModifier(atkAdd);
+        playerStats.MovementSpeed.AddModifier(mvSpeedAdd);
+        Debug.Log(playerStats.Atk.CurrentValue);
+        timer = duration;
+        StartCoroutine(ResetCharacter(duration));
+        startCountdown = true;
     }
 
     public void SKB2()
     {
-        Debug.Log("health and armor regen ");
+        StartCoroutine(playerStats.RegenLoop(hpRegenAdd, armRegenAdd, 5));
     }
 
     public void SKB3()
@@ -28,4 +58,14 @@ public class SkBlessing : MonoBehaviour
     {
         Debug.Log("skb5");
     }
+    
+    IEnumerator ResetCharacter(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Debug.Log("coroutine end");
+        playerStats.Atk.RemoveModifier(atkAdd);
+        playerStats.MovementSpeed.RemoveModifier(mvSpeedAdd);
+    }
+
+    
 }
