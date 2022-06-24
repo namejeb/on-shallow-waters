@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EarnCurrencyItems : MonoBehaviour
 {
+    [SerializeField] protected Vector2Int minMaxAmount;
+    
     protected void EarnGold(int amt)
     {
         CurrencySystem.AddCurrency(CurrencyType.GOLD, amt);

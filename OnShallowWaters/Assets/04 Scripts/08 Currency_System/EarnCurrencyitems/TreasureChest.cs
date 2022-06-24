@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class TreasureChest : EarnCurrencyItems, IDamageable
 {
-    [SerializeField] private Vector2Int minMaxAmount;
     [SerializeField] [Range(0f, 1f)] private float spawnRate;
     
     private bool _isOpened = false;
@@ -31,7 +30,12 @@ public class TreasureChest : EarnCurrencyItems, IDamageable
     {
         OpenChest();
     }
-    
+
+    public float LostHP()
+    {
+        throw new System.NotImplementedException();
+    }
+
     //Add animation
 
     // private void OnTriggerEnter(Collider other)

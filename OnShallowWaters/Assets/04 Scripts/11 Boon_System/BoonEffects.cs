@@ -188,29 +188,19 @@ public class BoonEffects : MonoBehaviour {
     //Utility
     private void UpgradeStat(Stat stat, float[] increaseAmounts, ref int tracker)
     {
-        // Vector2Int modifierValues = CalcModifierValues(stat, increaseAmounts, tracker);
-        // stat.AddModifier( modifierValues.x );
-        //
-        // if (tracker != increaseAmounts.Length - 1)
-        // {
-        //     stat.RemoveModifier( modifierValues.y );
-        //     tracker++;
-        // }
-        
         Vector2Int modifierValues = CalcModifierValues(stat, increaseAmounts, tracker);
-        stat.RemoveModifier( modifierValues.y );
-        print(modifierValues.x);
+        stat.AddModifier( modifierValues.x );
+        
         if (tracker != increaseAmounts.Length - 1)
         {
-            stat.AddModifier( modifierValues.x );
+            stat.RemoveModifier( modifierValues.y );
             tracker++;
         }
         else
         {
-         
-            stat.AddModifier(  modifierValues.x * (int)increaseAmounts[tracker]);
+            //max hit
         }
-        
+
         // print($"(Added: {modifierValues.x}, Removed: {modifierValues.y})");
     }
     
@@ -242,5 +232,4 @@ public class BoonEffects : MonoBehaviour {
     {
         return Mathf.Abs(val1 - val2);
     }
-    
 }
