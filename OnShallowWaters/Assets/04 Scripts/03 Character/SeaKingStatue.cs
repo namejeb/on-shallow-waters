@@ -10,7 +10,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
     public enum Blessing { bless1, bless2 , bless3 , bless4 , bless5 }
 
     public string blessName, blessDesc;
-    public float time, requiredSoul;
+    public float soulDuration, requiredSoul;
     private bool isInteractable;
 
     [Header("UI Side")]
@@ -55,14 +55,15 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
             bg.enabled = true;
             equipButton.onClick.AddListener(ChangeBlessing);
             blessNameText.text = blessName;
-            descriptionText.text = "Time: " + time.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n" + blessDesc;
+            descriptionText.text = "Time: " + soulDuration.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n" + blessDesc;
         }
     }
 
     public void ChangeBlessing()
     {
         skbButton.onClick.RemoveAllListeners();
-
+        skb.Duration = soulDuration;
+        skb.RequiredSoul = requiredSoul;
         switch (blessType)
         {
             case Blessing.bless1:
@@ -70,6 +71,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
                 break;
             case Blessing.bless2:
                 skbButton.onClick.AddListener(skb.SKB2);
+                skb.Duration = skb.Skb2Duration;
                 break;
             case Blessing.bless3:
                 skbButton.onClick.AddListener(skb.SKB3);

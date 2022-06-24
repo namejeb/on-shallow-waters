@@ -72,15 +72,16 @@ public class PlayerStats : CharacterStats, IShopCustomer
         }
     }
 
-    public IEnumerator RegenLoop(int regenHp, int regenArm, int regenCount)
+    public IEnumerator RegenLoop(int regenHp, int regenArm, int regenCount, float regenPerSeconds)
     {
         for (int i = 0; i < regenCount; i++)
         {
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(regenPerSeconds);
             currHp += regenHp;
             // player hp bar should updated
             Debug.Log(currHp);
         }
+
     }
 
     // private void UpgradeAtk()
