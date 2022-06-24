@@ -13,7 +13,12 @@ public class EnemyHandler : CharacterStats, IDamageable
         TakeDamage(damageAmount);
         healthBar.UpdateHealthBar(CurrHpPercentage);
     }
-    
+
+    public float LostHP()
+    {
+        throw new System.NotImplementedException();
+    }
+
     //temp damage to test WaveSpawner, will remove
     protected override void Die()
     {

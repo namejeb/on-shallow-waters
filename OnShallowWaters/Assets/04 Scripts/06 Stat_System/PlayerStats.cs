@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -69,7 +71,19 @@ public class PlayerStats : CharacterStats, IShopCustomer
             //souls shop upgrades   
         }
     }
-    
+
+    public IEnumerator RegenLoop(int regenHp, int regenArm, int regenCount, float regenPerSeconds)
+    {
+        for (int i = 0; i < regenCount; i++)
+        {
+            yield return new WaitForSeconds(regenPerSeconds);
+            currHp += regenHp;
+            // player hp bar should updated
+            Debug.Log(currHp);
+        }
+
+    }
+
     // private void UpgradeAtk()
     // {
     //     int newValue = Atk.BaseValue + atkUpgradeAmt;
@@ -77,9 +91,9 @@ public class PlayerStats : CharacterStats, IShopCustomer
     //     
     //    // save to file
     // }
-    
-    
-    
+
+
+
     // public void UpgradeDef()
     // {
     //      Stat stat = _playerStats.Def;
@@ -87,13 +101,13 @@ public class PlayerStats : CharacterStats, IShopCustomer
     //      int newValue = currValue + defUpgradeAmt;
     //     
     //      _playerStats.Atk.ModifyBaseValue(newValue);
-    
-    
+
+
     //     
     //     _playerStats.AddModifier(_playerStats.Def, 5);    -> soul shop upgrade method?
     // }
-    
-    
+
+
     //Testing
     //  private void Update()
     // {

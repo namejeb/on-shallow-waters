@@ -4,12 +4,14 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private PlayerMovement pm;
     [SerializeField] private Rigidbody rb;
     public Joystick joystick;
 
     public float speed = 6f;
     public float turnSmooth = 0.1f;
     float turnSmoothVelocity;
+    float stunTime;
 
     private Vector3 _moveDir;
     private void Update()
@@ -36,4 +38,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = new Vector3(direction.x, 0f, direction.z) * speed;
     }
+
+    
+
+    
 }

@@ -11,6 +11,9 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float speed;
 
     [SerializeField] private LayerMask enemyLayer;
+
+    [SerializeField] private int attackSequence = 0;
+    [SerializeField] private float nextAttack;
     
     
     private bool _isDash = false;
@@ -59,7 +62,31 @@ public class DashNAttack : MonoBehaviour
     {
         animator.SetTrigger("Attack");
 
-        
+        //Attack Sequence(What attack/aniamtion it will do)
+        /*
+        if (attackSequence == 0 && Time.time > nextAttack)
+        {
+            playerMovement.enabled = false;
+            animator.SetTrigger("Attack");
+            attackSequence++;
+            nextAttack = Time.time + 1;
+        }
+        else if (attackSequence == 1 && Time.time > nextAttack)
+        {
+            playerMovement.enabled = false;
+            animator.SetTrigger("Attack");
+            attackSequence++;
+            nextAttack = Time.time + 1;
+        }
+        else if (attackSequence == 1 && Time.time > nextAttack)
+        {
+            playerMovement.enabled = false;
+            animator.SetTrigger("Attack");
+            attackSequence = 0;
+            nextAttack = Time.time + 1.5f;
+
+        }
+        */
 
         //temp damage to test WaveSpawner, will remove
         Collider[] enemies = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
@@ -68,11 +95,14 @@ public class DashNAttack : MonoBehaviour
         {
             if (enemies[i] != null)
             {
-                if (enemies[i].GetComponent<EnemyHandler>() != null)
-                    enemies[i].GetComponent<EnemyHandler>().Damage(5);
+                EnemyHandler enemyHandler = enemies[i].GetComponent<EnemyHandler>();
+                IDamageable damagable = enemies[i].GetComponent<IDamageable>();
 
-                if (enemies[i].GetComponent<IDamageable>() != null)
-                    enemies[i].GetComponent<IDamageable>().Damage(5);
+                if (enemyHandler != null)
+                    enemyHandler.Damage(5);
+
+                if (damagable != null)
+                    damagable.Damage(5);
 
             }
         }

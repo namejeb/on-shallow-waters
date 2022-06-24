@@ -1,31 +1,182 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using _04_Scripts._05_Enemies_Bosses;
+using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
 
 public class SkBlessing : MonoBehaviour
 {
+    [SerializeField] private Image soulMeter;
+    [SerializeField] private Button soulButton;
+
+    [Header("SKB 1")]
+    [SerializeField] private int atkAdd;
+    [SerializeField] private int mvSpeedAdd;
+
+    [Header("SKB 2")]
+    [SerializeField] private int hpRegenAdd;
+    [SerializeField] private int armRegenAdd;
+    [SerializeField] private int regenAmount;
+    [SerializeField] private float regenPerSec;
+
+    [Header("SKB 4")]
+    [SerializeField] private float executeDistance;
+    [SerializeField] private float executePercentage;
+
+    [Header("SKB 5")]
+    [SerializeField] private int skb5Damage;
+
+    private float timer, duration, requiredSoul, currSoul;
+    private bool startCountdown;
+
+    private PlayerStats playerStats;
+
+    public float Skb2Duration
+    {
+        get => regenPerSec * regenAmount;
+    }
+
+    public float Duration
+    {
+        get => duration;
+        set => duration = value;
+    }
+
+    public float RequiredSoul
+    {
+        get => requiredSoul;
+        set => requiredSoul = value;
+    }
+
+    private void Awake()
+    {
+        playerStats = GetComponent<PlayerStats>();
+    }
+
+    private void Start()
+    {
+        soulButton.interactable = false;
+
+        // this is setting for skb, if 1st skb got change need change here too
+        duration = 10;
+        requiredSoul = 50;
+        soulButton.onClick.AddListener(SKB1);
+    }
+
+    private void Update()
+    {
+        if (startCountdown)
+        {
+            timer -= Time.deltaTime;
+            soulMeter.fillAmount -= 1.0f / duration * Time.deltaTime;
+
+            if (timer < 0)
+            {
+                timer = duration;
+                startCountdown = false;
+                soulButton.interactable = false;
+            }
+        }
+    }
+
     public void SKB1()
     {
-        Debug.Log("increase atk and mv spd");
+        if (startCountdown)
+            return;
+
+        timer = duration;
+        playerStats.Atk.AddModifier(atkAdd);
+        playerStats.MovementSpeed.AddModifier(mvSpeedAdd);
+        StartCoroutine(ResetCharacter(duration));
+        startCountdown = true;
     }
 
     public void SKB2()
     {
-        Debug.Log("health and armor regen ");
+        if (startCountdown)
+            return;
+
+        duration = regenPerSec * regenAmount;
+        StartCoroutine(playerStats.RegenLoop(hpRegenAdd, armRegenAdd, regenAmount, regenPerSec));
+        startCountdown = true;
     }
 
     public void SKB3()
     {
+        if (startCountdown)
+            return;
+        //duration = skb3Duration;
         Debug.Log("slow down time");
     }
 
     public void SKB4()
     {
-        Debug.Log("execute low health");
+        if (startCountdown)
+            return;
+
+        startCountdown = true;
+        EnemiesCore[] enemies = FindObjectsOfType<EnemiesCore>();
+
+        foreach (EnemiesCore enemy in enemies)
+        {
+            float distanceToEnemy = (enemy.transform.position - transform.position).magnitude;
+
+            if (enemy.gameObject.activeInHierarchy && distanceToEnemy < executeDistance)
+            {
+                IDamageable e = enemy.GetComponent<IDamageable>();
+                int damage = Mathf.CeilToInt(e.LostHP() * executePercentage);
+
+                if (damage <= 0)
+                    damage = 1;
+
+                e.Damage(damage);
+            }
+        }
     }
 
     public void SKB5()
     {
-        Debug.Log("skb5");
+        if (startCountdown)
+            return;
+
+        startCountdown = true;
+        EnemiesCore[] enemies = FindObjectsOfType<EnemiesCore>();
+
+        foreach (EnemiesCore enemy in enemies)
+        {
+            if (enemy.gameObject.activeInHierarchy)
+            {
+                enemy.GetComponent<IDamageable>().Damage(skb5Damage);
+            }
+        }
+    }
+    
+    IEnumerator ResetCharacter(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Debug.Log("coroutine end");
+        playerStats.Atk.RemoveModifier(atkAdd);
+        playerStats.MovementSpeed.RemoveModifier(mvSpeedAdd);
+    }
+
+    public void UpdateSoulMeter(float percentage)
+    {
+        soulMeter.fillAmount = percentage;
+    }
+
+    public void AddSoul(int soul)
+    {
+        if (startCountdown)
+            return;
+
+        currSoul += soul;
+        UpdateSoulMeter(currSoul / requiredSoul);
+
+        if (currSoul >= requiredSoul)
+        {
+            currSoul = 0;
+            soulButton.interactable = true;
+        }
     }
 }

@@ -1204,6 +1204,7 @@ GameObject:
   - component: {fileID: 1093336465}
   - component: {fileID: 1093336462}
   - component: {fileID: 1093336461}
+  - component: {fileID: 7836655524029940417}
   m_Layer: 0
   m_Name: xbot
   m_TagString: Player
@@ -1298,7 +1299,9 @@ MonoBehaviour:
   speed: 50
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  attackSequence: 0
+  nextAttack: 0
 --- !u!114 &1093336464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1386,6 +1389,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTarget: {fileID: 0}
+--- !u!114 &7836655524029940417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4262394600308867474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76dc580c08108c242b7feed329d0839d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soulMeter: {fileID: 0}
+  atkAdd: 20
+  mvSpeedAdd: 10
+  skb1Duration: 10
+  hpRegenAdd: 5
+  armRegenAdd: 5
+  regenAmount: 5
+  regenPerSec: 0.8
+  executeDistance: 10
+  executePercentage: 0.16
+  skb4Duration: 0.4
+  skb5Damage: 5
+  skb5Duration: 0.4
 --- !u!1 &4788523522053977168
 GameObject:
   m_ObjectHideFlags: 0
