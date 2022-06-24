@@ -38,6 +38,9 @@ public class RoomSpawner : MonoBehaviour
     public static event Action OnRoomChangeStart;
     public static event Action OnRoomChangeFinish;  
     public static event Action<Transform> OnResetPlayerPos;
+    
+    private int _roomFinishedCount = -1; //to exclude basic room
+    private int _bossRoomsIndex;
 
 
     private void OnDestroy()
@@ -79,27 +82,45 @@ public class RoomSpawner : MonoBehaviour
 
     private void SpawnRoom(RoomEntranceDir dir)
     {
-        Room room = null;
-        int roomIndex = 0;
+        //after 5 rooms, spawn boss
+        bool isBossStage = (_roomFinishedCount == 5);
+        HandleSpawnRoom(isBossStage, dir);
+    }
+
+    private void HandleSpawnRoom(bool isBossStage, RoomEntranceDir dir)
+    {
+        if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
         
-        if (dir == RoomEntranceDir.SOUTH)
+        Room room = null;
+        
+        if (isBossStage)
         {
-            roomIndex = UnityEngine.Random.Range(0, southEntranceRooms.Count);
-            room = southEntranceRooms[roomIndex];
-        }
-        else if (dir == RoomEntranceDir.EAST)
-        {
-            roomIndex = UnityEngine.Random.Range(0, eastEntranceRooms.Count);
-            room = eastEntranceRooms[roomIndex];
+            _roomFinishedCount = -1;
+           
+            room = roomListSo.bossRooms[_bossRoomsIndex];
+            if (_bossRoomsIndex + 1 < roomListSo.bossRooms.Count) _bossRoomsIndex++;
         }
         else
         {
-            roomIndex = UnityEngine.Random.Range(0, westEntranceRooms.Count);
-            room = westEntranceRooms[roomIndex];
+            int roomIndex = 0;
+        
+            if (dir == RoomEntranceDir.SOUTH)
+            {
+                roomIndex = UnityEngine.Random.Range(0, southEntranceRooms.Count);
+                room = southEntranceRooms[roomIndex];
+            }
+            else if (dir == RoomEntranceDir.EAST)
+            {
+                roomIndex = UnityEngine.Random.Range(0, eastEntranceRooms.Count);
+                room = eastEntranceRooms[roomIndex];
+            }
+            else
+            {
+                roomIndex = UnityEngine.Random.Range(0, westEntranceRooms.Count);
+                room = westEntranceRooms[roomIndex];
+            }
+            //room = southEntranceRooms[1];
         }
-
-        if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
-        room = southEntranceRooms[1];
         StartCoroutine(SpawnNewRoom(room));
     }
 
@@ -109,15 +130,15 @@ public class RoomSpawner : MonoBehaviour
         
         //Remove old room
         Destroy(_prevRoom.gameObject);
+        _roomFinishedCount++;
         
         //Spawn new room
         Transform roomTransform = room.roomPrefab.transform;
         _prevRoom = Instantiate(roomTransform, roomTransform.position, roomTransform.rotation);
-
+        
         //Set player position to spawn point
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
         
         if (OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
-
     }
 }

@@ -7,7 +7,7 @@ public class BoonEffects : MonoBehaviour {
     
     [Header("Increase Amounts: ")]
     [SerializeField] private float[] atkIncreaseAmounts = new float[3];
-    private int _atkTracker;
+    [SerializeField] private int _atkTracker;
 
     [SerializeField] private float[] atkSpeedIncreaseAmounts = new float[3];
     private int _atkSpeedTracker;
@@ -36,28 +36,23 @@ public class BoonEffects : MonoBehaviour {
     //------Combat------
     public void UpgradeAtk()                        //---5
     {
-        UpgradeStat(_playerStats.Atk, atkIncreaseAmounts, _atkTracker);
-        _atkTracker++;
-        
+        UpgradeStat(_playerStats.Atk, atkIncreaseAmounts, ref _atkTracker);
         print("atk:" + _playerStats.Atk.CurrentValue);
     }
 
     public void UpgradeAtkSpd()                     //---5
     {
-        UpgradeStat(_playerStats.AtkSpeed, atkSpeedIncreaseAmounts, _atkSpeedTracker);
-        _atkSpeedTracker++;
+        UpgradeStat(_playerStats.AtkSpeed, atkSpeedIncreaseAmounts, ref _atkSpeedTracker);
     }
     
     public void UpgradeCritDamage()                 //---5
     {
-        UpgradeStat(_playerStats.CritDamage, critDamageIncreaseAmounts, _critDamageTracker);
-        _critDamageTracker++;
+        UpgradeStat(_playerStats.CritDamage, critDamageIncreaseAmounts, ref _critDamageTracker);
     }
     
     public void UpgradeCritChance()                 //---5
     {
-        UpgradeStat(_playerStats.CritChance, critChanceIncreaseAmounts, _critChanceTracker);
-        _critChanceTracker++;
+        UpgradeStat(_playerStats.CritChance, critChanceIncreaseAmounts,  ref _critChanceTracker);
     }
     
     //Increase 5% damage every time you attack
@@ -189,16 +184,34 @@ public class BoonEffects : MonoBehaviour {
     {
         
     }
-
     
     //Utility
-    private void UpgradeStat(Stat stat, float[] increaseAmounts, int tracker)
+    private void UpgradeStat(Stat stat, float[] increaseAmounts, ref int tracker)
     {
-        Vector2Int modifierValues = CalcModifierValues(stat, increaseAmounts, tracker);
-        stat.AddModifier( modifierValues.x );
-        stat.RemoveModifier( modifierValues.y );
+        // Vector2Int modifierValues = CalcModifierValues(stat, increaseAmounts, tracker);
+        // stat.AddModifier( modifierValues.x );
+        //
+        // if (tracker != increaseAmounts.Length - 1)
+        // {
+        //     stat.RemoveModifier( modifierValues.y );
+        //     tracker++;
+        // }
         
-       // print($"(Added: {modifierValues.x}, Removed: {modifierValues.y})");
+        Vector2Int modifierValues = CalcModifierValues(stat, increaseAmounts, tracker);
+        stat.RemoveModifier( modifierValues.y );
+        print(modifierValues.x);
+        if (tracker != increaseAmounts.Length - 1)
+        {
+            stat.AddModifier( modifierValues.x );
+            tracker++;
+        }
+        else
+        {
+         
+            stat.AddModifier(  modifierValues.x * (int)increaseAmounts[tracker]);
+        }
+        
+        // print($"(Added: {modifierValues.x}, Removed: {modifierValues.y})");
     }
     
     
@@ -211,22 +224,23 @@ public class BoonEffects : MonoBehaviour {
 
         if (tracker > 0)
         {
-            float lastMultiplier = increaseAmounts[tracker - 1] ;
+            float lastMultiplier = increaseAmounts[tracker - 1];
             revertedValue = stat.CurrentValue / lastMultiplier;
 
             float valWithLastMultiplier = revertedValue * lastMultiplier;
             modifierToRemove = Mathf.RoundToInt(GetDifference(revertedValue, valWithLastMultiplier));
         }
         float newValue = revertedValue * increaseAmounts[tracker];
-        
         int modifierToAdd =  Mathf.RoundToInt(GetDifference(newValue, revertedValue));
 
         Vector2Int modifierValues = new Vector2Int(modifierToAdd, modifierToRemove);
         return modifierValues;
     }
+    
 
     private float GetDifference(float val1, float val2)
     {
         return Mathf.Abs(val1 - val2);
     }
+    
 }

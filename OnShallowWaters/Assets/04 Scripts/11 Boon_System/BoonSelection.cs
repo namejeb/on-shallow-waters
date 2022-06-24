@@ -115,13 +115,14 @@ public class BoonSelection : MonoBehaviour
         
     private void ActivateBoonEffect(int effectIndex)
     {
-        switch (effectIndex)
-        {
-            case 0: boonEffects.UpgradeAtk();         break;
-            case 1: boonEffects.UpgradeAtkSpd();      break;
-            case 2: boonEffects.UpgradeCritChance();  break;
-            case 3: boonEffects.UpgradeCritDamage();  break;
-        }
+        boonEffects.UpgradeAtk();
+        // switch (effectIndex)
+        // {
+        //     case 0: boonEffects.UpgradeAtk();         break;
+        //     case 1: boonEffects.UpgradeAtkSpd();      break;
+        //     case 2: boonEffects.UpgradeCritChance();  break;
+        //     case 3: boonEffects.UpgradeCritDamage();  break;
+        // }
     }
 
     public void RollBoons()

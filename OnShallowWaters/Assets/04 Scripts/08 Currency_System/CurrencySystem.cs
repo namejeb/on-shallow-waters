@@ -12,12 +12,13 @@ public class CurrencySystem : MonoBehaviour
 {
     public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType,int>();
 
-    public static event Action OnCurrencyChanged;
+    public static event Action<Vector2Int> OnCurrencyChanged;
+    private static Vector2Int _goldSoulAmount;
     
-    private void OnDestroy()
-    {
-        OnCurrencyChanged -= Print;
-    }
+    // private void OnDestroy()
+    // {
+    //     OnCurrencyChanged -= Print;
+    // }
     
     private void Awake()
     {
@@ -31,15 +32,16 @@ public class CurrencySystem : MonoBehaviour
 
         AddCurrency(CurrencyType.GOLD, 50);
         AddCurrency(CurrencyType.SOULS, 80);
-        Print();
-        OnCurrencyChanged += Print;
+         // Print(_goldSoulAmount);
+         // OnCurrencyChanged += Print;
     }
     
     public static void AddCurrency(CurrencyType currencyType, int amount)
     {
         currencyDict[currencyType] += amount;
+        UpdateVector2Int();
         
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke(_goldSoulAmount);
     }
 
     //Overload for adding in a range
@@ -61,13 +63,21 @@ public class CurrencySystem : MonoBehaviour
         {
             currencyDict[currencyType] = 0;
         }
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();   
+        UpdateVector2Int();
+        
+        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke(_goldSoulAmount);   
     }
 
-
-    private void Print()
+    private static void UpdateVector2Int()
     {
-        print("Current GOLD: " + currencyDict[CurrencyType.GOLD]);
-        print("Current SOULS: " + currencyDict[CurrencyType.SOULS]);
+        _goldSoulAmount.x = currencyDict[CurrencyType.GOLD];
+        _goldSoulAmount.y = currencyDict[CurrencyType.SOULS];
     }
+    
+
+    // private void Print(Vector2Int amounts)
+    // {
+    //     print("Current GOLD: " + currencyDict[CurrencyType.GOLD]);
+    //     print("Current SOULS: " + currencyDict[CurrencyType.SOULS]);
+    // }
 }
