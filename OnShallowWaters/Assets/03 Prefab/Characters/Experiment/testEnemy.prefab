@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5503540064776744071}
   - component: {fileID: 157487083573309903}
   - component: {fileID: 489212650485867900}
+  - component: {fileID: 3484009106226372181}
   m_Layer: 6
   m_Name: testEnemy
   m_TagString: Untagged
@@ -128,13 +129,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cea885d70afa45918f49f78957116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 15
+  maxHp: 10
   atk:
     baseValue: 0
     modifiers: 
     hasCap: 0
     cap: 0
   healthBar: {fileID: 4293882905830535436}
+--- !u!114 &3484009106226372181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108699635585412751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbd54a8ff752da4799eb15e6b455240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMaxAmount: {x: 30, y: 150}
 --- !u!1001 &6206596605425640098
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -115,19 +115,7 @@ public class WaveSpawner : MonoBehaviour
         state = SpawnState.COUNTING;
         waveCountdown = waveIntervalTime;
     }
-
-    // bool EnemyIsAlive()
-    // {
-    //     _searchCountdown -= Time.deltaTime;
-    //     if (_searchCountdown <= 0)
-    //     {
-    //         _searchCountdown = 1f;
-    //         if (GameObject.FindGameObjectWithTag("Enemy") == null)
-    //             return false;
-    //     }
-    //     return true;
-    // }
-	
+    
     IEnumerator SpawnWave(Wave wave)
     {
         state = SpawnState.SPAWNING;
@@ -174,8 +162,6 @@ public class WaveSpawner : MonoBehaviour
 		Transform e = _enemyPooler.GetFromPool(enemyType);
         e.gameObject.SetActive(true);
 		e.position = _spawnPoints[spawnIndex].position;
-
-        print(e.name + e.position);
         
         return e;
     }

@@ -9,21 +9,30 @@ using Random = UnityEngine.Random;
 namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
     public class EnemiesCore : MonoBehaviour, IDamageable{
         #region Basic Attributes
+        [Space][Space]
+        [Header("Basic Attributes: ")]
         public NavMeshAgent agent;
         public Transform puppet;
         public Rigidbody rb3d;
         public bool armourType;
 
         //Enemies Detection & AttackRange
+        [Space][Space]
+        [Header("Detection & Attack Range: ")]
         [FormerlySerializedAs("_dist")] public float dist;
         public float detectRange = 10;
         public float attackRange = 5;
+        
         //! Field of View
+        [Space][Space]
+        [Header("Field of View: ")]
         [Range(0, 30)]public float radius;
         [Range(0, 360)] public float angle;
         public LayerMask targetMask;
         public LayerMask obstructionMask;
 
+        [Space][Space]
+        [Header("Shield: ")]
         public float maxShield = 10;
         public float currentShield;
         
@@ -32,10 +41,15 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         public bool shieldDestroy;
         
         //Enemies Stats
+        [Space] [Space] 
+        [Header("Stats: ")] 
+     
         public float maxHealth;
         private float _coreHealth;
         [FormerlySerializedAs("_coreSpeed")] public float coreSpeed;
         public float coreDamage;
+        
+        private DropSouls _dropSouls;
         #endregion
 
         private protected enum CoreStage{
@@ -43,6 +57,12 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         } private protected CoreStage behaviour;
 
         #region Processing Field [Awake, Start, Update]
+
+        private void Awake()
+        {
+            _dropSouls = GetComponent<DropSouls>();
+        }
+        
         protected virtual void Start(){
             agent = GetComponent<NavMeshAgent>();
             rb3d = GetComponent<Rigidbody>();
@@ -130,7 +150,9 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             StartCoroutine(Death());
         }
 
-        private IEnumerator Death(){
+        private IEnumerator Death()
+        {
+            _dropSouls.Drop();
             yield return new WaitForSeconds(3f);
         }
 

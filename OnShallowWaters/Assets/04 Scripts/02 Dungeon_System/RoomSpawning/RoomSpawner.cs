@@ -119,7 +119,7 @@ public class RoomSpawner : MonoBehaviour
                 roomIndex = UnityEngine.Random.Range(0, westEntranceRooms.Count);
                 room = westEntranceRooms[roomIndex];
             }
-            room = southEntranceRooms[1];
+            //room = southEntranceRooms[1];
         }
         StartCoroutine(SpawnNewRoom(room));
     }

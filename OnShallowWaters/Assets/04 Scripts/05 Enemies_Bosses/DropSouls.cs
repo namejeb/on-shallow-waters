@@ -1,7 +1,7 @@
 
 public class DropSouls : EarnCurrencyItems
 {
-    private void OnDisable()
+    public void Drop()
     {
         EarnSoul(minMaxAmount.x, minMaxAmount.y);
     }

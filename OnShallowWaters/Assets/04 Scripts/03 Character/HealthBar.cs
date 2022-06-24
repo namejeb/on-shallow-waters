@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HealthBar : MonoBehaviour
@@ -12,6 +13,7 @@ public class HealthBar : MonoBehaviour
     {
         LeanTween.reset();
     }
+    
 
     private void Start()
     {
