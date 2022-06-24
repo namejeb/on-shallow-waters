@@ -14,13 +14,12 @@ public class TimeManager : MonoBehaviour
         ResetTimeSettings();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (activated)
         {
-            ActivateBulletTime();
-            StartCoroutine(DeactivateBulletTime());
+            SlowMoActivated();
+            StartCoroutine(DeactivateSlowMo());
         }
     }
 
@@ -36,14 +35,14 @@ public class TimeManager : MonoBehaviour
         Time.fixedDeltaTime = .02f;
     }
 
-    private void ActivateBulletTime()
+    private void SlowMoActivated()
     {
         activated = true;
         Time.timeScale *= slowdownFactor;
         Time.fixedDeltaTime = Time.timeScale * .02f;
     }
 
-    private IEnumerator DeactivateBulletTime()
+    private IEnumerator DeactivateSlowMo()
     {
         while (Time.timeScale < 1f)
         {
