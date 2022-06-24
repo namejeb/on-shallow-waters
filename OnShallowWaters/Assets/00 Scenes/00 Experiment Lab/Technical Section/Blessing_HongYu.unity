@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: a3032b97e0f0d9c479c175bf274f05f9, type: 2}
 --- !u!4 &34978684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1988162347107069439, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
@@ -192,9 +192,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1696356315}
     - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
+      propertyPath: angle
+      value: 71
+      objectReference: {fileID: 0}
+    - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
       propertyPath: puppet
       value: 
       objectReference: {fileID: 1432710439}
+    - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
+      propertyPath: radius
+      value: 15.3
+      objectReference: {fileID: 0}
     - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
       propertyPath: maxHealth
       value: 50
@@ -340,6 +348,10 @@ PrefabInstance:
     - target: {fileID: 1048972297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ActivateDash
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406398122, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1593991290, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
       propertyPath: m_RootOrder
@@ -582,6 +594,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2116110277958002824, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
   m_PrefabInstance: {fileID: 155930110}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &269872635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 269872637}
+  - component: {fileID: 269872636}
+  m_Layer: 0
+  m_Name: TimeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &269872636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269872635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32c2e62a8783b547a94525c4fbd00aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowdownFactor: 0.02
+  backToNormalTimeLength: 30
+--- !u!4 &269872637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269872635}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.750899, y: 0.3454876, z: 7.064912}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &361422339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -646,9 +704,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 361422340}
     - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
+      propertyPath: angle
+      value: 86
+      objectReference: {fileID: 0}
+    - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
       propertyPath: puppet
       value: 
       objectReference: {fileID: 1432710439}
+    - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
+      propertyPath: radius
+      value: 14.9
+      objectReference: {fileID: 0}
     - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
       propertyPath: maxHealth
       value: 50
@@ -682,7 +748,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!64 &421128693
 MeshCollider:
@@ -891,7 +957,7 @@ GameObject:
   - component: {fileID: 681707511}
   - component: {fileID: 681707510}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Add Soul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -950,7 +1016,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: 'Add Soul
+
+'
 --- !u!222 &681707511
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1128,9 +1196,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1111903324}
     - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
+      propertyPath: angle
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
       propertyPath: puppet
       value: 
       objectReference: {fileID: 1432710439}
+    - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
+      propertyPath: radius
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
       propertyPath: maxHealth
       value: 50
@@ -1211,9 +1287,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1281733814}
     - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
+      propertyPath: angle
+      value: 86
+      objectReference: {fileID: 0}
+    - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
       propertyPath: puppet
       value: 
       objectReference: {fileID: 1432710439}
+    - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
+      propertyPath: radius
+      value: 14.9
+      objectReference: {fileID: 0}
     - target: {fileID: 5554806339268852523, guid: 4bae02a87327c064e8398ce795279861, type: 3}
       propertyPath: maxHealth
       value: 50
@@ -1332,7 +1416,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
+  m_UpdateMethod: 0
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
@@ -1691,7 +1775,7 @@ GameObject:
   - component: {fileID: 2083405647}
   - component: {fileID: 2083405646}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: '[Debug] Add Soul Button'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1711,12 +1795,12 @@ RectTransform:
   m_Children:
   - {fileID: 681707509}
   m_Father: {fileID: 805242283}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 345.93, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 531.9, y: 95}
+  m_SizeDelta: {x: 81.07, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2083405646
 MonoBehaviour:
