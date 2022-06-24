@@ -23,6 +23,7 @@ public class EnemyHandler : CharacterStats, IDamageable
     protected override void Die()
     {
         WaveSpawner.UpdateWaveTotalEnemies();
+        print("died");
         gameObject.SetActive(false);
     }
 }

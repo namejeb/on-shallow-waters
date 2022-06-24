@@ -175,6 +175,8 @@ public class WaveSpawner : MonoBehaviour
         e.gameObject.SetActive(true);
 		e.position = _spawnPoints[spawnIndex].position;
 
+        print(e.name + e.position);
+        
         return e;
     }
 
