@@ -65,4 +65,9 @@ public class Boss_Stats : CharacterStats, IDamageable
         _bossFsm.SetState(_bossFsm.dieState);
         _uiManager.DisableSlider(0);
     }
+
+    public float LostHP()
+    {
+        return 0;
+    }
 }

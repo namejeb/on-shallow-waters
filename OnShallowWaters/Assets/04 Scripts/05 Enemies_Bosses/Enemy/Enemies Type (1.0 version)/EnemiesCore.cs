@@ -123,6 +123,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
         protected virtual void HealthBar(int dmg){
             _coreHealth -= dmg;
+            Debug.Log("Enemy Health: " + _coreHealth);
             //Set Health UI
 
             if (_coreHealth > 0) return;
@@ -167,6 +168,11 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
                 case false: HealthBar(damageAmount); break;
                 case true: ShieldBar(damageAmount); break;
             }
+        }
+
+        public float LostHP()
+        {
+            return maxHealth - _coreHealth;
         }
         #endregion
     }
