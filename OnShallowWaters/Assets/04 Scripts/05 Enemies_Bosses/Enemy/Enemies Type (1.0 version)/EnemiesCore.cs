@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
-    public class EnemiesCore : MonoBehaviour, IDamageable{
+    public class EnemiesCore : MonoBehaviour {
         #region Basic Attributes
         [Space][Space]
         [Header("Basic Attributes: ")]
@@ -156,7 +156,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         //     yield return new WaitForSeconds(3f);
         // }
 
-        private void ShieldBar(int damage) {
+        public void ShieldBar(int damage) {
             switch (shieldDestroy){
                 case true: _enemyStats.Damage(damage); return;
                 case false:
@@ -185,17 +185,18 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             shieldRecover = false;
         }
 
-        public void Damage(int damageAmount){
-            switch (armourType){
-                case false: _enemyStats.Damage(damageAmount); break;
-                case true: ShieldBar(damageAmount); break;
-            }
-        }
-
-        public float LostHP()
-        {
-            return maxHealth - _coreHealth;
-        }
+        // public void Damage(int damageAmount){
+        //     switch (armourType){
+        //         case false: _enemyStats.Damage(damageAmount); break;
+        //         case true: ShieldBar(damageAmount); break;
+        //     }
+        // }
+        
+        //
+        // public float LostHP()
+        // {
+        //     return maxHealth - _coreHealth;
+        // }
         #endregion
     }
 }

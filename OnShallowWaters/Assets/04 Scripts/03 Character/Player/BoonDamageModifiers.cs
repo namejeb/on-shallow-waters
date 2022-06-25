@@ -5,7 +5,6 @@ public class BoonDamageModifiers : MonoBehaviour
 {
    private bool _dmgIncreaseSingleEnemyActivated = false;
    private bool _firstTimeDmgBonusActivated = false;
-   
    private bool _dmgWhenShieldBreakActivated = false;
 
    private float _dmgIncreaseSingleEnemyModifier = 1f; 
@@ -32,8 +31,6 @@ public class BoonDamageModifiers : MonoBehaviour
             outgoingDmg = ApplyFirstTimeDamageBonus(outgoingDmg);
          }
       }
-
-
       return outgoingDmg;
    }
    

@@ -42,15 +42,14 @@ public class BoonEffects : MonoBehaviour {
 
     [Space] [Space] [Space] 
     [Header("Effects w/o arrays: ")] 
+    [SerializeField] private float shieldExtraDmgBonus = 1.2f;
+    [SerializeField] private float shieldBreakTrueDmg = 100f;
     [SerializeField] private float dmgIncreaseSingleEnemyEffectAmt = 1.4f;
     [SerializeField] private float firstTimeDmgBonus = 2f;
-    [SerializeField] private float shieldBreakTrueDmg = 100f;
-    [SerializeField] private float shieldExtraDmgBonus = 1.2f;
-    
-    
-    
+
     
     private StatIncreaseAmounts[] _statIncreaseAmounts;
+    private float[] _floatIncreaseAmounts;
     
     private void OnValidate()
     {
@@ -80,8 +79,16 @@ public class BoonEffects : MonoBehaviour {
     private void Start()
     {
         _playerStats = PlayerHandler.Instance.PlayerStats;
-        InitIncreaseAmounts();
+        InitStatIncreaseAmounts();
 
+        _floatIncreaseAmounts = new float[]
+        {
+            shieldExtraDmgBonus,
+            shieldBreakTrueDmg,
+            dmgIncreaseSingleEnemyEffectAmt,
+            firstTimeDmgBonus,
+        };
+        
         _statIncreaseAmounts = new StatIncreaseAmounts[]
         {
             atkPercent,
@@ -90,11 +97,12 @@ public class BoonEffects : MonoBehaviour {
             critDmg,
             defense,
             dmgReduction,
-            dmgReductionWhenLowHp
+            mvmntSpd,
+            dmgReductionWhenLowHp,
         };
     }
     
-    private void InitIncreaseAmounts()
+    private void InitStatIncreaseAmounts()
     {
         atkPercent.stat = _playerStats.AtkPercent;
         atkSpd.stat = _playerStats.AtkSpeed;
@@ -103,6 +111,7 @@ public class BoonEffects : MonoBehaviour {
         critDmg.stat = _playerStats.CritDamage;
         
         defense.stat = _playerStats.Defense;
+        mvmntSpd.stat = _playerStats.MovementSpeed;
         
         //uses the same stats
         dmgReduction.stat = _playerStats.DamageReduction;
@@ -111,26 +120,26 @@ public class BoonEffects : MonoBehaviour {
     
     //------Combat------
     // ATK % increase 50%/85%/120%
-    public void UpgradeAtkPercent()                        //---5
+    public void UpgradeAtkPercent()                  //---N
     {
         UpgradeStat(atkPercent);
     }
 
     //ATK speed increase 15%/25%/30%
-    public void UpgradeAtkSpd()                     //---5
+    public void UpgradeAtkSpd()                     //---N
     {
         UpgradeStat(atkSpd);
     }
     
         
     //Crit chance increase 15%/25%/30% ( Normal crit deal 50% more dmg)
-    public void UpgradeCritChance()                 //---5
+    public void UpgradeCritChance()                 //---N
     {
         UpgradeStat(critChance);
     }
 
     //Crit dmg increase 20%/30%/40%
-    public void UpgradeCritDamage()                 //---5
+    public void UpgradeCritDamage()                 //---N
     {
         UpgradeStat(critDmg);
     }
@@ -138,56 +147,56 @@ public class BoonEffects : MonoBehaviour {
              
     //Deal dmg when enemy's armor break
     //sus - Deal 100 true dmg when enemy's armor break    
-    public void DmgWhenArmorBreak()                 //---4
+    public void DmgWhenArmorBreak()                 //---Y
     {
         PlayerHandler.Instance.BoonDamageModifiers.EnableDmgWhenShieldBreak(shieldBreakTrueDmg);
     }
 
     //Deal 20% more dmg to enemy's armor
-    public void DamageToArmorIncrease()             //---3 
+    public void DmgToArmorIncrease()                //---Y 
     {
         PlayerHandler.Instance.BoonDamageModifiers.EnableExtraShieldDmg(shieldExtraDmgBonus);
     }
     
     //Deal 40% more dmg when there is only one enemy
-    public void SingleEnemyDmgIncrease()            //---3 
+    public void SingleEnemyDmgIncrease()            //---Y 
     {
         PlayerHandler.Instance.BoonDamageModifiers.EnableSingleEnemyDmgIncrease(dmgIncreaseSingleEnemyEffectAmt);
     }
     
     //Undamaged enemies will receive 100% more damage
-    public void FirstTimeDmgBonus()                 //---3 
+    public void FirstTimeDmgBonus()                 //---Y 
     {
         PlayerHandler.Instance.BoonDamageModifiers.EnableFirstTimeDmgBonus(firstTimeDmgBonus);
     }
     
     //------Survival------
     //Increase max hp by 30%/70%/110% 
-    public void IncreaseMaxHp()                     //---5 
+    public void IncreaseMaxHp()                     //---Y 
     {
         _playerStats.IncreaseMaxHp( maxHpIncreaseAmounts[_maxHpTracker] );
         _maxHpTracker++;
     }
     
     //Increase defense by 30%/50%/70%
-    public void IncreaseDefense()                     //---5 
+    public void IncreaseDefense()                     //---N
     {
         UpgradeStat(defense);
     }
 
     //Increase movement speed by 15%/25%/35%/50%   
-    public void IncreaseMovementSpeed()             //---5 
+    public void IncreaseMovementSpeed()                 //---Y 
     {
         UpgradeStat(mvmntSpd);
     }
     //Reduce damage taken by 10%/20%
-    public void ReduceDamageTaken()                 //---2
+    public void ReduceDamageTaken()                 //---N
     {
         UpgradeStat(dmgReduction);
     }
     
     //Reduce 25% dmg taken while 30%/40% hp or lower.
-    public void ReduceDamageWhenHpLow()         //---2
+    public void ReduceDamageWhenHpLow()             //---N
     {
         UpgradeStat(dmgReductionWhenLowHp);
     }
@@ -242,7 +251,12 @@ public class BoonEffects : MonoBehaviour {
 
     public StatIncreaseAmounts GetStatIncreaseAmounts(int id)
     {
-        return _statIncreaseAmounts[id-1];
+        return _statIncreaseAmounts[ id - 5 ];
+    }
+
+    public float GetFloatIncreaseAmounts(int id)
+    {
+        return _floatIncreaseAmounts[id - 1];
     }
     
     
