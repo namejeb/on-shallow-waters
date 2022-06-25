@@ -6,6 +6,7 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerStats stats;
+    [SerializeField] private EnemyStats eStats;
     
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
@@ -28,6 +29,11 @@ public class DashNAttack : MonoBehaviour
     private float _elapsedTime;
     private float _endTime = 0f;
 
+
+    private void Awake()
+    {
+        stats = PlayerHandler.Instance.PlayerStats;
+    }
 
     private void FixedUpdate()
     {
@@ -64,20 +70,23 @@ public class DashNAttack : MonoBehaviour
 
     public void Attack()
     {
-        playerMovement.enabled = false;
+        //playerMovement.enabled = false;
 
         //Attack Sequence(What attack/aniamtion it will do)
 
         if (attackSequence == 0 && Time.time > nextAttack)
         {
-            outDamage = 80 / 100;
+            outDamage = 80 / 100 * ((stats.Atk.CurrentValue + 0) * stats.AtkPercent.BaseValue) * (100/(100 + 50)) ;
+            Debug.Log(outDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack");
             attackSequence++;
-            nextAttack = Time.time + 1;
+            nextAttack = Time.time + 10;
         }
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
+            outDamage = 90 / 100 * ((stats.Atk.BaseValue + 0) * stats.AtkPercent.CurrentValue) * (100 / (100 + 20));
+            Debug.Log(outDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
             attackSequence++;
@@ -85,6 +94,8 @@ public class DashNAttack : MonoBehaviour
         }
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
+            outDamage = 100 / 100 * ((stats.Atk.BaseValue + 0) * stats.AtkPercent.CurrentValue) * (100 / (100 + 20));
+            Debug.Log(outDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
             attackSequence = 0;
@@ -106,7 +117,7 @@ public class DashNAttack : MonoBehaviour
                 //     enemyHandler.Damage(5);
 
                 if (damagable != null)
-                    damagable.Damage(5);
+                    damagable.Damage(outDamage);
 
             }
         }

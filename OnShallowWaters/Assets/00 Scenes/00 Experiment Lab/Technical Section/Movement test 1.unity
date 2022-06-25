@@ -377,6 +377,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   joystick: {fileID: 278739891}
   speed: 10
+  rotationSpeed: 10
   turnSmooth: 0.1
 --- !u!143 &97481714
 CharacterController:
@@ -410,6 +411,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 97481713}
   animator: {fileID: 0}
+  stats: {fileID: 0}
+  eStats: {fileID: 0}
   dashDuration: 0.2
   range: 1
   speed: 50
@@ -418,6 +421,8 @@ MonoBehaviour:
     m_Bits: 0
   attackSequence: 0
   nextAttack: 0
+  outDamage: 0
+  inDamage: 0
 --- !u!114 &97481717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3127,6 +3132,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93ba297178143b48afc89b92d325686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1948713398 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1093336462, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+  m_PrefabInstance: {fileID: 4028039543814449649}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606191925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e316826d5da42d1aa127712f40887f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1970566681
 GameObject:
   m_ObjectHideFlags: 0
@@ -3436,6 +3452,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1093336462, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: atk.baseValue
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093336462, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: atkPercent.baseValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 1948713398}
     - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: enemyLayer.m_Bits
       value: 64
