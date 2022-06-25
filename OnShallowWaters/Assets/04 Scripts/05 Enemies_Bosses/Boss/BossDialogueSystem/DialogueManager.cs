@@ -7,19 +7,24 @@ using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
+    [Header("Ref: ")]
     public static DialogueManager instance;
-
+    public GameObject dialogueBox;
+    public TMP_Text nameText;
+    public TMP_Text dialogueText;
+    
     public Dialogue dd;
 
     public bool isInteracted = false, isTyping;
     public string currSentence;
-
-    public GameObject dialogueBox;
-    public TMP_Text nameText;
-    public TMP_Text dialogueText;
-
+    
     private Queue<string> sentences;
     private IEnumerator coroutine;
+
+    [Space][Space]
+    [Header("Settings: ")]
+    [SerializeField] private float typeSpeed = .02f;
+    
 
     void Awake()
     {
@@ -90,7 +95,7 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return null;
+            yield return new WaitForSeconds(typeSpeed);
         }
         isTyping = false;
     }
