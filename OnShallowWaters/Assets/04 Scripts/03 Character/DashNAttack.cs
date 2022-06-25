@@ -35,7 +35,6 @@ public class DashNAttack : MonoBehaviour
 
     private void Dash()
     {
-        //playerMovement.Move((_endPos - _startPos), speed); 
         playerMovement.Move(transform.forward, speed);
 
         if (Time.time > _endTime)
@@ -52,10 +51,7 @@ public class DashNAttack : MonoBehaviour
         _isDash = true;
         playerMovement.enabled = false;
         
-        // _startPos = transform.position;
-        // _endPos = (transform.forward + transform.position) * range;
-
-        _endTime = Time.time + dashDuration;
+        _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo
     }
 
     public void Attack()

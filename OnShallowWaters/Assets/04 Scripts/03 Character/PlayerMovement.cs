@@ -1,5 +1,3 @@
-using System;
-using TreeEditor;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -50,6 +48,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector3 direction, float speed)
     {
-        rb.velocity = new Vector3(direction.x, 0f, direction.z) * speed / Time.timeScale;
+        rb.velocity = new Vector3(direction.x, 0f, direction.z) * speed  / Time.timeScale;
     }
 }
