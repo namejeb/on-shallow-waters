@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats, IShopCustomer
 {
- 
+    [SerializeField] private Stat atkPercent;
     [SerializeField] private Stat atkSpeed;
     [SerializeField] private Stat critChance;
     [SerializeField] private Stat critDamage;
@@ -17,6 +17,7 @@ public class PlayerStats : CharacterStats, IShopCustomer
     [SerializeField] private int atkUpgradeAmt = 3;
     [SerializeField] private int defUpgradeAmt = 3;
     
+    public Stat AtkPercent { get => atkPercent; }
     public Stat AtkSpeed { get => atkSpeed; }
     public Stat CritChance { get => critChance; }
     public Stat CritDamage { get => critDamage; }
