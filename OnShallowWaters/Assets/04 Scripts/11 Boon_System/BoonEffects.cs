@@ -1,35 +1,26 @@
-using System;
 using UnityEngine;
 
+[System.Serializable]
+public class StatIncreaseAmounts
+{
+    [HideInInspector] public Stat stat;
+    public float[] increaseAmounts;
+    [HideInInspector] public int tracker;
 
-public class BoonEffects : MonoBehaviour {
-    private PlayerStats _playerStats;
-
-    [System.Serializable]
-    private class StatIncreaseAmounts
+    public StatIncreaseAmounts(int size)
     {
-        [HideInInspector] public Stat stat;
-        public float[] increaseAmounts;
-        [HideInInspector] public int tracker;
-
-        public StatIncreaseAmounts(int size)
-        {
-            this.increaseAmounts = new float[size];
-        }
+        this.increaseAmounts = new float[size];
     }
     
-    [System.Serializable]
-    private class StatIncreaseAmountsInt
+    public float GetIncreaseAmount()
     {
-        [HideInInspector] public int statInt;
-        public float[] increaseAmounts;
-        [HideInInspector] public int tracker;
-
-        public StatIncreaseAmountsInt(int size)
-        {
-            this.increaseAmounts = new float[size];
-        }
+        return ( this.increaseAmounts[this.tracker]);
     }
+}
+public class BoonEffects : MonoBehaviour {
+    
+    private PlayerStats _playerStats;
+    
     [Header("Increase Amounts (Combat): ")]
     [SerializeField] private StatIncreaseAmounts atkPercent = new StatIncreaseAmounts(3);
     [SerializeField] private StatIncreaseAmounts atkSpd = new StatIncreaseAmounts(3);
@@ -42,12 +33,12 @@ public class BoonEffects : MonoBehaviour {
     [SerializeField] private float[] maxHpIncreaseAmounts = new float[3];
     private int _maxHpTracker;
     
- //   [SerializeField] private StatIncreaseAmountsInt maxHp = new StatIncreaseAmountsInt(3);
     [SerializeField] private StatIncreaseAmounts defense = new StatIncreaseAmounts(3);
     [SerializeField] private StatIncreaseAmounts mvmntSpd = new StatIncreaseAmounts(4);
     [SerializeField] private StatIncreaseAmounts dmgReduction = new StatIncreaseAmounts(2);
     [SerializeField] private StatIncreaseAmounts dmgReductionWhenLowHp = new StatIncreaseAmounts(2);
     
+    private StatIncreaseAmounts[] _statIncreaseAmounts;
     
     private void OnValidate()
     {
@@ -89,30 +80,40 @@ public class BoonEffects : MonoBehaviour {
     {
         _playerStats = PlayerHandler.Instance.PlayerStats;
         InitIncreaseAmounts();
+
+        _statIncreaseAmounts = new StatIncreaseAmounts[]
+        {
+            atkPercent,
+            atkSpd,
+            critChance,
+            critDmg,
+            defense,
+            dmgReduction,
+            dmgReductionWhenLowHp
+        };
     }
     
     //------Combat------
-    // ATK % increase 50%/85%/120%/130%/140%/150%
+    // ATK % increase 50%/85%/120%
     public void UpgradeAtkPercent()                        //---5
     {
         UpgradeStat(atkPercent);
-        print("atk:" + _playerStats.AtkPercent.CurrentValue);
     }
 
-    //ATK speed increase 15%/25%/30%/35%/40%/45%
+    //ATK speed increase 15%/25%/30%
     public void UpgradeAtkSpd()                     //---5
     {
         UpgradeStat(atkSpd);
     }
     
         
-    //Crit chance increase 15%/25%/30%/35%/40%/45% ( Normal crit deal 50% more dmg)
+    //Crit chance increase 15%/25%/30% ( Normal crit deal 50% more dmg)
     public void UpgradeCritChance()                 //---5
     {
         UpgradeStat(critChance);
     }
 
-    //Crit dmg increase 20%/30%/40%/50%/60%/70%
+    //Crit dmg increase 20%/30%/40%
     public void UpgradeCritDamage()                 //---5
     {
         UpgradeStat(critDmg);
@@ -149,7 +150,7 @@ public class BoonEffects : MonoBehaviour {
     //Increase max hp by 30%/70%/110% 
     public void IncreaseMaxHp()                     //---5 
     {
-        _playerStats.IncreaseMaxHp(maxHpIncreaseAmounts[_maxHpTracker] ); print($"Current Max: {_playerStats.MaxHp}");
+        _playerStats.IncreaseMaxHp( maxHpIncreaseAmounts[_maxHpTracker] );
         _maxHpTracker++;
     }
     
@@ -162,8 +163,7 @@ public class BoonEffects : MonoBehaviour {
     //Increase movement speed by 15%/25%/35%/50%   
     public void IncreaseMovementSpeed()             //---5 
     {
-       // UpgradeStat(_playerStats.MovementSpeed, mvmntSpdIncreaseAmounts, ref _mvmntSpdTracker);
-       UpgradeStat(mvmntSpd);
+        UpgradeStat(mvmntSpd);
     }
     //Reduce damage taken by 10%/20%
     public void ReduceDamageTaken()                 //---2
@@ -219,12 +219,16 @@ public class BoonEffects : MonoBehaviour {
     {
         return Mathf.Abs(val1 - val2);
     }
-
-    private int GetIncreaseAmount(StatIncreaseAmounts statIncreaseAmounts)
-    {
-        return (int) ( statIncreaseAmounts.increaseAmounts[statIncreaseAmounts.tracker] * 100 );
-    }
     
+    public float GetMaxHpIncreaseAmount()
+    {
+        return maxHpIncreaseAmounts[_maxHpTracker];
+    }
+
+    public StatIncreaseAmounts GetStatIncreaseAmounts(int id)
+    {
+        return _statIncreaseAmounts[id];
+    }
     
     
     // //Increase 5% damage every time you attack
@@ -263,7 +267,6 @@ public class BoonEffects : MonoBehaviour {
     // {
     //     
     // }
-    
     
     // //------Bonus------
     // //Increase souls received by 30%/50%/70%
@@ -307,5 +310,4 @@ public class BoonEffects : MonoBehaviour {
     // {
     //     
     // }
-
 }

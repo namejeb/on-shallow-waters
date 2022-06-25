@@ -15,8 +15,8 @@ public class BoonSelection : MonoBehaviour
     [Space][Space]
     [SerializeField] private Image background;
 
-    [SerializeField] private List<BoonItem> boonItemsList = new List<BoonItem>();
-    [SerializeField] private List<BoonItemsTimesUsed> _boonItemsTimesUsed = new List<BoonItemsTimesUsed>();
+    private List<BoonItem> boonItemsList = new List<BoonItem>();
+    private List<BoonItemsTimesUsed> _boonItemsTimesUsed = new List<BoonItemsTimesUsed>();
   
 
     private Transform _container;
@@ -87,15 +87,16 @@ public class BoonSelection : MonoBehaviour
     }
     private void ActivateBoonEffect(int effectIndex)
     {
-        boonEffects.IncreaseMaxHp();
+       // boonEffects.IncreaseMaxHp();
         switch (effectIndex)
         {
-            // case 0: boonEffects.UpgradeAtkPercent();  break;
-            // case 1: boonEffects.UpgradeAtkSpd();      break;
-            // case 2: boonEffects.UpgradeCritChance();  break;
-            // case 3: boonEffects.UpgradeCritDamage();  break;
+            case 0: boonEffects.IncreaseMaxHp();      break;
+            case 1: boonEffects.UpgradeAtkPercent();  break;
+            case 2: boonEffects.UpgradeAtkSpd();      break;
+            case 3: boonEffects.UpgradeCritChance();  break;
+            case 4: boonEffects.UpgradeCritDamage();  break;
         }
-
+        
         //increment usage
         BoonItemsTimesUsed bitu = _boonItemsTimesUsed.Find(b => b.boonItem.id == effectIndex);
         if (!bitu.IsLimitReached) bitu.usageCount++;
@@ -147,7 +148,15 @@ public class BoonSelection : MonoBehaviour
 
             //Set info
             _buttons[i].Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
-            _buttons[i].Find("descText").GetComponent<TextMeshProUGUI>().SetText(boonItem.description);
+            
+            float effectAmount = 0f;
+            if (boonItem.id == 0)
+                effectAmount = boonEffects.GetMaxHpIncreaseAmount() * 100;
+            else
+                effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id).GetIncreaseAmount() * 100;
+            
+            _buttons[i].Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} +{effectAmount}%");
+          
             
             //Set onClick function
             Button_UI buttonUI = _buttons[i].GetComponent<Button_UI>();
