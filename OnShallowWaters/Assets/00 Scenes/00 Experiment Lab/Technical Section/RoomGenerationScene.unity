@@ -178,6 +178,14 @@ PrefabInstance:
       propertyPath: m_fontStyle
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1048972297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1093336465}
+    - target: {fileID: 1048972297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ActivateDash
+      objectReference: {fileID: 0}
     - target: {fileID: 5067732618421055362, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
       propertyPath: m_Name
       value: UI_Canvas
@@ -5753,6 +5761,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda4b15f0b90a404db6cf4279e67901e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1093336465 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3169301569689684824, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
+  m_PrefabInstance: {fileID: 3169301569289797830}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446395478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed1b68068e47d754592a3e4afbecd35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1093336474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10613,6 +10632,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 940445731}
     - target: {fileID: 3169301569689684824, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169301569689684824, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
       propertyPath: damageableLayer.m_Bits
       value: 512
       objectReference: {fileID: 0}
@@ -10630,7 +10653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
       propertyPath: movementSpeed.baseValue
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
       propertyPath: atk.modifiers.Array.size

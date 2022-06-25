@@ -48,11 +48,13 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {      
          rb.velocity = Vector3.zero;
-         Move(_moveDir, speed);
+         Move(_moveDir, speed, false);
     }
 
-    public void Move(Vector3 direction, float speed)
+    public void Move(Vector3 direction, float speed, bool isDash)
     {
-        rb.velocity = new Vector3(direction.x, 0f, direction.z) * speed * _playerStats.MovementSpeed.CurrentValue / Time.timeScale;
+        float dashModifier = 1f;
+        if (isDash) dashModifier = speed;
+        rb.velocity = new Vector3(direction.x, 0f, direction.z) * (dashModifier * _playerStats.MovementSpeed.CurrentValue) / Time.timeScale;
     }
 }

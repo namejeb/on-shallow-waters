@@ -16,7 +16,7 @@ public class BoonSelection : MonoBehaviour
     [SerializeField] private Image background;
 
     private List<BoonItem> boonItemsList = new List<BoonItem>();
-   [SerializeField] private List<BoonItemsTimesUsed> _boonItemsTimesUsed = new List<BoonItemsTimesUsed>();
+   private List<BoonItemsTimesUsed> _boonItemsTimesUsed = new List<BoonItemsTimesUsed>();
   
 
     private Transform _container;
@@ -88,6 +88,7 @@ public class BoonSelection : MonoBehaviour
     }
     private void ActivateBoonEffect(int effectIndex)
     {
+        effectIndex = 10;
         // boonEffects.IncreaseMaxHp();
         switch (effectIndex)
         {
@@ -173,8 +174,6 @@ public class BoonSelection : MonoBehaviour
 
     private void SetButtonInfo(Transform buttonTransform, BoonItem boonItem)
     {
-        print(boonItem.title);
-        
         //Set info
         buttonTransform.Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
             
@@ -183,11 +182,7 @@ public class BoonSelection : MonoBehaviour
         if (boonItem.increaseAmountType == 0)
             effectAmount = boonEffects.GetMaxHpIncreaseAmount();
         else if (boonItem.increaseAmountType == 1)
-        {
-            print(boonItem.id);
             effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id).GetIncreaseAmount();
-        }
-         
         else
             effectAmount = boonEffects.GetFloatIncreaseAmounts(boonItem.id);
         

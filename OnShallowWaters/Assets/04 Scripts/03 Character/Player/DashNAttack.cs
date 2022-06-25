@@ -48,7 +48,7 @@ public class DashNAttack : MonoBehaviour
 
     private void Dash()
     {
-        playerMovement.Move(transform.forward, speed);
+        playerMovement.Move(transform.forward, speed, true);
 
         if (Time.time > _endTime)
         {
