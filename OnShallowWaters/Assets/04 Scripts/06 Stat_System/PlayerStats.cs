@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -10,27 +9,27 @@ public class PlayerStats : CharacterStats, IShopCustomer
     [SerializeField] private Stat critChance;
     [SerializeField] private Stat critDamage;
     [SerializeField] private Stat movementSpeed;
+    [SerializeField] private Stat defense;
+    [SerializeField] private Stat damageReduction;
     
-    
-    [Space][Space]
-    [Header("Upgrade Amount:")]
-    [SerializeField] private int atkUpgradeAmt = 3;
-    [SerializeField] private int defUpgradeAmt = 3;
     
     public Stat AtkPercent { get => atkPercent; }
     public Stat AtkSpeed { get => atkSpeed; }
     public Stat CritChance { get => critChance; }
     public Stat CritDamage { get => critDamage; }
     public Stat MovementSpeed { get => movementSpeed; }
+    public Stat Defense { get => defense; }
+    public Stat DamageReduction { get => damageReduction; }
+    
     
     protected override void Die()
     {
         //game end logics
     }
 
-    private void IncreaseMaxHp(int amount)
+    public void IncreaseMaxHp(float multiplier)
     {
-        MaxHp += amount;
+        MaxHp *= multiplier;
     }
     
     public void BoughtItem(ShopItem.ItemType itemType, CurrencyType currencyType)

@@ -8,7 +8,6 @@ public class BoonSelection : MonoBehaviour
 {
     [SerializeField] private BoonEffects boonEffects;
     
-    
     [Space][Space]
     [SerializeField] private BoonItemsSO boonItemsSo;
     [SerializeField] private float offsetX;
@@ -16,8 +15,8 @@ public class BoonSelection : MonoBehaviour
     [Space][Space]
     [SerializeField] private Image background;
 
-    private List<BoonItem> boonItemsList = new List<BoonItem>();
-    [SerializeField] private List<BoonItemsTimesUsed> _boonItemsTimesUseds = new List<BoonItemsTimesUsed>();
+    [SerializeField] private List<BoonItem> boonItemsList = new List<BoonItem>();
+    [SerializeField] private List<BoonItemsTimesUsed> _boonItemsTimesUsed = new List<BoonItemsTimesUsed>();
   
 
     private Transform _container;
@@ -33,7 +32,7 @@ public class BoonSelection : MonoBehaviour
     {
         public BoonItem boonItem;
         public int usageCount = 0;
-        private readonly int _maxUsageCount = 1;
+        private readonly int _maxUsageCount = 6;
 
         public bool IsLimitReached => usageCount == _maxUsageCount;
 
@@ -71,7 +70,7 @@ public class BoonSelection : MonoBehaviour
         foreach (BoonItem boonItem in boonItemsSo.boonItems)
         {
             BoonItemsTimesUsed bitu = new BoonItemsTimesUsed(boonItem);
-            _boonItemsTimesUseds.Add(bitu);
+            _boonItemsTimesUsed.Add(bitu);
         }
     }
         
@@ -88,37 +87,40 @@ public class BoonSelection : MonoBehaviour
     }
     private void ActivateBoonEffect(int effectIndex)
     {
-        //boonEffects.UpgradeAtk();
+        boonEffects.IncreaseMaxHp();
         switch (effectIndex)
         {
-            case 0: boonEffects.UpgradeAtkPercent();         break;
-            case 1: boonEffects.UpgradeAtkSpd();      break;
-            case 2: boonEffects.UpgradeCritChance();  break;
-            case 3: boonEffects.UpgradeCritDamage();  break;
+            // case 0: boonEffects.UpgradeAtkPercent();  break;
+            // case 1: boonEffects.UpgradeAtkSpd();      break;
+            // case 2: boonEffects.UpgradeCritChance();  break;
+            // case 3: boonEffects.UpgradeCritDamage();  break;
         }
 
         //increment usage
-        BoonItemsTimesUsed bitu = _boonItemsTimesUseds.Find(b => b.boonItem.id == effectIndex);
-        
-        if(!bitu.IsLimitReached)
-            bitu.usageCount++;
-        else
-        {    
-            //remove from pool;
-            boonItemsList.Remove(boonItemsList.Find(bI => bI.id == effectIndex));
-        }
+        BoonItemsTimesUsed bitu = _boonItemsTimesUsed.Find(b => b.boonItem.id == effectIndex);
+        if (!bitu.IsLimitReached) bitu.usageCount++;
     }
 
     
     //List of boons to randomize from
     private void PopulateBoonItemsPool()
     {
-        //set up pool
+        // set up pool
         boonItemsList.Clear();
-        foreach (BoonItem boonItem in boonItemsSo.boonItems)
-        {
-            boonItemsList.Add(boonItem);
-        }
+         foreach (BoonItem boonItem in boonItemsSo.boonItems)
+         {
+             boonItemsList.Add(boonItem);
+         }
+                 
+         // remove effects that have reached highest increase amount from pool
+         for(int j = 0; j < _boonItemsTimesUsed.Count; j++)
+         {
+             if (_boonItemsTimesUsed[j].IsLimitReached)
+             {
+                 BoonItem bI = _boonItemsTimesUsed[j].boonItem;
+                 boonItemsList.Remove(bI);
+             }
+         }
     }
     
     private void RandomiseBoonItems()

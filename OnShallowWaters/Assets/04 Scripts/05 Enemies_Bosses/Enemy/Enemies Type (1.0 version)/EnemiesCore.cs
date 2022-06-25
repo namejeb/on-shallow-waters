@@ -42,8 +42,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         
         //Enemies Stats
         [Space] [Space] 
-        [Header("Stats: ")] 
-     
+        [Header("Stats: ")]
         public float maxHealth;
         private float _coreHealth;
         [FormerlySerializedAs("_coreSpeed")] public float coreSpeed;
