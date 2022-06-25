@@ -35,7 +35,7 @@ public class BoonEffects : MonoBehaviour {
     //------Combat------
     public void UpgradeAtk()                        //---5
     {
-        UpgradeStat(_playerStats.Atk, atkBonusIncreaseAmounts, ref _atkBonusTracker);
+        UpgradeStat(_playerStats.AtkPercent, atkBonusIncreaseAmounts, ref _atkBonusTracker);
         print("atk:" + _playerStats.Atk.CurrentValue);
     }
 

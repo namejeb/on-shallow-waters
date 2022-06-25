@@ -116,9 +116,10 @@ public class SkBlessing : MonoBehaviour
         timer = duration;
         startCountdown = true;
         timeManager.StartSlowMo(duration);
+
         Debug.Log("slow down time");
     }
-
+    
     public void SKB4()
     {
         if (startCountdown)

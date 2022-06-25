@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,20 +12,14 @@ public class TimeManager : MonoBehaviour
     {
         ResetTimeSettings();
     }
-
-    void Update()
-    {
-        if (activated)
-        {
-            SlowMoActivated();
-            StartCoroutine(DeactivateSlowMo());
-        }
-    }
-
+    
     public void StartSlowMo(float slowTime)
     {
-        backToNormalTimeLength = slowTime * 10;
+        backToNormalTimeLength = slowTime;
         activated = true;
+        
+        SlowMoActivated();
+        StartCoroutine(DeactivateSlowMo());
     }
 
     private void ResetTimeSettings()
@@ -50,7 +43,6 @@ public class TimeManager : MonoBehaviour
 
             Time.timeScale += (1f / backToNormalTimeLength) * Time.unscaledDeltaTime;
             Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
-
         }
         activated = false;
         ResetTimeSettings();
