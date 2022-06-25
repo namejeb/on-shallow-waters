@@ -49,6 +49,10 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         public float coreDamage;
         
         private DropSouls _dropSouls;
+        
+        //Boon modifiers
+        public static float shieldDmgBonus = 1f;
+
         #endregion
 
         private protected enum CoreStage{
@@ -159,7 +163,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             switch (shieldDestroy){
                 case true: HealthBar(damage); return;
                 case false:
-                    currentShield -= damage;
+                    currentShield -= damage * shieldDmgBonus;
                     if (currentShield <= 0){
                         shieldDestroy = true;
                         rb3d.AddForce(25, 0, 25, ForceMode.Impulse);

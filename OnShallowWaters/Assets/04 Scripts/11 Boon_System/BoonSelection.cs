@@ -32,13 +32,14 @@ public class BoonSelection : MonoBehaviour
     {
         public BoonItem boonItem;
         public int usageCount = 0;
-        private readonly int _maxUsageCount = 6;
+        private readonly int _maxUsageCount;
 
         public bool IsLimitReached => usageCount == _maxUsageCount;
 
         public BoonItemsTimesUsed(BoonItem boonItem)
         {
             this.boonItem = boonItem;
+            this._maxUsageCount = boonItem.maxUsageCount;
         }
     }
     
@@ -141,8 +142,8 @@ public class BoonSelection : MonoBehaviour
     private void InitButtons()
     {
         SetBoonButtonsActive(true);
-        
-        for (int i = 0; i < 3; i++)
+  
+        for (int i = 0; i < boonItemsList.Count; i++)
         {
             BoonItem boonItem = _boonItems[i];
 
@@ -172,6 +173,9 @@ public class BoonSelection : MonoBehaviour
     public void RollBoons()
     {
         background.enabled = true;
+
+
+        
         PopulateBoonItemsPool();
         RandomiseBoonItems();
         InitButtons();

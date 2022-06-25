@@ -1,29 +1,11 @@
-using _04_Scripts._05_Enemies_Bosses;
-using _04_Scripts._05_Enemies_Bosses.Enemy;
-using UnityEngine;
+using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
 
-public class EnemyHandler : CharacterStats, IDamageable
+public class EnemyHandler : CharacterStats
 {
-    //temp damage to test WaveSpawner, will remove
-    [SerializeField] private HealthBar healthBar;
-    
-    //temp damage to test WaveSpawner, will remove
-    public void Damage(int damageAmount)
-    {
-        TakeDamage(damageAmount);
-        healthBar.UpdateHealthBar(CurrHpPercentage);
-    }
+    private EnemyStats _enemyStats;
+    private EnemiesCore _enemiesCore;
 
-    public float LostHP()
-    {
-        throw new System.NotImplementedException();
-    }
+    public EnemyStats EnemyStats { get => _enemyStats; }
+    public EnemiesCore EnemiesCore { get => _enemiesCore; }
 
-    //temp damage to test WaveSpawner, will remove
-    protected override void Die()
-    {
-        WaveSpawner.UpdateWaveTotalEnemies();
-        print("died");
-        gameObject.SetActive(false);
-    }
 }

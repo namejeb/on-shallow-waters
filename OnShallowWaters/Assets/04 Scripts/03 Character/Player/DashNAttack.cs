@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
 
@@ -19,6 +20,7 @@ public class DashNAttack : MonoBehaviour
 
     [SerializeField] private int outDamage;
     [SerializeField] private int inDamage;
+    
     
     
     private bool _isDash = false;
@@ -117,6 +119,8 @@ public class DashNAttack : MonoBehaviour
 
                 // if (enemyHandler != null)
                 //     enemyHandler.Damage(5);
+
+                
 
                 if (damagable != null)
                     damagable.Damage(outDamage);
