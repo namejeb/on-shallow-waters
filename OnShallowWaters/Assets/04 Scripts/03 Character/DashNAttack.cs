@@ -70,10 +70,13 @@ public class DashNAttack : MonoBehaviour
 
         //Attack Sequence(What attack/aniamtion it will do)
 
+        float baseAtk = (float) stats.Atk.CurrentValue;
+        float atkPercent = (float) stats.AtkPercent.CurrentValue;
+        float tempOutDamage = 0f;
+        
         if (attackSequence == 0 && Time.time > nextAttack)
         {
-            outDamage = 80 / 100 * ((stats.Atk.CurrentValue + 0) * stats.AtkPercent.BaseValue) * (100/(100 + 50)) ;
-            Debug.Log(outDamage);
+            tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
             playerMovement.enabled = true;
             animator.SetTrigger("Attack");
             attackSequence++;
@@ -81,7 +84,7 @@ public class DashNAttack : MonoBehaviour
         }
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
-            outDamage = 90 / 100 * ((stats.Atk.BaseValue + 0) * stats.AtkPercent.CurrentValue) * (100 / (100 + 20));
+            tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
             Debug.Log(outDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
@@ -90,13 +93,15 @@ public class DashNAttack : MonoBehaviour
         }
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
-            outDamage = 100 / 100 * ((stats.Atk.BaseValue + 0) * stats.AtkPercent.CurrentValue) * (100 / (100 + 20));
+            tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
             Debug.Log(outDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
         }
+
+        outDamage = Mathf.RoundToInt(tempOutDamage);
         
 
         //temp damage to test WaveSpawner, will remove
