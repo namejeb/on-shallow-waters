@@ -16,11 +16,6 @@ public class CurrencySystem : MonoBehaviour
     public static event Action<Vector2Int> OnCurrencyChanged;
     private static Vector2Int _goldSoulAmount;
     
-    // private void OnDestroy()
-    // {
-    //     OnCurrencyChanged -= Print;
-    // }
-    
     private void Awake()
     {
         currencyDict.Clear();
@@ -30,15 +25,11 @@ public class CurrencySystem : MonoBehaviour
         {
             currencyDict.Add((CurrencyType) i, 0);
         }
-     
-        // AddCurrency(CurrencyType.GOLD, 50);
-        // AddCurrency(CurrencyType.SOULS, 80);
-        // Print(_goldSoulAmount);
-        // OnCurrencyChanged += Print;
     }
 
     private void Start()
     {
+        _goldSoulAmount = Vector2Int.zero;
         if (OnCurrencyChanged != null)  OnCurrencyChanged.Invoke(_goldSoulAmount); 
     }
 
@@ -79,11 +70,4 @@ public class CurrencySystem : MonoBehaviour
         _goldSoulAmount.x = currencyDict[CurrencyType.GOLD];
         _goldSoulAmount.y = currencyDict[CurrencyType.SOULS];
     }
-    
-
-    // private void Print(Vector2Int amounts)
-    // {
-    //     print("Current GOLD: " + currencyDict[CurrencyType.GOLD]);
-    //     print("Current SOULS: " + currencyDict[CurrencyType.SOULS]);
-    // }
 }
