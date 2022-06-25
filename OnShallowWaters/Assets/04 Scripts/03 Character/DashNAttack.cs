@@ -76,16 +76,17 @@ public class DashNAttack : MonoBehaviour
         
         if (attackSequence == 0 && Time.time > nextAttack)
         {
-            tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
+            tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f));
+            Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack");
             attackSequence++;
-            nextAttack = Time.time + 10;
+            nextAttack = Time.time + 1;
         }
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
-            Debug.Log(outDamage);
+            Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
             attackSequence++;
@@ -94,7 +95,7 @@ public class DashNAttack : MonoBehaviour
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
-            Debug.Log(outDamage);
+            Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
             attackSequence = 0;
