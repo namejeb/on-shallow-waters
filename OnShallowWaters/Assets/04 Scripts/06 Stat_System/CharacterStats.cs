@@ -34,7 +34,6 @@ public class CharacterStats : MonoBehaviour
     
     protected void TakeDamage(int dmg)
     {
-        if (currHp <= 0) return;
         currHp -= dmg;
         
         if (currHp <= 0)

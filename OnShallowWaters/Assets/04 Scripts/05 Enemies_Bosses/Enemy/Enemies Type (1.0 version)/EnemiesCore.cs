@@ -15,6 +15,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         public Transform puppet;
         public Rigidbody rb3d;
         public bool armourType;
+        private EnemyStats _enemyStats;
 
         //Enemies Detection & AttackRange
         [Space][Space]
@@ -48,7 +49,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         [FormerlySerializedAs("_coreSpeed")] public float coreSpeed;
         public float coreDamage;
         
-        private DropSouls _dropSouls;
+  
         
         //Boon modifiers
         public static float shieldDmgBonus = 1f;
@@ -61,10 +62,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
         #region Processing Field [Awake, Start, Update]
 
-        private void Awake()
-        {
-            _dropSouls = GetComponent<DropSouls>();
-        }
+
         
         protected virtual void Start(){
             agent = GetComponent<NavMeshAgent>();
@@ -144,24 +142,23 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             }
         }
 
-        protected virtual void HealthBar(int dmg){
-            _coreHealth -= dmg;
-            Debug.Log("Enemy Health: " + _coreHealth);
-            //Set Health UI
+        // protected virtual void HealthBar(int dmg){
+        //     _coreHealth -= dmg;
+        //     Debug.Log("Enemy Health: " + _coreHealth);
+        //     //Set Health UI
+        //
+        //     if (_coreHealth > 0) return;
+        //     StartCoroutine(Death());
+        // }
 
-            if (_coreHealth > 0) return;
-            StartCoroutine(Death());
-        }
-
-        private IEnumerator Death()
-        {
-            _dropSouls.Drop();
-            yield return new WaitForSeconds(3f);
-        }
+        // private IEnumerator Death()
+        // {
+        //     yield return new WaitForSeconds(3f);
+        // }
 
         private void ShieldBar(int damage) {
             switch (shieldDestroy){
-                case true: HealthBar(damage); return;
+                case true: _enemyStats.Damage(damage); return;
                 case false:
                     currentShield -= damage * shieldDmgBonus;
                     if (currentShield <= 0){
@@ -190,7 +187,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
         public void Damage(int damageAmount){
             switch (armourType){
-                case false: HealthBar(damageAmount); break;
+                case false: _enemyStats.Damage(damageAmount); break;
                 case true: ShieldBar(damageAmount); break;
             }
         }

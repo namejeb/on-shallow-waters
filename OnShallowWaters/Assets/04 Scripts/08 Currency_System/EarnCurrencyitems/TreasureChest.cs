@@ -20,13 +20,6 @@ public class TreasureChest : EarnCurrencyItems, IDamageable
         //only happens to active chests
         _anim = GetComponent<Animator>();
         _anim.enabled = false;
-        
-        OpenChest();
-    }
-
-    private void Start()
-    {
-
     }
 
     private void OpenChest()

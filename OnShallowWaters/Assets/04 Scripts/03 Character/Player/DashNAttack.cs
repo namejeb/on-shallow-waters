@@ -13,7 +13,7 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float range;
     [SerializeField] private float speed;
 
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask damageableLayer;
 
     [SerializeField] private int attackSequence = 0;
     [SerializeField] private float nextAttack;
@@ -108,18 +108,25 @@ public class DashNAttack : MonoBehaviour
         
 
         //temp damage to test WaveSpawner, will remove
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
 
         for (int i = 0; i < hitColliders.Length; i++)
-        {
+        {       print(hitColliders[i]);
             if (hitColliders[i] == null) continue;  //skip if null
             
             // if (enemyHandler != null)
             //     enemyHandler.Damage(5);
-            
+     
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
             if (damagable == null) return;
-
+        
+            if (hitColliders[i].CompareTag("TreasureChest"))
+            {
+                hitColliders[i].GetComponent<TreasureChest>().Damage(5);
+               
+                continue;
+            }
+       
             EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
             if (enemyHandler == null) return;
                     
