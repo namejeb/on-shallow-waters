@@ -10,14 +10,16 @@ public class BoonSelection : MonoBehaviour
     
     
     [Space][Space]
-    [SerializeField] private BoonItemsSO boomItemsSo;
+    [SerializeField] private BoonItemsSO boonItemsSo;
     [SerializeField] private float offsetX;
     
     [Space][Space]
     [SerializeField] private Image background;
 
     private List<BoonItem> boonItemsList = new List<BoonItem>();
-    
+    [SerializeField] private List<BoonItemsTimesUsed> _boonItemsTimesUseds = new List<BoonItemsTimesUsed>();
+  
+
     private Transform _container;
     private Transform _boonButtonTemplate;
 
@@ -25,6 +27,22 @@ public class BoonSelection : MonoBehaviour
     private BoonItem[] _boonItems = new BoonItem[3];
 
     public static event Action OnSelectedBoon;
+
+    [Serializable]
+    private class BoonItemsTimesUsed
+    {
+        public BoonItem boonItem;
+        public int usageCount = 0;
+        private readonly int _maxUsageCount = 1;
+
+        public bool IsLimitReached => usageCount == _maxUsageCount;
+
+        public BoonItemsTimesUsed(BoonItem boonItem)
+        {
+            this.boonItem = boonItem;
+        }
+    }
+    
 
     #region Singleton
     public static BoonSelection Instance;
@@ -48,9 +66,15 @@ public class BoonSelection : MonoBehaviour
         {
             _buttons[i] = CreateShopButton(i);      
         }
+        
+        //tracker for each effect's times used
+        foreach (BoonItem boonItem in boonItemsSo.boonItems)
+        {
+            BoonItemsTimesUsed bitu = new BoonItemsTimesUsed(boonItem);
+            _boonItemsTimesUseds.Add(bitu);
+        }
     }
-
-    
+        
     //Create buttons at start, only change info and onClick functions of these buttons afterwards
     private Transform CreateShopButton(int positionIndex)
     {
@@ -62,13 +86,36 @@ public class BoonSelection : MonoBehaviour
         
         return newShopButtonTransform;
     }
+    private void ActivateBoonEffect(int effectIndex)
+    {
+        //boonEffects.UpgradeAtk();
+        switch (effectIndex)
+        {
+            case 0: boonEffects.UpgradeAtkPercent();         break;
+            case 1: boonEffects.UpgradeAtkSpd();      break;
+            case 2: boonEffects.UpgradeCritChance();  break;
+            case 3: boonEffects.UpgradeCritDamage();  break;
+        }
+
+        //increment usage
+        BoonItemsTimesUsed bitu = _boonItemsTimesUseds.Find(b => b.boonItem.id == effectIndex);
+        
+        if(!bitu.IsLimitReached)
+            bitu.usageCount++;
+        else
+        {    
+            //remove from pool;
+            boonItemsList.Remove(boonItemsList.Find(bI => bI.id == effectIndex));
+        }
+    }
+
     
     //List of boons to randomize from
     private void PopulateBoonItemsPool()
     {
         //set up pool
         boonItemsList.Clear();
-        foreach (BoonItem boonItem in boomItemsSo.boonItems)
+        foreach (BoonItem boonItem in boonItemsSo.boonItems)
         {
             boonItemsList.Add(boonItem);
         }
@@ -111,20 +158,6 @@ public class BoonSelection : MonoBehaviour
             buttonUI.ClickEvent(() => CloseBoonSelection());
         }
     }
-    
-        
-    private void ActivateBoonEffect(int effectIndex)
-    {
-        boonEffects.UpgradeAtk();
-        // switch (effectIndex)
-        // {
-        //     case 0: boonEffects.UpgradeAtk();         break;
-        //     case 1: boonEffects.UpgradeAtkSpd();      break;
-        //     case 2: boonEffects.UpgradeCritChance();  break;
-        //     case 3: boonEffects.UpgradeCritDamage();  break;
-        // }
-    }
-
     public void RollBoons()
     {
         background.enabled = true;

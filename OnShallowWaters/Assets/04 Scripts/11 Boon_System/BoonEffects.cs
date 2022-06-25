@@ -33,7 +33,7 @@ public class BoonEffects : MonoBehaviour {
     }
     
     //------Combat------
-    public void UpgradeAtk()                        //---5
+    public void UpgradeAtkPercent()                        //---5
     {
         UpgradeStat(_playerStats.AtkPercent, atkBonusIncreaseAmounts, ref _atkBonusTracker);
         print("atk:" + _playerStats.Atk.CurrentValue);
@@ -189,18 +189,14 @@ public class BoonEffects : MonoBehaviour {
     {
         Vector2Int modifierValues = CalcModifierValues(stat, increaseAmounts, tracker);
         stat.AddModifier( modifierValues.x );
+        stat.RemoveModifier( modifierValues.y );
+        tracker++;
         
-        if (tracker != increaseAmounts.Length - 1)
+        //If highest increase amount is reached
+        if (tracker == increaseAmounts.Length - 1)
         {
-            stat.RemoveModifier( modifierValues.y );
-            tracker++;
+            //Remove from pool
         }
-        else
-        {
-            //max hit
-        }
-
-        // print($"(Added: {modifierValues.x}, Removed: {modifierValues.y})");
     }
     
     
