@@ -34,7 +34,6 @@ public class CharacterStats : MonoBehaviour
     
     protected void TakeDamage(int dmg)
     {
-        if (currHp - dmg < 0) return;  //prevent dying again
         currHp -= dmg;
         
         if (currHp <= 0)

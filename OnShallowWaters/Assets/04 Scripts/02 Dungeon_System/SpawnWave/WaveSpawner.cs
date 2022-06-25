@@ -170,4 +170,9 @@ public class WaveSpawner : MonoBehaviour
     {
         _currentWave.totalEnemies -= 1;
     }
+
+    public static int GetCurrWaveTotalEnemies()
+    {
+        return _currentWave.totalEnemies;
+    }
 }

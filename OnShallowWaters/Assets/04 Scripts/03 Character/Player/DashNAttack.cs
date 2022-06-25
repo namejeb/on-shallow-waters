@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
 
@@ -12,14 +13,15 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float range;
     [SerializeField] private float speed;
 
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask damageableLayer;
 
     [SerializeField] private int attackSequence = 0;
     [SerializeField] private float nextAttack;
 
     [SerializeField] private int outDamage;
     [SerializeField] private int inDamage;
-    
+
+    private BoonDamageModifiers _boonDamageModifiers;
     
     private bool _isDash = false;
  
@@ -33,8 +35,9 @@ public class DashNAttack : MonoBehaviour
     private void Awake()
     {
         stats = PlayerHandler.Instance.PlayerStats;
+        _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
     }
-
+    
     private void FixedUpdate()
     {
         if (_isDash)
@@ -101,30 +104,39 @@ public class DashNAttack : MonoBehaviour
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
         }
-
         outDamage = Mathf.RoundToInt(tempOutDamage);
         
 
         //temp damage to test WaveSpawner, will remove
-        Collider[] enemies = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
 
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            if (enemies[i] != null)
+        for (int i = 0; i < hitColliders.Length; i++)
+        {       print(hitColliders[i]);
+            if (hitColliders[i] == null) continue;  //skip if null
+            
+            // if (enemyHandler != null)
+            //     enemyHandler.Damage(5);
+     
+            IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
+            if (damagable == null) return;
+        
+            if (hitColliders[i].CompareTag("TreasureChest"))
             {
-              //  EnemyHandler enemyHandler = enemies[i].GetComponent<EnemyHandler>();
-                IDamageable damagable = enemies[i].GetComponent<IDamageable>();
+                hitColliders[i].GetComponent<TreasureChest>().Damage(5);
+               
+                continue;
+            }
+       
+            EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
+            if (enemyHandler == null) return;
+                    
+            outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler);
+            enemyHandler.EnemyStats.Damage(outDamage);
 
-                // if (enemyHandler != null)
-                //     enemyHandler.Damage(5);
-
-                if (damagable != null)
-                    damagable.Damage(outDamage);
-
+            if (_boonDamageModifiers.DmgWhenShieldBreakActivated)
+            {
+                _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
             }
         }
     }
-
-
-    
 }

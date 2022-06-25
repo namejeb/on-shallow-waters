@@ -8,6 +8,7 @@ public class PlayerHandler : MonoBehaviour
 
     private static PlayerStats _playerStats;
     private static PlayerMovement _playerMovement;
+    private static BoonDamageModifiers _boonDamageModifiers;
     
     public PlayerStats PlayerStats
     {
@@ -17,6 +18,11 @@ public class PlayerHandler : MonoBehaviour
     public Transform CameraTarget
     {
         get => cameraTarget;
+    }
+
+    public BoonDamageModifiers BoonDamageModifiers
+    {
+        get => _boonDamageModifiers;
     }
 
     public static PlayerHandler Instance;
@@ -34,6 +40,7 @@ public class PlayerHandler : MonoBehaviour
         RoomSpawner.OnResetPlayerPos += ResetPosition;
 
         _playerStats = GetComponent<PlayerStats>();
+        _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
     }
     
     public void SavePlayer()
