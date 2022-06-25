@@ -99,6 +99,8 @@ public class RoomSpawner : MonoBehaviour
            
             room = roomListSo.bossRooms[_bossRoomsIndex];
             if (_bossRoomsIndex + 1 < roomListSo.bossRooms.Count) _bossRoomsIndex++;
+
+            DialogueManager.instance.StartDialogue();
         }
         else
         {

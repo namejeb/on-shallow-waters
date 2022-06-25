@@ -9,14 +9,15 @@ public class DialogueManager : MonoBehaviour
 {
     [Header("Ref: ")]
     public static DialogueManager instance;
-    public GameObject dialogueBox;
+    public GameObject dialogueBox, playerControl;
     public TMP_Text nameText;
     public TMP_Text dialogueText;
-    
-    public Dialogue dd;
+    private Dialogue dialogue;
+    private DialogueDatabase dialogueDatabase;
 
-    public bool isInteracted = false, isTyping;
-    public string currSentence;
+    [SerializeField] private int bossNum, dialogueNum;
+    private bool isInteracted = false, isTyping;
+    private string currSentence;
     
     private Queue<string> sentences;
     private IEnumerator coroutine;
@@ -32,35 +33,40 @@ public class DialogueManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+
+        dialogueDatabase = GetComponent<DialogueDatabase>();
+        dialogue = dialogueDatabase.allBoss.bossDialogue[bossNum].dialogueList[dialogueNum];
     }
 
     void Start()
     {
         sentences = new Queue<string>();
         var list = sentences.ToList();
-        StartDialogue(dd);
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isInteracted)
+        if (isInteracted)
         {
-            if (!isTyping)
-                DisplayNextSentence();
-            else
+            if (Input.GetMouseButtonDown(0))
             {
-                StopCoroutine(coroutine);
-                dialogueText.text = currSentence;
-                isTyping = false;
+                if (!isTyping)
+                    DisplayNextSentence();
+                else
+                {
+                    StopCoroutine(coroutine);
+                    dialogueText.text = currSentence;
+                    isTyping = false;
+                }
             }
-            
         }
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue()
     {
         isInteracted = true;
         dialogueBox.SetActive(true);
+        playerControl.SetActive(false);
         nameText.text = dialogue.name;
         sentences.Clear();
         foreach (string sentence in dialogue.sentences)
@@ -103,6 +109,7 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         Debug.Log("there is no sentences alr");
+        playerControl.SetActive(true);
         isInteracted = false;
     }
 }
