@@ -5,6 +5,8 @@ public class DashNAttack : MonoBehaviour
 {
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Animator animator;
+    [SerializeField] private PlayerStats stats;
+    [SerializeField] private EnemyStats eStats;
     
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
@@ -14,6 +16,9 @@ public class DashNAttack : MonoBehaviour
 
     [SerializeField] private int attackSequence = 0;
     [SerializeField] private float nextAttack;
+
+    [SerializeField] private int outDamage;
+    [SerializeField] private int inDamage;
     
     
     private bool _isDash = false;
@@ -24,6 +29,11 @@ public class DashNAttack : MonoBehaviour
     private float _elapsedTime;
     private float _endTime = 0f;
 
+
+    private void Awake()
+    {
+        stats = PlayerHandler.Instance.PlayerStats;
+    }
 
     private void FixedUpdate()
     {
@@ -56,33 +66,38 @@ public class DashNAttack : MonoBehaviour
 
     public void Attack()
     {
-        animator.SetTrigger("Attack");
+        //playerMovement.enabled = false;
 
         //Attack Sequence(What attack/aniamtion it will do)
-        /*
+
         if (attackSequence == 0 && Time.time > nextAttack)
         {
-            playerMovement.enabled = false;
+            outDamage = 80 / 100 * ((stats.Atk.CurrentValue + 0) * stats.AtkPercent.BaseValue) * (100/(100 + 50)) ;
+            Debug.Log(outDamage);
+            playerMovement.enabled = true;
             animator.SetTrigger("Attack");
             attackSequence++;
-            nextAttack = Time.time + 1;
+            nextAttack = Time.time + 10;
         }
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
-            playerMovement.enabled = false;
-            animator.SetTrigger("Attack");
+            outDamage = 90 / 100 * ((stats.Atk.BaseValue + 0) * stats.AtkPercent.CurrentValue) * (100 / (100 + 20));
+            Debug.Log(outDamage);
+            playerMovement.enabled = true;
+            animator.SetTrigger("Attack2");
             attackSequence++;
             nextAttack = Time.time + 1;
         }
-        else if (attackSequence == 1 && Time.time > nextAttack)
+        else if (attackSequence == 2 && Time.time > nextAttack)
         {
-            playerMovement.enabled = false;
-            animator.SetTrigger("Attack");
+            outDamage = 100 / 100 * ((stats.Atk.BaseValue + 0) * stats.AtkPercent.CurrentValue) * (100 / (100 + 20));
+            Debug.Log(outDamage);
+            playerMovement.enabled = true;
+            animator.SetTrigger("Attack3");
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
-
         }
-        */
+        
 
         //temp damage to test WaveSpawner, will remove
         Collider[] enemies = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
@@ -98,9 +113,12 @@ public class DashNAttack : MonoBehaviour
                 //     enemyHandler.Damage(5);
 
                 if (damagable != null)
-                    damagable.Damage(5);
+                    damagable.Damage(outDamage);
 
             }
         }
     }
+
+
+    
 }
