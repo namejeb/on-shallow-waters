@@ -2017,7 +2017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boonEffects: {fileID: 2133914297}
-  boomItemsSo: {fileID: 11400000, guid: 1043c9677ae1bb8448fec1aa4ab7484a, type: 2}
+  boonItemsSo: {fileID: 11400000, guid: 1043c9677ae1bb8448fec1aa4ab7484a, type: 2}
   offsetX: 1.5
   background: {fileID: 724934512}
 --- !u!114 &2133914297
@@ -2032,22 +2032,99 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17b89a6cb70f314d881eddd3c9a4e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atkIncreaseAmounts:
-  - 1.2
-  - 1.4
-  - 1.5
-  atkSpeedIncreaseAmounts:
+  atkPercent:
+    stat:
+      baseValue: 0
+      modifiers: 
+      hasCap: 0
+      cap: 0
+    increaseAmounts:
+    - 1.5
+    - 1.85
+    - 2.2
+    tracker: 0
+  atkSpd:
+    stat:
+      baseValue: 0
+      modifiers: 
+      hasCap: 0
+      cap: 0
+    increaseAmounts:
+    - 1.15
+    - 1.25
+    - 1.3
+    tracker: 0
+  critChance:
+    stat:
+      baseValue: 0
+      modifiers: 
+      hasCap: 0
+      cap: 0
+    increaseAmounts:
+    - 1.15
+    - 1.25
+    - 1.3
+    tracker: 0
+  critDmg:
+    stat:
+      baseValue: 0
+      modifiers: 
+      hasCap: 0
+      cap: 0
+    increaseAmounts:
+    - 1.2
+    - 1.3
+    - 1.4
+    tracker: 0
+  maxHpIncreaseAmounts:
   - 1.3
-  - 1.5
   - 1.7
-  critChanceIncreaseAmounts:
-  - 1.3
-  - 1.5
-  - 1.8
-  critDamageIncreaseAmounts:
-  - 1.5
-  - 1.8
-  - 2.2
+  - 2.1
+  defense:
+    stat:
+      baseValue: 0
+      modifiers: 
+      hasCap: 0
+      cap: 0
+    increaseAmounts:
+    - 1
+    - 1
+    - 1
+    tracker: 0
+  mvmntSpd:
+    stat:
+      baseValue: 0
+      modifiers: 
+      hasCap: 0
+      cap: 0
+    increaseAmounts:
+    - 1.15
+    - 1.25
+    - 1.35
+    - 1.5
+    tracker: 0
+  dmgReduction:
+    stat:
+      baseValue: 0
+      modifiers: 
+      hasCap: 0
+      cap: 0
+    increaseAmounts:
+    - 1
+    - 1
+    - 1
+    - 1
+    tracker: 0
+  dmgReductionWhenLowHp:
+    stat:
+      baseValue: 0
+      modifiers: 
+      hasCap: 0
+      cap: 0
+    increaseAmounts:
+    - 1
+    - 1
+    tracker: 0
 --- !u!1 &114753874361569630
 GameObject:
   m_ObjectHideFlags: 0
