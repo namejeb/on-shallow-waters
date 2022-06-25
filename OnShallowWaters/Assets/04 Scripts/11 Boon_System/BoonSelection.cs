@@ -88,8 +88,7 @@ public class BoonSelection : MonoBehaviour
     }
     private void ActivateBoonEffect(int effectIndex)
     {
-        effectIndex = 10;
-        // boonEffects.IncreaseMaxHp();
+        //effectIndex = 1;
         switch (effectIndex)
         {
             case 0: boonEffects.IncreaseMaxHp();      break;
