@@ -54,7 +54,6 @@ public class Boss_Stats : CharacterStats, IDamageable
         }
         else
         {
-            
             TakeDamage(damageAmount);
             _uiManager.UpdateSlider(0, CurrHpPercentage);
         }
