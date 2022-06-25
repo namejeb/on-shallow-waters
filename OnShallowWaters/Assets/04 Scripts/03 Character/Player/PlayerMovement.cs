@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -6,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerMovement pm;
     [SerializeField] private Rigidbody rb;
+    private PlayerStats _playerStats;
     public Joystick joystick;
 
     public float speed = 6f;
@@ -17,7 +19,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 _moveDir;
 
-    
+    private void Awake()
+    {
+        _playerStats = PlayerHandler.Instance.PlayerStats;
+    }
     private void Update()
     {
         float horizontal = joystick.Horizontal;
@@ -48,6 +53,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector3 direction, float speed)
     {
-        rb.velocity = new Vector3(direction.x, 0f, direction.z) * speed  / Time.timeScale;
+        rb.velocity = new Vector3(direction.x, 0f, direction.z) * speed * _playerStats.MovementSpeed.CurrentValue / Time.timeScale;
     }
 }

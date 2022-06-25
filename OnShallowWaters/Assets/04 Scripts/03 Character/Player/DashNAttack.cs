@@ -111,7 +111,7 @@ public class DashNAttack : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
 
         for (int i = 0; i < hitColliders.Length; i++)
-        {       print(hitColliders[i]);
+        {   
             if (hitColliders[i] == null) continue;  //skip if null
             
             // if (enemyHandler != null)
@@ -122,8 +122,7 @@ public class DashNAttack : MonoBehaviour
         
             if (hitColliders[i].CompareTag("TreasureChest"))
             {
-                hitColliders[i].GetComponent<TreasureChest>().Damage(5);
-               
+                hitColliders[i].GetComponent<TreasureChest>().Damage(0);
                 continue;
             }
        

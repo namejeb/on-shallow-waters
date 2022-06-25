@@ -42,15 +42,14 @@ public class BoonEffects : MonoBehaviour {
 
     [Space] [Space] [Space] 
     [Header("Effects w/o arrays: ")] 
+    [SerializeField] private float shieldExtraDmgBonus = 1.2f;
+    [SerializeField] private float shieldBreakTrueDmg = 100f;
     [SerializeField] private float dmgIncreaseSingleEnemyEffectAmt = 1.4f;
     [SerializeField] private float firstTimeDmgBonus = 2f;
-    [SerializeField] private float shieldBreakTrueDmg = 100f;
-    [SerializeField] private float shieldExtraDmgBonus = 1.2f;
-    
-    
-    
+
     
     private StatIncreaseAmounts[] _statIncreaseAmounts;
+    private float[] _floatIncreaseAmounts;
     
     private void OnValidate()
     {
@@ -82,6 +81,14 @@ public class BoonEffects : MonoBehaviour {
         _playerStats = PlayerHandler.Instance.PlayerStats;
         InitIncreaseAmounts();
 
+        _floatIncreaseAmounts = new float[]
+        {
+            shieldExtraDmgBonus,
+            shieldBreakTrueDmg,
+            dmgIncreaseSingleEnemyEffectAmt,
+            firstTimeDmgBonus,
+        };
+        
         _statIncreaseAmounts = new StatIncreaseAmounts[]
         {
             atkPercent,
@@ -90,7 +97,8 @@ public class BoonEffects : MonoBehaviour {
             critDmg,
             defense,
             dmgReduction,
-            dmgReductionWhenLowHp
+            mvmntSpd,
+            dmgReductionWhenLowHp,
         };
     }
     
@@ -144,7 +152,7 @@ public class BoonEffects : MonoBehaviour {
     }
 
     //Deal 20% more dmg to enemy's armor
-    public void DamageToArmorIncrease()             //---3 
+    public void DmgToArmorIncrease()             //---3 
     {
         PlayerHandler.Instance.BoonDamageModifiers.EnableExtraShieldDmg(shieldExtraDmgBonus);
     }
@@ -242,7 +250,12 @@ public class BoonEffects : MonoBehaviour {
 
     public StatIncreaseAmounts GetStatIncreaseAmounts(int id)
     {
-        return _statIncreaseAmounts[id-1];
+        return _statIncreaseAmounts[ id - 5 ];
+    }
+
+    public float GetFloatIncreaseAmounts(int id)
+    {
+        return _floatIncreaseAmounts[id - 1];
     }
     
     
