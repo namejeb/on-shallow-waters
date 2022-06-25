@@ -31,6 +31,7 @@ public class SkBlessing : MonoBehaviour
     private bool startCountdown;
 
     private PlayerStats playerStats;
+    private TimeManager timeManager;
 
     public float Skb2Duration
     {
@@ -52,6 +53,7 @@ public class SkBlessing : MonoBehaviour
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
+        timeManager = FindObjectOfType<TimeManager>();
     }
 
     private void Start()
@@ -68,8 +70,8 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
         {
-            timer -= Time.deltaTime;
-            soulMeter.fillAmount -= 1.0f / duration * Time.deltaTime;
+            timer -= Time.unscaledDeltaTime;
+            soulMeter.fillAmount -= 1.0f / duration * Time.unscaledDeltaTime;
 
             if (timer < 0)
             {
@@ -85,6 +87,7 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        currSoul = 0;
         timer = duration;
         playerStats.Atk.AddModifier(atkAdd);
         playerStats.MovementSpeed.AddModifier(mvSpeedAdd);
@@ -97,7 +100,9 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        currSoul = 0;
         duration = regenPerSec * regenAmount;
+        timer = duration;
         StartCoroutine(playerStats.RegenLoop(hpRegenAdd, armRegenAdd, regenAmount, regenPerSec));
         startCountdown = true;
     }
@@ -106,7 +111,11 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
             return;
-        //duration = skb3Duration;
+
+        currSoul = 0;
+        timer = duration;
+        startCountdown = true;
+        timeManager.StartSlowMo(duration);
         Debug.Log("slow down time");
     }
 
@@ -115,6 +124,7 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        currSoul = 0;
         startCountdown = true;
         EnemiesCore[] enemies = FindObjectsOfType<EnemiesCore>();
 
@@ -140,6 +150,7 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        currSoul = 0;
         startCountdown = true;
         EnemiesCore[] enemies = FindObjectsOfType<EnemiesCore>();
 
@@ -170,12 +181,15 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        currSoul += soul;
-        UpdateSoulMeter(currSoul / requiredSoul);
+        if (!soulButton.interactable)
+        {
+            currSoul += soul;
+            UpdateSoulMeter(currSoul / requiredSoul);
+        }
+        
 
         if (currSoul >= requiredSoul)
         {
-            currSoul = 0;
             soulButton.interactable = true;
         }
     }

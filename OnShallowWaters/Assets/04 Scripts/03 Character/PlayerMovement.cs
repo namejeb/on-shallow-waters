@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     public Joystick joystick;
 
-    public float speed = 6f;    
+    public float speed = 6f;
+    public float rotationSpeed = 10f;
 
     public float turnSmooth = 0.1f;
     float turnSmoothVelocity;
@@ -29,21 +30,22 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = joystick.Horizontal;
         float vertical = joystick.Vertical;
         _moveDir = new Vector3(horizontal, 0f, vertical).normalized;
-        
+
         if (_moveDir.magnitude >= 0.2f)
         {
-            float targetAngle = Mathf.Atan2(_moveDir.x, _moveDir.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            //float targetAngle = Mathf.Atan2(_moveDir.x, _moveDir.z) * Mathf.Rad2Deg;
+            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
+            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            RotateTowards();
         }
     }
 
-    // private void RotateTowards(Transform target, Boss_FSM boss)
-    // {
-    //     Vector3 direction = (target.position - boss.transform.position).normalized;
-    //     Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-    //     boss.transform.rotation = Quaternion.RotateTowards(boss.transform.rotation, lookRotation, Time.deltaTime * boss.rotationSpeed);
-    // }
+    private void RotateTowards()
+    {
+        Quaternion lookRotation = Quaternion.LookRotation(_moveDir);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.unscaledDeltaTime * rotationSpeed);
+    }
 
     private void FixedUpdate()
     {      
