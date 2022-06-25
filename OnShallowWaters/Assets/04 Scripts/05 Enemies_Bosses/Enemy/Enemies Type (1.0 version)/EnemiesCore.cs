@@ -69,7 +69,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         protected virtual void Start(){
             agent = GetComponent<NavMeshAgent>();
             rb3d = GetComponent<Rigidbody>();
-            puppet = GameObject.Find("Puppet").transform;
+            puppet = GameObject.FindWithTag("Player").transform;
             
             _coreHealth = maxHealth;
             agent.speed = coreSpeed;

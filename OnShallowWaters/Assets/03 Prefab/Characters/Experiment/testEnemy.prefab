@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 157487083573309903}
   - component: {fileID: 489212650485867900}
   - component: {fileID: 3484009106226372181}
+  - component: {fileID: -7967988073641337599}
+  - component: {fileID: 7781317459827798357}
+  - component: {fileID: -6268902731779171104}
   m_Layer: 6
   m_Name: testEnemy
   m_TagString: Untagged
@@ -135,7 +138,6 @@ MonoBehaviour:
     modifiers: 
     hasCap: 0
     cap: 0
-  healthBar: {fileID: 4293882905830535436}
 --- !u!114 &3484009106226372181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +151,87 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minMaxAmount: {x: 30, y: 150}
+--- !u!114 &-7967988073641337599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108699635585412751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc13607ad1f84364e8db5fb4d39a41cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 5
+  atk:
+    baseValue: 0
+    modifiers: 
+    hasCap: 0
+    cap: 0
+  healthBar: {fileID: 4293882905830535436}
+  defense:
+    baseValue: 0
+    modifiers: 
+    hasCap: 0
+    cap: 0
+--- !u!114 &7781317459827798357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108699635585412751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5adecd4189aeac8409084e10e8059c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  puppet: {fileID: 0}
+  rb3d: {fileID: 0}
+  armourType: 0
+  dist: 0
+  detectRange: 10
+  attackRange: 5
+  radius: 0
+  angle: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxShield: 10
+  currentShield: 0
+  stunTimer: 3
+  shieldRecover: 0
+  shieldDestroy: 0
+  maxHealth: 0
+  coreSpeed: 0
+  coreDamage: 0
+--- !u!195 &-6268902731779171104
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108699635585412751}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &6206596605425640098
 PrefabInstance:
   m_ObjectHideFlags: 0

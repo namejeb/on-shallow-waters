@@ -40,6 +40,7 @@ public class PlayerHandler : MonoBehaviour
         RoomSpawner.OnResetPlayerPos += ResetPosition;
 
         _playerStats = GetComponent<PlayerStats>();
+        _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
     }
     
     public void SavePlayer()

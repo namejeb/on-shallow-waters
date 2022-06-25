@@ -6,6 +6,7 @@ public class EnemyStats : CharacterStats, IDamageable
     [Header("Ref:")]
     [SerializeField] private HealthBar healthBar;
 
+    
     [Space]
     [Header("Settings:")]
     [SerializeField] private Stat defense;
@@ -16,6 +17,7 @@ public class EnemyStats : CharacterStats, IDamageable
     public void Damage(int damageAmount)
     {
         TakeDamage(damageAmount);
+        print(damageAmount);
         healthBar.UpdateHealthBar(CurrHpPercentage);
     }
 

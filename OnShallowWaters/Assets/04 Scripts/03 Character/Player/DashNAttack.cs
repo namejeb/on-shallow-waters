@@ -20,8 +20,8 @@ public class DashNAttack : MonoBehaviour
 
     [SerializeField] private int outDamage;
     [SerializeField] private int inDamage;
-    
-    
+
+    private BoonDamageModifiers _boonDamageModifiers;
     
     private bool _isDash = false;
  
@@ -35,8 +35,9 @@ public class DashNAttack : MonoBehaviour
     private void Awake()
     {
         stats = PlayerHandler.Instance.PlayerStats;
+        _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
     }
-
+    
     private void FixedUpdate()
     {
         if (_isDash)
@@ -103,32 +104,32 @@ public class DashNAttack : MonoBehaviour
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
         }
-
         outDamage = Mathf.RoundToInt(tempOutDamage);
         
 
         //temp damage to test WaveSpawner, will remove
-        Collider[] enemies = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, enemyLayer);
 
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            if (enemies[i] != null)
+            if (hitColliders[i] == null) continue;  //skip if null
+            
+            // if (enemyHandler != null)
+            //     enemyHandler.Damage(5);
+            
+            IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
+            if (damagable == null) return;
+
+            EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
+            if (enemyHandler == null) return;
+                    
+            outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler);
+            enemyHandler.EnemyStats.Damage(outDamage);
+
+            if (_boonDamageModifiers.DmgWhenShieldBreakActivated)
             {
-              //  EnemyHandler enemyHandler = enemies[i].GetComponent<EnemyHandler>();
-                IDamageable damagable = enemies[i].GetComponent<IDamageable>();
-
-                // if (enemyHandler != null)
-                //     enemyHandler.Damage(5);
-
-                
-
-                if (damagable != null)
-                    damagable.Damage(outDamage);
-
+                _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
             }
         }
     }
-
-
-    
 }

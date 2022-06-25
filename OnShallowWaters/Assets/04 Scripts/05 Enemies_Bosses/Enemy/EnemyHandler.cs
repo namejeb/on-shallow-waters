@@ -8,4 +8,9 @@ public class EnemyHandler : CharacterStats
     public EnemyStats EnemyStats { get => _enemyStats; }
     public EnemiesCore EnemiesCore { get => _enemiesCore; }
 
+    private new void  Awake()
+    {
+        _enemyStats = GetComponent<EnemyStats>();
+        _enemiesCore = GetComponent<EnemiesCore>();
+    }
 }
