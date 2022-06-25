@@ -54,11 +54,12 @@ public class BoonEffects : MonoBehaviour {
 
         for (int i = 0; i < 4; i++)
         {
-            dmgReduction.increaseAmounts[i] = Mathf.Clamp(dmgReduction.increaseAmounts[i], 1, float.MaxValue);
+            mvmntSpd.increaseAmounts[i] = Mathf.Clamp(mvmntSpd.increaseAmounts[i], 1, float.MaxValue);
         }
 
         for (int i = 0; i < 2; i++)
         {
+            dmgReduction.increaseAmounts[i] = Mathf.Clamp(dmgReduction.increaseAmounts[i], 1, float.MaxValue);
             dmgReductionWhenLowHp.increaseAmounts[i] = Mathf.Clamp(dmgReductionWhenLowHp.increaseAmounts[i], 1, float.MaxValue);
         }
     }
@@ -171,7 +172,7 @@ public class BoonEffects : MonoBehaviour {
         
     }
     
-    //Reduce 50% dmg taken while 30% hp or lower
+    //Reduce 25% dmg taken while 30%/40% hp or lower.
     public void ReduceDamageWhenHpLow()         //---2
     {
         

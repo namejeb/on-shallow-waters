@@ -771,10 +771,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomSpawner
       objectReference: {fileID: 0}
-    - target: {fileID: 5558113445243430009, guid: ba5b3119f96c18a418ee9bd4d2e5ed39, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba5b3119f96c18a418ee9bd4d2e5ed39, type: 3}
 --- !u!1 &144608406
@@ -1128,121 +1124,37 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1093336465}
-    - target: {fileID: 1406398121, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1893112755, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: boonItemsSo
-      value: 
-      objectReference: {fileID: 11400000, guid: 1043c9677ae1bb8448fec1aa4ab7484a, type: 2}
     - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: atkIncreaseAmounts.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: atkIncreaseAmounts.Array.data[3]
-      value: 1.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: maxHpIncreaseAmounts.Array.data[0]
+      propertyPath: defense.increaseAmounts.Array.data[0]
       value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: maxHpIncreaseAmounts.Array.data[1]
+      propertyPath: defense.increaseAmounts.Array.data[1]
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
+      propertyPath: defense.increaseAmounts.Array.data[2]
       value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: maxHpIncreaseAmounts.Array.data[2]
-      value: 2.1
+      propertyPath: dmgReduction.increaseAmounts.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: atkSpd.increaseAmounts.Array.data[0]
-      value: 1.15
+      propertyPath: dmgReduction.increaseAmounts.Array.data[0]
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: atkSpd.increaseAmounts.Array.data[1]
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: atkSpd.increaseAmounts.Array.data[2]
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: critDmg.increaseAmounts.Array.data[0]
+      propertyPath: dmgReduction.increaseAmounts.Array.data[1]
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: critDmg.increaseAmounts.Array.data[1]
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: critDmg.increaseAmounts.Array.data[2]
-      value: 1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: mvmntSpd.increaseAmounts.Array.data[0]
-      value: 1.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: mvmntSpd.increaseAmounts.Array.data[1]
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: mvmntSpd.increaseAmounts.Array.data[2]
-      value: 1.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: mvmntSpd.increaseAmounts.Array.data[3]
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: dmgReduction.increaseAmounts.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: atkPercent.increaseAmounts.Array.data[0]
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: atkPercent.increaseAmounts.Array.data[1]
-      value: 1.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: atkPercent.increaseAmounts.Array.data[2]
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: critChance.increaseAmounts.Array.data[0]
-      value: 1.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: critChance.increaseAmounts.Array.data[1]
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: critChance.increaseAmounts.Array.data[2]
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: dmgReduction.increaseAmounts.Array.data[2]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: dmgReduction.increaseAmounts.Array.data[3]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
       propertyPath: dmgReductionWhenLowHp.increaseAmounts.Array.data[0]
-      value: 1
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 2133914297, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
       propertyPath: dmgReductionWhenLowHp.increaseAmounts.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2116110277958002824, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 5067732618421055362, guid: c8c9cb33c6c67264c8902dd46ade4845, type: 3}
       propertyPath: m_Name
@@ -10634,10 +10546,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3169301568022787853, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3169301569515499348, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -10690,46 +10598,6 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 1384527511}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atk.cap
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atk.hasCap
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atk.baseValue
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atkSpeed.baseValue
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atkPercent.baseValue
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atk.modifiers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atk.modifiers.Array.data[0]
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atkSpeed.modifiers.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atkSpeed.modifiers.Array.data[1]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3169301569689684825, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
-      propertyPath: atkSpeed.modifiers.Array.data[2]
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5132689955011933206, guid: a5828cc1f9998fc4ea7546d021a6fb97, type: 3}
       propertyPath: soulMeter
       value: 
