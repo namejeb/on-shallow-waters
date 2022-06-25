@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
 {
@@ -27,6 +28,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
     private Outline outline;
 
     public Blessing blessType;
+    
 
     private void Awake()
     {

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
+
 public enum CurrencyType
 {
     SOULS,
@@ -10,7 +11,7 @@ public enum CurrencyType
 
 public class CurrencySystem : MonoBehaviour
 {
-    public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType,int>();
+    public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType, int>();
 
     public static event Action<Vector2Int> OnCurrencyChanged;
     private static Vector2Int _goldSoulAmount;
@@ -29,19 +30,24 @@ public class CurrencySystem : MonoBehaviour
         {
             currencyDict.Add((CurrencyType) i, 0);
         }
-
-        AddCurrency(CurrencyType.GOLD, 50);
-        AddCurrency(CurrencyType.SOULS, 80);
-         // Print(_goldSoulAmount);
-         // OnCurrencyChanged += Print;
+     
+        // AddCurrency(CurrencyType.GOLD, 50);
+        // AddCurrency(CurrencyType.SOULS, 80);
+        // Print(_goldSoulAmount);
+        // OnCurrencyChanged += Print;
     }
-    
+
+    private void Start()
+    {
+        if (OnCurrencyChanged != null)  OnCurrencyChanged.Invoke(_goldSoulAmount); 
+    }
+
     public static void AddCurrency(CurrencyType currencyType, int amount)
     {
         currencyDict[currencyType] += amount;
         UpdateVector2Int();
         
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke(_goldSoulAmount);
+        if (OnCurrencyChanged != null)  OnCurrencyChanged.Invoke(_goldSoulAmount); 
     }
 
     //Overload for adding in a range

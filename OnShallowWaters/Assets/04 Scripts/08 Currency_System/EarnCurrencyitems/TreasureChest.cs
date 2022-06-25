@@ -16,14 +16,17 @@ public class TreasureChest : EarnCurrencyItems, IDamageable
         {
             gameObject.SetActive(false);
         }
+        
+        //only happens to active chests
+        _anim = GetComponent<Animator>();
+        _anim.enabled = false;
+        
+        OpenChest();
     }
 
     private void Start()
     {
-        _anim = GetComponent<Animator>();
-        _anim.enabled = false;
 
-        OpenChest();
     }
 
     private void OpenChest()

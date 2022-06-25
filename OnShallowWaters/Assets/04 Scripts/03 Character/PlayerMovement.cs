@@ -19,12 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 _moveDir;
 
-    // private void Start()
-    // {
-    //     Time.timeScale = .5f;
-    //     Time.fixedDeltaTime = Time.timeScale * .02f;
-    // }
-
+    
     private void Update()
     {
         float horizontal = joystick.Horizontal;
@@ -36,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
             //float targetAngle = Mathf.Atan2(_moveDir.x, _moveDir.z) * Mathf.Rad2Deg;
             //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
             //transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
+        
             RotateTowards();
         }
     }
