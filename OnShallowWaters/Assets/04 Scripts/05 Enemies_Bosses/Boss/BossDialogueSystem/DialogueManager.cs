@@ -15,7 +15,6 @@ public class DialogueManager : MonoBehaviour
     private Dialogue dialogue;
     private DialogueDatabase dialogueDatabase;
 
-    [SerializeField] private int bossNum, dialogueNum;
     private bool isInteracted = false, isTyping;
     private string currSentence;
     
@@ -25,7 +24,8 @@ public class DialogueManager : MonoBehaviour
     [Space][Space]
     [Header("Settings: ")]
     [SerializeField] private float typeSpeed = .02f;
-    
+    [SerializeField] private float delayTime = 1f;
+    [SerializeField] private int bossNum, dialogueNum;
 
     void Awake()
     {
@@ -35,13 +35,13 @@ public class DialogueManager : MonoBehaviour
             instance = this;
 
         dialogueDatabase = GetComponent<DialogueDatabase>();
-        dialogue = dialogueDatabase.allBoss.bossDialogue[bossNum].dialogueList[dialogueNum];
     }
 
     void Start()
     {
         sentences = new Queue<string>();
         var list = sentences.ToList();
+        dialogue = dialogueDatabase.allBoss.bossDialogue[bossNum].dialogueList[dialogueNum];
     }
 
     private void Update()
@@ -65,16 +65,10 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue()
     {
         isInteracted = true;
-        dialogueBox.SetActive(true);
-        playerControl.SetActive(false);
-        nameText.text = dialogue.name;
-        sentences.Clear();
-        foreach (string sentence in dialogue.sentences)
-        {
-            sentences.Enqueue(sentence);
-        }
-
-        DisplayNextSentence();
+        PlayerHandler.Instance.EnableAnDisableMove();
+        //playerControl.SetActive(false);
+        
+        StartCoroutine(Delay(delayTime));
     }
 
     public void DisplayNextSentence()
@@ -82,19 +76,19 @@ public class DialogueManager : MonoBehaviour
         if (sentences.Count == 0)
         {
             EndDialogue();
+            //playerControl.SetActive(true);
             dialogueBox.SetActive(false);
             return;
         }
 
         currSentence = sentences.ElementAt(0);
-        Debug.Log(currSentence);
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         coroutine = TypeSentence(sentence);
         StartCoroutine(coroutine);
     }
 
-    IEnumerator TypeSentence(string sentence)
+    private IEnumerator TypeSentence(string sentence)
     {
         isTyping = true;
         dialogueText.text = "";
@@ -108,8 +102,20 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        Debug.Log("there is no sentences alr");
-        playerControl.SetActive(true);
+        PlayerHandler.Instance.EnableAnDisableMove();
         isInteracted = false;
+    }
+
+    private IEnumerator Delay(float waitDuration)
+    {
+        yield return new WaitForSeconds(waitDuration);
+        dialogueBox.SetActive(true);
+        nameText.text = dialogue.name;
+        sentences.Clear();
+        foreach (string sentence in dialogue.sentences)
+        {
+            sentences.Enqueue(sentence);
+        }
+        DisplayNextSentence();
     }
 }

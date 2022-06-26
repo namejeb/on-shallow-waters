@@ -22,7 +22,7 @@ public class DialogueDatabase : MonoBehaviour
     public TextAsset bossJson;
     string json;
 
-    void Start()
+    void Awake()
     {
         json = bossJson.text;
         allBoss = JsonConvert.DeserializeObject<AllBoss>(json);

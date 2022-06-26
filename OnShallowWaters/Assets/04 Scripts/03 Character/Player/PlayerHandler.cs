@@ -72,4 +72,9 @@ public class PlayerHandler : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _playerMovement.enabled = true;
     }
+
+    public void EnableAnDisableMove()
+    {
+        _playerMovement.canMove = !_playerMovement.canMove;
+    }
 }
