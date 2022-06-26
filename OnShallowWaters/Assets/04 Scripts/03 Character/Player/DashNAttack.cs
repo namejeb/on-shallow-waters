@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
+using UnityEngine.EventSystems;
 
 public class DashNAttack : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class DashNAttack : MonoBehaviour
 
     [SerializeField] private int outDamage;
     [SerializeField] private int inDamage;
-
+    [SerializeField] private AttackButtonUI pressedButton;
+    [SerializeField] private bool isSlashTigger;
     private BoonDamageModifiers _boonDamageModifiers;
     
     private bool _isDash = false;
@@ -66,6 +68,43 @@ public class DashNAttack : MonoBehaviour
         
         _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo 
     }
+
+    public void Update()
+    {
+        if(pressedButton.isPressed)
+           pressedButton.chargedTimer += Time.deltaTime;
+
+
+        if (pressedButton.isSlash)
+           HeavySlash();
+
+        else if (pressedButton.isSlam)
+            HeavySlam();
+    }
+    public void HeavySlash()
+    {
+        pressedButton.isSlash = false;
+        float baseAtk = (float)stats.Atk.CurrentValue;
+        float atkPercent = (float)stats.AtkPercent.CurrentValue;
+        float tempOutDamage = 0f;
+        tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
+        playerMovement.enabled = true;
+        animator.SetTrigger("slashATK");
+        attackSequence = 0;
+    }
+
+    public void HeavySlam()
+    {
+        pressedButton.isSlam = false;
+        float baseAtk = (float)stats.Atk.CurrentValue;
+        float atkPercent = (float)stats.AtkPercent.CurrentValue;
+        float tempOutDamage = 0f;
+        tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
+        playerMovement.enabled = true;
+        animator.SetTrigger("slamATK");
+        attackSequence = 0;
+    }
+
 
     public void Attack()
     {
@@ -143,5 +182,7 @@ public class DashNAttack : MonoBehaviour
                 _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
             }
         }
+
+        Debug.Log(attackSequence.ToString());
     }
 }
