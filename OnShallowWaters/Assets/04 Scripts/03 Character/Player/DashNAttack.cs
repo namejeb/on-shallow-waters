@@ -64,7 +64,7 @@ public class DashNAttack : MonoBehaviour
         _isDash = true;
         playerMovement.enabled = false;
         
-        _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo
+        _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo 
     }
 
     public void Attack()
