@@ -60,7 +60,7 @@ public class Boss_FSM : MonoBehaviour
 
     private void Start()
     {
-        _agent.speed = speed;
+        //_agent.speed = speed;
         DoBossAttack(bossType);
         SetState(restState); 
     }
@@ -130,7 +130,8 @@ public class Boss_FSM : MonoBehaviour
     public void ShootProjectile(GameObject shootPb, Transform aimer)
     {
         Vector3 targetDirection = (target.position - aimer.position).normalized;
-        float angle = Mathf.Atan2(targetDirection.z, targetDirection.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+        aimer.eulerAngles = new Vector3(0, angle - 90, 0);
         GameObject bullet = Instantiate(shootPb, aimer.position, aimer.rotation);
         
         if (bullet.GetComponent<Projectile>() != null)

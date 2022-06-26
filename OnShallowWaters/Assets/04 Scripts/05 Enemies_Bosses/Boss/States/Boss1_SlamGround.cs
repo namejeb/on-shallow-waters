@@ -24,7 +24,7 @@ public class Boss1_SlamGround : Boss_Move3
             boss.shootCount = 0;
             boss.inStateTimer = 0;
             boss.Agent.speed = boss.speed;
-            boss.SetState(boss.restState);
+            boss.BossRandomState();
         }
         
         if (boss.inStateTimer > boss.shootInterval - 2)

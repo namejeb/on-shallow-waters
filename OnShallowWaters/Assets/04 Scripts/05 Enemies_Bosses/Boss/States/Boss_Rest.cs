@@ -7,7 +7,7 @@ public class Boss_Rest : Boss_BaseState
 {
     public override void EnterState(Boss_FSM boss)
     {
-        //Debug.Log("Boss1_Rest");
+        Debug.Log("Boss1_Rest");
         boss.Agent.speed = 0;
     }
 
