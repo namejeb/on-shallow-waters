@@ -3,14 +3,20 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
 {
+    /*
+     
+        NOTES: IF IMPLEMENT SKB STATUE IN SCENE, PLEASE ADD [PHYSICS RAYCASTER] COMPONENT TO THE CAMERA
+
+     */
+
+
     public enum Blessing { bless1, bless2 , bless3 , bless4 , bless5 }
 
     public string blessName, blessDesc;
     public float soulDuration, requiredSoul;
-    public bool isInteractable;
+    private bool isInteractable;
 
     [Header("UI Side")]
     [SerializeField] private GameObject BlessUI;
