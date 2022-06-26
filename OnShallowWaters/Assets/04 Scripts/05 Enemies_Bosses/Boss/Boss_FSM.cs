@@ -11,7 +11,7 @@ public class Boss_FSM : MonoBehaviour
     [SerializeField] private Transform target;
     public float inStateTimer;
     public float rotationSpeed;
-    
+
     [Header("Melee Settings")]
     [SerializeField] private List<GameObject> meleeHitbox;
     public float chaseMinDistance;
@@ -31,16 +31,18 @@ public class Boss_FSM : MonoBehaviour
     public float restTimeout = 3f;
     public float stuntTimeout = 5f;
 
-    [Header("Boss Value Configuration")] 
+    [Header("Boss Value Configuration")]
     public List<float> value;
 
     private Boss_BaseState _currentState;
     private NavMeshAgent _agent;
     private Animator _animator;
+    private Rigidbody rb;
 
     public Transform Target => target;
     public NavMeshAgent Agent => _agent;
     public Animator Anim => _animator;
+    public Rigidbody Rb { get { return rb; } set { rb = value; } }
 
     //assign default as boss 1, or can go for null check 
     public Boss_Move1 move1State = new Boss1_SlicingClaws();
@@ -55,7 +57,7 @@ public class Boss_FSM : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -88,6 +90,11 @@ public class Boss_FSM : MonoBehaviour
             case 3: SetState(move3State); break;
             case 4: SetState(move4State); break;
         }
+    }
+
+    public int RandomChoice()
+    {
+        return Random.Range(0, 2);
     }
 
     /// <summary>

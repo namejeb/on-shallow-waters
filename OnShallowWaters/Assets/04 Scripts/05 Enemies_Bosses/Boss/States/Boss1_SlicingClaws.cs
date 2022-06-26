@@ -8,7 +8,7 @@ public class Boss1_SlicingClaws : Boss_Move1
 
     public override void EnterState(Boss_FSM boss)
     {
-        Debug.Log("B1_Move_1");
+        //Debug.Log("B1_Move_1");
         boss.Agent.stoppingDistance = boss.chaseMinDistance; 
     }
 

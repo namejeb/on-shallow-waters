@@ -32,7 +32,7 @@ public class MeleeHitbox : MonoBehaviour
             if (slam)
                 col.gameObject.GetComponent<CrowdControl>().KnockUp();
 
-            Debug.Log("Player Damaged" + damage);    
+            Debug.Log("Player Damaged: " + damage);    
         }
     }
 
