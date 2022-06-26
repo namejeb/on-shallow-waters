@@ -1,8 +1,9 @@
 using System.Collections;
+using _04_Scripts._05_Enemies_Bosses;
 using UnityEngine;
 
 
-public class PlayerStats : CharacterStats, IShopCustomer
+public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
     [SerializeField] private Stat atkPercent;
     [SerializeField] private Stat atkSpeed;
@@ -83,6 +84,16 @@ public class PlayerStats : CharacterStats, IShopCustomer
         }
 
     }
+    
+    public void Damage(int damageAmount)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public float LostHP()
+    {
+        throw new System.NotImplementedException();
+    }
 
     // private void UpgradeAtk()
     // {
@@ -132,4 +143,5 @@ public class PlayerStats : CharacterStats, IShopCustomer
     //         print("Curr Atk: " + Atk.CurrentValue);
     //     }
     // } 
+
 }
