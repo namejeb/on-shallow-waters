@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
     public sealed class SlowHeavyShooter : EnemiesCore{
-        public GameObject firePoint;
+        public Transform firePoint;
         // public List<GameObject> vfx = new List<GameObject>();
         [SerializeField] private GameObject effectToSpawn;
         [SerializeField] private float timeToFire;
@@ -17,7 +17,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             //_effectToSpawn = vfx[0];
             shieldRecover = true;
             currentShield = maxShield;
-            HealthBar(10);
+            
             _enemiesProjectile = effectToSpawn.GetComponent<EnemiesProjectile>();
         }
 
@@ -39,7 +39,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             if (Time.time >= timeToFire){
                 timeToFire = Time.time + (1 / _enemiesProjectile.fireRate);
                 Quaternion rotation = _rotate;
-                Instantiate(effectToSpawn, transform.position, rotation);
+                Instantiate(effectToSpawn, firePoint.position, rotation);
             }
         }
     }

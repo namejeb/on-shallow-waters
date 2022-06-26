@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,5 +40,4 @@ public class InputManager : MonoBehaviour
             swipeDash.enabled = true;
         }
     }
-    
 }

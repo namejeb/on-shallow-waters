@@ -1,33 +1,36 @@
+using System.Collections;
+using _04_Scripts._05_Enemies_Bosses;
 using UnityEngine;
 
 
-public class PlayerStats : CharacterStats, IShopCustomer
+public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
- 
+    [SerializeField] private Stat atkPercent;
     [SerializeField] private Stat atkSpeed;
     [SerializeField] private Stat critChance;
     [SerializeField] private Stat critDamage;
     [SerializeField] private Stat movementSpeed;
+    [SerializeField] private Stat defense;
+    [SerializeField] private Stat damageReduction;
     
     
-    [Space][Space]
-    [Header("Upgrade Amount:")]
-    [SerializeField] private int atkUpgradeAmt = 3;
-    [SerializeField] private int defUpgradeAmt = 3;
-    
+    public Stat AtkPercent { get => atkPercent; }
     public Stat AtkSpeed { get => atkSpeed; }
     public Stat CritChance { get => critChance; }
     public Stat CritDamage { get => critDamage; }
     public Stat MovementSpeed { get => movementSpeed; }
+    public Stat Defense { get => defense; }
+    public Stat DamageReduction { get => damageReduction; }
+    
     
     protected override void Die()
     {
         //game end logics
     }
 
-    private void IncreaseMaxHp(int amount)
+    public void IncreaseMaxHp(float multiplier)
     {
-        MaxHp += amount;
+        MaxHp *= multiplier;
     }
     
     public void BoughtItem(ShopItem.ItemType itemType, CurrencyType currencyType)
@@ -69,7 +72,29 @@ public class PlayerStats : CharacterStats, IShopCustomer
             //souls shop upgrades   
         }
     }
+
+    public IEnumerator RegenLoop(int regenHp, int regenArm, int regenCount, float regenPerSeconds)
+    {
+        for (int i = 0; i < regenCount; i++)
+        {
+            yield return new WaitForSeconds(regenPerSeconds);
+            currHp += regenHp;
+            // player hp bar should updated
+            Debug.Log(currHp);
+        }
+
+    }
     
+    public void Damage(int damageAmount)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public float LostHP()
+    {
+        throw new System.NotImplementedException();
+    }
+
     // private void UpgradeAtk()
     // {
     //     int newValue = Atk.BaseValue + atkUpgradeAmt;
@@ -77,9 +102,9 @@ public class PlayerStats : CharacterStats, IShopCustomer
     //     
     //    // save to file
     // }
-    
-    
-    
+
+
+
     // public void UpgradeDef()
     // {
     //      Stat stat = _playerStats.Def;
@@ -87,13 +112,13 @@ public class PlayerStats : CharacterStats, IShopCustomer
     //      int newValue = currValue + defUpgradeAmt;
     //     
     //      _playerStats.Atk.ModifyBaseValue(newValue);
-    
-    
+
+
     //     
     //     _playerStats.AddModifier(_playerStats.Def, 5);    -> soul shop upgrade method?
     // }
-    
-    
+
+
     //Testing
     //  private void Update()
     // {
@@ -118,4 +143,5 @@ public class PlayerStats : CharacterStats, IShopCustomer
     //         print("Curr Atk: " + Atk.CurrentValue);
     //     }
     // } 
+
 }

@@ -13,9 +13,7 @@ public class Stat
     [Header("Caps:")]
     [SerializeField] private bool hasCap;
     [SerializeField] [Range(1f, 20f)] private float cap = 1;
-
-    public int PrevModifierByBoon { get; set; }
-
+    
     public int BaseValue 
     { 
         get => baseValue; 

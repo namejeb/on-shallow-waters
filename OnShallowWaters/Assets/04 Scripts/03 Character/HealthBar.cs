@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class HealthBar : MonoBehaviour
@@ -12,7 +14,7 @@ public class HealthBar : MonoBehaviour
     {
         LeanTween.reset();
     }
-
+    
     private void Start()
     {
         _cam = Camera.main;
@@ -28,5 +30,6 @@ public class HealthBar : MonoBehaviour
     {
         LeanTween.scaleX(frontBar.gameObject, percentage, .01f);
         LeanTween.scaleX(midBar.gameObject, percentage, .3f);
+        
     }
 }

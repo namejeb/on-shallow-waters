@@ -8,9 +8,12 @@ public class Boss1_Config : MonoBehaviour
     public float dashTimeout = 3f;
     public float dashSpeed;
 
-    private float _percentage = 0.7f;
-
+  // private decimal _percentage = 0.7M;
+    
     private Boss_Stats _bs;
+
+    private float[] _percentages = {.7f, .4f, .1f};
+    private int _index = 0;
 
     private void Awake()
     {
@@ -19,11 +22,26 @@ public class Boss1_Config : MonoBehaviour
 
     private void Update()
     {
-        if (_bs.CurrHpPercentage <= _percentage && !_bs.armState)
+        //Debug.Log("Current Hp percentage: " + _bs.CurrHpPercentage + "\nTriggerPercentage: " + _percentage);
+        // if ((decimal)_bs.CurrHpPercentage <= _percentage && !_bs.armState)
+        // {
+        //     _percentage -= 0.3M;
+        //     _bs.armState = true;
+        // }
+
+        if (_bs.CurrHpPercentage <= _percentages[_index] && !_bs.armState)
         {
-            _percentage -= 0.3f;
-            _bs.armState = true;
-            Debug.Log(_bs.CurrHpPercentage + "Dectected 1");
+            if (_index < 2)
+            {
+                _index++;
+                _bs.armState = true;
+            }
         }
+        
+        // if (_bs.CurrHpPercentage <= _percentage && !_bs.armState)
+        // {
+        //     _percentage -= 0.3f;
+        //     _bs.armState = true;
+        // }
     }
 }

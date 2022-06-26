@@ -8,16 +8,17 @@ public class BoonSelection : MonoBehaviour
 {
     [SerializeField] private BoonEffects boonEffects;
     
-    
     [Space][Space]
-    [SerializeField] private BoonItemsSO boomItemsSo;
+    [SerializeField] private BoonItemsSO boonItemsSo;
     [SerializeField] private float offsetX;
     
     [Space][Space]
     [SerializeField] private Image background;
 
     private List<BoonItem> boonItemsList = new List<BoonItem>();
-    
+   private List<BoonItemsTimesUsed> _boonItemsTimesUsed = new List<BoonItemsTimesUsed>();
+  
+
     private Transform _container;
     private Transform _boonButtonTemplate;
 
@@ -25,6 +26,23 @@ public class BoonSelection : MonoBehaviour
     private BoonItem[] _boonItems = new BoonItem[3];
 
     public static event Action OnSelectedBoon;
+
+    [Serializable]
+    private class BoonItemsTimesUsed
+    {
+        public BoonItem boonItem;
+        public int usageCount = 0;
+        private readonly int _maxUsageCount;
+
+        public bool IsLimitReached => usageCount == _maxUsageCount;
+
+        public BoonItemsTimesUsed(BoonItem boonItem)
+        {
+            this.boonItem = boonItem;
+            this._maxUsageCount = boonItem.maxUsageCount;
+        }
+    }
+    
 
     #region Singleton
     public static BoonSelection Instance;
@@ -48,9 +66,15 @@ public class BoonSelection : MonoBehaviour
         {
             _buttons[i] = CreateShopButton(i);      
         }
+        
+        //tracker for each effect's times used
+        foreach (BoonItem boonItem in boonItemsSo.boonItems)
+        {
+            BoonItemsTimesUsed bitu = new BoonItemsTimesUsed(boonItem);
+            _boonItemsTimesUsed.Add(bitu);
+        }
     }
-
-    
+        
     //Create buttons at start, only change info and onClick functions of these buttons afterwards
     private Transform CreateShopButton(int positionIndex)
     {
@@ -62,16 +86,53 @@ public class BoonSelection : MonoBehaviour
         
         return newShopButtonTransform;
     }
+    private void ActivateBoonEffect(int effectIndex)
+    {
+        //effectIndex = 1;
+        switch (effectIndex)
+        {
+            case 0: boonEffects.IncreaseMaxHp();      break;
+            
+            case 1: boonEffects.DmgToArmorIncrease();  break;
+            case 2: boonEffects.DmgWhenArmorBreak();  break;
+            case 3: boonEffects.SingleEnemyDmgIncrease();  break;
+            case 4: boonEffects.FirstTimeDmgBonus();  break;
+            
+            case 5: boonEffects.UpgradeAtkPercent();  break;
+            case 6: boonEffects.UpgradeAtkSpd();      break;
+            case 7: boonEffects.UpgradeCritChance();  break;
+            case 8: boonEffects.UpgradeCritDamage();  break;
+            case 9: boonEffects.IncreaseDefense();  break;
+            case 10: boonEffects.IncreaseMovementSpeed();  break;
+            case 11: boonEffects.ReduceDamageTaken(); break;
+            case 12: boonEffects.ReduceDamageWhenHpLow(); break;
+        }
+        
+        //increment usage
+        BoonItemsTimesUsed bitu = _boonItemsTimesUsed.Find(b => b.boonItem.id == effectIndex);
+        if (!bitu.IsLimitReached) bitu.usageCount++;
+    }
+
     
     //List of boons to randomize from
     private void PopulateBoonItemsPool()
     {
-        //set up pool
+        // set up pool
         boonItemsList.Clear();
-        foreach (BoonItem boonItem in boomItemsSo.boonItems)
-        {
-            boonItemsList.Add(boonItem);
-        }
+         foreach (BoonItem boonItem in boonItemsSo.boonItems)
+         {
+             boonItemsList.Add(boonItem);
+         }
+                 
+         // remove effects that have reached highest increase amount from pool
+         for(int i = 0; i < _boonItemsTimesUsed.Count; i++)
+         {
+             if (_boonItemsTimesUsed[i].IsLimitReached)
+             {
+                 BoonItem bI = _boonItemsTimesUsed[i].boonItem;
+                 boonItemsList.Remove(bI);
+             }
+         }
     }
     
     private void RandomiseBoonItems()
@@ -91,14 +152,12 @@ public class BoonSelection : MonoBehaviour
     private void InitButtons()
     {
         SetBoonButtonsActive(true);
-        
+  
         for (int i = 0; i < 3; i++)
         {
             BoonItem boonItem = _boonItems[i];
 
-            //Set info
-            _buttons[i].Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
-            _buttons[i].Find("descText").GetComponent<TextMeshProUGUI>().SetText(boonItem.description);
+            SetButtonInfo(_buttons[i], boonItem);
             
             //Set onClick function
             Button_UI buttonUI = _buttons[i].GetComponent<Button_UI>();
@@ -111,19 +170,28 @@ public class BoonSelection : MonoBehaviour
             buttonUI.ClickEvent(() => CloseBoonSelection());
         }
     }
-    
-        
-    private void ActivateBoonEffect(int effectIndex)
-    {
-        switch (effectIndex)
-        {
-            case 0: boonEffects.UpgradeAtk();         break;
-            case 1: boonEffects.UpgradeAtkSpd();      break;
-            case 2: boonEffects.UpgradeCritChance();  break;
-            case 3: boonEffects.UpgradeCritDamage();  break;
-        }
-    }
 
+    private void SetButtonInfo(Transform buttonTransform, BoonItem boonItem)
+    {
+        //Set info
+        buttonTransform.Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
+            
+        float effectAmount = 0f;
+        
+        if (boonItem.increaseAmountType == 0)
+            effectAmount = boonEffects.GetMaxHpIncreaseAmount();
+        else if (boonItem.increaseAmountType == 1)
+            effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id).GetIncreaseAmount();
+        else
+            effectAmount = boonEffects.GetFloatIncreaseAmounts(boonItem.id);
+        
+            
+        if(boonItem.isPercentage)
+            buttonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} +{effectAmount * 100}%");
+        else
+            buttonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount}");
+    }
+    
     public void RollBoons()
     {
         background.enabled = true;

@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class Boss_FSM : MonoBehaviour
 {
     public enum BossMode { BOSS1, BOSS2 }
-    
-    [SerializeField] private BossMode bam;
+
+    [SerializeField] private BossMode bossType;
     [SerializeField] private Transform target;
     public float inStateTimer;
     public float rotationSpeed;
@@ -49,17 +49,19 @@ public class Boss_FSM : MonoBehaviour
     public Boss_Move4 move4State = new Boss1_Dash();
     public readonly Boss_Rest restState = new Boss_Rest();
     public readonly Boss_Stunt stuntState = new Boss_Stunt();
+    public readonly Boss_Die dieState = new Boss_Die();
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        
     }
 
     private void Start()
     {
-        _agent.speed = speed;
-        DoBossAttack(bam);
+        //_agent.speed = speed;
+        DoBossAttack(bossType);
         SetState(restState); 
     }
 
@@ -89,7 +91,7 @@ public class Boss_FSM : MonoBehaviour
     }
 
     /// <summary>
-    /// Switch Boss Attack State Machine
+    /// Switch Boss State Machine Through enum bossType
     /// </summary>
     /// <param name="mode"></param>
     private void DoBossAttack(BossMode mode)
@@ -128,7 +130,8 @@ public class Boss_FSM : MonoBehaviour
     public void ShootProjectile(GameObject shootPb, Transform aimer)
     {
         Vector3 targetDirection = (target.position - aimer.position).normalized;
-        float angle = Mathf.Atan2(targetDirection.z, targetDirection.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+        aimer.eulerAngles = new Vector3(0, angle - 90, 0);
         GameObject bullet = Instantiate(shootPb, aimer.position, aimer.rotation);
         
         if (bullet.GetComponent<Projectile>() != null)

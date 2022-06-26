@@ -10,21 +10,26 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
             StartCoroutine(Removed());
         }
         
-        private void Update() {
+        protected virtual void Update() {
             Transform trans = transform;
             trans.position += trans.forward * (speed * Time.deltaTime);
         }
 
         private void OnTriggerEnter(Collider other){
             if (!other.CompareTag("Enemy")){
+                AreaImpact();
                 gameObject.SetActive(false);
             }
             
             //! IF PLAYER, APPLY DMG
         }
+        
+        protected virtual void AreaImpact(){
+            //Does nothing for now
+        }
 
         private IEnumerator Removed(){
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(4.5f);
             gameObject.SetActive(false);
         }
     }

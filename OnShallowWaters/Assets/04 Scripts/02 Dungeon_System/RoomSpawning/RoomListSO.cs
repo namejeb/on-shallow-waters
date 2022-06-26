@@ -7,4 +7,5 @@ public class RoomListSO : ScriptableObject
 {
     public GameObject roomBasic;
     public List<Room> rooms;
+    public List<Room> bossRooms;
 }

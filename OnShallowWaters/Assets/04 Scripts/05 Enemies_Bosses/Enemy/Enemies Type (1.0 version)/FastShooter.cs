@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
@@ -5,8 +6,13 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         public GameObject projectile;
         public bool fireOnce;
 
+        // agent.SetDestination(puppet.position);
+        // if(dist < attackRange * attackRange){
+        //     agent.stoppingDistance = attackRange;
+        //     behaviour = CoreStage.Attack;
+        // }
+        
         protected override void Movement(){
-            
         }
 
         protected override void Attack(){
