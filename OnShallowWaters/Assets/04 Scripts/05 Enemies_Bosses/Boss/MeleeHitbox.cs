@@ -6,7 +6,21 @@ using UnityEngine;
 public class MeleeHitbox : MonoBehaviour
 {
     public int damage;
+    public float delayBox, offBoxTime;
     public bool slam;
+
+    BoxCollider bc;
+
+    private void Awake()
+    {
+        bc = GetComponent<BoxCollider>();
+
+        if (slam)
+        {
+            bc.enabled = false;
+            StartCoroutine(EnableColldier());
+        } 
+    }
 
     private void OnTriggerEnter(Collider col)
     {
@@ -20,5 +34,13 @@ public class MeleeHitbox : MonoBehaviour
 
             Debug.Log("Player Damaged" + damage);    
         }
+    }
+
+    IEnumerator EnableColldier()
+    {
+        yield return new WaitForSeconds(delayBox);
+        bc.enabled = true;
+        yield return new WaitForSeconds(offBoxTime);
+        bc.enabled = false;
     }
 }
