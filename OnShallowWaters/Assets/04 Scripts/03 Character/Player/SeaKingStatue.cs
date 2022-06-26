@@ -10,7 +10,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
 
     public string blessName, blessDesc;
     public float soulDuration, requiredSoul;
-    private bool isInteractable;
+    public bool isInteractable;
 
     [Header("UI Side")]
     [SerializeField] private GameObject BlessUI;
