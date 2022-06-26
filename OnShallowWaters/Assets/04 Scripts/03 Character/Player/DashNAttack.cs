@@ -125,6 +125,12 @@ public class DashNAttack : MonoBehaviour
                 hitColliders[i].GetComponent<TreasureChest>().Damage(0);
                 continue;
             }
+            
+            if (hitColliders[i].CompareTag("TrainingDummy"))
+            {
+                hitColliders[i].GetComponent<TrainingDummy>().Damage(0);
+                continue;
+            }
        
             EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
             if (enemyHandler == null) return;

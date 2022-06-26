@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-using System;
+
 
 public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
 {
@@ -35,6 +33,24 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
         outline = GetComponent<Outline>();
     }
 
+    private void Start()
+    {
+        InitUI();
+    }
+
+    private void InitUI()
+    {
+        SKB_UIDataHolder dataHolder = GameObject.FindGameObjectWithTag("SKB_UIDataHolder").GetComponent<SKB_UIDataHolder>();
+
+        BlessUI = dataHolder.BlessUI;
+        bg = dataHolder.bg;
+        blessNameText = dataHolder.blessNameText;
+        descriptionText = dataHolder.descriptionText;
+        equipButton = dataHolder.equipButton;
+        exitButton = dataHolder.exitButton;
+        skbButton = dataHolder.skbButton;
+    }
+
     private void OnTriggerEnter(Collider col)
     {
         skb = col.gameObject.GetComponent<SkBlessing>();
@@ -53,6 +69,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
         Debug.Log("STATUE CLICKED");
         if (isInteractable)
         {
+            print('s');
             BlessUI.SetActive(true);
             bg.enabled = true;
             equipButton.onClick.AddListener(ChangeBlessing);
