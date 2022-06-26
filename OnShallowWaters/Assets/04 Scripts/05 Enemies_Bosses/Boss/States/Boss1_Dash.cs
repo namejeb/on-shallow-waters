@@ -9,7 +9,7 @@ public class Boss1_Dash : Boss_Move4
     
     public override void EnterState(Boss_FSM boss)
     {
-        Debug.Log("B1_Move_4");
+        //Debug.Log("B1_Move_4");
         boss.Agent.enabled = false;
         _direction = (boss.Target.position - boss.transform.position).normalized;
         _b1Config = boss.gameObject.GetComponent<Boss1_Config>();

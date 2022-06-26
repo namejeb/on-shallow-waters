@@ -9,14 +9,14 @@ public class DialogueManager : MonoBehaviour
 {
     [Header("Ref: ")]
     public static DialogueManager instance;
-    public GameObject dialogueBox;
+    public GameObject dialogueBox, playerControl;
     public TMP_Text nameText;
     public TMP_Text dialogueText;
-    
-    public Dialogue dd;
+    private Dialogue dialogue;
+    private DialogueDatabase dialogueDatabase;
 
-    public bool isInteracted = false, isTyping;
-    public string currSentence;
+    private bool isInteracted = false, isTyping;
+    private string currSentence;
     
     private Queue<string> sentences;
     private IEnumerator coroutine;
@@ -24,7 +24,8 @@ public class DialogueManager : MonoBehaviour
     [Space][Space]
     [Header("Settings: ")]
     [SerializeField] private float typeSpeed = .02f;
-    
+    [SerializeField] private float delayTime = 1f;
+    [SerializeField] private int bossNum, dialogueNum;
 
     void Awake()
     {
@@ -32,43 +33,42 @@ public class DialogueManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+
+        dialogueDatabase = GetComponent<DialogueDatabase>();
     }
 
     void Start()
     {
         sentences = new Queue<string>();
         var list = sentences.ToList();
-        StartDialogue(dd);
+        dialogue = dialogueDatabase.allBoss.bossDialogue[bossNum].dialogueList[dialogueNum];
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isInteracted)
+        if (isInteracted)
         {
-            if (!isTyping)
-                DisplayNextSentence();
-            else
+            if (Input.GetMouseButtonDown(0))
             {
-                StopCoroutine(coroutine);
-                dialogueText.text = currSentence;
-                isTyping = false;
+                if (!isTyping)
+                    DisplayNextSentence();
+                else
+                {
+                    StopCoroutine(coroutine);
+                    dialogueText.text = currSentence;
+                    isTyping = false;
+                }
             }
-            
         }
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue()
     {
         isInteracted = true;
-        dialogueBox.SetActive(true);
-        nameText.text = dialogue.name;
-        sentences.Clear();
-        foreach (string sentence in dialogue.sentences)
-        {
-            sentences.Enqueue(sentence);
-        }
-
-        DisplayNextSentence();
+        PlayerHandler.Instance.EnableAnDisableMove();
+        //playerControl.SetActive(false);
+        
+        StartCoroutine(Delay(delayTime));
     }
 
     public void DisplayNextSentence()
@@ -76,19 +76,19 @@ public class DialogueManager : MonoBehaviour
         if (sentences.Count == 0)
         {
             EndDialogue();
+            //playerControl.SetActive(true);
             dialogueBox.SetActive(false);
             return;
         }
 
         currSentence = sentences.ElementAt(0);
-        Debug.Log(currSentence);
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         coroutine = TypeSentence(sentence);
         StartCoroutine(coroutine);
     }
 
-    IEnumerator TypeSentence(string sentence)
+    private IEnumerator TypeSentence(string sentence)
     {
         isTyping = true;
         dialogueText.text = "";
@@ -102,7 +102,20 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        Debug.Log("there is no sentences alr");
+        PlayerHandler.Instance.EnableAnDisableMove();
         isInteracted = false;
+    }
+
+    private IEnumerator Delay(float waitDuration)
+    {
+        yield return new WaitForSeconds(waitDuration);
+        dialogueBox.SetActive(true);
+        nameText.text = dialogue.name;
+        sentences.Clear();
+        foreach (string sentence in dialogue.sentences)
+        {
+            sentences.Enqueue(sentence);
+        }
+        DisplayNextSentence();
     }
 }

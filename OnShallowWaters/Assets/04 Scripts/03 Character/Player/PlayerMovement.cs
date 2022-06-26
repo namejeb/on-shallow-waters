@@ -11,8 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 6f;
     public float rotationSpeed = 10f;
-
-    public float turnSmooth = 0.1f;
+    public bool canMove;
     float turnSmoothVelocity;
     float stunTime;
 
@@ -21,12 +20,18 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _playerStats = PlayerHandler.Instance.PlayerStats;
+        canMove = true;
     }
     private void Update()
     {
-        float horizontal = joystick.Horizontal;
-        float vertical = joystick.Vertical;
-        _moveDir = new Vector3(horizontal, 0f, vertical).normalized;
+        if (canMove)
+        {
+            float horizontal = joystick.Horizontal;
+            float vertical = joystick.Vertical;
+            _moveDir = new Vector3(horizontal, 0f, vertical).normalized;
+        }
+        else
+            _moveDir = Vector3.zero;
 
         if (_moveDir.magnitude >= 0.2f)
         {

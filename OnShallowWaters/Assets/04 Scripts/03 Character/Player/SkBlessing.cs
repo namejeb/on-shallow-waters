@@ -72,7 +72,6 @@ public class SkBlessing : MonoBehaviour
         {
             timer -= Time.unscaledDeltaTime;
             soulMeter.fillAmount -= 1.0f / duration * Time.unscaledDeltaTime;
-
             if (timer < 0)
             {
                 timer = duration;
@@ -116,8 +115,6 @@ public class SkBlessing : MonoBehaviour
         timer = duration;
         startCountdown = true;
         timeManager.StartSlowMo(duration);
-
-        Debug.Log("slow down time");
     }
     
     public void SKB4()
@@ -126,6 +123,7 @@ public class SkBlessing : MonoBehaviour
             return;
 
         currSoul = 0;
+        timer = duration;
         startCountdown = true;
         EnemiesCore[] enemies = FindObjectsOfType<EnemiesCore>();
 
@@ -152,6 +150,7 @@ public class SkBlessing : MonoBehaviour
             return;
 
         currSoul = 0;
+        timer = duration;
         startCountdown = true;
         EnemiesCore[] enemies = FindObjectsOfType<EnemiesCore>();
 
@@ -184,7 +183,10 @@ public class SkBlessing : MonoBehaviour
 
         if (!soulButton.interactable)
         {
-            currSoul += soul;
+            if (currSoul >= requiredSoul)
+                currSoul = requiredSoul;
+            else
+                currSoul += soul;
             UpdateSoulMeter(currSoul / requiredSoul);
         }
         

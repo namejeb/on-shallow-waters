@@ -84,6 +84,7 @@ public class RoomSpawner : MonoBehaviour
     {
         //after 5 rooms, spawn boss
         bool isBossStage = (_roomFinishedCount == 5);
+        //isBossStage = true; //boss room debug
         HandleSpawnRoom(isBossStage, dir);
     }
 
@@ -99,6 +100,8 @@ public class RoomSpawner : MonoBehaviour
            
             room = roomListSo.bossRooms[_bossRoomsIndex];
             if (_bossRoomsIndex + 1 < roomListSo.bossRooms.Count) _bossRoomsIndex++;
+
+            DialogueManager.instance.StartDialogue();
         }
         else
         {
