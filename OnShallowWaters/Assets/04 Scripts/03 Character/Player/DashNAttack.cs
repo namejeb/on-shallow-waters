@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
+using UnityEngine.EventSystems;
 
-public class DashNAttack : MonoBehaviour
+public class DashNAttack : MonoBehaviour, IPointerDownHandler , IPointerUpHandler
 {
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Animator animator;
@@ -20,7 +21,8 @@ public class DashNAttack : MonoBehaviour
 
     [SerializeField] private int outDamage;
     [SerializeField] private int inDamage;
-
+    [SerializeField] private bool buttonPressed;
+    [SerializeField] private float chargedTimer;
     private BoonDamageModifiers _boonDamageModifiers;
     
     private bool _isDash = false;
@@ -66,6 +68,60 @@ public class DashNAttack : MonoBehaviour
         
         _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo 
     }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        buttonPressed = true;
+    }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        buttonPressed = false;
+        chargedTimer = 0;
+    }
+
+    public void Update()
+    {
+        chargedTimer += Time.deltaTime;
+
+        if (buttonPressed == true && chargedTimer > 3)
+        {
+            HeavySlash();
+            
+        }
+
+        else if (buttonPressed == true && chargedTimer > 5)
+        {
+            HeavySlam();
+        }
+        else if (buttonPressed == true && chargedTimer == 7)
+        {
+            HeavySlam();
+        }
+    }
+    public void HeavySlash()
+    {
+        float baseAtk = (float)stats.Atk.CurrentValue;
+        float atkPercent = (float)stats.AtkPercent.CurrentValue;
+        float tempOutDamage = 0f;
+        tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
+        Debug.Log(tempOutDamage);
+        playerMovement.enabled = true;
+        animator.SetTrigger("slashATK");
+        nextAttack = Time.time + 1;
+    }
+
+    public void HeavySlam()
+    {
+        float baseAtk = (float)stats.Atk.CurrentValue;
+        float atkPercent = (float)stats.AtkPercent.CurrentValue;
+        float tempOutDamage = 0f;
+        tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
+        Debug.Log(tempOutDamage);
+        playerMovement.enabled = true;
+        animator.SetTrigger("slamATK");
+        nextAttack = Time.time + 1;
+    }
+
 
     public void Attack()
     {

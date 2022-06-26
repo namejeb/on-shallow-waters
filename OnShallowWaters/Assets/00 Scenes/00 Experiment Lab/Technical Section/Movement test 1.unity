@@ -378,7 +378,7 @@ MonoBehaviour:
   joystick: {fileID: 278739891}
   speed: 10
   rotationSpeed: 10
-  turnSmooth: 0.1
+  canMove: 0
 --- !u!143 &97481714
 CharacterController:
   m_ObjectHideFlags: 0
@@ -416,13 +416,15 @@ MonoBehaviour:
   dashDuration: 0.2
   range: 1
   speed: 50
-  enemyLayer:
+  damageableLayer:
     serializedVersion: 2
     m_Bits: 0
   attackSequence: 0
   nextAttack: 0
   outDamage: 0
   inDamage: 0
+  buttonPressed: 0
+  chargedTimer: 0
 --- !u!114 &97481717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3461,12 +3463,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1093336462, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: movementSpeed.baseValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093336462, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: atk.modifiers.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1093336462, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: atk.modifiers.Array.data[0]
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: stats
@@ -3478,6 +3488,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1093336464, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093336465, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: canMove
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1093336465, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
