@@ -21,6 +21,5 @@ public class SpawnBoonTrigger : MonoBehaviour
     public void SpawnAtPosition(Vector3 position)
     {
         Instantiate(boonTrigger.gameObject, position, Quaternion.identity);
-        print("soaned at:" + position);
     }
 }
