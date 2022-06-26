@@ -18,8 +18,8 @@ public class SpawnBoonTrigger : MonoBehaviour
         Instantiate(boonTrigger.gameObject, playerStats.transform.position + new Vector3(0f, 1f, 3f), Quaternion.identity);
     }
 
-    public void SpawnAtLastEnemy(Transform lastEnemy)
+    public void SpawnAtPosition(Vector3 position)
     {
-        Instantiate(boonTrigger.gameObject, lastEnemy.position, Quaternion.identity);
+        Instantiate(boonTrigger.gameObject, position, Quaternion.identity);
     }
 }

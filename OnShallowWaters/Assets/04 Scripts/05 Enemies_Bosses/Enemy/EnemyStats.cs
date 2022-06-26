@@ -1,6 +1,5 @@
 using _04_Scripts._05_Enemies_Bosses;
 using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyStats : CharacterStats, IDamageable
@@ -41,6 +40,12 @@ public class EnemyStats : CharacterStats, IDamageable
     {
         _dropSouls.Drop();
         WaveSpawner.UpdateWaveTotalEnemies();
+
+        if (WaveSpawner.IsLastEnemy)
+        {
+            SpawnBoonTrigger.Instance.SpawnAtPosition(transform.position);
+        }
+        
         gameObject.SetActive(false);
     }
     

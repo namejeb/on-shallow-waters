@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
@@ -36,23 +37,23 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
     private List<Transform> _spawnPoints = new List<Transform>();
+
+    private static int _roomTotalEnemies = 0;
+    public static bool IsLastEnemy => _roomTotalEnemies == 0;
     
     private EnemyPooler _enemyPooler;
-    
-    private float _searchCountdown = 1f;
-    
     
     private int _nextWave = 0;
     private bool _isEnd;
     
     private static Wave _currentWave;
-    private static Transform _lastEnemy;
 
     [Header("Enemy Initialization")]
     public Wave[] waves;
 
     [Header("Game State")]
     public SpawnState state = SpawnState.NOTHING;
+    
     
     private void Start()
     {
@@ -66,6 +67,14 @@ public class WaveSpawner : MonoBehaviour
         waveCountdown = 0f;
 
         _currentWave = waves[0];
+
+        for (int i = 0; i < waves.Length; i++)
+        {
+            for (int j = 0; j < waves[i].enemies.Count; j++)
+            {
+                _roomTotalEnemies += waves[i].enemies[j].count;
+            }
+        }
     }
 
     private void Update()
@@ -81,33 +90,19 @@ public class WaveSpawner : MonoBehaviour
         {
             if (_currentWave.IsWaveComplete)
             {
-                if (_isEnd)
-                {
-                    state = SpawnState.NOTHING;
-                    
-                    SpawnBoonTrigger.Instance.SpawnAtLastEnemy(_lastEnemy);
-                    print("spawned at: " + _lastEnemy.position);
-                
-                }
-                else
-                    WaveCompleted(waves[_nextWave]);
+                if (_isEnd) state = SpawnState.NOTHING;
+                else WaveCompleted(waves[_nextWave]);
             }
-            else
-                return;
+            else return;
         }
 		
 		// Rest time between wave
         if (waveCountdown <= 0)
         {
-            if (state != SpawnState.SPAWNING)
-            {
-                StartCoroutine(SpawnWave(waves[_nextWave]));
-            }
+            if (state != SpawnState.SPAWNING) StartCoroutine(SpawnWave(waves[_nextWave]));
         }
-        else if (state == SpawnState.NOTHING)
-            return;
-        else
-            waveCountdown -= Time.deltaTime;
+        else if (state == SpawnState.NOTHING) return;
+        else waveCountdown -= Time.deltaTime;
     }
 
     void WaveCompleted(Wave wave)
@@ -127,17 +122,8 @@ public class WaveSpawner : MonoBehaviour
 		{
 			for (int j = 0; j < wave.enemies[i].count; j++)
             {
-                bool isLastEnemy = i == wave.enemies.Count - 1 && j == wave.enemies[i].count - 1;
-                
-                if (isLastEnemy)
-                {
-                    _lastEnemy = SpawnEnemy(wave.enemies[i].enemy);
-                }
-                else
-                {
-                    SpawnEnemy(wave.enemies[i].enemy);
-                }
-			}
+                 SpawnEnemy(wave.enemies[i].enemy);
+            }
 		}
 		
 		// Determine are every waves go through already or not
@@ -153,7 +139,7 @@ public class WaveSpawner : MonoBehaviour
         yield break;
     }
 	
-    Transform SpawnEnemy(EnemyPooler.EnemyPoolType enemyType)
+    void SpawnEnemy(EnemyPooler.EnemyPoolType enemyType)
     {
         // Random Spawn points
         int spawnIndex = Random.Range(0, _spawnPoints.Count);
@@ -162,13 +148,12 @@ public class WaveSpawner : MonoBehaviour
 		Transform e = _enemyPooler.GetFromPool(enemyType);
         e.gameObject.SetActive(true);
 		e.position = _spawnPoints[spawnIndex].position;
-        
-        return e;
     }
 
     public static void UpdateWaveTotalEnemies()
     {
         _currentWave.totalEnemies -= 1;
+        _roomTotalEnemies -= 1 ;
     }
 
     public static int GetCurrWaveTotalEnemies()
