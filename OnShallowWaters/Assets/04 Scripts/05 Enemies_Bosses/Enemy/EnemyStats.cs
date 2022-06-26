@@ -22,7 +22,7 @@ public class EnemyStats : CharacterStats, IDamageable
         base.Awake();
         
         _dropSouls = GetComponent<DropSouls>();
-        _enemiesCore = GetComponent<EnemyHandler>().EnemiesCore;
+        _enemiesCore = GetComponent<EnemiesCore>();
     }
     public void Damage(int damageAmount)
     {
