@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 
 public class DialogueManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text dialogueText;
     private Dialogue dialogue;
     private DialogueDatabase dialogueDatabase;
+    public FloatingJoystick joystick;
 
     private bool isInteracted = false, isTyping;
     private string currSentence;
@@ -66,7 +68,8 @@ public class DialogueManager : MonoBehaviour
     {
         isInteracted = true;
         PlayerHandler.Instance.EnableAnDisableMove();
-        //playerControl.SetActive(false);
+        joystick.OnPointerUp(new PointerEventData(null));
+        playerControl.SetActive(false);
         
         StartCoroutine(Delay(delayTime));
     }
@@ -76,7 +79,7 @@ public class DialogueManager : MonoBehaviour
         if (sentences.Count == 0)
         {
             EndDialogue();
-            //playerControl.SetActive(true);
+            playerControl.SetActive(true);
             dialogueBox.SetActive(false);
             return;
         }
