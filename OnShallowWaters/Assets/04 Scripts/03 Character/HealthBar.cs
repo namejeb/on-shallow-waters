@@ -30,6 +30,5 @@ public class HealthBar : MonoBehaviour
     {
         LeanTween.scaleX(frontBar.gameObject, percentage, .01f);
         LeanTween.scaleX(midBar.gameObject, percentage, .3f);
-        
     }
 }
