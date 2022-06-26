@@ -423,8 +423,8 @@ MonoBehaviour:
   nextAttack: 0
   outDamage: 0
   inDamage: 0
-  buttonPressed: 0
-  chargedTimer: 0
+  pressedButton: {fileID: 0}
+  isSlashTigger: 0
 --- !u!114 &97481717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1683,6 +1683,7 @@ GameObject:
   - component: {fileID: 1192439998}
   - component: {fileID: 1192439997}
   - component: {fileID: 1192439996}
+  - component: {fileID: 1192439999}
   m_Layer: 5
   m_Name: AttackButton
   m_TagString: Untagged
@@ -1754,19 +1755,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1192439997}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1948713392}
-        m_TargetAssemblyTypeName: DashNAttack, Assembly-CSharp
-        m_MethodName: Attack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1192439997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1805,6 +1794,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192439994}
   m_CullTransparentMesh: 1
+--- !u!114 &1192439999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192439994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6bf687a2bcf6046805c7dcd2ec82f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSlash: 0
+  chargedTimer: 0
+  isSlam: 0
+  isPressed: 0
+  DNA: {fileID: 1948713392}
 --- !u!1001 &1350118704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3454,6 +3460,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 507039181, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1093336462, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: atk.baseValue
       value: 30
@@ -3482,6 +3492,10 @@ PrefabInstance:
       propertyPath: stats
       value: 
       objectReference: {fileID: 1948713398}
+    - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: pressedButton
+      value: 
+      objectReference: {fileID: 1192439999}
     - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: enemyLayer.m_Bits
       value: 64
@@ -3540,6 +3554,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3489376991222979368, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028039544555071572, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4028039544555071574, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}

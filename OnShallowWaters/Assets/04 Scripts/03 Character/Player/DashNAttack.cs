@@ -3,7 +3,7 @@ using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
 using UnityEngine.EventSystems;
 
-public class DashNAttack : MonoBehaviour, IPointerDownHandler , IPointerUpHandler
+public class DashNAttack : MonoBehaviour
 {
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Animator animator;
@@ -21,8 +21,8 @@ public class DashNAttack : MonoBehaviour, IPointerDownHandler , IPointerUpHandle
 
     [SerializeField] private int outDamage;
     [SerializeField] private int inDamage;
-    [SerializeField] private bool buttonPressed;
-    [SerializeField] private float chargedTimer;
+    [SerializeField] private AttackButtonUI pressedButton;
+    [SerializeField] private bool isSlashTigger;
     private BoonDamageModifiers _boonDamageModifiers;
     
     private bool _isDash = false;
@@ -69,57 +69,40 @@ public class DashNAttack : MonoBehaviour, IPointerDownHandler , IPointerUpHandle
         _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo 
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        buttonPressed = true;
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        buttonPressed = false;
-        chargedTimer = 0;
-    }
-
     public void Update()
     {
-        chargedTimer += Time.deltaTime;
+        if(pressedButton.isPressed)
+           pressedButton.chargedTimer += Time.deltaTime;
 
-        if (buttonPressed == true && chargedTimer > 3)
-        {
-            HeavySlash();
-            
-        }
 
-        else if (buttonPressed == true && chargedTimer > 5)
-        {
+        if (pressedButton.isSlash)
+           HeavySlash();
+
+        else if (pressedButton.isSlam)
             HeavySlam();
-        }
-        else if (buttonPressed == true && chargedTimer == 7)
-        {
-            HeavySlam();
-        }
     }
     public void HeavySlash()
     {
+        pressedButton.isSlash = false;
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
         tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
-        Debug.Log(tempOutDamage);
         playerMovement.enabled = true;
         animator.SetTrigger("slashATK");
-        nextAttack = Time.time + 1;
+        attackSequence = 0;
     }
 
     public void HeavySlam()
     {
+        pressedButton.isSlam = false;
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
         tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
-        Debug.Log(tempOutDamage);
         playerMovement.enabled = true;
         animator.SetTrigger("slamATK");
-        nextAttack = Time.time + 1;
+        attackSequence = 0;
     }
 
 
@@ -199,5 +182,7 @@ public class DashNAttack : MonoBehaviour, IPointerDownHandler , IPointerUpHandle
                 _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
             }
         }
+
+        Debug.Log(attackSequence.ToString());
     }
 }
