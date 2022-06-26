@@ -10,9 +10,11 @@ public class CrowdControl : MonoBehaviour
     [SerializeField] private float time;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        pm = GetComponent<PlayerMovement>();
+        dna = GetComponent<DashNAttack>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
