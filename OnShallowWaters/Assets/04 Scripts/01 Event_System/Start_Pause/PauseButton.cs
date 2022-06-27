@@ -14,14 +14,14 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         public void PauseGame(){
             if (isPaused) return;
             pauseMenu.SetActive(true);
-            Time.timeScale = 1f;
+            Time.timeScale = 0f;
             isPaused = true;
         }
         
         public void ResumeGame(){
             if (!isPaused) return;
             pauseMenu.SetActive(false);
-            Time.timeScale = 0f;
+            Time.timeScale = 1f;
             isPaused = false;
         }
 
