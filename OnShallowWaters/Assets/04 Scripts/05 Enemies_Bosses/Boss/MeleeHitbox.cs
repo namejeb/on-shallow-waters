@@ -7,7 +7,7 @@ public class MeleeHitbox : MonoBehaviour
 {
     public int damage;
     public float delayBox, offBoxTime;
-    public bool slam;
+    public bool slam, isDamaged;
 
     BoxCollider bc;
 
@@ -35,7 +35,11 @@ public class MeleeHitbox : MonoBehaviour
                 col.gameObject.GetComponent<CrowdControl>().KnockUp();
             }
 
-            Debug.Log("Player Damaged: " + damage);    
+            if (!isDamaged)
+            {
+                isDamaged = true;
+                Debug.Log("Player Damaged: " + damage);    
+            }
         }
     }
 
