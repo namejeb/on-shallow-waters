@@ -15,6 +15,7 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
     private void Break()
     {
         //play sound
+        
         EarnGold(minMaxAmount.x, minMaxAmount.y);
         gameObject.SetActive(false);
     }
