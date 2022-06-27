@@ -3,21 +3,40 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 
-
-
-
-public class RoomSpawner : MonoBehaviour
+public enum RoomEntranceDir
 {
-    [SerializeField] private RoomListSO roomListSo;
+    SOUTH,
+    EAST,
+    WEST
+}
 
-    private List<Level> _levelList = new List<Level>();
+[Serializable]
+public class Room
+{
+    public GameObject roomPrefab;
+    public RoomEntranceDir roomEntranceDir;
+    
+    public static Transform FindSpawnPoint(Transform room)
+    {
+        Transform playerSpawnPoint = room.Find("refs").Find("ref_Entrance");
+        return playerSpawnPoint;
+    }
+}
+
+public class RoomSpawnerV2 : MonoBehaviour
+{
+    [SerializeField] private Transform rBasic;
+    [SerializeField] private List<Room> bossRooms;
+    
+
+    [SerializeField] private List<Level> levelList = new List<Level>();
     private int _levelCounter = 0;
     
     private static Transform _prevRoom;
     public static event Action OnRoomChangeStart;
     public static event Action OnRoomChangeFinish;  
     public static event Action<Transform> OnResetPlayerPos;
-    
+
     private int _roomFinishedCount = -1; //to exclude basic room
     private int _bossRoomsIndex;
 
@@ -31,38 +50,44 @@ public class RoomSpawner : MonoBehaviour
     {
         SortRooms();
         ExitRoomTrigger.OnExitRoom += SpawnRoom;
-
-         GameObject roomBasic = roomListSo.roomBasic;
-         _prevRoom = Instantiate(roomBasic.transform, roomBasic.transform.position, roomBasic.transform.rotation);
+        
+         SetRoomActive(rBasic.transform, true);
+         _prevRoom = rBasic.transform;
     }
 
     private void SortRooms()
     {
-        for (int i = 0; i < roomListSo.levels.Count; i++)
+        for (int i = 0; i < levelList.Count; i++)
         {
-            Level currLevel = roomListSo.levels[i];
+            Level currLevel = levelList[i];
             
             currLevel.southEntranceRooms.Clear();
             currLevel.eastEntranceRooms.Clear();
             currLevel.westEntranceRooms.Clear();
             
-            for (int j = 0; j < roomListSo.levels[i].rooms.Count; j++)
+            for (int j = 0; j < levelList[i].rooms.Count; j++)
             {
-                Room room = roomListSo.levels[i].rooms[j];
+                Room room = levelList[i].rooms[j];
                 
                 if (room.roomEntranceDir == RoomEntranceDir.SOUTH) { currLevel.southEntranceRooms.Add(room); }
                 else if (room.roomEntranceDir == RoomEntranceDir.EAST) { currLevel.eastEntranceRooms.Add(room); }
                 else  { currLevel.westEntranceRooms.Add(room); }
+                
+                room.roomPrefab.SetActive(false);
             }
-            _levelList.Add(currLevel);
+        }
+
+        for (int i = 0; i < bossRooms.Count; i++)
+        {
+            bossRooms[i].roomPrefab.SetActive(false);
         }
     }
 
     private void SpawnRoom(RoomEntranceDir dir)
     {
         //after 5 rooms, spawn boss
-        bool isBossStage = (_roomFinishedCount == 5); 
-        //isBossStage = true; //boss room debug
+        bool isBossStage = (_roomFinishedCount == 1); 
+       // isBossStage = true; //boss room debug
         HandleSpawnRoom(isBossStage, dir);
     }
 
@@ -70,14 +95,14 @@ public class RoomSpawner : MonoBehaviour
     {
         if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
         
-        Level level = _levelList[_levelCounter];
+        Level level = levelList[_levelCounter];
         Room room = null;
 
         if (isBossStage)
         {
             _roomFinishedCount = 0;
       
-           room = roomListSo.bossRooms[_levelCounter];
+           room = bossRooms[_levelCounter];
            _levelCounter += 1;
 
            DialogueManager.instance.StartDialogue();
@@ -104,25 +129,29 @@ public class RoomSpawner : MonoBehaviour
             }
             //  room = _levelList[0].southEntranceRooms[1];
         }
-        StartCoroutine(SpawnNewRoom(room));
+        StartCoroutine(EnableRoom(room));
     }
-
-    private IEnumerator SpawnNewRoom(Room room)
+    
+    
+    private IEnumerator EnableRoom(Room room)
     {
         yield return new WaitForSeconds(1f);
         
         //Remove old room
-        Destroy(_prevRoom.gameObject);
+        SetRoomActive(_prevRoom, false);
         _roomFinishedCount++;
         
         //Spawn new room
-        Transform roomTransform = room.roomPrefab.transform;
-        _prevRoom = Instantiate(roomTransform, roomTransform.localPosition, roomTransform.rotation);
-        print(room.roomPrefab.transform.localPosition);
+        SetRoomActive(room.roomPrefab.transform, true);
+        _prevRoom = room.roomPrefab.transform;
         
         //Set player position to spawn point
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
-        
         if (OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
+    }
+
+    private void SetRoomActive(Transform roomTransform, bool status)
+    {
+        roomTransform.gameObject.SetActive(status);
     }
 }

@@ -14,22 +14,18 @@ public class StopCameraAtBounds : MonoBehaviour
     
     private float _upperBoundZ;
     private float _lowerBoundZ;
+    
 
     private void OnValidate()
     {
         offsetBoundsX = Mathf.Clamp(offsetBoundsX, 0, float.MaxValue);
         offsetBoundsZ = Mathf.Clamp(offsetBoundsZ, 0, float.MaxValue);
     }
-
-    private void Awake()
-    {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        InitBoundsValues();
-    }
-    
     private void Start()
     {
         _cameraTarget = PlayerHandler.Instance.CameraTarget;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        InitBoundsValues();
     }
 
     private void Update()
@@ -65,7 +61,6 @@ public class StopCameraAtBounds : MonoBehaviour
         {
             newPos.z = _lowerBoundZ + .1f;
         }
-        
         _cameraTarget.transform.position = newPos;
     }
 
