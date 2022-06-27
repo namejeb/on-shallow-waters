@@ -3,6 +3,25 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 
+public enum RoomEntranceDir
+{
+    SOUTH,
+    EAST,
+    WEST
+}
+
+[Serializable]
+public class Room
+{
+    public GameObject roomPrefab;
+    public RoomEntranceDir roomEntranceDir;
+    
+    public static Transform FindSpawnPoint(Transform room)
+    {
+        Transform playerSpawnPoint = room.Find("refs").Find("ref_Entrance");
+        return playerSpawnPoint;
+    }
+}
 
 public class RoomSpawnerV2 : MonoBehaviour
 {
