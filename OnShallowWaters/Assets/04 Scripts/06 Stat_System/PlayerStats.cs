@@ -87,7 +87,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     public void Damage(int damageAmount)
     {
-        throw new System.NotImplementedException();
+        TakeDamage(damageAmount);
     }
 
     public float LostHP()

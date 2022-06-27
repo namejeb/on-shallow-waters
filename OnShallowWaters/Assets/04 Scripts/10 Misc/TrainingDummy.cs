@@ -1,6 +1,4 @@
-using System;
 using _04_Scripts._05_Enemies_Bosses;
-using Cinemachine;
 using UnityEngine;
 
 public class TrainingDummy : MonoBehaviour, IDamageable

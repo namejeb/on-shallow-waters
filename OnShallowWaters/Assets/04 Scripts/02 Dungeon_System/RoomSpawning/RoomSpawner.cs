@@ -24,16 +24,15 @@ public class Room
     }
 }
 
+
+
 public class RoomSpawner : MonoBehaviour
 {
     [SerializeField] private RoomListSO roomListSo;
-    
-    private List<Room> southEntranceRooms = new List<Room>();
-    private List<Room> eastEntranceRooms = new List<Room>();
-    private List<Room> westEntranceRooms = new List<Room>();
-    
-    private Dictionary<RoomEntranceDir, List<Room>> roomDict = new Dictionary<RoomEntranceDir, List<Room>>();
 
+    private List<Level> _levelList = new List<Level>();
+    private int _levelCounter = 0;
+    
     private static Transform _prevRoom;
     public static event Action OnRoomChangeStart;
     public static event Action OnRoomChangeFinish;  
@@ -59,32 +58,31 @@ public class RoomSpawner : MonoBehaviour
 
     private void SortRooms()
     {
-        foreach(Room room in roomListSo.rooms)
+        for (int i = 0; i < roomListSo.levels.Count; i++)
         {
-            if (room.roomEntranceDir == RoomEntranceDir.SOUTH)
+            Level currLevel = roomListSo.levels[i];
+            
+            currLevel.southEntranceRooms.Clear();
+            currLevel.eastEntranceRooms.Clear();
+            currLevel.westEntranceRooms.Clear();
+            
+            for (int j = 0; j < roomListSo.levels[i].rooms.Count; j++)
             {
-                southEntranceRooms.Add(room);
+                Room room = roomListSo.levels[i].rooms[j];
+                
+                if (room.roomEntranceDir == RoomEntranceDir.SOUTH) { currLevel.southEntranceRooms.Add(room); }
+                else if (room.roomEntranceDir == RoomEntranceDir.EAST) { currLevel.eastEntranceRooms.Add(room); }
+                else  { currLevel.westEntranceRooms.Add(room); }
             }
-            else if (room.roomEntranceDir == RoomEntranceDir.EAST)
-            {
-                eastEntranceRooms.Add(room);
-            }
-            else
-            {
-                westEntranceRooms.Add(room);
-            }
+            _levelList.Add(currLevel);
         }
-        
-        roomDict.Add(RoomEntranceDir.SOUTH, southEntranceRooms);
-        roomDict.Add(RoomEntranceDir.EAST, eastEntranceRooms);
-        roomDict.Add(RoomEntranceDir.WEST, westEntranceRooms);
     }
 
     private void SpawnRoom(RoomEntranceDir dir)
     {
         //after 5 rooms, spawn boss
-        bool isBossStage = (_roomFinishedCount == 5);
-        //isBossStage = true; //boss room debug
+        bool isBossStage = (_roomFinishedCount == 5); 
+        isBossStage = true; //boss room debug
         HandleSpawnRoom(isBossStage, dir);
     }
 
@@ -92,36 +90,39 @@ public class RoomSpawner : MonoBehaviour
     {
         if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
         
+        Level level = _levelList[_levelCounter];
         Room room = null;
-        
+
         if (isBossStage)
         {
-            _roomFinishedCount = -1;
-           
-            room = roomListSo.bossRooms[_bossRoomsIndex];
-            if (_bossRoomsIndex + 1 < roomListSo.bossRooms.Count) _bossRoomsIndex++;
+            _roomFinishedCount = 0;
+      
+           room = roomListSo.bossRooms[_levelCounter];
+           _levelCounter += 1;
 
-            DialogueManager.instance.StartDialogue();
+           DialogueManager.instance.StartDialogue();
         }
         else
         {
             int roomIndex = 0;
+       ;
         
             if (dir == RoomEntranceDir.SOUTH)
             {
-                roomIndex = UnityEngine.Random.Range(0, southEntranceRooms.Count);
-                room = southEntranceRooms[roomIndex];
+                roomIndex = UnityEngine.Random.Range(0, level.southEntranceRooms.Count);
+                room = level.southEntranceRooms[roomIndex];
             }
             else if (dir == RoomEntranceDir.EAST)
             {
-                roomIndex = UnityEngine.Random.Range(0, eastEntranceRooms.Count);
-                room = eastEntranceRooms[roomIndex];
+                roomIndex = UnityEngine.Random.Range(0, level.eastEntranceRooms.Count);
+                room = level.eastEntranceRooms[roomIndex];
             }
             else
             {
-                roomIndex = UnityEngine.Random.Range(0, westEntranceRooms.Count);
-                room = westEntranceRooms[roomIndex];
-            } 
+                roomIndex = UnityEngine.Random.Range(0, level.westEntranceRooms.Count);
+                room = level.westEntranceRooms[roomIndex];
+            }
+            
             // room = southEntranceRooms[1];
         }
         StartCoroutine(SpawnNewRoom(room));
