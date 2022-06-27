@@ -149,4 +149,11 @@ public class Boss_FSM : MonoBehaviour
     {
         GameObject bullet = Instantiate(shootPb, aimer.position, transform.rotation);
     }
+
+    public void RotateTowards(Transform target, Boss_FSM boss)
+    {
+        Vector3 direction = (target.position - boss.transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        boss.transform.rotation = Quaternion.RotateTowards(boss.transform.rotation, lookRotation, Time.deltaTime * boss.rotationSpeed);
+    }
 }

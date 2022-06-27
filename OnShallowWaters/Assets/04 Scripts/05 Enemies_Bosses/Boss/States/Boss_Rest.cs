@@ -12,7 +12,7 @@ public class Boss_Rest : Boss_BaseState
         //Debug.Log("Boss1_Rest");
         boss.Agent.speed = 0;
         choice = boss.RandomChoice();
-        Debug.Log(choice);
+        //Debug.Log(choice);
     }
 
     public override void Update(Boss_FSM boss)
@@ -26,19 +26,18 @@ public class Boss_Rest : Boss_BaseState
         }
         
         if (choice == 0)
-            RotateTowards(boss.Target, boss);
+            boss.RotateTowards(boss.Target, boss);
         else if (choice == 1)
         {
             boss.Agent.speed = 2;
             boss.Agent.SetDestination(boss.Target.position);
-            
         }
     }
     
-    private void RotateTowards(Transform target, Boss_FSM boss)
-    {
-        Vector3 direction = (target.position - boss.transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        boss.transform.rotation = Quaternion.RotateTowards(boss.transform.rotation, lookRotation, Time.deltaTime * boss.rotationSpeed);
-    }
+    //private void RotateTowards(Transform target, Boss_FSM boss)
+    //{
+    //    Vector3 direction = (target.position - boss.transform.position).normalized;
+    //    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+    //    boss.transform.rotation = Quaternion.RotateTowards(boss.transform.rotation, lookRotation, Time.deltaTime * boss.rotationSpeed);
+    //}
 }
