@@ -29,7 +29,7 @@ public class PlayerHandler : MonoBehaviour
 
     private void OnDestroy()
     {
-        RoomSpawner.OnResetPlayerPos -= ResetPosition;
+        RoomSpawnerV2.OnResetPlayerPos -= ResetPosition;
     }
 
     private void Awake()
@@ -37,7 +37,7 @@ public class PlayerHandler : MonoBehaviour
         Instance = this;
         
         _playerMovement = GetComponent<PlayerMovement>();
-        RoomSpawner.OnResetPlayerPos += ResetPosition;
+        RoomSpawnerV2.OnResetPlayerPos += ResetPosition;
 
         _playerStats = GetComponent<PlayerStats>();
         _boonDamageModifiers = GetComponent<BoonDamageModifiers>();

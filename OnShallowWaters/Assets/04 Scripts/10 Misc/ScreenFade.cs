@@ -9,8 +9,8 @@ public class ScreenFade : MonoBehaviour
     {
         LeanTween.reset();
         
-        RoomSpawner.OnRoomChangeStart -= FadeIn;
-        RoomSpawner.OnRoomChangeFinish -= FadeOut;
+        RoomSpawnerV2.OnRoomChangeStart -= FadeIn;
+        RoomSpawnerV2.OnRoomChangeFinish -= FadeOut;
     }
 
     private void Awake()
@@ -20,8 +20,8 @@ public class ScreenFade : MonoBehaviour
 
     private void Start()
     {
-        RoomSpawner.OnRoomChangeStart += FadeIn;
-        RoomSpawner.OnRoomChangeFinish += FadeOut;
+        RoomSpawnerV2.OnRoomChangeStart += FadeIn;
+        RoomSpawnerV2.OnRoomChangeFinish += FadeOut;
     }
     
     private void FadeIn()
