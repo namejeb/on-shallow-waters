@@ -52,8 +52,11 @@ public class RoomSpawner : MonoBehaviour
         SortRooms();
         ExitRoomTrigger.OnExitRoom += SpawnRoom;
 
-        GameObject roomBasic = roomListSo.roomBasic;
-        _prevRoom = Instantiate(roomBasic.transform, roomBasic.transform.position, roomBasic.transform.rotation);
+         GameObject roomBasic = roomListSo.roomBasic;
+        // _prevRoom = Instantiate(roomBasic.transform, roomBasic.transform.position, roomBasic.transform.rotation);
+        
+        SetRoomActive(roomBasic.transform, true);
+        _prevRoom = roomBasic.transform;
     }
 
     private void SortRooms()
@@ -82,7 +85,7 @@ public class RoomSpawner : MonoBehaviour
     {
         //after 5 rooms, spawn boss
         bool isBossStage = (_roomFinishedCount == 5); 
-        isBossStage = true; //boss room debug
+        //isBossStage = true; //boss room debug
         HandleSpawnRoom(isBossStage, dir);
     }
 
@@ -122,10 +125,11 @@ public class RoomSpawner : MonoBehaviour
                 roomIndex = UnityEngine.Random.Range(0, level.westEntranceRooms.Count);
                 room = level.westEntranceRooms[roomIndex];
             }
-            
-            // room = southEntranceRooms[1];
+            //  room = _levelList[0].southEntranceRooms[1];
         }
-        StartCoroutine(SpawnNewRoom(room));
+       // StartCoroutine(SpawnNewRoom(room));
+
+        StartCoroutine(EnableRoom(room));
     }
 
     private IEnumerator SpawnNewRoom(Room room)
@@ -138,11 +142,39 @@ public class RoomSpawner : MonoBehaviour
         
         //Spawn new room
         Transform roomTransform = room.roomPrefab.transform;
-        _prevRoom = Instantiate(roomTransform, roomTransform.position, roomTransform.rotation);
+        _prevRoom = Instantiate(roomTransform, roomTransform.localPosition, roomTransform.rotation);
+        print(room.roomPrefab.transform.localPosition);
         
         //Set player position to spawn point
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
         
         if (OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
+    }
+
+    private IEnumerator EnableRoom(Room room)
+    {
+        yield return new WaitForSeconds(1f);
+        
+        //Remove old room
+        SetRoomActive(_prevRoom, false);
+        _roomFinishedCount++;
+        
+        //Spawn new room
+        SetRoomActive(room.roomPrefab.transform, true);
+        _prevRoom = room.roomPrefab.transform;
+        
+        // Transform roomTransform = room.roomPrefab.transform;
+        // _prevRoom = Instantiate(roomTransform, roomTransform.localPosition, roomTransform.rotation);
+        print(room.roomPrefab.transform.localPosition);
+        
+        
+        //Set player position to spawn point
+        if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
+        if (OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
+    }
+
+    private void SetRoomActive(Transform roomTransform, bool status)
+    {
+        roomTransform.gameObject.SetActive(status);
     }
 }
