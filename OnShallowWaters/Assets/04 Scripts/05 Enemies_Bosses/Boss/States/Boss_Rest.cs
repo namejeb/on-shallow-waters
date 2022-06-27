@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class Boss_Rest : Boss_BaseState
 {
+    int choice;
+
     public override void EnterState(Boss_FSM boss)
     {
-        Debug.Log("Boss1_Rest");
+        //Debug.Log("Boss1_Rest");
         boss.Agent.speed = 0;
+        choice = boss.RandomChoice();
+        Debug.Log(choice);
     }
 
     public override void Update(Boss_FSM boss)
@@ -20,8 +24,15 @@ public class Boss_Rest : Boss_BaseState
             boss.Agent.speed = boss.speed;
             boss.BossRandomState();
         }
-
-        //RotateTowards(boss.Target, boss);
+        
+        if (choice == 0)
+            RotateTowards(boss.Target, boss);
+        else if (choice == 1)
+        {
+            boss.Agent.speed = 2;
+            boss.Agent.SetDestination(boss.Target.position);
+            
+        }
     }
     
     private void RotateTowards(Transform target, Boss_FSM boss)

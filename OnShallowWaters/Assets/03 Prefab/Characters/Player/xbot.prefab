@@ -1205,6 +1205,7 @@ GameObject:
   - component: {fileID: 1093336462}
   - component: {fileID: 1093336461}
   - component: {fileID: 7836655524029940417}
+  - component: {fileID: 557213166787715092}
   m_Layer: 0
   m_Name: xbot
   m_TagString: Player
@@ -1294,14 +1295,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 1093336465}
   animator: {fileID: 4028039544555071572}
+  stats: {fileID: 0}
+  eStats: {fileID: 0}
   dashDuration: 0.2
   range: 0
   speed: 50
-  enemyLayer:
+  damageableLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   attackSequence: 0
   nextAttack: 0
+  outDamage: 0
+  inDamage: 0
+  pressedButton: {fileID: 0}
+  isSlashTigger: 0
 --- !u!114 &1093336464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1337,7 +1344,7 @@ MonoBehaviour:
   joystick: {fileID: 0}
   speed: 10
   rotationSpeed: 1000
-  turnSmooth: 0.1
+  canMove: 0
 --- !u!114 &1093336462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1352,6 +1359,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 5
   atk:
+    baseValue: 0
+    modifiers: 
+    hasCap: 0
+    cap: 0
+  atkPercent:
     baseValue: 0
     modifiers: 
     hasCap: 0
@@ -1372,12 +1384,20 @@ MonoBehaviour:
     hasCap: 0
     cap: 0
   movementSpeed:
+    baseValue: 10
+    modifiers: 
+    hasCap: 0
+    cap: 0
+  defense:
     baseValue: 0
     modifiers: 
     hasCap: 0
     cap: 0
-  atkUpgradeAmt: 3
-  defUpgradeAmt: 3
+  damageReduction:
+    baseValue: 0
+    modifiers: 
+    hasCap: 0
+    cap: 0
 --- !u!114 &1093336461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1414,6 +1434,22 @@ MonoBehaviour:
   executeDistance: 10
   executePercentage: 0.16
   skb5Damage: 5
+--- !u!114 &557213166787715092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4262394600308867474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6ca4b148445cf408d7ac9d8622f8db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pm: {fileID: 0}
+  dna: {fileID: 0}
+  rb: {fileID: 0}
+  time: 1.5
 --- !u!1 &4788523522053977168
 GameObject:
   m_ObjectHideFlags: 0

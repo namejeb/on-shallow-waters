@@ -16,6 +16,9 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Transform myTarget)
     {
         moveDir = (myTarget.position - transform.position).normalized;
+
+        // if got change in z then dont need recalculate
+        moveDir = new Vector3 (moveDir.x, 0, moveDir.z);
     }
 
     private void OnTriggerEnter(Collider col)
