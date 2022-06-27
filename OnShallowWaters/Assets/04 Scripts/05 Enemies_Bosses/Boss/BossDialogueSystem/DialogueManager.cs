@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour
     private DialogueDatabase dialogueDatabase;
     public FloatingJoystick joystick;
 
-    private bool isInteracted = false, isTyping;
+    public bool isInteracted = false, isTyping;
     private string currSentence;
     
     private Queue<string> sentences;
@@ -63,14 +63,8 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-
     public void StartDialogue()
     {
-        isInteracted = true;
-        PlayerHandler.Instance.EnableAnDisableMove();
-        joystick.OnPointerUp(new PointerEventData(null));
-        playerControl.SetActive(false);
-        
         StartCoroutine(Delay(delayTime));
     }
 
@@ -112,6 +106,12 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator Delay(float waitDuration)
     {
         yield return new WaitForSeconds(waitDuration);
+        
+        isInteracted = true;
+        PlayerHandler.Instance.EnableAnDisableMove();
+        joystick.OnPointerUp(new PointerEventData(null));
+        playerControl.SetActive(false);
+        
         dialogueBox.SetActive(true);
         nameText.text = dialogue.name;
         sentences.Clear();
