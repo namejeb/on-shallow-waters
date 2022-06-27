@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 1154637202242802876}
   - component: {fileID: 2858030941650885401}
   - component: {fileID: 21731530841649107}
-  m_Layer: 0
+  - component: {fileID: -5558119838009339747}
+  - component: {fileID: -1231415461961284913}
+  m_Layer: 9
   m_Name: crates 2
-  m_TagString: Untagged
+  m_TagString: BreakableProps
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,3 +85,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-5558119838009339747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967449366680718854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc021c24aab9244ab319c46b1a20078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMaxAmount: {x: 50, y: 200}
+--- !u!65 &-1231415461961284913
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967449366680718854}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3399433, y: 0.33994332, z: 0.37441614}
+  m_Center: {x: 0, y: 0.00037324443, z: 0.13872266}

@@ -1,7 +1,6 @@
 using _04_Scripts._05_Enemies_Bosses;
-using UnityEngine;
 
-public class BreakableProp : MonoBehaviour, IDamageable
+public class BreakableProp : EarnCurrencyItems, IDamageable
 {
     public void Damage(int damageAmount)
     {
@@ -16,6 +15,7 @@ public class BreakableProp : MonoBehaviour, IDamageable
     private void Break()
     {
         //play sound
+        EarnGold(minMaxAmount.x, minMaxAmount.y);
         gameObject.SetActive(false);
     }
 }

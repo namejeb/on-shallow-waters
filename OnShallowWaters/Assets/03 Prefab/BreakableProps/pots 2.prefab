@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 5385674668787116428}
   - component: {fileID: 9012293321689605673}
   - component: {fileID: 6554688330905146083}
-  m_Layer: 0
+  - component: {fileID: 4740032010290315367}
+  - component: {fileID: 8069074041241432322}
+  m_Layer: 9
   m_Name: pots 2
-  m_TagString: Untagged
+  m_TagString: BreakableProps
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,3 +85,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4740032010290315367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4753006519573836598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc021c24aab9244ab319c46b1a20078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMaxAmount: {x: 50, y: 200}
+--- !u!65 &8069074041241432322
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4753006519573836598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.17498176, y: 0.17498177, z: 0.2911189}
+  m_Center: {x: 0, y: -1.06668e-15, z: 0.07506095}

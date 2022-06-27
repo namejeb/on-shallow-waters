@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 5139467340954844157}
   - component: {fileID: 8141617265483887704}
   - component: {fileID: 6275804072482848914}
-  m_Layer: 0
+  - component: {fileID: 3456559235900780617}
+  - component: {fileID: 4029160386479688534}
+  m_Layer: 9
   m_Name: barrels 1
-  m_TagString: Untagged
+  m_TagString: BreakableProps
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,3 +85,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3456559235900780617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483377726996209991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc021c24aab9244ab319c46b1a20078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMaxAmount: {x: 50, y: 200}
+--- !u!65 &4029160386479688534
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483377726996209991}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3650579, y: 0.36505792, z: 0.43189538}
+  m_Center: {x: 0, y: -0.000000022351747, z: 0}
