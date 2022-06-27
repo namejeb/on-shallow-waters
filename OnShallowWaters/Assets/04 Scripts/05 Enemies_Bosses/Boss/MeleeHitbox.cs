@@ -30,7 +30,10 @@ public class MeleeHitbox : MonoBehaviour
             //if (Vector3.Distance(transform.position, col.transform.position) < 1)
 
             if (slam)
+            {
+                slam = false;
                 col.gameObject.GetComponent<CrowdControl>().KnockUp();
+            }
 
             Debug.Log("Player Damaged: " + damage);    
         }
