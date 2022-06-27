@@ -64,7 +64,7 @@ public class Boss_FSM : MonoBehaviour
     {
         target = PlayerHandler.Instance.transform;
         
-        //_agent.speed = speed;
+        _agent.speed = speed;
         DoBossAttack(bossType);
         SetState(restState); 
     }
@@ -83,7 +83,7 @@ public class Boss_FSM : MonoBehaviour
     public void BossRandomState()
     {
         int randNum = Random.Range(0, 5);
-
+      //  randNum = 4;
         switch (randNum)
         {
             case 0: SetState(restState); break;
