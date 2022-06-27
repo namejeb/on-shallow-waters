@@ -8,7 +8,7 @@ public class Boss_Stunt : Boss_BaseState
     {
         boss.Agent.enabled = false;
         // play stunt animation
-        Debug.Log("Dectected 2");
+        //Debug.Log("Boss Stunted");
     }
 
     public override void Update(Boss_FSM boss)

@@ -1,6 +1,5 @@
 using _04_Scripts._05_Enemies_Bosses;
 using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyStats : CharacterStats, IDamageable
@@ -24,6 +23,12 @@ public class EnemyStats : CharacterStats, IDamageable
         _dropSouls = GetComponent<DropSouls>();
         _enemiesCore = GetComponent<EnemiesCore>();
     }
+
+    private void OnEnable()
+    {
+        healthBar.UpdateHealthBar(CurrHpPercentage);    
+    }
+    
     public void Damage(int damageAmount)
     {
         if (_enemiesCore.armourType) _enemiesCore.ShieldBar(damageAmount);
@@ -40,7 +45,20 @@ public class EnemyStats : CharacterStats, IDamageable
     protected override void Die()
     {
         _dropSouls.Drop();
+        
         WaveSpawner.UpdateWaveTotalEnemies();
+
+        if (WaveSpawner.IsLastEnemy)
+        {
+            SpawnBoonTrigger.Instance.SpawnAtPosition(transform.position);
+        }
+
+        Invoke(nameof(DisableSelf), 1f);
+    }
+
+    //change to call in animation?
+    private void DisableSelf()
+    {
         gameObject.SetActive(false);
     }
     
