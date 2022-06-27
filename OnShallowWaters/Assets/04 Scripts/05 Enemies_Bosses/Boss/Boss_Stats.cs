@@ -5,6 +5,7 @@ using _04_Scripts._05_Enemies_Bosses;
 using _04_Scripts._05_Enemies_Bosses.Enemy;
 using UnityEngine;
 
+
 public class Boss_Stats : CharacterStats, IDamageable
 {
     public int maxArmour;
@@ -13,6 +14,8 @@ public class Boss_Stats : CharacterStats, IDamageable
 
     private Boss_FSM _bossFsm;
     private BossUiManager _uiManager;
+
+    public static event Action OnBossDead;
 
     private new void Awake()
     {
@@ -63,6 +66,8 @@ public class Boss_Stats : CharacterStats, IDamageable
     {
         _bossFsm.SetState(_bossFsm.dieState);
         _uiManager.DisableSlider(0);
+        
+        if(OnBossDead != null) OnBossDead.Invoke();
     }
 
     public float LostHP()

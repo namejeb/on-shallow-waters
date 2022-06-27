@@ -62,6 +62,8 @@ public class Boss_FSM : MonoBehaviour
 
     private void Start()
     {
+        target = PlayerHandler.Instance.transform;
+        
         //_agent.speed = speed;
         DoBossAttack(bossType);
         SetState(restState); 
