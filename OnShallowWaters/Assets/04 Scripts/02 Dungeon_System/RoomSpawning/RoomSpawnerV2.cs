@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using Random = System.Random;
 
 public enum RoomEntranceDir
 {
@@ -25,10 +26,10 @@ public class Room
 
 public class RoomSpawnerV2 : MonoBehaviour
 {
+    [SerializeField] [Range(0f, 1f)] private float soulShopSpawnRate;
+    
     [SerializeField] private Transform rBasic;
     [SerializeField] private List<Room> bossRooms;
-    
-
     [SerializeField] private List<Level> levelList = new List<Level>();
     private int _levelCounter = 0;
     
@@ -88,7 +89,13 @@ public class RoomSpawnerV2 : MonoBehaviour
         //after 5 rooms, spawn boss
         bool isBossStage = (_roomFinishedCount == 1); 
        // isBossStage = true; //boss room debug
-        HandleSpawnRoom(isBossStage, dir);
+       HandleSpawnRoom(isBossStage, dir);
+       
+       //if is soul shop
+       // bool isSoulShop = false;
+       // float sShopRate = UnityEngine.Random.Range(0f, 1f);
+       // if (sShopRate > soulShopSpawnRate) isSoulShop = true;
+       //     
     }
 
     private void HandleSpawnRoom(bool isBossStage, RoomEntranceDir dir)
@@ -107,11 +114,14 @@ public class RoomSpawnerV2 : MonoBehaviour
 
            DialogueManager.instance.StartDialogue();
         }
+        // else if (isSoulShop)
+        // {
+        //     room = rSoulShop;
+        // }
         else
         {
             int roomIndex = 0;
-       ;
-        
+            
             if (dir == RoomEntranceDir.SOUTH)
             {
                 roomIndex = UnityEngine.Random.Range(0, level.southEntranceRooms.Count);
