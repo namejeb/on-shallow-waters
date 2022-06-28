@@ -42,7 +42,7 @@ public class WaveSpawner : MonoBehaviour
 
     private static int _roomTotalEnemies = 0;
     public static bool IsLastEnemy => _roomTotalEnemies == 0;
-    
+
     private EnemyPooler _enemyPooler;
     
     private int _nextWave = 0;
@@ -58,13 +58,14 @@ public class WaveSpawner : MonoBehaviour
     
     private void Start()
     {
+        _enemyPooler = transform.Find("EnemyPooler").GetComponent<EnemyPooler>();
+        
         _spawnPoints.Clear();
         for (int i = 0; i < transform.childCount; i++)
         {
             _spawnPoints.Add(transform.GetChild(i));
         }
         
-        _enemyPooler = EnemyPooler.Instance;
         waveCountdown = 0f;
 
         _currentWave = waves[0];
@@ -76,6 +77,7 @@ public class WaveSpawner : MonoBehaviour
                 _roomTotalEnemies += waves[i].enemies[j].count;
             }
         }
+        print(_currentWave.totalEnemies);
     }
 
     private void Update()
@@ -159,7 +161,6 @@ public class WaveSpawner : MonoBehaviour
 
     public static int GetCurrWaveTotalEnemies()
     {
-        print(_currentWave.totalEnemies);
         return _currentWave.totalEnemies;
     }
 }
