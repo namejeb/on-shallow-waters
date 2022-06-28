@@ -4,7 +4,6 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement pm;
     [SerializeField] private Rigidbody rb;
     private PlayerStats _playerStats;
     public Joystick joystick;
@@ -24,9 +23,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-            // float horizontal = joystick.Horizontal;
-            // float vertical = joystick.Vertical;
-            float horizontal = 1f; float vertical = 1f;
+            float horizontal = joystick.Horizontal;
+            float vertical = joystick.Vertical;
             _moveDir = new Vector3(horizontal, 0f, vertical).normalized;
         }
         else
@@ -62,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float dashModifier = 1f;
         if (isDash) dashModifier = speed;
-        //rb.velocity = new Vector3(direction.x, 0f, direction.z) * (dashModifier * _playerStats.MovementSpeed.CurrentValue * _playerStats.MovementSpeedMultiplier ) / Time.timeScale;
-        rb.velocity = new Vector3(direction.x, 0f, direction.z) * dashModifier * 10f / Time.timeScale;
+        rb.velocity = new Vector3(direction.x, 0f, direction.z) * (dashModifier * _playerStats.MovementSpeed.CurrentValue * _playerStats.MovementSpeedMultiplier ) / Time.timeScale;
     }
 }
