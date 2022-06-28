@@ -18,18 +18,23 @@ public class EnemyStats : CharacterStats, IDamageable
     [SerializeField] private Stat defense;
     
     public Stat Defense { get => defense; }
-    
+
+    private bool isDead = false;
+
     private new void Awake()
     {
         base.Awake();
         
         _dropSouls = GetComponent<DropSouls>();
         _enemiesCore = GetComponent<EnemiesCore>();
+  
+        
     }
 
     private void OnEnable()
     {
-        healthBar.UpdateHealthBar(CurrHpPercentage);    
+        healthBar.UpdateHealthBar(CurrHpPercentage);
+        isDead = false;
     }
     
     public void Damage(int damageAmount)
@@ -47,13 +52,21 @@ public class EnemyStats : CharacterStats, IDamageable
     
     protected override void Die()
     {
+        if (isDead) return;
+        isDead = true;
+        
         _dropSouls.Drop();
         
-       // WaveSpawner.UpdateWaveTotalEnemies();
+        // TestWave testWave = TestWave.Instance;
+        // ;
+        // testWave.UpdateEnemyCount();
+        // print(name);
         
-        if(OnEnemyDeath != null) OnEnemyDeath.Invoke();
-
-        if (WaveSpawner.IsLastEnemy)
+       // if(OnEnemyDeath != null) OnEnemyDeath.Invoke();
+       
+       
+        WaveSpawner.Instance.UpdateWaveTotalEnemies();
+        if (WaveSpawner.Instance.IsLastEnemy)
         {
             SpawnBoonTrigger.Instance.SpawnAtPosition(transform.position);
         }

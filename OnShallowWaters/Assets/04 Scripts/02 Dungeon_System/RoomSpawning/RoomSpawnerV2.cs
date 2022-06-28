@@ -46,6 +46,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     private void OnDestroy()
     {
         ExitRoomTrigger.OnExitRoom -= SpawnRoom;
+        _roomFinishedCount = -1;
     }
     
     private void Awake()
@@ -55,6 +56,8 @@ public class RoomSpawnerV2 : MonoBehaviour
         
          SetRoomActive(rBasic.transform, true);
          _prevRoom = rBasic.transform;
+
+         IsBossRoom = false;
     }
 
     private void SortRooms()
@@ -88,7 +91,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     private void SpawnRoom(RoomEntranceDir dir)
     {
         //after 5 rooms, spawn boss
-        bool isBossStage = (_roomFinishedCount == 1); 
+        bool isBossStage = (_roomFinishedCount == 5); 
        // isBossStage = true; //boss room debug
        HandleSpawnRoom(isBossStage, dir);
     }
@@ -132,7 +135,7 @@ public class RoomSpawnerV2 : MonoBehaviour
                 roomIndex = UnityEngine.Random.Range(0, level.westEntranceRooms.Count);
                 room = level.westEntranceRooms[roomIndex];
             }
-            //  room = _levelList[0].southEntranceRooms[1];
+         // room = level.southEntranceRooms[1];
         }
         StartCoroutine(EnableRoom(room));
     }

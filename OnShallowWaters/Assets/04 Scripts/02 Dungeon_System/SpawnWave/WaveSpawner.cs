@@ -4,51 +4,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[System.Serializable]
+public class Enemies
+{
+    public EnemyPooler.EnemyPoolType enemy;
+    public int count;
+}
+
+[System.Serializable]
+public class Wave
+{
+    public string name;
+    public List<Enemies> enemies;
+    public int totalEnemies = 0;
+    //public float rate;
+
+    public bool IsWaveComplete => totalEnemies <= 0;
+
+    public void Awake()
+    {
+        totalEnemies = 0;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            totalEnemies += enemies[i].count;
+        }
+    }
+}
+
+
 public class WaveSpawner : MonoBehaviour
 {
     public enum SpawnState { NOTHING, SPAWNING, WAITING, COUNTING };
 
-    [System.Serializable]
-    public class Enemies
-    {
-        public EnemyPooler.EnemyPoolType enemy;
-        public int count;
-    }
-
-    [System.Serializable]
-    public class Wave
-    {
-        public string name;
-        public List<Enemies> enemies;
-        public int totalEnemies = 0;
-        //public float rate;
-
-        public bool IsWaveComplete => totalEnemies == 0;
-
-        public void CalcTotalEnemies()
-        {
-            totalEnemies = 0;
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                totalEnemies += enemies[i].count;
-            }
-        }
-    }
 
     [Header("Wave Settings")]
     [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
     private List<Transform> _spawnPoints = new List<Transform>();
 
-    private static int _roomTotalEnemies = 0;
-    public static bool IsLastEnemy => _roomTotalEnemies == 0;
+    private int _roomTotalEnemies = 0;
+    public bool IsLastEnemy => _roomTotalEnemies == 0;
 
     private EnemyPooler _enemyPooler;
     
     private int _nextWave = 0;
     private bool _isEnd;
     
-    private Wave _currentWave;
+    private static Wave _currentWave;
 
     [Header("Enemy Initialization")]
     public Wave[] waves;
@@ -58,40 +60,27 @@ public class WaveSpawner : MonoBehaviour
     
     public static int WaveTotalEnemies { get; private set; }
 
-    private void OnDisable()
-    {
-        EnemyStats.OnEnemyDeath -= UpdateWaveTotalEnemies;
-    }
+    public static event Action<Wave> OnChangeWave;
+    public static event Action<int> OnChangeRoom;
+    
     
     private void Start()
     {
         _enemyPooler = transform.Find("EnemyPooler").GetComponent<EnemyPooler>();
-        EnemyStats.OnEnemyDeath += UpdateWaveTotalEnemies;
-        
-        _spawnPoints.Clear();
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            _spawnPoints.Add(transform.GetChild(i));
-        }
-        
-        waveCountdown = 0f;
-        
-        _currentWave = waves[0];
-        _currentWave.CalcTotalEnemies();
-        
-        for (int i = 0; i < waves.Length; i++)
-        {
-            for (int j = 0; j < waves[i].enemies.Count; j++)
-            {
-                _roomTotalEnemies += waves[i].enemies[j].count;
-            }
-        } 
-        print(_currentWave.totalEnemies);
     }
-    
+
+    private void OnDisable()
+    {
+        _roomTotalEnemies = 0;
+        _isEnd = false;
+        _nextWave = 0;
+    }
+
+    public static WaveSpawner Instance;
     private void OnEnable()
     {
-        EnemyStats.OnEnemyDeath += UpdateWaveTotalEnemies;
+        Instance = this;
+ 
         _spawnPoints.Clear();
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -99,9 +88,7 @@ public class WaveSpawner : MonoBehaviour
         }
         
         waveCountdown = 0f;
-        
         _currentWave = waves[0];
-        _currentWave.CalcTotalEnemies();
         
         for (int i = 0; i < waves.Length; i++)
         {
@@ -109,8 +96,7 @@ public class WaveSpawner : MonoBehaviour
             {
                 _roomTotalEnemies += waves[i].enemies[j].count;
             }
-        } 
-        print(_currentWave.totalEnemies);
+        }
     }
     
     private void Update()
@@ -151,12 +137,12 @@ public class WaveSpawner : MonoBehaviour
     {
         state = SpawnState.SPAWNING;
 
-        wave.CalcTotalEnemies();
+        wave.Awake();
         _currentWave = wave;
 
         WaveTotalEnemies = _currentWave.totalEnemies;
-        
-		for (int i = 0; i < wave.enemies.Count; i++)
+
+        for (int i = 0; i < wave.enemies.Count; i++)
 		{
 			for (int j = 0; j < wave.enemies[i].count; j++)
             {
@@ -192,10 +178,5 @@ public class WaveSpawner : MonoBehaviour
     {
         _currentWave.totalEnemies -= 1;
         _roomTotalEnemies -= 1 ;
-    }
-
-    public int GetCurrWaveTotalEnemies()
-    {
-        return _currentWave.totalEnemies;
     }
 }

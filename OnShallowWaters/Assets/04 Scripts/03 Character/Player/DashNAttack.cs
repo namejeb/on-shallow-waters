@@ -169,24 +169,17 @@ public class DashNAttack : MonoBehaviour
             outDamage = ApplyCrit(outDamage);
             
             //if hit an enemy
-            // EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
-            // if(enemyHandler != null)
-            // {
-            //     outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
-            //     _skBlessing.AddSoul(2);
-            // }
-
             EnemyHandler enemyHandler = null;
             if (hitColliders[i].CompareTag("Enemy"))
             {
                 enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
-                if(enemyHandler != null)    //if still null, meaning its a boss
+                if(enemyHandler != null)            //if still null, meaning its a boss
                     outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
                 
                 _skBlessing.AddSoul(2);
             }
             damagable.Damage( (int) outDamage);
-            if (_boonDamageModifiers.DmgWhenShieldBreakActivated)
+            if (_boonDamageModifiers.DmgWhenShieldBreakActivated && enemyHandler.EnemiesCore != null)
             {
                 _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
             }
