@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -53,7 +55,6 @@ public class WaveSpawner : MonoBehaviour
 
     [Header("Game State")]
     public SpawnState state = SpawnState.NOTHING;
-    
     
     private void Start()
     {
@@ -158,6 +159,7 @@ public class WaveSpawner : MonoBehaviour
 
     public static int GetCurrWaveTotalEnemies()
     {
+        print(_currentWave.totalEnemies);
         return _currentWave.totalEnemies;
     }
 }
