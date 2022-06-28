@@ -179,6 +179,7 @@ public class DashNAttack : MonoBehaviour
                 _skBlessing.AddSoul(2);
             }
             damagable.Damage( (int) outDamage);
+            if (enemyHandler == null) continue;
             if (_boonDamageModifiers.DmgWhenShieldBreakActivated && enemyHandler.EnemiesCore != null)
             {
                 _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);

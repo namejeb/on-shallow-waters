@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class DisableInviDoor : MonoBehaviour
@@ -8,6 +9,11 @@ public class DisableInviDoor : MonoBehaviour
         Boss_Stats.OnBossDead -= OpenDoor;
     }
 
+    private void OnEnable()
+    {
+        ResetDoor();
+    }
+
     private void Start()
     {
         BoonSelection.OnSelectedBoon += OpenDoor;
@@ -16,6 +22,13 @@ public class DisableInviDoor : MonoBehaviour
 
     private void OpenDoor()
     {
-        gameObject.SetActive(false);
+        GetComponent<MeshCollider>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    private void ResetDoor()
+    {
+        GetComponent<MeshCollider>().enabled = true;
+        GetComponent<MeshRenderer>().enabled = true;
     }
 }
