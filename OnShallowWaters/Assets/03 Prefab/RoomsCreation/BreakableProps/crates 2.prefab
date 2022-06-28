@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 21731530841649107}
   - component: {fileID: -5558119838009339747}
   - component: {fileID: -1231415461961284913}
+  - component: {fileID: 9059038560280454782}
   m_Layer: 9
   m_Name: crates 2
   m_TagString: BreakableProps
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc021c24aab9244ab319c46b1a20078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxAmount: {x: 50, y: 200}
+  minMaxAmount: {x: 5, y: 10}
 --- !u!65 &-1231415461961284913
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,3 +112,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3399433, y: 0.33994332, z: 0.37441614}
   m_Center: {x: 0, y: 0.00037324443, z: 0.13872266}
+--- !u!208 &9059038560280454782
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967449366680718854}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.17, y: 0.17, z: 0.187}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.13900001}
+  m_TimeToStationary: 0.5

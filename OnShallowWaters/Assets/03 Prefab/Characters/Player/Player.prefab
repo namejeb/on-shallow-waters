@@ -93,6 +93,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
+      propertyPath: nextAttack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093336463, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
       propertyPath: damageableLayer.m_Bits
       value: 512
       objectReference: {fileID: 0}
@@ -167,6 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ea9e89e27ef5044b281ffafc72362f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmgReductionActivated: 0
+  dmgReductionActivationThreshold: 0
 --- !u!4 &1988162347107069439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3489376991222979368, guid: b0b77a5a4d9fcb041a7358811453d2d5, type: 3}
@@ -182,6 +188,10 @@ PrefabInstance:
     - target: {fileID: 704905260, guid: 004337bd276a1c842b32d001eceb88ea, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055299391, guid: 004337bd276a1c842b32d001eceb88ea, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2055299391, guid: 004337bd276a1c842b32d001eceb88ea, type: 3}
       propertyPath: playerModel

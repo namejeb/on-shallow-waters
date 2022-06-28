@@ -41,6 +41,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     private int _roomFinishedCount = -1; //to exclude basic room
     private int _bossRoomsIndex;
 
+    public static bool IsBossRoom { get; private set; }
 
     private void OnDestroy()
     {
@@ -87,8 +88,8 @@ public class RoomSpawnerV2 : MonoBehaviour
     private void SpawnRoom(RoomEntranceDir dir)
     {
         //after 5 rooms, spawn boss
-        bool isBossStage = (_roomFinishedCount == 1); 
-        isBossStage = true; //boss room debug
+        bool isBossStage = (_roomFinishedCount == 5); 
+       // isBossStage = true; //boss room debug
        HandleSpawnRoom(isBossStage, dir);
     }
 
@@ -101,6 +102,8 @@ public class RoomSpawnerV2 : MonoBehaviour
 
         if (isBossStage)
         {
+            IsBossRoom = true;
+            
             _roomFinishedCount = 0;
       
            room = bossRooms[_levelCounter];
@@ -110,6 +113,8 @@ public class RoomSpawnerV2 : MonoBehaviour
         }
         else
         {
+            IsBossRoom = false;
+            
             int roomIndex = 0;
             
             if (dir == RoomEntranceDir.SOUTH)

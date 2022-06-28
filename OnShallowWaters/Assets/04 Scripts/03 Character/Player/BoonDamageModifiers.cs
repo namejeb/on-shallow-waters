@@ -10,6 +10,9 @@ public class BoonDamageModifiers : MonoBehaviour
    private float _dmgIncreaseSingleEnemyModifier = 1f; 
    private float _firstTimeDmgBonusModifier = 1f;
    private int _dmgWhenShieldBreakModifier;
+
+   public bool dmgReductionActivated = false;
+   public float dmgReductionActivationThreshold = 0f;
  
 
    public bool DmgWhenShieldBreakActivated { get => _dmgWhenShieldBreakActivated; }
@@ -73,5 +76,11 @@ public class BoonDamageModifiers : MonoBehaviour
    public void EnableExtraShieldDmg(float effectAmount)
    {
       EnemiesCore.shieldDmgBonus = effectAmount;
+   }
+
+   public void EnableDmgReductionWhenLowHp(float effectAmount)
+   {
+      dmgReductionActivated = true;
+      dmgReductionActivationThreshold = effectAmount;
    }
 }

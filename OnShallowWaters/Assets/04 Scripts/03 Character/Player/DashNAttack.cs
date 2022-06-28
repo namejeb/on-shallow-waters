@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
+using UnityEditor.Tilemaps;
 using UnityEngine.EventSystems;
 
 public class DashNAttack : MonoBehaviour
@@ -13,6 +14,11 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
     [SerializeField] private float speed;
+    
+    private bool _isDash = false;
+    
+    private float _elapsedTime;
+    private float _endTime = 0f;
 
     [SerializeField] private LayerMask damageableLayer;
 
@@ -23,21 +29,15 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private int inDamage;
     [SerializeField] private AttackButtonUI pressedButton;
     [SerializeField] private bool isSlashTigger;
-    private BoonDamageModifiers _boonDamageModifiers;
     
-    private bool _isDash = false;
- 
-    private Vector3 _startPos;
-    private Vector3 _endPos;
-
-    private float _elapsedTime;
-    private float _endTime = 0f;
-
-
+    private BoonDamageModifiers _boonDamageModifiers;
+    private SkBlessing _skBlessing;
+    
     private void Awake()
     {
         stats = PlayerHandler.Instance.PlayerStats;
         _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
+        _skBlessing = GetComponent<SkBlessing>();
     }
     
     private void FixedUpdate()
@@ -144,6 +144,9 @@ public class DashNAttack : MonoBehaviour
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
         }
+
+        nextAttack /= stats.AtkSpeed;
+
         outDamage = Mathf.RoundToInt(tempOutDamage);
         HandleDamaging(tempOutDamage);
         
@@ -153,52 +156,53 @@ public class DashNAttack : MonoBehaviour
     private void HandleDamaging(float outDamage)
     {
         outDamage = Mathf.RoundToInt(outDamage);
-        this.outDamage = (int) outDamage;
-       
+
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
         
         for (int i = 0; i < hitColliders.Length; i++)
         {   
             if (hitColliders[i] == null) continue;  //skip if null
             
-     
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
-            if (damagable == null) return;
+            if (damagable == null) continue;
 
-
-            EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
-            if(enemyHandler != null)
-            {
-                outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
-            }
-
-            damagable.Damage( (int) outDamage);
-            print(outDamage);
+            outDamage = ApplyCrit(outDamage);
             
+            //if hit an enemy
+            // EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
+            // if(enemyHandler != null)
+            // {
+            //     outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
+            //     _skBlessing.AddSoul(2);
+            // }
+
+            EnemyHandler enemyHandler = null;
+            if (hitColliders[i].CompareTag("Enemy"))
+            {
+                enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
+                if(enemyHandler != null)    //if still null, meaning its a boss
+                    outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
+                
+                _skBlessing.AddSoul(2);
+            }
+            damagable.Damage( (int) outDamage);
             if (_boonDamageModifiers.DmgWhenShieldBreakActivated)
             {
                 _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
             }
-            
-            // enemyHandler.EnemyStats.Damage( (int) outDamage);
-            
-            // if (hitColliders[i].CompareTag("TreasureChest"))
-            // {
-            //     hitColliders[i].GetComponent<TreasureChest>().Damage(0);
-            //     continue;
-            // }
-            //
-            // if (hitColliders[i].CompareTag("TrainingDummy"))
-            // {
-            //     hitColliders[i].GetComponent<TrainingDummy>().Damage(0);
-            //     continue;
-            // }
-            //
-            // if(hitColliders[i].CompareTag("BreakableProps"))
-            // {
-            //     hitColliders[i].GetComponent<BreakableProp>().Damage(0);
-            //     continue;
-            // }
         }
     }
+
+    private float ApplyCrit(float outgoingDamage)
+    {
+        float cr = UnityEngine.Random.Range(0f, 1f);
+        if (cr < stats.CritChance)
+        {
+            outgoingDamage *= stats.CritDamage;
+        }
+
+        return outgoingDamage;
+    }
+
+
 }

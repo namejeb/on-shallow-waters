@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6275804072482848914}
   - component: {fileID: 3456559235900780617}
   - component: {fileID: 4029160386479688534}
+  - component: {fileID: -6571105526929130744}
   m_Layer: 9
   m_Name: barrels 1
   m_TagString: BreakableProps
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc021c24aab9244ab319c46b1a20078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxAmount: {x: 50, y: 200}
+  minMaxAmount: {x: 5, y: 10}
 --- !u!65 &4029160386479688534
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,3 +112,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3650579, y: 0.36505792, z: 0.43189538}
   m_Center: {x: 0, y: -0.000000022351747, z: 0}
+--- !u!208 &-6571105526929130744
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483377726996209991}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.18300001, y: 0.18300001, z: 0.216}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

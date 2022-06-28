@@ -6,28 +6,72 @@ using UnityEngine;
 public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
     [SerializeField] private Stat atkPercent;
-    [SerializeField] private Stat atkSpeed;
-    [SerializeField] private Stat critChance;
-    [SerializeField] private Stat critDamage;
+    private float _atkSpeed = 1f;
+    
+    private float _critChance = .3f;
+    private float _critDamage = 1.5f;
+    
     [SerializeField] private Stat movementSpeed;
+    private float _mvmntSpdMutliplier = 1f;
+    
     [SerializeField] private Stat defense;
-    private Stat _damageReduction;
+    private float _defMutliplier = 1f;
+    
+    private float _damageReduction = 1f;
     
     
     public Stat AtkPercent { get => atkPercent; }
-    public Stat AtkSpeed { get => atkSpeed; }
-    public Stat CritChance { get => critChance; }
-    public Stat CritDamage { get => critDamage; }
+    public float AtkSpeed { get => _atkSpeed; }
+    public float CritChance { get => _critChance; }
+    public float CritDamage { get => _critDamage; }
     public Stat MovementSpeed { get => movementSpeed; }
+    public float MovementSpeedMultiplier  { get => _mvmntSpdMutliplier; }
     public Stat Defense { get => defense; }
-    public Stat DamageReduction { get => _damageReduction; }
-    
- 
+    public float DefMultiplier { get => _defMutliplier; }
+    public float DamageReduction { get => _damageReduction; }
+
+    private BoonDamageModifiers _boonDamageModifiers;
+
+    private new void Awake()
+    {
+        _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
+    }
 
     
     protected override void Die()
     {
         //game end logics
+    }
+    
+
+
+    public void IncreaseDamageReduction(float multiplierToSet)
+    {
+        _damageReduction = multiplierToSet;
+    }
+
+    public void IncreaseCritChance(float multiplierToSet)
+    {
+        _critChance = multiplierToSet;
+    }
+
+    public void IncreaseCritDmg(float multiplier)
+    {
+        _critDamage *= multiplier;
+    }
+
+    public void IncreaseDef(float multiplierToSet)
+    {
+        _defMutliplier = multiplierToSet;
+    }
+    public void IncreaseMvmntSpd(float multiplierToSet)
+    {
+        _mvmntSpdMutliplier = multiplierToSet;
+    }
+
+    public void IncreaseAtkSpd(float multiplierToSet)
+    {
+        _atkSpeed = multiplierToSet;
     }
 
     public void IncreaseMaxHp(float multiplier)
@@ -89,61 +133,28 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     public void Damage(int damageAmount)
     {
-        TakeDamage(damageAmount);
+        int dmg = (int) ReceiveIncomingDmg(damageAmount);
+        TakeDamage(dmg);
+    }
+    
+    private float ReceiveIncomingDmg(float incomingDamage)
+    {
+        incomingDamage *= (100 / (100 + (DefMultiplier * (Defense.CurrentValue + 0))) * DamageReduction);
+
+        if (_boonDamageModifiers.dmgReductionActivated)
+        {
+            if (CurrHpPercentage < _boonDamageModifiers.dmgReductionActivationThreshold)
+            {
+                //decrease by 25%
+                incomingDamage *= (1 - .25f);
+            }
+        }
+        
+        return incomingDamage;
     }
 
     public float LostHP()
     {
         throw new System.NotImplementedException();
     }
-
-    // private void UpgradeAtk()
-    // {
-    //     int newValue = Atk.BaseValue + atkUpgradeAmt;
-    //     Atk.ModifyBaseValue(newValue);
-    //     
-    //    // save to file
-    // }
-
-
-
-    // public void UpgradeDef()
-    // {
-    //      Stat stat = _playerStats.Def;
-    //      int currValue = stat.BaseValue;
-    //      int newValue = currValue + defUpgradeAmt;
-    //     
-    //      _playerStats.Atk.ModifyBaseValue(newValue);
-
-
-    //     
-    //     _playerStats.AddModifier(_playerStats.Def, 5);    -> soul shop upgrade method?
-    // }
-
-
-    //Testing
-    //  private void Update()
-    // {
-    //     if (Input.GetKeyDown("t"))
-    //     {
-    //         AddModifier(Atk, 3);
-    //         //UpgradeAtk();
-    //     }
-    //
-    //     if (Input.GetKeyDown("y"))
-    //     {
-    //         AddModifier(Atk, 4);
-    //     }
-    //
-    //     if (Input.GetKeyDown("r"))
-    //     {
-    //         RemoveModifier(Atk, 4);
-    //     }
-    //
-    //     if (Input.GetKeyDown("f"))
-    //     {
-    //         print("Curr Atk: " + Atk.CurrentValue);
-    //     }
-    // } 
-
 }
