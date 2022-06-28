@@ -67,7 +67,7 @@ public class BoonDamageModifiers : MonoBehaviour
    public void EnableDmgWhenShieldBreak(float effectAmount)
    {
       _dmgWhenShieldBreakActivated = true;
-      _dmgIncreaseSingleEnemyModifier = effectAmount;
+      _dmgWhenShieldBreakModifier = effectAmount;
    }
 
    public void EnableExtraShieldDmg(float effectAmount)
