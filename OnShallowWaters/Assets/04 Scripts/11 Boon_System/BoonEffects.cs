@@ -61,7 +61,7 @@ public class BoonEffects : MonoBehaviour {
     
     private PlayerStats _playerStats;
 
-    [Space] public int boonToUse;
+   // [Space] public int boonToUse;
     
     [Space] 
     [Header("Effects w/ arrays: ")]
@@ -151,7 +151,6 @@ public class BoonEffects : MonoBehaviour {
     
     public void HandleEffectActivation(int boonItemId)
     {
-        boonItemId = boonToUse;
         switch (boonItemId)
         {
             case 0: IncreaseMaxHp();      break;        //--x

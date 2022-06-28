@@ -14,6 +14,11 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
     [SerializeField] private float speed;
+    
+    private bool _isDash = false;
+    
+    private float _elapsedTime;
+    private float _endTime = 0f;
 
     [SerializeField] private LayerMask damageableLayer;
 
@@ -24,17 +29,15 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private int inDamage;
     [SerializeField] private AttackButtonUI pressedButton;
     [SerializeField] private bool isSlashTigger;
+    
     private BoonDamageModifiers _boonDamageModifiers;
+    private SkBlessing _skBlessing;
     
-    private bool _isDash = false;
-    
-    private float _elapsedTime;
-    private float _endTime = 0f;
-
     private void Awake()
     {
         stats = PlayerHandler.Instance.PlayerStats;
         _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
+        _skBlessing = GetComponent<SkBlessing>();
     }
     
     private void FixedUpdate()
@@ -165,15 +168,24 @@ public class DashNAttack : MonoBehaviour
 
             outDamage = ApplyCrit(outDamage);
             
-            EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
-            if(enemyHandler != null)
-            {
-                outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
-            }
+            //if hit an enemy
+            // EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
+            // if(enemyHandler != null)
+            // {
+            //     outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
+            //     _skBlessing.AddSoul(2);
+            // }
 
+            EnemyHandler enemyHandler = null;
+            if (hitColliders[i].CompareTag("Enemy"))
+            {
+                enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
+                if(enemyHandler != null)    //if still null, meaning its a boss
+                    outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
+                
+                _skBlessing.AddSoul(2);
+            }
             damagable.Damage( (int) outDamage);
-            print(outDamage);
-            
             if (_boonDamageModifiers.DmgWhenShieldBreakActivated)
             {
                 _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);

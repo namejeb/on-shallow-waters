@@ -34,7 +34,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
     private new void Awake()
     {
-        _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
+        _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
     }
 
     
