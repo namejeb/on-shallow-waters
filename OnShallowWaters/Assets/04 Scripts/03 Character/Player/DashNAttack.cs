@@ -34,11 +34,15 @@ public class DashNAttack : MonoBehaviour
     
     private void Awake()
     {
-        stats = PlayerHandler.Instance.PlayerStats;
-        _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
         _skBlessing = GetComponent<SkBlessing>();
     }
-    
+
+    private void Start()
+    {
+        stats = PlayerHandler.Instance.PlayerStats;
+        _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
+    }
+
     private void FixedUpdate()
     {
         if (_isDash)
