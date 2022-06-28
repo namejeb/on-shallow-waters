@@ -15,6 +15,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         public Transform puppet;
         public Rigidbody rb3d;
         public bool armourType;
+        public Animator anim;
         private EnemyStats _enemyStats;
 
         //Enemies Detection & AttackRange
@@ -48,8 +49,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         private float _coreHealth;
         [FormerlySerializedAs("_coreSpeed")] public float coreSpeed;
         public float coreDamage;
-        
-  
         
         //Boon modifiers
         public static float shieldDmgBonus = 1f;
@@ -87,6 +86,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
         #region Basic States
         protected virtual void Movement(){
+            anim.SetBool("isWalk", true);
             agent.SetDestination(puppet.position);
             if(dist < attackRange * attackRange){
                 agent.stoppingDistance = attackRange;

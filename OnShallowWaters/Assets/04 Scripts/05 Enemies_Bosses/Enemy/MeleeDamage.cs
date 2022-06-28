@@ -25,7 +25,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
             enemy.GetComponent<LightAttacker>().targetHit += 1;
             _isAttackOn = false;
             _targetHit = true;
-            print("Hit");
         }
     }
 }

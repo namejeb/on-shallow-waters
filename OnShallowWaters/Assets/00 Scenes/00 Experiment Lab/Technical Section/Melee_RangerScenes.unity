@@ -279,6 +279,7 @@ MonoBehaviour:
   puppet: {fileID: 0}
   rb3d: {fileID: 0}
   armourType: 0
+  anim: {fileID: 0}
   dist: 0
   detectRange: 10
   attackRange: 5
@@ -574,6 +575,7 @@ MonoBehaviour:
   puppet: {fileID: 0}
   rb3d: {fileID: 0}
   armourType: 0
+  anim: {fileID: 0}
   dist: 0
   detectRange: 10
   attackRange: 10
@@ -810,7 +812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &458021151
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -946,6 +948,7 @@ MonoBehaviour:
   puppet: {fileID: 0}
   rb3d: {fileID: 0}
   armourType: 0
+  anim: {fileID: 458021158}
   dist: 0
   detectRange: 10
   attackRange: 1.5
@@ -965,7 +968,6 @@ MonoBehaviour:
   maxHealth: 100
   coreSpeed: 5
   coreDamage: 20
-  anim: {fileID: 458021158}
   missAttack: 0
   targetHit: 0
 --- !u!95 &458021158
@@ -1099,6 +1101,7 @@ MonoBehaviour:
   puppet: {fileID: 0}
   rb3d: {fileID: 0}
   armourType: 1
+  anim: {fileID: 638743562}
   dist: 0
   detectRange: 10
   attackRange: 1.5
@@ -1118,7 +1121,6 @@ MonoBehaviour:
   maxHealth: 100
   coreSpeed: 2
   coreDamage: 20
-  anim: {fileID: 638743562}
   missAttack: 0
   targetHit: 0
 --- !u!195 &638743564
@@ -1671,6 +1673,7 @@ MonoBehaviour:
   puppet: {fileID: 0}
   rb3d: {fileID: 0}
   armourType: 0
+  anim: {fileID: 0}
   dist: 0
   detectRange: 10
   attackRange: 5
@@ -1678,10 +1681,10 @@ MonoBehaviour:
   angle: 42
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   maxShield: 10
   currentShield: 0
   stunTimer: 3
@@ -2378,7 +2381,7 @@ Transform:
   - {fileID: 1815892750}
   - {fileID: 652384286}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1424413218
 GameObject:
@@ -2410,7 +2413,7 @@ Transform:
   m_Children:
   - {fileID: 1915334469}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1427906834
 GameObject:
@@ -2567,6 +2570,7 @@ MonoBehaviour:
   puppet: {fileID: 0}
   rb3d: {fileID: 0}
   armourType: 0
+  anim: {fileID: 0}
   dist: 0
   detectRange: 10
   attackRange: 5
@@ -2820,7 +2824,7 @@ Transform:
   - {fileID: 17937466}
   - {fileID: 672680577}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1815892749
 GameObject:
@@ -7784,7 +7788,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2117110349
 GameObject:
@@ -7817,6 +7821,120 @@ Transform:
   m_Father: {fileID: 1193632717}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2119946326
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -41.946823
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.4989421
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127995219417853248, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_Name
+      value: Fishmen_Attack (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+--- !u!1001 &2858016399131078533
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -43.764053
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.9781225
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315711919873669114, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127995219417853248, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
+      propertyPath: m_Name
+      value: Fishmen_Attack
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
 --- !u!1001 &5554806339517611009
 PrefabInstance:
   m_ObjectHideFlags: 0
