@@ -13,6 +13,9 @@ public class Boss1_ThrustHand : Boss_Move2
     public override void Update(Boss_FSM boss)
     {
         boss.inStateTimer += Time.deltaTime;
+
+        boss.RotateTowards(boss.Target, boss);
+
         if (boss.inStateTimer > boss.shootInterval)
         {
             boss.shootCount += 1;
@@ -27,7 +30,7 @@ public class Boss1_ThrustHand : Boss_Move2
             boss.SetState(boss.restState);
         }
 
-        boss.RotateTowards(boss.Target, boss);
+        
     }
     
     //private void RotateTowards(Transform target, Boss_FSM boss)

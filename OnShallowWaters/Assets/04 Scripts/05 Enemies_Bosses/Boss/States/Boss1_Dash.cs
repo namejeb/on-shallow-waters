@@ -24,6 +24,11 @@ public class Boss1_Dash : Boss_Move4
     {
         boss.inStateTimer += Time.deltaTime;
 
+        if (boss.inStateTimer > 1.5)
+        {
+            boss.RotateTowards(boss.Target, boss);
+        }
+
         if (boss.inStateTimer > boss.value[1])
         {
             Debug.Log("Change");
