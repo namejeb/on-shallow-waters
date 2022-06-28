@@ -11,8 +11,8 @@ public class BoonDamageModifiers : MonoBehaviour
    private float _firstTimeDmgBonusModifier = 1f;
    private int _dmgWhenShieldBreakModifier;
 
-   public bool dmgReductionActivated = false;
-   public float dmgReductionActivationThreshold = 0f;
+   [HideInInspector] public bool dmgReductionActivated = false;
+   [HideInInspector] public float dmgReductionActivationThreshold = 0f;
  
 
    public bool DmgWhenShieldBreakActivated { get => _dmgWhenShieldBreakActivated; }

@@ -1206,7 +1206,8 @@ GameObject:
   - component: {fileID: 1093336461}
   - component: {fileID: 7836655524029940417}
   - component: {fileID: 557213166787715092}
-  m_Layer: 0
+  - component: {fileID: 1093336474}
+  m_Layer: 3
   m_Name: xbot
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1299,12 +1300,12 @@ MonoBehaviour:
   eStats: {fileID: 0}
   dashDuration: 0.2
   range: 0
-  speed: 50
+  speed: 5
   damageableLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   attackSequence: 0
-  nextAttack: 0
+  nextAttack: 1
   outDamage: 0
   inDamage: 0
   pressedButton: {fileID: 0}
@@ -1357,29 +1358,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e316826d5da42d1aa127712f40887f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 5
+  maxHp: 150
   atk:
-    baseValue: 0
+    baseValue: 30
     modifiers: 
     hasCap: 0
-    cap: 0
+    cap: 1
   atkPercent:
-    baseValue: 0
-    modifiers: 
-    hasCap: 0
-    cap: 0
-  atkSpeed:
-    baseValue: 0
-    modifiers: 
-    hasCap: 0
-    cap: 0
-  critChance:
-    baseValue: 0
-    modifiers: 
-    hasCap: 0
-    cap: 0
-  critDamage:
-    baseValue: 0
+    baseValue: 10
     modifiers: 
     hasCap: 0
     cap: 0
@@ -1389,12 +1375,7 @@ MonoBehaviour:
     hasCap: 0
     cap: 0
   defense:
-    baseValue: 0
-    modifiers: 
-    hasCap: 0
-    cap: 0
-  damageReduction:
-    baseValue: 0
+    baseValue: 50
     modifiers: 
     hasCap: 0
     cap: 0
@@ -1450,6 +1431,20 @@ MonoBehaviour:
   dna: {fileID: 0}
   rb: {fileID: 0}
   time: 1.5
+--- !u!114 &1093336474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4262394600308867474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ea9e89e27ef5044b281ffafc72362f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmgReductionActivated: 0
+  dmgReductionActivationThreshold: 0
 --- !u!1 &4788523522053977168
 GameObject:
   m_ObjectHideFlags: 0
