@@ -21,7 +21,7 @@ public class BoonDamageModifiers : MonoBehaviour
    {
       if (_dmgIncreaseSingleEnemyActivated)
       {
-         if (WaveSpawner.GetCurrWaveTotalEnemies() == 1)
+         if (WaveSpawner.WaveTotalEnemies == 1)
          {
             outgoingDmg = ApplyDamageIncreaseToSingleEnemy(outgoingDmg);
          }

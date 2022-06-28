@@ -107,6 +107,7 @@ Transform:
   - {fileID: 2157873316386839458}
   - {fileID: 1131787007378177964}
   - {fileID: 8420550062851980258}
+  - {fileID: 2640369308373496974}
   m_Father: {fileID: 8704599846826320023}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveCountdown: 0
   waveIntervalTime: 0
+  _enemyPooler: {fileID: 2640369308373496973}
   waves:
   - name: wave 1
     enemies:
@@ -1333,6 +1335,83 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2174402689276799429, guid: bf6d2822dfb0e4b4aacf0c181f4db30f, type: 3}
   m_PrefabInstance: {fileID: 3566683895724998818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3934370721049925826
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6072034723749131767}
+    m_Modifications:
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.3577442
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5336392
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.1335526
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386126, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: m_Name
+      value: EnemyPooler
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314427353888386127, guid: 13792762f930a694d85c70448baad53a, type: 3}
+      propertyPath: listOfPool.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 13792762f930a694d85c70448baad53a, type: 3}
+--- !u!114 &2640369308373496973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1314427353888386127, guid: 13792762f930a694d85c70448baad53a, type: 3}
+  m_PrefabInstance: {fileID: 3934370721049925826}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8986686af2e64da4896baffd45997902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2640369308373496974 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1314427353888386124, guid: 13792762f930a694d85c70448baad53a, type: 3}
+  m_PrefabInstance: {fileID: 3934370721049925826}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4080513549644290554
 PrefabInstance:

@@ -16,18 +16,8 @@ public class EnemyPooler : MonoBehaviour
 		public List<Transform> enemyPoolList = new List<Transform>();
 	}
 	
-    
 	[SerializeField] private List<PoolInfo> listOfPool;
 
-	#region Singleton
-	public static EnemyPooler Instance;
-
-	private void Awake()
-	{
-		Instance = this;
-		DontDestroyOnLoad(gameObject);
-	}
-	#endregion
 
 	void Start()
 	{
