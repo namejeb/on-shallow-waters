@@ -11,9 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 6f;
     public float rotationSpeed = 10f;
-    public bool canMove;
-    float turnSmoothVelocity;
-    float stunTime;
+    public bool canMove = true;
 
     private Vector3 _moveDir;
 
