@@ -149,11 +149,7 @@ public class BoonEffects : MonoBehaviour {
         defense.stat = _playerStats.Defense;
         mvmntSpd.stat = _playerStats.MovementSpeed;
         
-        //uses the same stats
         dmgReductionWhenLowHp.stat = _playerStats.DamageReduction;
-
-        //based on Base Value
-
     }
     
     public void HandleEffectActivation(int boonItemId)
@@ -257,12 +253,7 @@ public class BoonEffects : MonoBehaviour {
     {
         UpgradeStat(mvmntSpd);
     }
-    //Reduce damage taken by 10%/20%
-    // public void ReduceDamageTaken()                 //---N
-    // {
-    //     UpgradeStat(dmgReduction);
-    // }
-    
+
     //Reduce 25% dmg taken while 30%/40% hp or lower.
     public void ReduceDamageWhenHpLow()             //---N
     {
@@ -337,6 +328,12 @@ public class BoonEffects : MonoBehaviour {
         }
         return 0f;
     }
+    
+    //Reduce damage taken by 10%/20%
+    // public void ReduceDamageTaken()                 //---N
+    // {
+    //     UpgradeStat(dmgReduction);
+    // }
 
     // public float GetFloatIncreaseAmounts(int id)
     // {

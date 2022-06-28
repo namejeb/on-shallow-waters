@@ -91,26 +91,6 @@ public class BoonSelection : MonoBehaviour
     }
     private void ActivateBoonEffect(int boonItemId)
     {
-        // //effectIndex = 1;
-        // switch (effectIndex)
-        // {
-        //     case 0: boonEffects.IncreaseMaxHp();      break;
-        //     
-        //     case 1: boonEffects.DmgToArmorIncrease();  break;
-        //     case 2: boonEffects.DmgWhenArmorBreak();  break;
-        //     case 3: boonEffects.SingleEnemyDmgIncrease();  break;
-        //     case 4: boonEffects.FirstTimeDmgBonus();  break;
-        //     
-        //     case 5: boonEffects.UpgradeAtkPercent();  break;
-        //     case 6: boonEffects.UpgradeAtkSpd();      break;
-        //     case 7: boonEffects.UpgradeCritChance();  break;
-        //     case 8: boonEffects.UpgradeCritDamage();  break;
-        //     case 9: boonEffects.IncreaseDefense();  break;
-        //     case 10: boonEffects.IncreaseMovementSpeed();  break;
-        //     case 11: boonEffects.ReduceDamageTaken(); break;
-        //     case 12: boonEffects.ReduceDamageWhenHpLow(); break;
-        // }
-        
         boonEffects.HandleEffectActivation(boonItemId);
         
         //increment usage

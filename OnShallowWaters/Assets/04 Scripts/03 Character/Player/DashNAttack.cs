@@ -164,14 +164,16 @@ public class DashNAttack : MonoBehaviour
      
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
             if (damagable == null) return;
-            
+
+
             EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
-            if (enemyHandler != null)
+            if(enemyHandler != null)
             {
                 outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
             }
-            
+
             damagable.Damage( (int) outDamage);
+            print(outDamage);
             
             if (_boonDamageModifiers.DmgWhenShieldBreakActivated)
             {
