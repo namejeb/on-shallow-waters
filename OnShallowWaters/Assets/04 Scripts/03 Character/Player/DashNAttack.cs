@@ -12,17 +12,17 @@ public class DashNAttack : MonoBehaviour
     
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 5f;
     
     private bool _isDash = false;
     
-    private float _elapsedTime;
+    private float _elapsedTime = 0f;
     private float _endTime = 0f;
 
     [SerializeField] private LayerMask damageableLayer;
 
     [SerializeField] private int attackSequence = 0;
-    [SerializeField] private float nextAttack;
+    [SerializeField] private float nextAttack = 0;
 
     [SerializeField] private int outDamage;
     [SerializeField] private int inDamage;
