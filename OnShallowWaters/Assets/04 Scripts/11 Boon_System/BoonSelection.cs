@@ -185,12 +185,12 @@ public class BoonSelection : MonoBehaviour
         
         if (boonItem.increaseAmountType == 0)
             effectAmount = boonEffects.GetMaxHpIncreaseAmount();
-        else if (boonItem.increaseAmountType == 1)
-            effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id).GetIncreaseAmount();
         else
-            effectAmount = boonEffects.GetFloatIncreaseAmounts(boonItem.id);
+            effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id);
         
-            
+        // else if (boonItem.increaseAmountType == 1)
+        //     effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id).GetIncreaseAmount();
+        
         if(boonItem.isPercentage)
             buttonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} +{effectAmount * 100}%");
         else

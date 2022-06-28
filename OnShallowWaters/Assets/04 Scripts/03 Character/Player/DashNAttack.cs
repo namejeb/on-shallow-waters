@@ -74,7 +74,6 @@ public class DashNAttack : MonoBehaviour
         if(pressedButton.isPressed)
            pressedButton.chargedTimer += Time.deltaTime;
 
-
         if (pressedButton.isSlash)
            HeavySlash();
 
@@ -88,6 +87,7 @@ public class DashNAttack : MonoBehaviour
         float atkPercent = (float)stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
         tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
+        HandleDamaging(tempOutDamage);
         playerMovement.enabled = true;
         animator.SetTrigger("slashATK");
         attackSequence = 0;
@@ -100,6 +100,7 @@ public class DashNAttack : MonoBehaviour
         float atkPercent = (float)stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
         tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
+        HandleDamaging(tempOutDamage);
         playerMovement.enabled = true;
         animator.SetTrigger("slamATK");
         attackSequence = 0;
@@ -119,7 +120,7 @@ public class DashNAttack : MonoBehaviour
         if (attackSequence == 0 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f));
-            Debug.Log(tempOutDamage);
+         //   Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack");
             attackSequence++;
@@ -128,7 +129,7 @@ public class DashNAttack : MonoBehaviour
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
-            Debug.Log(tempOutDamage);
+          //  Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
             attackSequence++;
@@ -137,58 +138,65 @@ public class DashNAttack : MonoBehaviour
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
-            Debug.Log(tempOutDamage);
+          //  Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
         }
         outDamage = Mathf.RoundToInt(tempOutDamage);
+        HandleDamaging(tempOutDamage);
         
+     // Debug.Log(attackSequence.ToString());
+    }
 
-        //temp damage to test WaveSpawner, will remove
+    private void HandleDamaging(float outDamage)
+    {
+        outDamage = Mathf.RoundToInt(outDamage);
+        this.outDamage = (int) outDamage;
+       
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
-
+        
         for (int i = 0; i < hitColliders.Length; i++)
         {   
             if (hitColliders[i] == null) continue;  //skip if null
             
-            // if (enemyHandler != null)
-            //     enemyHandler.Damage(5);
      
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
             if (damagable == null) return;
-        
-            if (hitColliders[i].CompareTag("TreasureChest"))
-            {
-                hitColliders[i].GetComponent<TreasureChest>().Damage(0);
-                continue;
-            }
             
-            if (hitColliders[i].CompareTag("TrainingDummy"))
-            {
-                hitColliders[i].GetComponent<TrainingDummy>().Damage(0);
-                continue;
-            }
-            
-            if(hitColliders[i].CompareTag("BreakableProps"))
-            {
-                hitColliders[i].GetComponent<BreakableProp>().Damage(0);
-                continue;
-            }
-       
             EnemyHandler enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
-            if (enemyHandler == null) return;
-                    
-            outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler);
-            enemyHandler.EnemyStats.Damage(outDamage);
-
+            if (enemyHandler != null)
+            {
+                outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
+            }
+            
+            damagable.Damage( (int) outDamage);
+            
             if (_boonDamageModifiers.DmgWhenShieldBreakActivated)
             {
                 _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
             }
+            
+            // enemyHandler.EnemyStats.Damage( (int) outDamage);
+            
+            // if (hitColliders[i].CompareTag("TreasureChest"))
+            // {
+            //     hitColliders[i].GetComponent<TreasureChest>().Damage(0);
+            //     continue;
+            // }
+            //
+            // if (hitColliders[i].CompareTag("TrainingDummy"))
+            // {
+            //     hitColliders[i].GetComponent<TrainingDummy>().Damage(0);
+            //     continue;
+            // }
+            //
+            // if(hitColliders[i].CompareTag("BreakableProps"))
+            // {
+            //     hitColliders[i].GetComponent<BreakableProp>().Damage(0);
+            //     continue;
+            // }
         }
-
-        Debug.Log(attackSequence.ToString());
     }
 }

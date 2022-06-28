@@ -11,7 +11,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     [SerializeField] private Stat critDamage;
     [SerializeField] private Stat movementSpeed;
     [SerializeField] private Stat defense;
-    [SerializeField] private Stat damageReduction;
+    private Stat _damageReduction;
     
     
     public Stat AtkPercent { get => atkPercent; }
@@ -20,8 +20,10 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     public Stat CritDamage { get => critDamage; }
     public Stat MovementSpeed { get => movementSpeed; }
     public Stat Defense { get => defense; }
-    public Stat DamageReduction { get => damageReduction; }
+    public Stat DamageReduction { get => _damageReduction; }
     
+ 
+
     
     protected override void Die()
     {

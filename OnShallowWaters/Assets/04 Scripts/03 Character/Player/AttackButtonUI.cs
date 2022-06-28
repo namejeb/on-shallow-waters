@@ -17,8 +17,7 @@ public class AttackButtonUI : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         isPressed = true;
         if (isPressed)
         {
-            DNA.Attack();   
-            
+            DNA.Attack();
         }
     }
     public void OnPointerUp(PointerEventData eventData)
@@ -30,7 +29,7 @@ public class AttackButtonUI : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             isSlash=true;
             Debug.Log("KAHHHHHHHBIIIIIN");
         }
-
+        
         else if (chargedTimer >= 2)
         {
             isSlam=true;

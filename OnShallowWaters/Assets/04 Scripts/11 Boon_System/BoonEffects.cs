@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [System.Serializable]
@@ -6,7 +7,7 @@ public class StatIncreaseAmounts
     public int idFromBoonItem;
     [HideInInspector] public Stat stat;
     public float[] increaseAmounts;
-    [HideInInspector] public int tracker;
+    [HideInInspector] public int tracker = 0;
 
     public StatIncreaseAmounts(int size)
     {
@@ -18,13 +19,59 @@ public class StatIncreaseAmounts
         return ( this.increaseAmounts[this.tracker]);
     }
 }
+
+[System.Serializable]
+public class StatIncreaseAmountsFloat
+{
+    public int idFromBoonItem;
+    [HideInInspector] public float stat;
+    public float[] increaseAmounts;
+    [HideInInspector] public int tracker = 0;
+
+    public StatIncreaseAmountsFloat (int size)
+    {
+        this.increaseAmounts = new float[size];
+    }
+    
+    public float GetIncreaseAmount()
+    {
+        return ( this.increaseAmounts[this.tracker]);
+    }
+}
+
+[System.Serializable]
+public class StatIncreaseAmountsInt
+{
+    public int idFromBoonItem;
+    [HideInInspector] public int stat;
+    public int[] increaseAmounts;
+    [HideInInspector] public int tracker = 0;
+
+    public StatIncreaseAmountsInt (int size)
+    {
+        this.increaseAmounts = new int[size];
+    }
+    
+    public float GetIncreaseAmount()
+    {
+        return ( this.increaseAmounts[this.tracker]);
+    }
+}
 public class BoonEffects : MonoBehaviour {
     
     private PlayerStats _playerStats;
+
+    [Space] public int boonToUse;
     
     [Space] 
     [Header("Effects w/ arrays: ")]
     [Header("Increase Amounts (Combat): ")]
+    [SerializeField] private StatIncreaseAmountsFloat shieldExtraDmgBonus = new StatIncreaseAmountsFloat(3);
+    [SerializeField] private StatIncreaseAmountsInt shieldBreakTrueDmg = new StatIncreaseAmountsInt(3);
+    [SerializeField] private StatIncreaseAmountsFloat dmgIncreaseSingleEnemy = new StatIncreaseAmountsFloat(3);
+    [SerializeField] private StatIncreaseAmountsFloat firstTimeDmgBonus = new StatIncreaseAmountsFloat(3);
+
+    [Space]
     [SerializeField] private StatIncreaseAmounts atkPercent = new StatIncreaseAmounts(3);
     [SerializeField] private StatIncreaseAmounts atkSpd = new StatIncreaseAmounts(3);
     [SerializeField] private StatIncreaseAmounts critChance = new StatIncreaseAmounts(3);
@@ -36,49 +83,34 @@ public class BoonEffects : MonoBehaviour {
     [Header("Increase Amounts (Survival): ")] 
     [SerializeField] private float[] maxHpIncreaseAmounts = new float[3];
     private int _maxHpTracker;
-    
     [SerializeField] private StatIncreaseAmounts defense = new StatIncreaseAmounts(3);
-    [SerializeField] private StatIncreaseAmounts mvmntSpd = new StatIncreaseAmounts(4);
-    [SerializeField] private StatIncreaseAmounts dmgReduction = new StatIncreaseAmounts(2);
-    [SerializeField] private StatIncreaseAmounts dmgReductionWhenLowHp = new StatIncreaseAmounts(2);
+    [SerializeField] private StatIncreaseAmounts mvmntSpd = new StatIncreaseAmounts(3);
+    [SerializeField] private StatIncreaseAmounts dmgReductionWhenLowHp = new StatIncreaseAmounts(3);
 
     [Space] [Space] [Space] 
-    [SerializeField] private StatIncreaseAmounts shieldExtraDmgBonus = new StatIncreaseAmounts(3);
-    [SerializeField] private StatIncreaseAmounts shieldBreakTrueDmg = new StatIncreaseAmounts(3);
-    [SerializeField] private StatIncreaseAmounts dmgIncreaseSingleEnemyEffectAmt = new StatIncreaseAmounts(3);
-    [SerializeField] private StatIncreaseAmounts firstTimeDmgBonus = new StatIncreaseAmounts(3);
-    
-    [Space] [Space] [Space] 
-    // [Header("Effects w/o arrays: ")] 
-    // [SerializeField] private float shieldExtraDmgBonus = 1.2f;
-    // [SerializeField] private float shieldBreakTrueDmg = 100f;
-    // [SerializeField] private float dmgIncreaseSingleEnemyEffectAmt = 1.4f;
-    // [SerializeField] private float firstTimeDmgBonus = 2f;
-    
+    [Header("Increase Amounts (Special): ")] 
+
+    private Hashtable HIncreaseAmounts = new Hashtable();
     private StatIncreaseAmounts[] _statIncreaseAmounts;
-    private float[] _floatIncreaseAmounts;
-    
+
+   
     private void OnValidate()
     {
+
         for (int i = 0; i < 3; i++)
         {
             atkPercent.increaseAmounts[i] = Mathf.Clamp(atkPercent.increaseAmounts[i], 1, float.MaxValue);
             atkSpd.increaseAmounts[i] = Mathf.Clamp(atkSpd.increaseAmounts[i], 1, float.MaxValue);
+            
             critChance.increaseAmounts[i] = Mathf.Clamp(critChance.increaseAmounts[i], 1, float.MaxValue);
             critDmg.increaseAmounts[i] = Mathf.Clamp(critDmg.increaseAmounts[i], 1, float.MaxValue);
+            
             maxHpIncreaseAmounts[i] = Mathf.Clamp(maxHpIncreaseAmounts[i], 1, float.MaxValue);
             defense.increaseAmounts[i] = Mathf.Clamp(defense.increaseAmounts[i], 1, float.MaxValue);
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            mvmntSpd.increaseAmounts[i] = Mathf.Clamp(mvmntSpd.increaseAmounts[i], 1, float.MaxValue);
-        }
-
-        for (int i = 0; i < 2; i++)
-        {
-            dmgReduction.increaseAmounts[i] = Mathf.Clamp(dmgReduction.increaseAmounts[i], 1, float.MaxValue);
+            
             dmgReductionWhenLowHp.increaseAmounts[i] = Mathf.Clamp(dmgReductionWhenLowHp.increaseAmounts[i], 1, float.MaxValue);
+            
+            mvmntSpd.increaseAmounts[i] = Mathf.Clamp(mvmntSpd.increaseAmounts[i], 1, float.MaxValue);
         }
     }
     
@@ -86,32 +118,26 @@ public class BoonEffects : MonoBehaviour {
     {
         _playerStats = PlayerHandler.Instance.PlayerStats;
         InitStatIncreaseAmounts();
-
-        // _floatIncreaseAmounts = new float[]
-        // {
-        //     shieldExtraDmgBonus,
-        //     shieldBreakTrueDmg,
-        //     dmgIncreaseSingleEnemyEffectAmt,
-        //     firstTimeDmgBonus,
-        // };
-        
-        _statIncreaseAmounts = new StatIncreaseAmounts[]
-        {
-            atkPercent,
-            atkSpd,
-            critChance,
-            critDmg,
-            defense,
-            dmgReduction,
-            mvmntSpd,
-            dmgReductionWhenLowHp,
-            shieldExtraDmgBonus,
-            shieldBreakTrueDmg,
-            dmgIncreaseSingleEnemyEffectAmt,
-            firstTimeDmgBonus
-        };
+        InitHash();
     }
-    
+
+    private void InitHash()
+    {
+        HIncreaseAmounts.Clear();
+        
+        HIncreaseAmounts.Add(atkPercent.idFromBoonItem, atkPercent);
+        HIncreaseAmounts.Add(atkSpd.idFromBoonItem, atkSpd);
+        HIncreaseAmounts.Add(critChance.idFromBoonItem, critChance);
+        HIncreaseAmounts.Add(critDmg.idFromBoonItem, critDmg);
+        HIncreaseAmounts.Add(defense.idFromBoonItem, defense);
+        HIncreaseAmounts.Add(mvmntSpd.idFromBoonItem, mvmntSpd);
+        HIncreaseAmounts.Add(dmgReductionWhenLowHp.idFromBoonItem, dmgReductionWhenLowHp);
+        
+        HIncreaseAmounts.Add(shieldExtraDmgBonus.idFromBoonItem, shieldExtraDmgBonus);
+        HIncreaseAmounts.Add(shieldBreakTrueDmg.idFromBoonItem, shieldBreakTrueDmg);
+        HIncreaseAmounts.Add(dmgIncreaseSingleEnemy.idFromBoonItem, dmgIncreaseSingleEnemy);
+        HIncreaseAmounts.Add(firstTimeDmgBonus.idFromBoonItem, firstTimeDmgBonus);
+    }
     private void InitStatIncreaseAmounts()
     {
         atkPercent.stat = _playerStats.AtkPercent;
@@ -124,22 +150,23 @@ public class BoonEffects : MonoBehaviour {
         mvmntSpd.stat = _playerStats.MovementSpeed;
         
         //uses the same stats
-        dmgReduction.stat = _playerStats.DamageReduction;
         dmgReductionWhenLowHp.stat = _playerStats.DamageReduction;
+
+        //based on Base Value
+
     }
     
-
     public void HandleEffectActivation(int boonItemId)
     {
-        //effectIndex = 1;
+        boonItemId = boonToUse;
         switch (boonItemId)
         {
-            case 0: IncreaseMaxHp();      break;
+            case 0: IncreaseMaxHp();      break;   //--x
             
-            case 1: DmgToArmorIncrease();  break;
-            case 2: DmgWhenArmorBreak();  break;
-            case 3: SingleEnemyDmgIncrease();  break;
-            case 4: FirstTimeDmgBonus();  break;
+            case 1: DmgToArmorIncrease();  break;  //--x
+            case 2: DmgWhenArmorBreak();  break;   //--x
+            case 3: SingleEnemyDmgIncrease();  break;   //---x
+            case 4: FirstTimeDmgBonus();  break;   //--x
             
             case 5: UpgradeAtkPercent();  break;
             case 6: UpgradeAtkSpd();      break;
@@ -147,8 +174,7 @@ public class BoonEffects : MonoBehaviour {
             case 8: UpgradeCritDamage();  break;
             case 9: IncreaseDefense();  break;
             case 10: IncreaseMovementSpeed();  break;
-            case 11: ReduceDamageTaken(); break;
-            case 12: ReduceDamageWhenHpLow(); break;
+            case 11: ReduceDamageWhenHpLow(); break;
         }
     }
     
@@ -183,29 +209,33 @@ public class BoonEffects : MonoBehaviour {
     //sus - Deal 100 true dmg when enemy's armor break    
     public void DmgWhenArmorBreak()                 //---Y
     {
-        int effectAmountIndex = shieldBreakTrueDmg.tracker;
-        PlayerHandler.Instance.BoonDamageModifiers.EnableDmgWhenShieldBreak(shieldBreakTrueDmg.increaseAmounts[effectAmountIndex]);
+        int effectIndex = shieldBreakTrueDmg.tracker;
+        PlayerHandler.Instance.BoonDamageModifiers.EnableDmgWhenShieldBreak(shieldBreakTrueDmg.increaseAmounts[effectIndex]);
+        shieldBreakTrueDmg.tracker++;
     }
 
     //Deal 20% more dmg to enemy's armor
     public void DmgToArmorIncrease()                //---Y 
     {
-        int effectAmountIndex = shieldExtraDmgBonus.tracker;
-        PlayerHandler.Instance.BoonDamageModifiers.EnableExtraShieldDmg(shieldExtraDmgBonus.increaseAmounts[effectAmountIndex]);
+        int effectIndex = shieldExtraDmgBonus.tracker;
+        PlayerHandler.Instance.BoonDamageModifiers.EnableExtraShieldDmg(shieldExtraDmgBonus.increaseAmounts[effectIndex]);
+        shieldExtraDmgBonus.tracker++;
     }
     
     //Deal 40% more dmg when there is only one enemy
     public void SingleEnemyDmgIncrease()            //---Y 
     {
-        int effectAmountIndex = dmgIncreaseSingleEnemyEffectAmt.tracker;
-        PlayerHandler.Instance.BoonDamageModifiers.EnableSingleEnemyDmgIncrease(dmgIncreaseSingleEnemyEffectAmt.increaseAmounts[effectAmountIndex]);
+        int effectIndex = dmgIncreaseSingleEnemy.tracker;
+        PlayerHandler.Instance.BoonDamageModifiers.EnableSingleEnemyDmgIncrease(dmgIncreaseSingleEnemy.increaseAmounts[effectIndex]);
+        dmgIncreaseSingleEnemy.tracker++;
     }
     
     //Undamaged enemies will receive 100% more damage
     public void FirstTimeDmgBonus()                 //---Y 
     {
-        int effectAmountIndex = firstTimeDmgBonus.tracker;
-        PlayerHandler.Instance.BoonDamageModifiers.EnableFirstTimeDmgBonus(firstTimeDmgBonus.increaseAmounts[effectAmountIndex]);
+        int effectIndex = firstTimeDmgBonus.tracker;
+        PlayerHandler.Instance.BoonDamageModifiers.EnableFirstTimeDmgBonus(firstTimeDmgBonus.increaseAmounts[effectIndex]);
+        firstTimeDmgBonus.tracker++;
     }
     
     //------Survival------
@@ -228,10 +258,10 @@ public class BoonEffects : MonoBehaviour {
         UpgradeStat(mvmntSpd);
     }
     //Reduce damage taken by 10%/20%
-    public void ReduceDamageTaken()                 //---N
-    {
-        UpgradeStat(dmgReduction);
-    }
+    // public void ReduceDamageTaken()                 //---N
+    // {
+    //     UpgradeStat(dmgReduction);
+    // }
     
     //Reduce 25% dmg taken while 30%/40% hp or lower.
     public void ReduceDamageWhenHpLow()             //---N
@@ -247,6 +277,7 @@ public class BoonEffects : MonoBehaviour {
         Vector2Int modifierValues = CalcModifierValues(statIncreaseAmounts);
         stat.AddModifier( modifierValues.x );
         stat.RemoveModifier( modifierValues.y );
+        
         statIncreaseAmounts.tracker++;
     }
 
@@ -287,15 +318,30 @@ public class BoonEffects : MonoBehaviour {
         return maxHpIncreaseAmounts[_maxHpTracker];
     }
 
-    public StatIncreaseAmounts GetStatIncreaseAmounts(int id)
+    public float GetStatIncreaseAmounts(int id)
     {
-        return _statIncreaseAmounts[ id - 5 ];
+        if (HIncreaseAmounts[id] is StatIncreaseAmounts)
+        {
+            StatIncreaseAmounts sia = (StatIncreaseAmounts) HIncreaseAmounts[id];
+            return sia.GetIncreaseAmount();
+        }
+        if (HIncreaseAmounts[id] is StatIncreaseAmountsFloat)
+        {
+            StatIncreaseAmountsFloat sia = (StatIncreaseAmountsFloat) HIncreaseAmounts[id];
+            return sia.GetIncreaseAmount();
+        }
+        if (HIncreaseAmounts[id] is StatIncreaseAmountsInt)
+        {
+            StatIncreaseAmountsInt sia = (StatIncreaseAmountsInt) HIncreaseAmounts[id];
+            return sia.GetIncreaseAmount();
+        }
+        return 0f;
     }
 
-    public float GetFloatIncreaseAmounts(int id)
-    {
-        return _floatIncreaseAmounts[id - 1];
-    }
+    // public float GetFloatIncreaseAmounts(int id)
+    // {
+    //     return _floatIncreaseAmounts[id - 1];
+    // }
     
     
     // //Increase 5% damage every time you attack
