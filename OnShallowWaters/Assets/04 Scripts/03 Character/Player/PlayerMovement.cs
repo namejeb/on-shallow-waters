@@ -24,8 +24,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-            float horizontal = joystick.Horizontal;
-            float vertical = joystick.Vertical;
+            // float horizontal = joystick.Horizontal;
+            // float vertical = joystick.Vertical;
+            float horizontal = 1f; float vertical = 1f;
             _moveDir = new Vector3(horizontal, 0f, vertical).normalized;
         }
         else
@@ -48,16 +49,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {      
-         rb.velocity = Vector3.zero;
-         Move(_moveDir, speed, false);
+    {
+        Move(_moveDir, speed, false);
+    }
+
+    private void LateUpdate()
+    {
+        rb.velocity = Vector3.zero;
     }
 
     public void Move(Vector3 direction, float speed, bool isDash)
     {
         float dashModifier = 1f;
         if (isDash) dashModifier = speed;
-      //  rb.velocity = new Vector3(direction.x, 0f, direction.z) * (dashModifier * _playerStats.MovementSpeed.CurrentValue * _playerStats.MovementSpeedMultiplier ) / Time.timeScale;
-        rb.velocity = new Vector3(direction.x, 0f, direction.z) * dashModifier * 10f ;
+        //rb.velocity = new Vector3(direction.x, 0f, direction.z) * (dashModifier * _playerStats.MovementSpeed.CurrentValue * _playerStats.MovementSpeedMultiplier ) / Time.timeScale;
+        rb.velocity = new Vector3(direction.x, 0f, direction.z) * dashModifier * 10f / Time.timeScale;
     }
 }
