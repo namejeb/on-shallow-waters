@@ -88,7 +88,7 @@ public class DashNAttack : MonoBehaviour
         float tempOutDamage = 0f;
         tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
         HandleDamaging(tempOutDamage);
-        playerMovement.enabled = false;
+        playerMovement.enabled = true;
         animator.SetTrigger("slashATK");
         attackSequence = 0;
     }
@@ -101,7 +101,7 @@ public class DashNAttack : MonoBehaviour
         float tempOutDamage = 0f;
         tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
         HandleDamaging(tempOutDamage);
-        playerMovement.enabled = false;
+        playerMovement.enabled = true;
         animator.SetTrigger("slamATK");
         attackSequence = 0;
     }
