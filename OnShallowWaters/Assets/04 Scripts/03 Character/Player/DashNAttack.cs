@@ -80,7 +80,7 @@ public class DashNAttack : MonoBehaviour
         if (pressedButton.isSlash)
            HeavySlash();
 
-        else if (pressedButton.isSlam)
+        else if (pressedButton.isSlam) 
             HeavySlam();
     }
     public void HeavySlash()

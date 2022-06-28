@@ -35,16 +35,14 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     private new void Awake()
     {
         _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
+        movementSpeed.ModifyBaseValue(10);
     }
-
     
     protected override void Die()
     {
         //game end logics
     }
     
-
-
     public void IncreaseDamageReduction(float multiplierToSet)
     {
         _damageReduction = multiplierToSet;
