@@ -88,7 +88,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     private void SpawnRoom(RoomEntranceDir dir)
     {
         //after 5 rooms, spawn boss
-        bool isBossStage = (_roomFinishedCount == 5); 
+        bool isBossStage = (_roomFinishedCount+1 == 1); 
        // isBossStage = true; //boss room debug
        HandleSpawnRoom(isBossStage, dir);
     }

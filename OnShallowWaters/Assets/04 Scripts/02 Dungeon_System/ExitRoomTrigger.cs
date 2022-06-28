@@ -14,7 +14,7 @@ public class ExitRoomTrigger : MonoBehaviour
         {
             if (RoomSpawnerV2.IsBossRoom)
             {
-                SceneManager.LoadSceneAsync("GIMMEMAHNEY");
+                SceneManager.LoadScene("GIMMEMAHNEY");
             }
             else
             {
