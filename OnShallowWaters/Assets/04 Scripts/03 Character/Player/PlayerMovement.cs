@@ -59,6 +59,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float dashModifier = 1f;
         if (isDash) dashModifier = speed;
-        rb.velocity = new Vector3(direction.x, 0f, direction.z) * (dashModifier * _playerStats.MovementSpeed.CurrentValue) / Time.timeScale;
+        rb.velocity = new Vector3(direction.x, 0f, direction.z) * (dashModifier * _playerStats.MovementSpeed.CurrentValue * _playerStats.MovementSpeedMultiplier ) / Time.timeScale;
     }
 }
