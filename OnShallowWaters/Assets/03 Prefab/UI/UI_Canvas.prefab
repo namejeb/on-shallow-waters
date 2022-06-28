@@ -2115,6 +2115,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17b89a6cb70f314d881eddd3c9a4e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shieldExtraDmgBonus:
+    idFromBoonItem: 1
+    val: 0
+    increaseAmounts:
+    - 1.2
+    - 1.25
+    - 1.3
+    tracker: 0
+  shieldBreakTrueDmg:
+    idFromBoonItem: 2
+    val: 0
+    increaseAmounts: 280000003c00000055000000
+    tracker: 0
+  dmgIncreaseSingleEnemy:
+    idFromBoonItem: 3
+    val: 0
+    increaseAmounts:
+    - 1.15
+    - 1.2
+    - 1.25
+    tracker: 0
+  firstTimeDmgBonus:
+    idFromBoonItem: 4
+    val: 0
+    increaseAmounts:
+    - 1.75
+    - 2
+    - 2.5
+    tracker: 0
   atkPercent:
     idFromBoonItem: 5
     stat:
@@ -2129,11 +2158,7 @@ MonoBehaviour:
     tracker: 0
   atkSpd:
     idFromBoonItem: 6
-    stat:
-      baseValue: 0
-      modifiers: 
-      hasCap: 0
-      cap: 0
+    val: 0
     increaseAmounts:
     - 1.2
     - 1.3
@@ -2141,23 +2166,15 @@ MonoBehaviour:
     tracker: 0
   critChance:
     idFromBoonItem: 7
-    stat:
-      baseValue: 0
-      modifiers: 
-      hasCap: 0
-      cap: 0
+    val: 0
     increaseAmounts:
-    - 1.25
-    - 1.35
-    - 1.55
+    - 0.25
+    - 0.35
+    - 0.55
     tracker: 0
   critDmg:
     idFromBoonItem: 8
-    stat:
-      baseValue: 0
-      modifiers: 
-      hasCap: 0
-      cap: 0
+    val: 0
     increaseAmounts:
     - 1.3
     - 1.5
@@ -2167,25 +2184,17 @@ MonoBehaviour:
   - 1.3
   - 1.7
   - 2.1
-  defense:
-    idFromBoonItem: 9
-    stat:
-      baseValue: 0
-      modifiers: 
-      hasCap: 0
-      cap: 0
+  defMultiplier:
+    idFromBoonItem: 0
+    val: 0
     increaseAmounts:
-    - 1.3
-    - 1.5
-    - 1.7
+    - 0
+    - 0
+    - 0
     tracker: 0
-  mvmntSpd:
+  mvmntSpdMultiplier:
     idFromBoonItem: 10
-    stat:
-      baseValue: 0
-      modifiers: 
-      hasCap: 0
-      cap: 0
+    val: 0
     increaseAmounts:
     - 1.15
     - 1.25
@@ -2193,44 +2202,11 @@ MonoBehaviour:
     tracker: 0
   dmgReductionWhenLowHp:
     idFromBoonItem: 11
-    stat:
-      baseValue: 0
-      modifiers: 
-      hasCap: 0
-      cap: 0
+    val: 0
     increaseAmounts:
     - 1.25
     - 1.3
     - 1.4
-    tracker: 0
-  shieldBreakTrueDmg:
-    idFromBoonItem: 2
-    stat: 0
-    increaseAmounts: 280000003c00000055000000
-    tracker: 0
-  shieldExtraDmgBonus:
-    idFromBoonItem: 1
-    stat: 0
-    increaseAmounts:
-    - 1.2
-    - 1.25
-    - 1.3
-    tracker: 0
-  dmgIncreaseSingleEnemy:
-    idFromBoonItem: 3
-    stat: 0
-    increaseAmounts:
-    - 1.15
-    - 1.2
-    - 1.25
-    tracker: 0
-  firstTimeDmgBonus:
-    idFromBoonItem: 4
-    stat: 0
-    increaseAmounts:
-    - 1.75
-    - 2
-    - 2.5
     tracker: 0
 --- !u!1 &114753874361569630
 GameObject:

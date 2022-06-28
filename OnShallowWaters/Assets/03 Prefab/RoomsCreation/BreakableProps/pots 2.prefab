@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6554688330905146083}
   - component: {fileID: 4740032010290315367}
   - component: {fileID: 8069074041241432322}
+  - component: {fileID: 6801094460670913419}
   m_Layer: 9
   m_Name: pots 2
   m_TagString: BreakableProps
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc021c24aab9244ab319c46b1a20078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxAmount: {x: 50, y: 200}
+  minMaxAmount: {x: 5, y: 10}
 --- !u!65 &8069074041241432322
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,3 +112,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.17498176, y: 0.17498177, z: 0.2911189}
   m_Center: {x: 0, y: -1.06668e-15, z: 0.07506095}
+--- !u!208 &6801094460670913419
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4753006519573836598}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.087000005, y: 0.087000005, z: 0.14600001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.075}
+  m_TimeToStationary: 0.5
