@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 
 public class ExitRoomTrigger : MonoBehaviour
@@ -11,7 +12,14 @@ public class ExitRoomTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (OnExitRoom != null) OnExitRoom.Invoke(nextRoomEntranceDir);
+            if (RoomSpawnerV2.IsBossRoom)
+            {
+                SceneManager.LoadSceneAsync("GIMMEMAHNEY");
+            }
+            else
+            {
+                if (OnExitRoom != null) OnExitRoom.Invoke(nextRoomEntranceDir);
+            }
         }
     }
 }
