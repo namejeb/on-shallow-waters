@@ -88,7 +88,7 @@ public class DashNAttack : MonoBehaviour
         float tempOutDamage = 0f;
         tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
         HandleDamaging(tempOutDamage);
-        playerMovement.enabled = true;
+        playerMovement.enabled = false;
         animator.SetTrigger("slashATK");
         attackSequence = 0;
     }
@@ -101,7 +101,7 @@ public class DashNAttack : MonoBehaviour
         float tempOutDamage = 0f;
         tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
         HandleDamaging(tempOutDamage);
-        playerMovement.enabled = true;
+        playerMovement.enabled = false;
         animator.SetTrigger("slamATK");
         attackSequence = 0;
     }
@@ -175,11 +175,12 @@ public class DashNAttack : MonoBehaviour
             //     outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
             //     _skBlessing.AddSoul(2);
             // }
-
+            
             EnemyHandler enemyHandler = null;
             if (hitColliders[i].CompareTag("Enemy"))
             {
                 enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
+
                 if(enemyHandler != null)    //if still null, meaning its a boss
                     outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
                 
