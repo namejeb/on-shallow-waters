@@ -62,8 +62,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
         #region Processing Field [Awake, Start, Update]
 
-
-        
         protected virtual void Start(){
             agent = GetComponent<NavMeshAgent>();
             rb3d = GetComponent<Rigidbody>();
@@ -79,8 +77,8 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             
             switch(behaviour){
                 case CoreStage.Idle: Detection(); break;
-                case CoreStage.Move: transform.LookAt(puppet); Movement(); break;
-                case CoreStage.Attack: Attack(); break;
+                case CoreStage.Move: LookAtDirection(); Movement(); break;
+                case CoreStage.Attack: LookAtDirection(); Attack(); break;
                 case CoreStage.SpecialMove: UniqueMove(); break;
                 default: throw new ArgumentOutOfRangeException();
             }
@@ -94,6 +92,12 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
                 agent.stoppingDistance = attackRange;
                 behaviour = CoreStage.Attack;
             }
+        }
+
+        private void LookAtDirection(){
+            var position = puppet.position;
+            Vector3 rotation = new Vector3(position.x, transform.position.y, position.z);
+            transform.LookAt(rotation);
         }
 
         protected virtual void Detection(){
