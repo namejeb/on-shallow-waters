@@ -1,6 +1,7 @@
 using _04_Scripts._05_Enemies_Bosses;
 using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
 using UnityEngine;
+using System;
 
 public class EnemyStats : CharacterStats, IDamageable
 {
@@ -9,6 +10,8 @@ public class EnemyStats : CharacterStats, IDamageable
     private DropSouls _dropSouls;
 
     private EnemiesCore _enemiesCore;
+
+    public static event Action OnEnemyDeath;
     
     [Space]
     [Header("Settings:")]
@@ -46,7 +49,9 @@ public class EnemyStats : CharacterStats, IDamageable
     {
         _dropSouls.Drop();
         
-        WaveSpawner.UpdateWaveTotalEnemies();
+       // WaveSpawner.UpdateWaveTotalEnemies();
+        
+        if(OnEnemyDeath != null) OnEnemyDeath.Invoke();
 
         if (WaveSpawner.IsLastEnemy)
         {
