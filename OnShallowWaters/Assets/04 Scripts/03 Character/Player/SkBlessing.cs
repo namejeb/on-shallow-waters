@@ -81,11 +81,27 @@ public class SkBlessing : MonoBehaviour
         }
     }
 
+    private bool CanSpendSoul()
+    {
+        if (CurrencySystem.currencyDict[CurrencyType.SOULS] - 100 >= 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
     public void SKB1()
     {
         if (startCountdown)
             return;
 
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
+        
         currSoul = 0;
         timer = duration;
         playerStats.Atk.AddModifier(atkAdd);
@@ -99,6 +115,12 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
+        
         currSoul = 0;
         duration = regenPerSec * regenAmount;
         timer = duration;
@@ -111,6 +133,12 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
+        
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -121,7 +149,13 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
             return;
-
+        
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
+        
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -149,6 +183,12 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
+        
         currSoul = 0;
         timer = duration;
         startCountdown = true;
