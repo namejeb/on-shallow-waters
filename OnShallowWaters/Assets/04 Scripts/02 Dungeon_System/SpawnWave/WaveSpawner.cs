@@ -147,8 +147,8 @@ public class WaveSpawner : MonoBehaviour
 
 		//Spawn enemy (Object Pooling)
 		Transform e = _enemyPooler.GetFromPool(enemyType);
-        e.gameObject.SetActive(true);
 		e.position = _spawnPoints[spawnIndex].position;
+        e.gameObject.SetActive(true);
     }
 
     public static void UpdateWaveTotalEnemies()
