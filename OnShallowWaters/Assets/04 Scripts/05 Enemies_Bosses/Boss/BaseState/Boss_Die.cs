@@ -8,7 +8,9 @@ public class Boss_Die : Boss_BaseState
     {
         //play animation
         Debug.Log("Die State");
-        boss.Agent.enabled = false;
+        //boss.Agent.ResetPath();
+        //boss.Agent.isStopped = true;
+        boss.gameObject.SetActive(false);
     }
 
     public override void Update(Boss_FSM boss)
