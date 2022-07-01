@@ -77,11 +77,14 @@ public class DashNAttack : MonoBehaviour
         if(pressedButton.isPressed)
            pressedButton.chargedTimer += Time.deltaTime;
 
+        //calcualtion for charge attacks here
         if (pressedButton.isSlash)
            HeavySlash();
 
         else if (pressedButton.isSlam) 
             HeavySlam();
+        
+        //detect normal
     }
     public void HeavySlash()
     {
@@ -89,7 +92,7 @@ public class DashNAttack : MonoBehaviour
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
-        tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
+        tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent);
         HandleDamaging(tempOutDamage);
         playerMovement.enabled = true;
         animator.SetTrigger("slashATK");
@@ -102,7 +105,7 @@ public class DashNAttack : MonoBehaviour
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
-        tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent) * (100f / (100f + 50f));
+        tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent);
         HandleDamaging(tempOutDamage);
         playerMovement.enabled = true;
         animator.SetTrigger("slamATK");
@@ -122,7 +125,7 @@ public class DashNAttack : MonoBehaviour
         
         if (attackSequence == 0 && Time.time > nextAttack)
         {
-            tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f));
+            tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
          //   Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack");
@@ -131,7 +134,7 @@ public class DashNAttack : MonoBehaviour
         }
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
-            tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
+            tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
@@ -140,7 +143,7 @@ public class DashNAttack : MonoBehaviour
         }
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
-            tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) * (100f/(100f + 50f)) ;
+            tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
             playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
