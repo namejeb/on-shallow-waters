@@ -12,11 +12,12 @@ public class EnemyStats : CharacterStats, IDamageable
     private EnemiesCore _enemiesCore;
 
     public static event Action OnEnemyDeath;
-    
+
     [Space]
     [Header("Settings:")]
     [SerializeField] private Stat defense;
-    
+
+    [SerializeField] private new Collider collider;
     public Stat Defense { get => defense; }
 
     private bool isDead = false;
@@ -35,6 +36,7 @@ public class EnemyStats : CharacterStats, IDamageable
     {
         healthBar.UpdateHealthBar(CurrHpPercentage);
         isDead = false;
+        collider.enabled = true;
     }
     
     public void Damage(int damageAmount)
@@ -71,6 +73,7 @@ public class EnemyStats : CharacterStats, IDamageable
             SpawnBoonTrigger.Instance.SpawnAtPosition(transform.position);
         }
 
+        collider.enabled = false;
         Invoke(nameof(DisableSelf), 1f);
     }
 

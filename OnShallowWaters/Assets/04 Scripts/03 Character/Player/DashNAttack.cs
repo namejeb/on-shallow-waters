@@ -122,7 +122,9 @@ public class DashNAttack : MonoBehaviour
         float baseAtk = (float) stats.Atk.CurrentValue;
         float atkPercent = (float) stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
+
         
+
         if (attackSequence == 0 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
@@ -155,8 +157,8 @@ public class DashNAttack : MonoBehaviour
 
         outDamage = Mathf.RoundToInt(tempOutDamage);
         HandleDamaging(tempOutDamage);
-        
-     // Debug.Log(attackSequence.ToString());
+
+        // Debug.Log(attackSequence.ToString());
     }
 
     private void HandleDamaging(float outDamage)
