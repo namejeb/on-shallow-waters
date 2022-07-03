@@ -15,16 +15,12 @@ public class AttackButtonUI : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public void OnPointerDown(PointerEventData eventData)
     {
         isPressed = true;
-        if (isPressed)
-        {
-            DNA.Attack();
-        }
     }
     public void OnPointerUp(PointerEventData eventData)
     {
        
         isPressed = false;
-        if (chargedTimer >= 1 && chargedTimer <2)
+        /*if (chargedTimer >= 1 && chargedTimer <2)
         {
             isSlash=true;
             Debug.Log("KAHHHHHHHBIIIIIN");
@@ -36,6 +32,7 @@ public class AttackButtonUI : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
         }
          chargedTimer = 0;
+        */
     }
 
 
