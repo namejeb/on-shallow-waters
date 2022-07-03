@@ -44,6 +44,11 @@ public class MeleeHitbox : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        isDamaged = false;
+    }
+
     IEnumerator EnableColldier()
     {
         yield return new WaitForSeconds(delayBox);

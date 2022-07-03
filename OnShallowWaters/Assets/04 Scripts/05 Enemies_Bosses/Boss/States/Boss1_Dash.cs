@@ -13,8 +13,9 @@ public class Boss1_Dash : Boss_Move4
         boss.Agent.enabled = false;
         boss.HitBoxOn(1);
         _b1Config = boss.gameObject.GetComponent<Boss1_Config>();
-        boss.value[0] = _b1Config.dashSpeed;
-        boss.value[1] = _b1Config.dashTimeout;
+        //boss.value[0] = _b1Config.dashSpeed;
+        //boss.value[1] = _b1Config.dashTimeout;
+        
         boss.Agent.speed = _b1Config.dashSpeed;
         _direction = (boss.Target.position - boss.transform.position);
         //boss.Agent.SetDestination(boss.Target.position * 1.5f); 
@@ -29,7 +30,7 @@ public class Boss1_Dash : Boss_Move4
             boss.RotateTowards(boss.Target, boss);
         }
 
-        if (boss.inStateTimer > boss.value[1])
+        if (boss.inStateTimer > 3)
         {
             Debug.Log("Change");
             boss.inStateTimer = 0;

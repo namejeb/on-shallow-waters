@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class Boss1_Config : MonoBehaviour
 {
+    [Header("Boss1 Config Settings")]
     public float dashTimeout = 3f;
     public float dashSpeed;
-
-  // private decimal _percentage = 0.7M;
     
     private Boss_Stats _bs;
 
@@ -22,13 +21,6 @@ public class Boss1_Config : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("Current Hp percentage: " + _bs.CurrHpPercentage + "\nTriggerPercentage: " + _percentage);
-        // if ((decimal)_bs.CurrHpPercentage <= _percentage && !_bs.armState)
-        // {
-        //     _percentage -= 0.3M;
-        //     _bs.armState = true;
-        // }
-
         if (_bs.CurrHpPercentage <= _percentages[_index] && !_bs.armState)
         {
             if (_index < 2)
@@ -37,11 +29,5 @@ public class Boss1_Config : MonoBehaviour
                 _bs.armState = true;
             }
         }
-        
-        // if (_bs.CurrHpPercentage <= _percentage && !_bs.armState)
-        // {
-        //     _percentage -= 0.3f;
-        //     _bs.armState = true;
-        // }
     }
 }
