@@ -13,7 +13,12 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
     [SerializeField] private float speed = 5f;
-    
+
+    //Heavy Attack Variables
+    [SerializeField] private float chargedTimer;
+    public bool isSlash;
+    public bool isSlam;
+
     private bool _isDash = false;
     
     private float _elapsedTime = 0f;
@@ -74,40 +79,63 @@ public class DashNAttack : MonoBehaviour
 
     public void Update()
     {
+        
         if(pressedButton.isPressed)
-           pressedButton.chargedTimer += Time.deltaTime;
+           chargedTimer += Time.deltaTime;
 
         //calcualtion for charge attacks here
-        if (pressedButton.isSlash)
-           HeavySlash();
 
-        else if (pressedButton.isSlam) 
-            HeavySlam();
-        
-        //detect normal
+        if (pressedButton.isPressed == false)
+        {
+            if (chargedTimer >= 1 && chargedTimer < 2)
+            {
+
+                isSlash = true;
+                Debug.Log("KAHHHHHHHBIIIIIN");
+                if (isSlash)
+                    HeavySlash();
+            }
+
+            else if (chargedTimer >= 2)
+            {
+                isSlam = true;
+                Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+                if (isSlam)
+                    HeavySlam();
+            }
+            else if (chargedTimer >= 0.01)
+            {
+                //detect normal
+                Attack();
+            }
+
+            chargedTimer = 0;
+        }
+            
+       
     }
     public void HeavySlash()
     {
-        pressedButton.isSlash = false;
+        isSlash = false;
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
         tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent);
         HandleDamaging(tempOutDamage);
-        playerMovement.enabled = true;
+        playerMovement.enabled = false;
         animator.SetTrigger("slashATK");
         attackSequence = 0;
     }
 
     public void HeavySlam()
     {
-        pressedButton.isSlam = false;
+        isSlam = false;
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent.CurrentValue;
         float tempOutDamage = 0f;
         tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent);
         HandleDamaging(tempOutDamage);
-        playerMovement.enabled = true;
+        playerMovement.enabled = false;
         animator.SetTrigger("slamATK");
         attackSequence = 0;
     }
