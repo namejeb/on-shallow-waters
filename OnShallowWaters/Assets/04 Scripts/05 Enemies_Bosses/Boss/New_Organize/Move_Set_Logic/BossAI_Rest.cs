@@ -30,8 +30,8 @@ public class BossAI_Rest : State
             sm.BossRandomState();
         }
 
-        if (canRotate)
-            sm.RotateTowards();
+        //if (canRotate)
+        //    sm.RotateTowards();
         else if (usingNavmesh)
         {
             sm.Agent.speed = restMoveSpeed;

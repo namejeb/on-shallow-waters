@@ -32,6 +32,7 @@ public class BossAI_MeleeAttack : State
         {
             sm.isAttacking = true;
             sm.Agent.speed = 0;
+            sm.Agent.enabled = false;
             sm.Anim.SetTrigger(animationTrigger);
         }
 
@@ -39,6 +40,8 @@ public class BossAI_MeleeAttack : State
         {
             sm.isAttacking = false;
             sm.isAttackFin = false;
+            sm.Agent.enabled = true;
+            sm.Agent.ResetPath();
             sm.Agent.speed = sm.speed;
             sm.inStateTimer = 0;
             sm.BossRandomState();
