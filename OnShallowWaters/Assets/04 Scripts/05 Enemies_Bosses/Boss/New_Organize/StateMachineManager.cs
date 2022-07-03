@@ -9,9 +9,10 @@ public class StateMachineManager : MonoBehaviour
 
     [SerializeField] private BossMode bossType;
     [SerializeField] private Transform target;
-    public List<State> stateList;
     public float inStateTimer;
     public float rotationSpeed;
+    public List<State> stateList;
+    public List<State> passiveStates;
 
     [Header("Melee Settings")]
     [SerializeField] private List<GameObject> meleeHitbox;
@@ -85,11 +86,6 @@ public class StateMachineManager : MonoBehaviour
     {
         int randNum = Random.Range(0, stateList.Count);
         SetState(stateList[randNum]);
-    }
-
-    public int RandomChoice()
-    {
-        return Random.Range(0, 2);
     }
 
     /// <summary>

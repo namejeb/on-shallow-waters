@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Boss_AI/Melee Attack")]
-public class MeleeAttack : State
+public class BossAI_MeleeAttack : State
 {
     public string animationTrigger;
 

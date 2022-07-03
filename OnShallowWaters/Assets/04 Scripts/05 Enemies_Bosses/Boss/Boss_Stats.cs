@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using _04_Scripts._05_Enemies_Bosses;
-using _04_Scripts._05_Enemies_Bosses.Enemy;
 using UnityEngine;
 
 
@@ -12,14 +9,15 @@ public class Boss_Stats : CharacterStats, IDamageable
     public int currArmour;
     public bool armState;
 
-    private Boss_FSM _bossFsm;
+    //private Boss_FSM _bossFsm;
+    StateMachineManager smm;
     private BossUiManager _uiManager;
 
     public static event Action OnBossDead;
 
     private new void Awake()
     {
-        _bossFsm = GetComponent<Boss_FSM>();
+        smm = GetComponent<StateMachineManager>();
         _uiManager = FindObjectOfType<BossUiManager>();
         base.Awake();
     }
@@ -52,7 +50,7 @@ public class Boss_Stats : CharacterStats, IDamageable
                 armState = false;
                 _uiManager.DisableSlider(1);
                 currArmour = maxArmour;
-                _bossFsm.SetState(_bossFsm.stuntState);
+                smm.SetState(smm.passiveStates[1]);
             }
         }
         else
@@ -64,7 +62,7 @@ public class Boss_Stats : CharacterStats, IDamageable
 
     protected override void Die()
     {
-        _bossFsm.SetState(_bossFsm.dieState);
+        smm.SetState(smm.passiveStates[0]);
         _uiManager.DisableSlider(0);
         
         if(OnBossDead != null) OnBossDead.Invoke();

@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Boss_AI/Dash")]
-public class Dash : State
+public class BossAI_Dash : State
 {
-    public float dashSpeed;
+    public float dashForce;
     public float dashTimeout;
     public Vector3 _direction;
 
     public override void EnterState(StateMachineManager sm)
     {
         sm.Agent.enabled = false;
-        sm.Agent.speed = dashSpeed;
     }
 
     public override void UpdateState(StateMachineManager sm)
@@ -28,7 +27,6 @@ public class Dash : State
         if (sm.inStateTimer > dashTimeout)
         {
             sm.inStateTimer = 0;
-            sm.Agent.speed = sm.speed;
             sm.HitBoxOff(1);
             sm.Rb.velocity = Vector3.zero;
             sm.Rb.isKinematic = true;
@@ -41,7 +39,7 @@ public class Dash : State
         {
             sm.HitBoxOn(1);
             sm.Rb.isKinematic = false;
-            sm.Rb.AddForce(new Vector3(_direction.x, 0, _direction.z) * 100);
+            sm.Rb.AddForce(new Vector3(_direction.x, 0, _direction.z) * dashForce);
         }
     }
 }

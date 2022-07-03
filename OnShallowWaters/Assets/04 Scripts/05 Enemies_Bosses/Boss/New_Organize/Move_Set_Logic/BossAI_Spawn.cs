@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Boss_AI/Spawn")]
-public class Spawn : State
+public class BossAI_Spawn : State
 {
     public override void EnterState(StateMachineManager sm)
     {

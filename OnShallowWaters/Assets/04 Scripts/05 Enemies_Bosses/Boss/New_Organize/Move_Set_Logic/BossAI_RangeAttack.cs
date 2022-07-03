@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Boss_AI/Range Attack")]
-public class RangeAttack : State
+public class BossAI_RangeAttack : State
 {
     public int maxShootCount;
 
