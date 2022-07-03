@@ -5,7 +5,7 @@ using UnityEngine;
 public class Destroyer : MonoBehaviour
 {
     public float destroyTime;
-    void Update()
+    void Start()
     {
         StartCoroutine(DestroyObj());
     }
