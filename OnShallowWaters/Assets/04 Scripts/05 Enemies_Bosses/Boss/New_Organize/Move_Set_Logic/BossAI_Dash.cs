@@ -5,9 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Boss_AI/Dash")]
 public class BossAI_Dash : State
 {
-    public float dashForce;
-    public float dashTimeout;
-    public Vector3 _direction;
+    [SerializeField] private float rotateTime;
+    [SerializeField] private float dashStartTime;
+    [SerializeField] private float dashForce;
+    [SerializeField] private float dashTimeout;
+    
+    private Vector3 _direction;
 
     public override void EnterState(StateMachineManager sm)
     {
@@ -18,7 +21,7 @@ public class BossAI_Dash : State
     {
         sm.inStateTimer += Time.deltaTime;
 
-        if (sm.inStateTimer < 3)
+        if (sm.inStateTimer < rotateTime)
         {
             sm.RotateTowards();
             _direction = (sm.Target.position - sm.transform.position);
@@ -32,10 +35,10 @@ public class BossAI_Dash : State
             sm.Rb.isKinematic = true;
             sm.Agent.enabled = true;
             sm.Agent.ResetPath();
-            sm.SetState(sm.stateList[1]);
+            sm.BossRandomState();
         }
         
-        if (sm.inStateTimer > 3)
+        if (sm.inStateTimer > dashStartTime)
         {
             sm.HitBoxOn(1);
             sm.Rb.isKinematic = false;

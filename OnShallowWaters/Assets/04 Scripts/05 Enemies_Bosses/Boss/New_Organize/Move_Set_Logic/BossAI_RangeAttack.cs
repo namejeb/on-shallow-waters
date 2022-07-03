@@ -5,7 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Boss_AI/Range Attack")]
 public class BossAI_RangeAttack : State
 {
-    public int maxShootCount;
+    [SerializeField] private int prefabIndex;
+    [SerializeField] private int aimerIndex;
+    [SerializeField] private int shootCount;
+    [SerializeField] private int maxShootCount;
+    [SerializeField] private float shootInterval;
 
     public override void EnterState(StateMachineManager sm)
     {
@@ -18,15 +22,15 @@ public class BossAI_RangeAttack : State
 
         sm.RotateTowards();
 
-        if (sm.inStateTimer > sm.shootInterval)
+        if (sm.inStateTimer > shootInterval)
         {
-            sm.shootCount += 1;
+            shootCount += 1;
             sm.inStateTimer = 0;
-            sm.ShootProjectile(sm.shootPrefab[0], sm.aimDirection[0]);
+            sm.ShootProjectile(sm.shootPrefab[prefabIndex], sm.aimDirection[aimerIndex]);
         }
-        else if (sm.shootCount >= maxShootCount)
+        else if (shootCount >= maxShootCount)
         {
-            sm.shootCount = 0;
+            shootCount = 0;
             sm.inStateTimer = 0;
             sm.Agent.speed = sm.speed;
             sm.BossRandomState();

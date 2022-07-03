@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Boss_AI/Rest")]
 public class BossAI_Rest : State
 {
+    [Header("Default")]
+    [SerializeField] private float restTimeout;
+
     [Header("Rotate")]
     [SerializeField] private bool canRotate;
 
@@ -20,7 +23,7 @@ public class BossAI_Rest : State
     public override void UpdateState(StateMachineManager sm)
     {
         sm.inStateTimer += Time.deltaTime;
-        if (sm.inStateTimer > sm.restTimeout)
+        if (sm.inStateTimer > restTimeout)
         {
             sm.inStateTimer = 0;
             sm.Agent.speed = sm.speed;

@@ -9,6 +9,7 @@ public class StateMachineManager : MonoBehaviour
 
     [SerializeField] private BossMode bossType;
     [SerializeField] private Transform target;
+    public int speed;
     public float inStateTimer;
     public float rotationSpeed;
     public List<State> stateList;
@@ -17,22 +18,12 @@ public class StateMachineManager : MonoBehaviour
     [Header("Melee Settings")]
     [SerializeField] private List<GameObject> meleeHitbox;
     public float chaseMinDistance;
-    public float chaseTimeout = 5f;
-    public float attackDistOffset = 0.5f;
-    public int speed;
     public bool isAttacking;
     public bool isAttackFin;
 
     [Header("Range Settings")]
     public List<Transform> aimDirection;
     public List<GameObject> shootPrefab;
-    public int shootCount;
-    public float shootInterval = 3f;
-
-    [Header("Default Settings")]
-    public float restTimeout = 3f;
-    public float stuntTimeout = 5f;
-    
 
     private State _currentState;
     private NavMeshAgent _agent;
@@ -43,15 +34,6 @@ public class StateMachineManager : MonoBehaviour
     public NavMeshAgent Agent => _agent;
     public Animator Anim => _animator;
     public Rigidbody Rb { get { return rb; } set { rb = value; } }
-
-    //assign default as boss 1, or can go for null check 
-    //public Boss_Move1 move1State = new Boss1_SlicingClaws();
-    //public Boss_Move2 move2State = new Boss1_ThrustHand();
-    //public Boss_Move3 move3State = new Boss1_SlamGround();
-    //public Boss_Move4 move4State = new Boss1_Dash();
-    //public readonly Boss_Rest restState = new Boss_Rest();
-    //public readonly Boss_Stunt stuntState = new Boss_Stunt();
-    //public readonly Boss_Die dieState = new Boss_Die();
 
     private void Awake()
     {
