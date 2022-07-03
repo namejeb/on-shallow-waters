@@ -133,6 +133,9 @@ public class DashNAttack : MonoBehaviour
             animator.SetTrigger("Attack");
             attackSequence++;
             nextAttack = Time.time + 1;
+
+            outDamage = Mathf.RoundToInt(tempOutDamage);
+            HandleDamaging(tempOutDamage);
         }
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
@@ -142,6 +145,9 @@ public class DashNAttack : MonoBehaviour
             animator.SetTrigger("Attack2");
             attackSequence++;
             nextAttack = Time.time + 1;
+
+            outDamage = Mathf.RoundToInt(tempOutDamage);
+            HandleDamaging(tempOutDamage);
         }
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
@@ -151,12 +157,14 @@ public class DashNAttack : MonoBehaviour
             animator.SetTrigger("Attack3");
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
+
+            outDamage = Mathf.RoundToInt(tempOutDamage);
+            HandleDamaging(tempOutDamage);
         }
 
         nextAttack /= stats.AtkSpeed;
 
-        outDamage = Mathf.RoundToInt(tempOutDamage);
-        HandleDamaging(tempOutDamage);
+        
 
         // Debug.Log(attackSequence.ToString());
     }
