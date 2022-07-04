@@ -191,7 +191,7 @@ public class BoonEffects : MonoBehaviour {
     {
        // UpgradeStat(critChance);
        int effectIndex = critChance.tracker;
-       _playerStats.IncreaseCritChance(critChance.increaseAmounts[effectIndex]);    print(_playerStats.CritChance);
+       _playerStats.IncreaseCritChance(critChance.increaseAmounts[effectIndex]);  
        critChance.tracker++;
     }
 
@@ -200,7 +200,7 @@ public class BoonEffects : MonoBehaviour {
     {
       //  UpgradeStat(critDmg);
       int effectIndex = critDmg.tracker;
-      _playerStats.IncreaseCritDmg(critDmg.increaseAmounts[effectIndex]);   print(_playerStats.CritDamage);
+      _playerStats.IncreaseCritDmg(critDmg.increaseAmounts[effectIndex]);  
       critDmg.tracker++;
     }
 

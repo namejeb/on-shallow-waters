@@ -6,28 +6,30 @@ using UnityEngine;
 public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
     [SerializeField] private Stat atkPercent;
-    private float _atkSpeed = 1f;
-    
-    private float _critChance = .3f;
-    private float _critDamage = 1.5f;
-    
     [SerializeField] private Stat movementSpeed;
-    private float _mvmntSpdMutliplier = 1f;
-    
     [SerializeField] private Stat defense;
+    
+    private float _mvmntSpdMutliplier = 1f;
     private float _defMutliplier = 1f;
     
     private float _damageReduction = 1f;
     
+    private float _critChance = .3f;
+    private float _critDamage = 1.5f;
+    
+    private float _atkSpeed = 1f;
     
     public Stat AtkPercent { get => atkPercent; }
+    public Stat MovementSpeed { get => movementSpeed; }
+    public Stat Defense { get => defense; }
+    
+    public float MovementSpeedMultiplier  { get => _mvmntSpdMutliplier; }
+    public float DefMultiplier { get => _defMutliplier; }
+    
     public float AtkSpeed { get => _atkSpeed; }
     public float CritChance { get => _critChance; }
     public float CritDamage { get => _critDamage; }
-    public Stat MovementSpeed { get => movementSpeed; }
-    public float MovementSpeedMultiplier  { get => _mvmntSpdMutliplier; }
-    public Stat Defense { get => defense; }
-    public float DefMultiplier { get => _defMutliplier; }
+
     public float DamageReduction { get => _damageReduction; }
 
     private BoonDamageModifiers _boonDamageModifiers;
