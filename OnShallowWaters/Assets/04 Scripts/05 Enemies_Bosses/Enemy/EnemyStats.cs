@@ -49,9 +49,9 @@ public class EnemyStats : CharacterStats, IDamageable
 
     public float LostHP()
     {
-        throw new System.NotImplementedException();
+        return _enemiesCore.maxHealth - currHp;
     }
-    
+
     protected override void Die()
     {
         if (isDead) return;

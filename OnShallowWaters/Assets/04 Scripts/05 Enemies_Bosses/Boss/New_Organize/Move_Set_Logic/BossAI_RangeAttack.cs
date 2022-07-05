@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Boss_AI/Range Attack")]
 public class BossAI_RangeAttack : State
 {
+	[SerializeField] private string animationTrigger;
     [SerializeField] private int prefabIndex;
     [SerializeField] private int aimerIndex;
     [SerializeField] private int shootCount;
