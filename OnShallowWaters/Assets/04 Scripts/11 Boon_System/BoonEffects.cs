@@ -61,7 +61,7 @@ public class BoonEffects : MonoBehaviour {
     
     private PlayerStats _playerStats;
 
- //   [Space] public int boonToUse;
+   // [Space] public int boonToUse;
     
     [Space] 
     [Header("Effects w/ arrays: ")]
@@ -72,7 +72,7 @@ public class BoonEffects : MonoBehaviour {
     [SerializeField] private StatIncreaseAmountsFloat firstTimeDmgBonus = new StatIncreaseAmountsFloat(3);
 
     [Space]
-    [SerializeField] private StatIncreaseAmounts atkPercent = new StatIncreaseAmounts(3);
+    [SerializeField] private StatIncreaseAmountsFloat atkPercent = new StatIncreaseAmountsFloat(3);
     [SerializeField] private StatIncreaseAmountsFloat atkSpd = new StatIncreaseAmountsFloat(3);
     [SerializeField] private StatIncreaseAmountsFloat critChance = new StatIncreaseAmountsFloat(3);
     [SerializeField] private StatIncreaseAmountsFloat critDmg = new StatIncreaseAmountsFloat(3);
@@ -91,7 +91,7 @@ public class BoonEffects : MonoBehaviour {
     [Header("Increase Amounts (Special): ")] 
 
     private Hashtable HIncreaseAmounts = new Hashtable();
-
+    
     private void OnValidate()
     {
         for (int i = 0; i < 3; i++)
@@ -137,7 +137,7 @@ public class BoonEffects : MonoBehaviour {
     }
     private void InitStatIncreaseAmounts()
     {
-        atkPercent.stat = _playerStats.AtkPercent;
+        atkPercent.val = _playerStats.AtkPercent;
         atkSpd.val = _playerStats.AtkSpeed;
         
         critChance.val = _playerStats.CritChance;
@@ -151,6 +151,8 @@ public class BoonEffects : MonoBehaviour {
     
     public void HandleEffectActivation(int boonItemId)
     {
+     //   boonItemId = boonToUse;
+        
         switch (boonItemId)
         {
             case 0: IncreaseMaxHp();      break;        //--x
@@ -169,16 +171,19 @@ public class BoonEffects : MonoBehaviour {
             case 11: ReduceDamageWhenHpLow(); break;    //--x
         }
     }
-    
+
     //------Combat------
     // ATK % increase 50%/85%/120%
-    public void UpgradeAtkPercent()               
+    private void UpgradeAtkPercent()
     {
-        UpgradeStat(atkPercent);
+        int effectIndex = atkPercent.tracker;
+        _playerStats.IncreaseAtkPercent(atkPercent.increaseAmounts[effectIndex]);
+        print(_playerStats.AtkPercent);
+        atkPercent.tracker++;
     }
 
     //ATK speed increase 15%/25%/30%
-    public void UpgradeAtkSpd()                 
+    private void UpgradeAtkSpd()                 
     {
         int effectIndex = atkSpd.tracker;
         _playerStats.IncreaseAtkSpd(atkSpd.increaseAmounts[effectIndex]);
@@ -187,19 +192,17 @@ public class BoonEffects : MonoBehaviour {
     
         
     //Crit chance increase 15%/25%/30% ( Normal crit deal 50% more dmg)
-    public void UpgradeCritChance()          
+    private void UpgradeCritChance()          
     {
-       // UpgradeStat(critChance);
-       int effectIndex = critChance.tracker;
+        int effectIndex = critChance.tracker;
        _playerStats.IncreaseCritChance(critChance.increaseAmounts[effectIndex]);  
        critChance.tracker++;
     }
 
     //Crit dmg increase 20%/30%/40%
-    public void UpgradeCritDamage()              
-    {
-      //  UpgradeStat(critDmg);
-      int effectIndex = critDmg.tracker;
+    private void UpgradeCritDamage()              
+    { 
+        int effectIndex = critDmg.tracker;
       _playerStats.IncreaseCritDmg(critDmg.increaseAmounts[effectIndex]);  
       critDmg.tracker++;
     }
@@ -207,7 +210,7 @@ public class BoonEffects : MonoBehaviour {
              
     //Deal dmg when enemy's armor break
     //sus - Deal 100 true dmg when enemy's armor break    
-    public void DmgWhenArmorBreak()             
+    private void DmgWhenArmorBreak()             
     {
         int effectIndex = shieldBreakTrueDmg.tracker;
         PlayerHandler.Instance.BoonDamageModifiers.EnableDmgWhenShieldBreak(shieldBreakTrueDmg.increaseAmounts[effectIndex]);
@@ -215,7 +218,7 @@ public class BoonEffects : MonoBehaviour {
     }
 
     //Deal 20% more dmg to enemy's armor
-    public void DmgToArmorIncrease()          
+    private void DmgToArmorIncrease()          
     {
         int effectIndex = shieldExtraDmgBonus.tracker;
         PlayerHandler.Instance.BoonDamageModifiers.EnableExtraShieldDmg(shieldExtraDmgBonus.increaseAmounts[effectIndex]);
@@ -223,7 +226,7 @@ public class BoonEffects : MonoBehaviour {
     }
     
     //Deal 40% more dmg when there is only one enemy
-    public void SingleEnemyDmgIncrease()        
+    private void SingleEnemyDmgIncrease()        
     {
         int effectIndex = dmgIncreaseSingleEnemy.tracker;
         PlayerHandler.Instance.BoonDamageModifiers.EnableSingleEnemyDmgIncrease(dmgIncreaseSingleEnemy.increaseAmounts[effectIndex]);
@@ -231,7 +234,7 @@ public class BoonEffects : MonoBehaviour {
     }
     
     //Undamaged enemies will receive 100% more damage
-    public void FirstTimeDmgBonus()             
+    private void FirstTimeDmgBonus()             
     {
         int effectIndex = firstTimeDmgBonus.tracker;
         PlayerHandler.Instance.BoonDamageModifiers.EnableFirstTimeDmgBonus(firstTimeDmgBonus.increaseAmounts[effectIndex]);
@@ -240,14 +243,14 @@ public class BoonEffects : MonoBehaviour {
     
     //------Survival------
     //Increase max hp by 30%/70%/110% 
-    public void IncreaseMaxHp()                  
+    private void IncreaseMaxHp()                  
     {
         _playerStats.IncreaseMaxHp( maxHpIncreaseAmounts[_maxHpTracker] );
         _maxHpTracker++;
     }
     
     //Increase defense by 30%/50%/70%
-    public void IncreaseDefense()                   
+    private void IncreaseDefense()                   
     {
         int effectIndex = defMultiplier.tracker;
         _playerStats.IncreaseDef( defMultiplier.increaseAmounts[effectIndex] );
@@ -255,7 +258,7 @@ public class BoonEffects : MonoBehaviour {
     }
 
     //Increase movement speed by 15%/25%/35%/50%   
-    public void IncreaseMovementSpeed()              
+    private void IncreaseMovementSpeed()              
     {
         int effectIndex = mvmntSpdMultiplier.tracker;
         _playerStats.IncreaseMvmntSpd( mvmntSpdMultiplier.increaseAmounts[effectIndex]);
@@ -263,7 +266,7 @@ public class BoonEffects : MonoBehaviour {
     }
 
     //Reduce 25% dmg taken while 30%/40% hp or lower.
-    public void ReduceDamageWhenHpLow()            
+    private void ReduceDamageWhenHpLow()            
     {
         int effectindex = dmgReductionWhenLowHp.tracker;
        _playerStats.IncreaseDamageReduction( dmgReductionWhenLowHp.increaseAmounts[effectindex] );

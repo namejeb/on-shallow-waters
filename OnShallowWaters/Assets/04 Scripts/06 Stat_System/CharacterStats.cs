@@ -48,12 +48,12 @@ public class CharacterStats : MonoBehaviour
         // implement different die functionalities      
     }
 
-    public void AddModifier(Stat statToModify, int modifier)
+    public void AddModifier(Stat statToModify, float modifier)
     {
         statToModify.AddModifier(modifier);
     }
 
-    public void RemoveModifier(Stat statToModify, int modifier)
+    public void RemoveModifier(Stat statToModify, float modifier)
     {
         statToModify.RemoveModifier(modifier);
     }

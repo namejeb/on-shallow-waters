@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
-    [SerializeField] private Stat atkPercent;
     [SerializeField] private Stat movementSpeed;
     [SerializeField] private Stat defense;
     
+    private float _atkPercent = 1f;
     private float _mvmntSpdMutliplier = 1f;
     private float _defMutliplier = 1f;
     
@@ -19,10 +19,10 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     private float _atkSpeed = 1f;
     
-    public Stat AtkPercent { get => atkPercent; }
     public Stat MovementSpeed { get => movementSpeed; }
     public Stat Defense { get => defense; }
     
+    public float AtkPercent { get => _atkPercent; }
     public float MovementSpeedMultiplier  { get => _mvmntSpdMutliplier; }
     public float DefMultiplier { get => _defMutliplier; }
     
@@ -37,12 +37,16 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     private new void Awake()
     {
         _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
-        movementSpeed.ModifyBaseValue(10);
     }
     
     protected override void Die()
     {
         //game end logics
+    }
+
+    public void IncreaseAtkPercent(float multiplierToSet)
+    {
+        _atkPercent = multiplierToSet;
     }
     
     public void IncreaseDamageReduction(float multiplierToSet)
@@ -53,11 +57,6 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     public void IncreaseCritChance(float multiplierToSet)
     {
         _critChance = multiplierToSet;
-    }
-
-    public void IncreaseCritDmg(float multiplier)
-    {
-        _critDamage *= multiplier;
     }
 
     public void IncreaseDef(float multiplierToSet)
@@ -73,7 +72,11 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         _atkSpeed = multiplierToSet;
     }
-
+    
+    public void IncreaseCritDmg(float multiplierToSet)
+    {
+        _critDamage *= multiplierToSet;
+    }
     public void IncreaseMaxHp(float multiplier)
     {
         MaxHp *= multiplier;
@@ -156,5 +159,18 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     public float LostHP()
     {
         throw new System.NotImplementedException();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown("r"))
+        {
+            RemoveModifier(Atk, 25.9f);
+        }
+
+        if (Input.GetKeyDown("a"))
+        {
+            AddModifier(Atk , 25.9f);
+        }
     }
 }
