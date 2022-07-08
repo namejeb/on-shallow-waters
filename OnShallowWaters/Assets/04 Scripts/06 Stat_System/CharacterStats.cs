@@ -32,11 +32,11 @@ public class CharacterStats : MonoBehaviour
         currHp = maxHp;
     }
     
-    protected void TakeDamage(int dmg)
+    protected void TakeDamage(float dmg)
     {
         currHp -= dmg;
         
-        if (currHp <= 0)
+        if (currHp <= 0f)
         {
             currHp = 0;
             Die();

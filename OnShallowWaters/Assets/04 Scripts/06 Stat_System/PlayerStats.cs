@@ -54,9 +54,9 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         _damageReduction = multiplierToSet;
     }
 
-    public void IncreaseCritChance(float multiplierToSet)
+    public void IncreaseCritChance(float multiplier)
     {
-        _critChance = multiplierToSet;
+        _critChance *= multiplier;
     }
 
     public void IncreaseDef(float multiplierToSet)
@@ -136,8 +136,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     public void Damage(int damageAmount)
     {
-        int dmg = (int) ReceiveIncomingDmg(damageAmount);
-        TakeDamage(dmg);
+        int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
+        TakeDamage(effectiveDmg);
     }
     
     private float ReceiveIncomingDmg(float incomingDamage)
