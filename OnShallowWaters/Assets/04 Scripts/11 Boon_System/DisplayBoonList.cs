@@ -41,7 +41,8 @@ public class DisplayBoonList : MonoBehaviour
     private void CreateDisplay()
     {
         Transform newDisplay = Instantiate(_boonDisplayTemplate, _scrollContent);                                                                                   
-        RectTransform newDisplayRect = newDisplay.GetComponent<RectTransform>();                                                                          
+        RectTransform newDisplayRect = newDisplay.GetComponent<RectTransform>();         
+        newDisplay.gameObject.SetActive(true);
                                                                                                                                                                                   
         float shopButtonWidth = newDisplayRect.rect.width;                                                                                                            
         newDisplayRect.anchoredPosition = new Vector2(shopButtonWidth * _numOfDisplays * -offsetX, newDisplayRect.anchoredPosition.y);
