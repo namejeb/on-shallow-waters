@@ -7,7 +7,7 @@ public class Stat
     [SerializeField] private int baseValue = 1;
     
     //[HideInInspector]
-    [SerializeField] private List<int> modifiers =  new List<int>();
+    [SerializeField] private List<float> modifiers =  new List<float>();
 
     [Space][Space]
     [Header("Caps:")]
@@ -27,7 +27,7 @@ public class Stat
             
             for (int i = 0; i < modifiers.Count; i++)
             {
-                currentValue += modifiers[i];
+                currentValue += (int) modifiers[i];
             }   
             
             return currentValue;
@@ -40,7 +40,7 @@ public class Stat
     }
 
     //Main functions to modify stats
-    public void AddModifier(int modifier)
+    public void AddModifier(float modifier)
     {
         bool isOverCap = (this.CurrentValue / (float) this.baseValue) > cap;
         
@@ -53,7 +53,7 @@ public class Stat
         modifiers.Add(modifier);
     }
 
-    public void RemoveModifier(int modifier)
+    public void RemoveModifier(float modifier)
     {
         modifiers.Remove(modifier);
     }

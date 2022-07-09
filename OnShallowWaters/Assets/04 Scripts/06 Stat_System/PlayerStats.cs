@@ -5,29 +5,31 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
-    [SerializeField] private Stat atkPercent;
-    private float _atkSpeed = 1f;
-    
-    private float _critChance = .3f;
-    private float _critDamage = 1.5f;
-    
     [SerializeField] private Stat movementSpeed;
-    private float _mvmntSpdMutliplier = 1f;
-    
     [SerializeField] private Stat defense;
+    
+    private float _atkPercent = 1f;
+    private float _mvmntSpdMutliplier = 1f;
     private float _defMutliplier = 1f;
     
     private float _damageReduction = 1f;
     
+    private float _critChance = .3f;
+    private float _critDamage = 1.5f;
     
-    public Stat AtkPercent { get => atkPercent; }
+    private float _atkSpeed = 1f;
+    
+    public Stat MovementSpeed { get => movementSpeed; }
+    public Stat Defense { get => defense; }
+    
+    public float AtkPercent { get => _atkPercent; }
+    public float MovementSpeedMultiplier  { get => _mvmntSpdMutliplier; }
+    public float DefMultiplier { get => _defMutliplier; }
+    
     public float AtkSpeed { get => _atkSpeed; }
     public float CritChance { get => _critChance; }
     public float CritDamage { get => _critDamage; }
-    public Stat MovementSpeed { get => movementSpeed; }
-    public float MovementSpeedMultiplier  { get => _mvmntSpdMutliplier; }
-    public Stat Defense { get => defense; }
-    public float DefMultiplier { get => _defMutliplier; }
+
     public float DamageReduction { get => _damageReduction; }
 
     private BoonDamageModifiers _boonDamageModifiers;
@@ -35,12 +37,16 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     private new void Awake()
     {
         _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
-        movementSpeed.ModifyBaseValue(10);
     }
     
     protected override void Die()
     {
         //game end logics
+    }
+
+    public void IncreaseAtkPercent(float multiplierToSet)
+    {
+        _atkPercent = multiplierToSet;
     }
     
     public void IncreaseDamageReduction(float multiplierToSet)
@@ -48,14 +54,9 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         _damageReduction = multiplierToSet;
     }
 
-    public void IncreaseCritChance(float multiplierToSet)
+    public void IncreaseCritChance(float multiplier)
     {
-        _critChance = multiplierToSet;
-    }
-
-    public void IncreaseCritDmg(float multiplier)
-    {
-        _critDamage *= multiplier;
+        _critChance *= multiplier;
     }
 
     public void IncreaseDef(float multiplierToSet)
@@ -71,7 +72,11 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         _atkSpeed = multiplierToSet;
     }
-
+    
+    public void IncreaseCritDmg(float multiplierToSet)
+    {
+        _critDamage *= multiplierToSet;
+    }
     public void IncreaseMaxHp(float multiplier)
     {
         MaxHp *= multiplier;
@@ -131,8 +136,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     public void Damage(int damageAmount)
     {
-        int dmg = (int) ReceiveIncomingDmg(damageAmount);
-        TakeDamage(dmg);
+        int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
+        TakeDamage(effectiveDmg);
     }
     
     private float ReceiveIncomingDmg(float incomingDamage)
@@ -154,5 +159,18 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     public float LostHP()
     {
         throw new System.NotImplementedException();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown("r"))
+        {
+            RemoveModifier(Atk, 25.9f);
+        }
+
+        if (Input.GetKeyDown("a"))
+        {
+            AddModifier(Atk , 25.9f);
+        }
     }
 }

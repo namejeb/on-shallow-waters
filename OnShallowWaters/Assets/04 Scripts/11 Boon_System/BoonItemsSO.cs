@@ -8,10 +8,6 @@ public class BoonItem
     public string description;
     public int maxUsageCount;
     public bool isPercentage = true;
-    
-    [Space]
-    [Header("[!] 0-single val, 1-stat array, 2-float array")]
-    public int increaseAmountType = 1;
 }
 
 

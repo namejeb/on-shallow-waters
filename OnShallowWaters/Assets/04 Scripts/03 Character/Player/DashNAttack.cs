@@ -118,7 +118,7 @@ public class DashNAttack : MonoBehaviour
     {
         isSlash = false;
         float baseAtk = (float)stats.Atk.CurrentValue;
-        float atkPercent = (float)stats.AtkPercent.CurrentValue;
+        float atkPercent = (float)stats.AtkPercent;
         float tempOutDamage = 0f;
         tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent);
         HandleDamaging(tempOutDamage);
@@ -131,7 +131,7 @@ public class DashNAttack : MonoBehaviour
     {
         isSlam = false;
         float baseAtk = (float)stats.Atk.CurrentValue;
-        float atkPercent = (float)stats.AtkPercent.CurrentValue;
+        float atkPercent = (float)stats.AtkPercent;
         float tempOutDamage = 0f;
         tempOutDamage = (float)(150f / 100f) * ((baseAtk + 0) * atkPercent);
         HandleDamaging(tempOutDamage);
@@ -148,7 +148,7 @@ public class DashNAttack : MonoBehaviour
         //Attack Sequence(What attack/aniamtion it will do)
 
         float baseAtk = (float) stats.Atk.CurrentValue;
-        float atkPercent = (float) stats.AtkPercent.CurrentValue;
+        float atkPercent = (float) stats.AtkPercent;
         float tempOutDamage = 0f;
 
         
