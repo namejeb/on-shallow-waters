@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
@@ -74,6 +75,11 @@ public class BoonEffects : MonoBehaviour {
 
     private Hashtable HIncreaseAmounts = new Hashtable();
 
+
+    private void OnValidate()
+    {
+        InitStatIncreaseAmounts();
+    }
 
     private void Start()
     {
