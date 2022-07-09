@@ -71,51 +71,10 @@ public class BoonEffects : MonoBehaviour {
     [Header("Gets id from BoonItemSo, so make sure each index corresponds to the effects in BoonItemSo")]
     [SerializeField] private List<StatIncreaseAmountsFloat> statIncreaseAmounts;
 
-    
-    // [Space] 
-    // [Header("Increase Amounts (Survival): ")] 
-    // [SerializeField] private StatIncreaseAmountsFloat maxHp = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat defMultiplier = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat mvmntSpdMultiplier = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat dmgReductionWhenLowHp = new StatIncreaseAmountsFloat(3);
-   
-    // [Space]
-    // [Header("Increase Amounts (Combat): ")]
-    // [SerializeField] private StatIncreaseAmountsFloat shieldExtraDmgBonus = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat shieldBreakTrueDmg = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat dmgIncreaseSingleEnemy = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat firstTimeDmgBonus = new StatIncreaseAmountsFloat(3);
-
-    // [Space]
-    // [SerializeField] private StatIncreaseAmountsFloat atkPercent = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat atkSpd = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat critChance = new StatIncreaseAmountsFloat(3);
-    // [SerializeField] private StatIncreaseAmountsFloat critDmg = new StatIncreaseAmountsFloat(3);
-    
-
 
     private Hashtable HIncreaseAmounts = new Hashtable();
 
-    
-    private void OnValidate()
-    {
-        // for (int i = 0; i < 3; i++)
-        // {
-        //     atkPercent.increaseAmounts[i] = Mathf.Clamp(atkPercent.increaseAmounts[i], 0, float.MaxValue);
-        //     atkSpd.increaseAmounts[i] = Mathf.Clamp(atkSpd.increaseAmounts[i], 0, float.MaxValue);
-            
-        //     critChance.increaseAmounts[i] = Mathf.Clamp(critChance.increaseAmounts[i], 0, float.MaxValue);
-        //     critDmg.increaseAmounts[i] = Mathf.Clamp(critDmg.increaseAmounts[i], 0, float.MaxValue);
-            
-        //     maxHp.increaseAmounts[i] = Mathf.Clamp(maxHp.increaseAmounts[i], 0, float.MaxValue);
-        //     defMultiplier.increaseAmounts[i] = Mathf.Clamp(defMultiplier.increaseAmounts[i], 0, float.MaxValue);
-            
-        //     dmgReductionWhenLowHp.increaseAmounts[i] = Mathf.Clamp(dmgReductionWhenLowHp.increaseAmounts[i], 0, float.MaxValue);
-            
-        //     mvmntSpdMultiplier.increaseAmounts[i] = Mathf.Clamp(mvmntSpdMultiplier.increaseAmounts[i], 0, float.MaxValue);
-        // }
-    }
-    
+
     private void Start()
     {
         _playerStats = PlayerHandler.Instance.PlayerStats;
@@ -130,36 +89,10 @@ public class BoonEffects : MonoBehaviour {
         for(int i = 0; i < statIncreaseAmounts.Count; i++){
             HIncreaseAmounts.Add(statIncreaseAmounts[i].idFromBoonItem, statIncreaseAmounts[i]);
         }
-
-        // HIncreaseAmounts.Add(maxHp.idFromBoonItem, maxHp);
-        // HIncreaseAmounts.Add(defMultiplier.idFromBoonItem, defMultiplier);
-        // HIncreaseAmounts.Add(mvmntSpdMultiplier.idFromBoonItem, mvmntSpdMultiplier);
-        // HIncreaseAmounts.Add(dmgReductionWhenLowHp.idFromBoonItem, dmgReductionWhenLowHp);
-        
-        
-        // HIncreaseAmounts.Add(shieldExtraDmgBonus.idFromBoonItem, shieldExtraDmgBonus);
-        // HIncreaseAmounts.Add(shieldBreakTrueDmg.idFromBoonItem, shieldBreakTrueDmg);
-        // HIncreaseAmounts.Add(dmgIncreaseSingleEnemy.idFromBoonItem, dmgIncreaseSingleEnemy);
-        // HIncreaseAmounts.Add(firstTimeDmgBonus.idFromBoonItem, firstTimeDmgBonus);
-
-        // HIncreaseAmounts.Add(atkPercent.idFromBoonItem, atkPercent);
-        // HIncreaseAmounts.Add(atkSpd.idFromBoonItem, atkSpd);
-        // HIncreaseAmounts.Add(critChance.idFromBoonItem, critChance);
-        // HIncreaseAmounts.Add(critDmg.idFromBoonItem, critDmg);
     }
+
     private void InitStatIncreaseAmounts()
     {
-        // atkPercent.val = _playerStats.AtkPercent;
-        // atkSpd.val = _playerStats.AtkSpeed;
-        
-        // critChance.val = _playerStats.CritChance;
-        // critDmg.val = _playerStats.CritDamage;
-        
-        // defMultiplier.val = _playerStats.DefMultiplier;
-        // mvmntSpdMultiplier.val = _playerStats.MovementSpeedMultiplier;
-        
-        // dmgReductionWhenLowHp.val = _playerStats.DamageReduction;
-
         //init id
         for (int i = 0; i < boonItemsSo.boonItems.Length; i++)
         {
@@ -353,11 +286,7 @@ public class BoonEffects : MonoBehaviour {
     {
         return Mathf.Abs(val1 - val2);
     }
-    
-    // public float GetMaxHpIncreaseAmount()
-    // {
-    //     return maxHp[_maxHpTracker];
-    // }
+
 
     public float GetStatIncreaseAmounts(int id)
     {

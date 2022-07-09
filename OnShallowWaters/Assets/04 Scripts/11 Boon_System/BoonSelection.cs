@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class BoonSelection : MonoBehaviour
 {
     [Serializable]
-    private class BoonItemsTimesUsed
+    public class BoonItemsTimesUsed
     {
         public BoonItem boonItem;
         public int usageCount = 0;
@@ -33,17 +33,18 @@ public class BoonSelection : MonoBehaviour
 
     private List<BoonItem> boonItemsList = new List<BoonItem>();
     private List<BoonItemsTimesUsed> _boonItemsTimesUsed = new List<BoonItemsTimesUsed>();
-  
-
-    private Transform _container;
+    public List<BoonItemsTimesUsed> chosenBoonsItems = new List<BoonItemsTimesUsed>();
+    
+    private Transform _containerButtons; 
     private Transform _boonButtonTemplate;
 
     private Transform[] _buttons = new Transform[3];
-    private BoonItem[] _boonItems = new BoonItem[3];
+    private BoonItem[] _randomisedBoonItems = new BoonItem[3];
 
     private BoonEffects _boonEffects;
-
+    
     public static event Action OnSelectedBoon;
+    public static event Action<BoonItemsTimesUsed, bool> OnListChanged;
 
 
     #region Singleton
@@ -58,8 +59,22 @@ public class BoonSelection : MonoBehaviour
     
     private void Start()
     {
-        _container = transform.Find("container");
-        _boonButtonTemplate = _container.Find("boonButtonTemplate");
+        SetupButtons();
+        
+        chosenBoonsItems.Clear();
+        
+        //tracker for each effect's times used
+        foreach (BoonItem boonItem in boonItemsSo.boonItems)
+        {
+            BoonItemsTimesUsed bitu = new BoonItemsTimesUsed(boonItem);
+            _boonItemsTimesUsed.Add(bitu);
+        }
+    }
+
+    private void SetupButtons()
+    {
+        _containerButtons = transform.Find("container_buttons");
+        _boonButtonTemplate = _containerButtons.Find("boonButtonTemplate");
         _boonButtonTemplate.gameObject.SetActive(false);
 
         background.enabled = false;
@@ -69,23 +84,16 @@ public class BoonSelection : MonoBehaviour
         {
             _buttons[i] = CreateShopButton(i);      
         }
-        
-        //tracker for each effect's times used
-        foreach (BoonItem boonItem in boonItemsSo.boonItems)
-        {
-            BoonItemsTimesUsed bitu = new BoonItemsTimesUsed(boonItem);
-            _boonItemsTimesUsed.Add(bitu);
-        }
     }
-        
+
     //Create buttons at start, only change info and onClick functions of these buttons afterwards
     private Transform CreateShopButton(int positionIndex)
     {
-        Transform newShopButtonTransform = Instantiate(_boonButtonTemplate, _container);
-        RectTransform newShopButtonRectTransform = newShopButtonTransform.GetComponent<RectTransform>();
+        Transform newShopButtonTransform = Instantiate(_boonButtonTemplate, _containerButtons);
+        RectTransform newShopButtonRect = newShopButtonTransform.GetComponent<RectTransform>();
 
-        float shopButtonWidth = newShopButtonRectTransform.rect.width;
-        newShopButtonRectTransform.anchoredPosition = new Vector2(shopButtonWidth * positionIndex * offsetX, newShopButtonRectTransform.anchoredPosition.y);
+        float shopButtonWidth = newShopButtonRect.rect.width;
+        newShopButtonRect.anchoredPosition = new Vector2(shopButtonWidth * positionIndex * offsetX, newShopButtonRect.anchoredPosition.y);
         
         return newShopButtonTransform;
     }
@@ -96,6 +104,19 @@ public class BoonSelection : MonoBehaviour
         //increment usage
         BoonItemsTimesUsed bitu = _boonItemsTimesUsed.Find(b => b.boonItem.id == boonItemId);
         if (!bitu.IsLimitReached) bitu.usageCount++;
+
+        //add to list
+        if (!chosenBoonsItems.Contains(bitu))
+        {
+            chosenBoonsItems.Add(bitu);
+           // if(OnListChanged != null) OnListChanged.Invoke();
+        }
+        //replace element
+        else
+        {
+           int index = chosenBoonsItems.FindIndex(b => b.boonItem.id == boonItemId);                            
+           chosenBoonsItems[index] = bitu;
+        }
     }
 
     
@@ -128,10 +149,10 @@ public class BoonSelection : MonoBehaviour
             int index = UnityEngine.Random.Range(0, boonItemsList.Count);
             BoonItem bI = boonItemsList[index];
 
-            boonItems[i] = bI;
+            _randomisedBoonItems[i] = bI;
             boonItemsList.Remove(bI);  //remove from pool to avoid duplicates
         }
-        _boonItems = boonItems;
+        _randomisedBoonItems = boonItems;
     }
     
     private void InitButtons()
@@ -140,9 +161,9 @@ public class BoonSelection : MonoBehaviour
   
         for (int i = 0; i < 3; i++)
         {
-            BoonItem boonItem = _boonItems[i];
+            BoonItem boonItem = _randomisedBoonItems[i];
 
-            SetButtonInfo(_buttons[i], boonItem);
+            SetBoonInfo(_buttons[i], boonItem);
             
             //Set onClick function
             Button_UI buttonUI = _buttons[i].GetComponent<Button_UI>();
@@ -156,24 +177,19 @@ public class BoonSelection : MonoBehaviour
         }
     }
 
-    private void SetButtonInfo(Transform buttonTransform, BoonItem boonItem)
+    public void SetBoonInfo(Transform boonTransform, BoonItem boonItem)
     {
         //Set info
-        buttonTransform.Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
+        boonTransform.Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
             
         float effectAmount = 0f;
         
-        // if (boonItem.id == 0)
-        //     effectAmount = boonEffects.GetMaxHpIncreaseAmount();
-        // else
-        //     effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id);
-
         effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id);
         
         if(boonItem.isPercentage)
-            buttonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} +{effectAmount * 100}%");
+            boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} +{effectAmount * 100}%");
         else
-            buttonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount}");
+            boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount}");
     }
     
     public void RollBoons()
