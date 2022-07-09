@@ -59,17 +59,7 @@ public class BoonSelection : MonoBehaviour
     
     private void Start()
     {
-        _containerButtons = transform.Find("container_buttons");
-        _boonButtonTemplate = _containerButtons.Find("boonButtonTemplate");
-        _boonButtonTemplate.gameObject.SetActive(false);
-
-        background.enabled = false;
-        
-        //create 3 buttons at the start
-        for (int i = 0; i < 3; i++)
-        {
-            _buttons[i] = CreateShopButton(i);      
-        }
+        SetupButtons();
         
         chosenBoonsItems.Clear();
         
@@ -83,7 +73,17 @@ public class BoonSelection : MonoBehaviour
 
     private void SetupButtons()
     {
+        _containerButtons = transform.Find("container_buttons");
+        _boonButtonTemplate = _containerButtons.Find("boonButtonTemplate");
+        _boonButtonTemplate.gameObject.SetActive(false);
 
+        background.enabled = false;
+        
+        //create 3 buttons at the start
+        for (int i = 0; i < 3; i++)
+        {
+            _buttons[i] = CreateShopButton(i);      
+        }
     }
 
     //Create buttons at start, only change info and onClick functions of these buttons afterwards
@@ -119,7 +119,6 @@ public class BoonSelection : MonoBehaviour
            chosenBoonsItems[index] = bitu;
            if(OnListChanged != null) OnListChanged.Invoke(chosenBoonsItems, false);
         }
-      
     }
 
     

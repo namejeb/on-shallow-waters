@@ -53,9 +53,6 @@ public class DisplayBoonList : MonoBehaviour
 
     private void SetInfo(List<BoonItemsTimesUsed> boonItemsTimesUsedList)
     {
-        //set texts
-        //set counter
-
         List<Transform> reversedDisplayList = _createdDisplays;
         reversedDisplayList.Reverse();
 
@@ -74,11 +71,7 @@ public class DisplayBoonList : MonoBehaviour
 
     private void UpdateList(List<BoonItemsTimesUsed> boonItemsTimesUsedList, bool isNewBoon)
     {
-        if (isNewBoon)
-        {
-            CreateDisplay();
-        }
-        
+        if (isNewBoon) { CreateDisplay(); }
         SetInfo(boonItemsTimesUsedList);
     }
 
@@ -87,12 +80,14 @@ public class DisplayBoonList : MonoBehaviour
         Transform upgradeLevels = displayTransform.Find("upgradeLevels");
         Transform[] indicators = new Transform[3];
 
+        // disable all first
         for (int i = 0; i < upgradeLevels.childCount; i++)
         {
             indicators[i] = upgradeLevels.transform.GetChild(i);
             indicators[i].gameObject.SetActive(false);
         }
 
+        // enable back according to usageCount
         for (int i = 0; i < boonItemsTimesUsed.usageCount; i++)
         {
             indicators[i].gameObject.SetActive(true);
