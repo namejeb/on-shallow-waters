@@ -4,24 +4,24 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 
+[Serializable]
+public class BoonItemsTimesUsed
+{
+    public BoonItem boonItem;
+    public int usageCount = 0;
+    private readonly int _maxUsageCount;
+
+    public bool IsLimitReached => usageCount == _maxUsageCount;
+
+    public BoonItemsTimesUsed(BoonItem boonItem)
+    {
+        this.boonItem = boonItem;
+        this._maxUsageCount = boonItem.maxUsageCount;
+    }
+}
+
 public class BoonSelection : MonoBehaviour
 {
-    [Serializable]
-    public class BoonItemsTimesUsed
-    {
-        public BoonItem boonItem;
-        public int usageCount = 0;
-        private readonly int _maxUsageCount;
-
-        public bool IsLimitReached => usageCount == _maxUsageCount;
-
-        public BoonItemsTimesUsed(BoonItem boonItem)
-        {
-            this.boonItem = boonItem;
-            this._maxUsageCount = boonItem.maxUsageCount;
-        }
-    }
-    
     [SerializeField] private BoonEffects boonEffects;
     
     [Space][Space]
@@ -44,7 +44,7 @@ public class BoonSelection : MonoBehaviour
     private BoonEffects _boonEffects;
     
     public static event Action OnSelectedBoon;
-    public static event Action<BoonItemsTimesUsed, bool> OnListChanged;
+    public static event Action<List<BoonItemsTimesUsed>, bool> OnListChanged;
 
 
     #region Singleton
@@ -109,14 +109,17 @@ public class BoonSelection : MonoBehaviour
         if (!chosenBoonsItems.Contains(bitu))
         {
             chosenBoonsItems.Add(bitu);
-           // if(OnListChanged != null) OnListChanged.Invoke();
+            if(OnListChanged != null) OnListChanged.Invoke(chosenBoonsItems, true);
+           
         }
         //replace element
         else
         {
            int index = chosenBoonsItems.FindIndex(b => b.boonItem.id == boonItemId);                            
            chosenBoonsItems[index] = bitu;
+           if(OnListChanged != null) OnListChanged.Invoke(chosenBoonsItems, false);
         }
+      
     }
 
     
