@@ -149,15 +149,10 @@ public class BoonSelection : MonoBehaviour
             int index = UnityEngine.Random.Range(0, boonItemsList.Count);
             BoonItem bI = boonItemsList[index];
 
-            _randomisedBoonItems[i] = bI;
+            boonItems[i] = bI;
             boonItemsList.Remove(bI);  //remove from pool to avoid duplicates
         }
         _randomisedBoonItems = boonItems;
-
-        for (int i = 0; i < 3; i++)
-        {
-            print(_randomisedBoonItems[i].description);
-        }
     }
     
     private void InitButtons()
@@ -167,8 +162,7 @@ public class BoonSelection : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             BoonItem boonItem = _randomisedBoonItems[i];
-            
-            if(boonItem == null) print("boon null");
+   
             SetBoonInfo(_buttons[i], boonItem);
             
             //Set onClick function
