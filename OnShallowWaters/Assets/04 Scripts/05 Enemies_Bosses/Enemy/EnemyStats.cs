@@ -8,11 +8,8 @@ public class EnemyStats : CharacterStats, IDamageable
     [Header("Ref:")]
     [SerializeField] private HealthBar healthBar;
     private DropSouls _dropSouls;
-
     private EnemiesCore _enemiesCore;
-
-    public static event Action OnEnemyDeath;
-
+    
     [Space]
     [Header("Settings:")]
     [SerializeField] private Stat defense;
@@ -28,8 +25,6 @@ public class EnemyStats : CharacterStats, IDamageable
         
         _dropSouls = GetComponent<DropSouls>();
         _enemiesCore = GetComponent<EnemiesCore>();
-  
-        
     }
 
     private void OnEnable()
@@ -49,24 +44,16 @@ public class EnemyStats : CharacterStats, IDamageable
 
     public float LostHP()
     {
-        throw new System.NotImplementedException();
+        return _enemiesCore.maxHealth - currHp;
     }
-    
+
     protected override void Die()
     {
         if (isDead) return;
         isDead = true;
         
         _dropSouls.Drop();
-        
-        // TestWave testWave = TestWave.Instance;
-        // ;
-        // testWave.UpdateEnemyCount();
-        // print(name);
-        
-       // if(OnEnemyDeath != null) OnEnemyDeath.Invoke();
-       
-       
+
         WaveSpawner.Instance.UpdateWaveTotalEnemies();
         if (WaveSpawner.Instance.IsLastEnemy)
         {
@@ -82,5 +69,4 @@ public class EnemyStats : CharacterStats, IDamageable
     {
         gameObject.SetActive(false);
     }
-    
 }

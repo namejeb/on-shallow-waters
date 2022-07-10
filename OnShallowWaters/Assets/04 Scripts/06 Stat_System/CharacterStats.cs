@@ -32,11 +32,11 @@ public class CharacterStats : MonoBehaviour
         currHp = maxHp;
     }
     
-    protected void TakeDamage(int dmg)
+    protected void TakeDamage(float dmg)
     {
         currHp -= dmg;
         
-        if (currHp <= 0)
+        if (currHp <= 0f)
         {
             currHp = 0;
             Die();
@@ -48,12 +48,12 @@ public class CharacterStats : MonoBehaviour
         // implement different die functionalities      
     }
 
-    public void AddModifier(Stat statToModify, int modifier)
+    public void AddModifier(Stat statToModify, float modifier)
     {
         statToModify.AddModifier(modifier);
     }
 
-    public void RemoveModifier(Stat statToModify, int modifier)
+    public void RemoveModifier(Stat statToModify, float modifier)
     {
         statToModify.RemoveModifier(modifier);
     }

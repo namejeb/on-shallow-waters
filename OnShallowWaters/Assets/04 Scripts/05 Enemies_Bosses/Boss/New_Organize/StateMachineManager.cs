@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Cinemachine;
+using NaughtyAttributes;
 
 public class StateMachineManager : MonoBehaviour
 {
@@ -29,6 +31,7 @@ public class StateMachineManager : MonoBehaviour
     private NavMeshAgent _agent;
     private Animator _animator;
     private Rigidbody rb;
+    private CinemachineImpulseSource impSource;
 
     public Transform Target => target;
     public NavMeshAgent Agent => _agent;
@@ -40,6 +43,7 @@ public class StateMachineManager : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        impSource = FindObjectOfType<CinemachineImpulseSource>();
     }
 
     private void Start()
@@ -49,7 +53,6 @@ public class StateMachineManager : MonoBehaviour
         Agent.stoppingDistance = chaseMinDistance;
 
         _agent.speed = speed;
-        //DoBossAttack(bossType);
         SetState(stateList[0]);
     }
 
@@ -67,34 +70,14 @@ public class StateMachineManager : MonoBehaviour
     public void BossRandomState()
     {
         int randNum = Random.Range(0, stateList.Count);
+
+        while (_currentState == stateList[randNum])
+        {
+            randNum = Random.Range(0, stateList.Count);
+        }
+
         SetState(stateList[randNum]);
     }
-
-    /// <summary>
-    /// Switch Boss State Machine Through enum bossType
-    /// </summary>
-    /// <param name="mode"></param>
-    //private void DoBossAttack(BossMode mode)
-    //{
-    //    switch (mode)
-    //    {
-    //        case BossMode.BOSS1:
-    //            move1State = new Boss1_SlicingClaws();
-    //            move2State = new Boss1_ThrustHand();
-    //            move3State = new Boss1_SlamGround();
-    //            move4State = new Boss1_Dash();
-    //            break;
-    //        case BossMode.BOSS2:
-    //            move1State = new Boss2_Attack();
-    //            break;
-    //    }
-
-    //    //! This will invoke the Update of whatever class it morphed into
-    //    move1State.Update(this);
-    //    move2State.Update(this);
-    //    move3State.Update(this);
-    //    move4State.Update(this);
-    //}
 
     public void HitBoxOn(int i)
     {
@@ -128,5 +111,15 @@ public class StateMachineManager : MonoBehaviour
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
+    [Button]
+    public void Shake()
+    {
+        Debug.Log("Shake");
+        float time = 2;
+        impSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = time;
+        impSource.m_DefaultVelocity.x = impSource.m_DefaultVelocity.y = -0.5f;
+        impSource.GenerateImpulse();
     }
 }

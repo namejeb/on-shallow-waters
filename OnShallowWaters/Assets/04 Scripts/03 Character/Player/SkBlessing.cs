@@ -101,11 +101,12 @@ public class SkBlessing : MonoBehaviour
             CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
         }
         else return;
-        
+
         currSoul = 0;
         timer = duration;
         playerStats.Atk.AddModifier(atkAdd);
         playerStats.MovementSpeed.AddModifier(mvSpeedAdd);
+        Debug.Log("Atk and Spd buff increase start");
         StartCoroutine(ResetCharacter(duration));
         startCountdown = true;
     }
@@ -120,7 +121,7 @@ public class SkBlessing : MonoBehaviour
             CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
         }
         else return;
-        
+
         currSoul = 0;
         duration = regenPerSec * regenAmount;
         timer = duration;
@@ -138,7 +139,7 @@ public class SkBlessing : MonoBehaviour
             CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
         }
         else return;
-        
+
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -149,22 +150,23 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
             return;
-        
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
-        
+
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
+
         currSoul = 0;
         timer = duration;
         startCountdown = true;
-        EnemiesCore[] enemies = FindObjectsOfType<EnemiesCore>();
-
-        foreach (EnemiesCore enemy in enemies)
+        EnemyStats[] enemies = FindObjectsOfType<EnemyStats>();
+        Debug.Log("in");
+        foreach (EnemyStats enemy in enemies)
         {
+            Debug.Log("lol");
             float distanceToEnemy = (enemy.transform.position - transform.position).magnitude;
-
+            Debug.Log("hai");
             if (enemy.gameObject.activeInHierarchy && distanceToEnemy < executeDistance)
             {
                 IDamageable e = enemy.GetComponent<IDamageable>();
@@ -172,7 +174,7 @@ public class SkBlessing : MonoBehaviour
 
                 if (damage <= 0)
                     damage = 1;
-
+                Debug.Log(damage);
                 e.Damage(damage);
             }
         }
@@ -183,21 +185,22 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
-        
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
+
         currSoul = 0;
         timer = duration;
         startCountdown = true;
-        EnemiesCore[] enemies = FindObjectsOfType<EnemiesCore>();
+        EnemyStats[] enemies = FindObjectsOfType<EnemyStats>();
 
-        foreach (EnemiesCore enemy in enemies)
+        foreach (EnemyStats enemy in enemies)
         {
             if (enemy.gameObject.activeInHierarchy)
             {
+                
                 enemy.GetComponent<IDamageable>().Damage(skb5Damage);
             }
         }
@@ -206,7 +209,7 @@ public class SkBlessing : MonoBehaviour
     IEnumerator ResetCharacter(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        Debug.Log("coroutine end");
+        Debug.Log("Atk & Spd buff end");
         playerStats.Atk.RemoveModifier(atkAdd);
         playerStats.MovementSpeed.RemoveModifier(mvSpeedAdd);
     }

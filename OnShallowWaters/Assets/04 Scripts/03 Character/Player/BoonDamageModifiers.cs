@@ -9,7 +9,7 @@ public class BoonDamageModifiers : MonoBehaviour
 
    private float _dmgIncreaseSingleEnemyModifier = 1f; 
    private float _firstTimeDmgBonusModifier = 1f;
-   private int _dmgWhenShieldBreakModifier;
+   private float _dmgWhenShieldBreakModifier;
 
    [HideInInspector] public bool dmgReductionActivated = false;
    [HideInInspector] public float dmgReductionActivationThreshold = 0f;
@@ -51,7 +51,7 @@ public class BoonDamageModifiers : MonoBehaviour
    {
       if (enemyHandler.EnemiesCore.shieldDestroy)
       {
-         enemyHandler.EnemyStats.Damage( _dmgWhenShieldBreakModifier );
+         enemyHandler.EnemyStats.Damage( (int) _dmgWhenShieldBreakModifier );
       }
    }
 
@@ -67,7 +67,7 @@ public class BoonDamageModifiers : MonoBehaviour
       _firstTimeDmgBonusModifier = effectAmount;
    }
 
-   public void EnableDmgWhenShieldBreak(int effectAmount)
+   public void EnableDmgWhenShieldBreak(float effectAmount)
    {
       _dmgWhenShieldBreakActivated = true;
       _dmgWhenShieldBreakModifier = effectAmount;

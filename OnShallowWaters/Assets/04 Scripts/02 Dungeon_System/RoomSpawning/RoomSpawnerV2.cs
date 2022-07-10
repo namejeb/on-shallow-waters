@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
-using Random = System.Random;
 
 public enum RoomEntranceDir
 {
@@ -26,9 +25,12 @@ public class Room
 
 public class RoomSpawnerV2 : MonoBehaviour
 {
-   // [SerializeField] [Range(0f, 1f)] private float soulShopSpawnRate;
+    [SerializeField] [Range(0f, 1f)] private float soulShopSpawnRate = .2f;
     
     [SerializeField] private Transform rBasic;
+    [SerializeField] private Transform rSoulShop;
+    private bool _sShopSpawnedInCurrLevel;
+    
     [SerializeField] private List<Room> bossRooms;
     [SerializeField] private List<Level> levelList = new List<Level>();
     private int _levelCounter = 0;
@@ -54,10 +56,12 @@ public class RoomSpawnerV2 : MonoBehaviour
         SortRooms();
         ExitRoomTrigger.OnExitRoom += SpawnRoom;
         
-         SetRoomActive(rBasic.transform, true);
-         _prevRoom = rBasic.transform;
+        SetRoomActive(rSoulShop, false);
+        
+        SetRoomActive(rBasic.transform, true);
+        _prevRoom = rBasic.transform;
 
-         IsBossRoom = false;
+        IsBossRoom = false;
     }
 
     private void SortRooms()
@@ -90,10 +94,39 @@ public class RoomSpawnerV2 : MonoBehaviour
 
     private void SpawnRoom(RoomEntranceDir dir)
     {
-        //after 5 rooms, spawn boss
-        bool isBossStage = (_roomFinishedCount == 5); 
-       // isBossStage = true; //boss room debug
-       HandleSpawnRoom(isBossStage, dir);
+        // Soul shop can only spawn once in one Level
+        if (_sShopSpawnedInCurrLevel)
+        {
+            //after 5 rooms, spawn boss
+            bool isBossStage = (_roomFinishedCount == 5); 
+            
+            // isBossStage = true; //boss room debug
+            HandleSpawnRoom(isBossStage, dir);
+
+            return;
+        }
+        
+        float sShopRate = UnityEngine.Random.Range(0f, 1f);
+        if (sShopRate < soulShopSpawnRate)
+        {
+            HandleSpawnSoulShop();
+        }
+        else
+        {
+            //after 5 rooms, spawn boss
+            bool isBossStage = (_roomFinishedCount == 5); 
+            
+            // isBossStage = true; //boss room debug
+            HandleSpawnRoom(isBossStage, dir);
+        }
+    }
+
+    private void HandleSpawnSoulShop()
+    {
+        if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
+        
+        StartCoroutine(EnableSoulShop());
+        _sShopSpawnedInCurrLevel = true;
     }
 
     private void HandleSpawnRoom(bool isBossStage, RoomEntranceDir dir)
@@ -108,6 +141,7 @@ public class RoomSpawnerV2 : MonoBehaviour
             IsBossRoom = true;
             
             _roomFinishedCount = 0;
+            _sShopSpawnedInCurrLevel = false;
       
            room = bossRooms[_levelCounter];
            _levelCounter += 1;
@@ -134,8 +168,8 @@ public class RoomSpawnerV2 : MonoBehaviour
             {
                 roomIndex = UnityEngine.Random.Range(0, level.westEntranceRooms.Count);
                 room = level.westEntranceRooms[roomIndex];
-            }
-         // room = level.southEntranceRooms[1];
+            } 
+             room = level.southEntranceRooms[1];
         }
         StartCoroutine(EnableRoom(room));
     }
@@ -152,6 +186,22 @@ public class RoomSpawnerV2 : MonoBehaviour
         //Spawn new room
         SetRoomActive(room.roomPrefab.transform, true);
         _prevRoom = room.roomPrefab.transform;
+        
+        //Set player position to spawn point
+        if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
+        if (OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
+    }
+
+    private IEnumerator EnableSoulShop()
+    {
+        yield return new WaitForSeconds(1f);
+        
+        //Remove old room
+        SetRoomActive(_prevRoom, false);
+
+        //Spawn new room
+        SetRoomActive(rSoulShop, true);
+        _prevRoom = rSoulShop;
         
         //Set player position to spawn point
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
