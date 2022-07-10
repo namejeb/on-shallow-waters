@@ -415,7 +415,7 @@ Transform:
   m_GameObject: {fileID: 3127995219417853248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1768, y: 1.1768, z: 1.1768}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8016169737949096454}
@@ -492,13 +492,13 @@ MonoBehaviour:
   agent: {fileID: 0}
   puppet: {fileID: 0}
   rb3d: {fileID: 0}
-  armourType: 0
+  armourType: 1
   anim: {fileID: 2858016398662717459}
   dist: 0
   detectRange: 10
   attackRange: 3
-  radius: 6
-  angle: 95
+  radius: 10
+  angle: 360
   targetMask:
     serializedVersion: 2
     m_Bits: 8
@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cea885d70afa45918f49f78957116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isShielded: 0
+  isShielded: 1
 --- !u!114 &3401333738797381828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,7 +863,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5967751492454651251, guid: e1f9dcb39da742041b1a15fa4d44577f, type: 3}
+  - {fileID: 2100000, guid: 133ce7246c1ea9941b23cdca083d9b51, type: 2}
   - {fileID: -4963801623029300775, guid: e1f9dcb39da742041b1a15fa4d44577f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
