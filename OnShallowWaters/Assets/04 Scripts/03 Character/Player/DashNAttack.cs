@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
 using UnityEngine.EventSystems;
@@ -71,6 +72,7 @@ public class DashNAttack : MonoBehaviour
 
     public void ActivateDash()
     {
+        animator.SetTrigger("Dash");
         _isDash = true;
         playerMovement.enabled = false;
         
@@ -87,28 +89,32 @@ public class DashNAttack : MonoBehaviour
 
         if (pressedButton.isPressed == false)
         {
-            if (chargedTimer >= 1 && chargedTimer < 2)
+            if (chargedTimer >= 0.5f && chargedTimer < 1)
             {
 
                 isSlash = true;
-                Debug.Log("KAHHHHHHHBIIIIIN");
+                //Debug.Log("KAHHHHHHHBIIIIIN");
                 if (isSlash)
                     HeavySlash();
+                StartCoroutine(EnableMove());
             }
 
-            else if (chargedTimer >= 2)
+            else if (chargedTimer >= 1)
             {
                 isSlam = true;
-                Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+                //Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
                 if (isSlam)
                     HeavySlam();
+                StartCoroutine(EnableMove());
             }
             else if (chargedTimer >= 0.01)
             {
                 //detect normal
                 Attack();
+                StartCoroutine(EnableMove());
             }
 
+            //playerMovement.enabled = true;
             chargedTimer = 0;
         }
             
@@ -143,7 +149,7 @@ public class DashNAttack : MonoBehaviour
 
     public void Attack()
     {
-        //playerMovement.enabled = false;
+        playerMovement.enabled = false;
 
         //Attack Sequence(What attack/aniamtion it will do)
 
@@ -157,10 +163,10 @@ public class DashNAttack : MonoBehaviour
         {
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
          //   Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
+            //playerMovement.enabled = true;
             animator.SetTrigger("Attack");
             attackSequence++;
-            nextAttack = Time.time + 1;
+            nextAttack = Time.time + 0.75f;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
@@ -169,10 +175,10 @@ public class DashNAttack : MonoBehaviour
         {
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
+            //playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
             attackSequence++;
-            nextAttack = Time.time + 1;
+            nextAttack = Time.time + 0.75f;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
@@ -181,7 +187,7 @@ public class DashNAttack : MonoBehaviour
         {
             tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
+            //playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
@@ -192,7 +198,7 @@ public class DashNAttack : MonoBehaviour
 
         nextAttack /= stats.AtkSpeed;
 
-        
+
 
         // Debug.Log(attackSequence.ToString());
     }
@@ -240,6 +246,12 @@ public class DashNAttack : MonoBehaviour
         }
 
         return outgoingDamage;
+    }
+
+    IEnumerator EnableMove()
+    {
+        yield return new WaitForSeconds(1.5f);
+        playerMovement.enabled = true;
     }
 
 
