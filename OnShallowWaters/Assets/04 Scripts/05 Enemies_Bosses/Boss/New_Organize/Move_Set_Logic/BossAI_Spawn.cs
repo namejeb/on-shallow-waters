@@ -5,36 +5,28 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Boss_AI/Spawn")]
 public class BossAI_Spawn : State
 {
-    [SerializeField] private int prefabIndex;
-    [SerializeField] private int aimerIndex;
-    [SerializeField] private int spawnCount;
-    [SerializeField] private int spawnMax;
-    [SerializeField] private float spawnInterval;
-    
+    [SerializeField] private string animationTrigger;
+    [SerializeField] private float spawnTimeout;
 
     public override void EnterState(StateMachineManager sm)
     {
         sm.Agent.enabled = false;
+        sm.Anim.SetTrigger(animationTrigger);
     }
 
     public override void UpdateState(StateMachineManager sm)
     {
         sm.inStateTimer += Time.deltaTime;
-        if (spawnCount < spawnMax && sm.inStateTimer > spawnInterval)
+
+        if (sm.inStateTimer > spawnTimeout)
         {
-            spawnCount += 1;
             sm.inStateTimer = 0;
-            sm.ShootProjectile2(sm.shootPrefab[prefabIndex], sm.aimDirection[aimerIndex]);
-        }
-        
-        if (spawnCount >= spawnMax && sm.inStateTimer > spawnInterval)
-        {
-            spawnCount = 0;
+            sm.Anim.SetTrigger("toNormal");
             sm.Agent.enabled = true;
             sm.BossRandomState();
         }
 
-        //if (sm.inStateTimer > spawnInterval - 2)
+        //if (sm.inStateTimer < spawnTimeout - 3)
         //    sm.RotateTowards();
     }
 }

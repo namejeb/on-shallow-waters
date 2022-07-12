@@ -204,7 +204,9 @@ public class DashNAttack : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
         
         for (int i = 0; i < hitColliders.Length; i++)
-        {   
+        {
+
+            Debug.Log(hitColliders[i].gameObject.name);
             if (hitColliders[i] == null) continue;  //skip if null
             
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();

@@ -8,6 +8,7 @@ public class BossAI_MeleeAttack : State
     [SerializeField] private string animationTrigger;
     [SerializeField] private float chaseTimeout;
     [SerializeField] private float attackDistOffset;
+    private bool isAttacking;
 
     public override void EnterState(StateMachineManager sm)
     {
@@ -17,34 +18,34 @@ public class BossAI_MeleeAttack : State
     public override void UpdateState(StateMachineManager sm)
     {
         sm.inStateTimer += Time.deltaTime;
-        if (sm.inStateTimer > chaseTimeout)
+        if (sm.inStateTimer > chaseTimeout && !isAttacking)
         {
             sm.inStateTimer = 0;
-            sm.SetState(sm.stateList[0]);
+            isAttacking = false;
+            sm.Agent.enabled = true;
+            sm.Agent.ResetPath();
+            sm.Agent.speed = sm.speed;
+            sm.Anim.SetTrigger("toNormal");
+            sm.BossRandomState();
         }
 
         //Debug.Log(Vector3.Distance(sm.transform.position, sm.Target.position));
 
-        if (sm.Agent.speed != 0)
-            sm.Agent.SetDestination(sm.Target.position);
-
-        if (Vector3.Distance(sm.transform.position, sm.Target.position) < (sm.chaseMinDistance + attackDistOffset) && !sm.isAttacking)
+        if (Vector3.Distance(sm.transform.position, sm.Target.position) < (sm.chaseMinDistance + attackDistOffset) && !isAttacking)
         {
-            sm.isAttacking = true;
-            sm.Agent.speed = 0;
+            isAttacking = true;
             sm.Agent.enabled = false;
             sm.Anim.SetTrigger(animationTrigger);
         }
 
-        if (sm.isAttackFin)
+        if (sm.Agent.enabled)
         {
-            sm.isAttacking = false;
-            sm.isAttackFin = false;
-            sm.Agent.enabled = true;
-            sm.Agent.ResetPath();
-            sm.Agent.speed = sm.speed;
-            sm.inStateTimer = 0;
-            sm.BossRandomState();
+            sm.Anim.SetBool("isWalk", true);
+            sm.Agent.SetDestination(sm.Target.position);
+        }
+        else
+        {
+            sm.Anim.SetBool("isWalk", false);
         }
     }
 }
