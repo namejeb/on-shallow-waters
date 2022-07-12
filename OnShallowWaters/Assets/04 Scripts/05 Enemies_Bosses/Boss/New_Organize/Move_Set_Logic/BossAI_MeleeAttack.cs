@@ -8,7 +8,7 @@ public class BossAI_MeleeAttack : State
     [SerializeField] private string animationTrigger;
     [SerializeField] private float chaseTimeout;
     [SerializeField] private float attackDistOffset;
-    private bool isAttacking;
+    public bool isAttacking = false;
 
     public override void EnterState(StateMachineManager sm)
     {
@@ -18,7 +18,7 @@ public class BossAI_MeleeAttack : State
     public override void UpdateState(StateMachineManager sm)
     {
         sm.inStateTimer += Time.deltaTime;
-        if (sm.inStateTimer > chaseTimeout && !isAttacking)
+        if (sm.inStateTimer > chaseTimeout)
         {
             sm.inStateTimer = 0;
             isAttacking = false;
@@ -28,17 +28,17 @@ public class BossAI_MeleeAttack : State
             sm.Anim.SetTrigger("toNormal");
             sm.BossRandomState();
         }
-
         //Debug.Log(Vector3.Distance(sm.transform.position, sm.Target.position));
 
         if (Vector3.Distance(sm.transform.position, sm.Target.position) < (sm.chaseMinDistance + attackDistOffset) && !isAttacking)
         {
-            isAttacking = true;
+            
             sm.Agent.enabled = false;
             sm.Anim.SetTrigger(animationTrigger);
+            isAttacking = true;
         }
 
-        if (sm.Agent.enabled)
+        else if (sm.Agent.enabled && !isAttacking)
         {
             sm.Anim.SetBool("isWalk", true);
             sm.Agent.SetDestination(sm.Target.position);
