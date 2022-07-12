@@ -90,20 +90,20 @@ public class StateMachineManager : MonoBehaviour
         meleeHitbox[i].SetActive(false);
     }
 
-    public void ShootProjectile(GameObject shootPb, Transform aimer)
+    public void ShootProjectile(int index)
     {
-        Vector3 targetDirection = (target.position - aimer.position).normalized;
+        Vector3 targetDirection = (target.position - aimDirection[index].position).normalized;
         float angle = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
-        aimer.eulerAngles = new Vector3(0, angle - 90, 0);
-        GameObject bullet = Instantiate(shootPb, aimer.position, aimer.rotation);
+        aimDirection[index].eulerAngles = new Vector3(0, angle - 90, 0);
+        GameObject bullet = Instantiate(shootPrefab[index], aimDirection[index].position, aimDirection[index].rotation);
 
         if (bullet.GetComponent<Projectile>() != null)
             bullet.GetComponent<Projectile>().SetDirection(target);
     }
 
-    public void ShootProjectile2(GameObject shootPb, Transform aimer)
+    public void ShootProjectile2(int index)
     {
-        GameObject bullet = Instantiate(shootPb, aimer.position, transform.rotation);
+        GameObject bullet = Instantiate(shootPrefab[index], aimDirection[index].position, transform.rotation);
     }
 
     public void RotateTowards()
@@ -114,7 +114,7 @@ public class StateMachineManager : MonoBehaviour
     }
 
     [Button]
-    public void Shake()
+    private void Shake()
     {
         Debug.Log("Shake");
         float time = 2;

@@ -20,31 +20,36 @@ public class BossAI_MeleeAttack : State
         if (sm.inStateTimer > chaseTimeout)
         {
             sm.inStateTimer = 0;
-            sm.SetState(sm.stateList[0]);
+            sm.Agent.enabled = true;
+            sm.Agent.ResetPath();
+            sm.Agent.speed = sm.speed;
+            sm.Anim.SetTrigger("toNormal");
+            sm.BossRandomState();
         }
 
         //Debug.Log(Vector3.Distance(sm.transform.position, sm.Target.position));
 
-        if (sm.Agent.speed != 0)
-            sm.Agent.SetDestination(sm.Target.position);
-
         if (Vector3.Distance(sm.transform.position, sm.Target.position) < (sm.chaseMinDistance + attackDistOffset) && !sm.isAttacking)
         {
             sm.isAttacking = true;
-            sm.Agent.speed = 0;
             sm.Agent.enabled = false;
             sm.Anim.SetTrigger(animationTrigger);
+        }
+
+        if (sm.Agent.enabled)
+        {
+            sm.Anim.SetBool("isWalk", true);
+            sm.Agent.SetDestination(sm.Target.position);
+        }
+        else
+        {
+            sm.Anim.SetBool("isWalk", false);
         }
 
         if (sm.isAttackFin)
         {
             sm.isAttacking = false;
             sm.isAttackFin = false;
-            sm.Agent.enabled = true;
-            sm.Agent.ResetPath();
-            sm.Agent.speed = sm.speed;
-            sm.inStateTimer = 0;
-            sm.BossRandomState();
         }
     }
 }

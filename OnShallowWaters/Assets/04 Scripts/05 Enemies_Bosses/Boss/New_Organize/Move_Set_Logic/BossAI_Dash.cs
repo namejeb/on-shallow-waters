@@ -5,20 +5,23 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Boss_AI/Dash")]
 public class BossAI_Dash : State
 {
+    [SerializeField] private string animationTrigger;
     [SerializeField] private float rotateTime;
     [SerializeField] private float dashStartTime;
     [SerializeField] private float dashForce;
     [SerializeField] private float dashTimeout;
-    
+
     private Vector3 _direction;
 
     public override void EnterState(StateMachineManager sm)
     {
         sm.Agent.enabled = false;
+        sm.Anim.SetTrigger(animationTrigger);
     }
 
     public override void UpdateState(StateMachineManager sm)
     {
+        
         sm.inStateTimer += Time.deltaTime;
 
         if (sm.inStateTimer < rotateTime)
@@ -29,6 +32,8 @@ public class BossAI_Dash : State
 
         if (sm.inStateTimer > dashTimeout)
         {
+            Debug.Log("Exit Dash");
+            sm.Anim.SetTrigger("toNormal");
             sm.inStateTimer = 0;
             sm.HitBoxOff(1);
             sm.Rb.velocity = Vector3.zero;
