@@ -190,14 +190,14 @@ public class BoonEffects : MonoBehaviour {
     private void UpgradeAtkPercent()
     {
         StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(8);
-        _playerStats.IncreaseAtkPercent( s.GetIncreaseAmount() ); print(_playerStats.AtkPercent);
+        _playerStats.IncreaseAtkPercent( s.GetIncreaseAmount() ); // print(_playerStats.AtkPercent);
     }
 
     //ATK speed increase 15%/25%/30%
     private void UpgradeAtkSpd()                 
     {
         StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(9);
-        _playerStats.IncreaseAtkSpd( s.GetIncreaseAmount() ); print(_playerStats.AtkSpeed);
+        _playerStats.IncreaseAtkSpd( s.GetIncreaseAmount() ); // print(_playerStats.AtkSpeed);
     }
     
         
