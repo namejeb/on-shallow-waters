@@ -1,56 +1,108 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+[System.Serializable]
+public class Enemies
+{
+    public EnemyPooler.EnemyPoolType enemy;
+    public int count;
+}
+
+[System.Serializable]
+public class Wave
+{
+    public string name;
+    public List<Enemies> enemies;
+    public int totalEnemies = 0;
+    //public float rate;
+
+    public bool IsWaveComplete => totalEnemies <= 0;
+
+    public void Awake()
+    {
+        totalEnemies = 0;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            totalEnemies += enemies[i].count;
+        }
+    }
+}
+
 
 public class WaveSpawner : MonoBehaviour
 {
     public enum SpawnState { NOTHING, SPAWNING, WAITING, COUNTING };
 
-    [System.Serializable]
-    public class Enemies
-    {
-        public EnemyPooler.EnemyPoolType enemy;
-        public int count;
-    }
-
-    [System.Serializable]
-    public class Wave
-    {
-        public string name;
-        public List<Enemies> enemies;
-        //public float rate;
-    }
 
     [Header("Wave Settings")]
     [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
-    [SerializeField] private List<Transform> spawnPoints;
-    [SerializeField] private EnemyPooler enemyPooler;
-    private float _searchCountdown = 1f;
+    private List<Transform> _spawnPoints = new List<Transform>();
+
+    private int _roomTotalEnemies = 0;
+    public bool IsLastEnemy => _roomTotalEnemies == 0;
+
+    private EnemyPooler _enemyPooler;
+    
     private int _nextWave = 0;
     private bool _isEnd;
+    
+    private static Wave _currentWave;
 
     [Header("Enemy Initialization")]
     public Wave[] waves;
 
     [Header("Game State")]
     public SpawnState state = SpawnState.NOTHING;
-	private DoorTrigger dt;
+    
+    public static int WaveTotalEnemies { get; private set; }
 
-    private void Awake()
-    {
-        dt = GetComponentInChildren<DoorTrigger>();
-    }
-
+    public static event Action<Wave> OnChangeWave;
+    public static event Action<int> OnChangeRoom;
+    
+    
     private void Start()
     {
-        waveCountdown = waveIntervalTime;
+        _enemyPooler = transform.Find("EnemyPooler").GetComponent<EnemyPooler>();
     }
 
+    private void OnDisable()
+    {
+        _roomTotalEnemies = 0;
+        _isEnd = false;
+        _nextWave = 0;
+    }
+
+    public static WaveSpawner Instance;
+    private void OnEnable()
+    {
+        Instance = this;
+ 
+        _spawnPoints.Clear();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            _spawnPoints.Add(transform.GetChild(i));
+        }
+        
+        waveCountdown = 0f;
+        _currentWave = waves[0];
+        
+        for (int i = 0; i < waves.Length; i++)
+        {
+            for (int j = 0; j < waves[i].enemies.Count; j++)
+            {
+                _roomTotalEnemies += waves[i].enemies[j].count;
+            }
+        }
+    }
+    
     private void Update()
     {
 		// Spawn start when player step into room
-        if (state == SpawnState.NOTHING && dt.doorTriggerd && !_isEnd)
+        if (state == SpawnState.NOTHING && !_isEnd)
         {
             state = SpawnState.WAITING;
         }
@@ -58,32 +110,21 @@ public class WaveSpawner : MonoBehaviour
 		// When state is WAITING, if enemy dead, either [start next wave] or [end stage] 
         if (state == SpawnState.WAITING)
         {
-            if (!EnemyIsAlive())
+            if (_currentWave.IsWaveComplete)
             {
-                if (_isEnd)
-                {
-                    state = SpawnState.NOTHING;
-                    dt.SetWallStatus(false);
-                }
-                else
-                    WaveCompleted(waves[_nextWave]);
+                if (_isEnd) state = SpawnState.NOTHING;
+                else WaveCompleted(waves[_nextWave]);
             }
-            else
-                return;
+            else return;
         }
 		
 		// Rest time between wave
         if (waveCountdown <= 0)
         {
-            if (state != SpawnState.SPAWNING)
-            {
-                StartCoroutine(SpawnWave(waves[_nextWave]));
-            }
+            if (state != SpawnState.SPAWNING) StartCoroutine(SpawnWave(waves[_nextWave]));
         }
-        else if (state == SpawnState.NOTHING)
-            return;
-        else
-            waveCountdown -= Time.deltaTime;
+        else if (state == SpawnState.NOTHING) return;
+        else waveCountdown -= Time.deltaTime;
     }
 
     void WaveCompleted(Wave wave)
@@ -91,29 +132,22 @@ public class WaveSpawner : MonoBehaviour
         state = SpawnState.COUNTING;
         waveCountdown = waveIntervalTime;
     }
-
-    bool EnemyIsAlive()
-    {
-        _searchCountdown -= Time.deltaTime;
-        if (_searchCountdown <= 0)
-        {
-            _searchCountdown = 1f;
-            if (GameObject.FindGameObjectWithTag("Enemy") == null)
-                return false;
-        }
-        return true;
-    }
-	
+    
     IEnumerator SpawnWave(Wave wave)
     {
         state = SpawnState.SPAWNING;
 
-		for (int i = 0; i < wave.enemies.Count; i++)
+        wave.Awake();
+        _currentWave = wave;
+
+        WaveTotalEnemies = _currentWave.totalEnemies;
+
+        for (int i = 0; i < wave.enemies.Count; i++)
 		{
 			for (int j = 0; j < wave.enemies[i].count; j++)
-			{
-				SpawnEnemy(wave.enemies[i].enemy);
-			}
+            {
+                 SpawnEnemy(wave.enemies[i].enemy);
+            }
 		}
 		
 		// Determine are every waves go through already or not
@@ -132,11 +166,17 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(EnemyPooler.EnemyPoolType enemyType)
     {
         // Random Spawn points
-        int spawnIndex = Random.Range(0, spawnPoints.Count);
+        int spawnIndex = Random.Range(0, _spawnPoints.Count);
 
 		//Spawn enemy (Object Pooling)
-		Transform e = enemyPooler.GetFromPool(enemyType);
+		Transform e = _enemyPooler.GetFromPool(enemyType);
+		e.position = _spawnPoints[spawnIndex].position;
         e.gameObject.SetActive(true);
-		e.position = spawnPoints[spawnIndex].position;
+    }
+
+    public void UpdateWaveTotalEnemies()
+    {
+        _currentWave.totalEnemies -= 1;
+        _roomTotalEnemies -= 1 ;
     }
 }

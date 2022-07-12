@@ -5,7 +5,15 @@ public class ShopItem
     public enum ItemType {
         HP,
         ATK,
-        DEF
+        DEF,
+        HealthPotion,
+        SomePotion,
+        BooBooPotion,
+        ManaPotion,
+        AisKosong,
+        MiloIce,
+        TehTarik,
+        KopiOPeng
     }
 
     public static int GetCost(ItemType itemType)
@@ -16,6 +24,14 @@ public class ShopItem
             case ItemType.HP:   return 30;
             case ItemType.ATK:  return 20;
             case ItemType.DEF:  return 10;
+            case ItemType.HealthPotion: return 30;
+            case ItemType.SomePotion: return 20;
+            case ItemType.BooBooPotion: return 10;
+            case ItemType.ManaPotion: return 10;
+            case ItemType.AisKosong: return 100;
+            case ItemType.MiloIce: return 50;
+            case ItemType.TehTarik: return 40;
+            case ItemType.KopiOPeng: return 60;
         }
     }
 
@@ -29,6 +45,14 @@ public class ShopItem
             case ItemType.HP:   return ga.gShop_Hp;
             case ItemType.ATK:  return ga.gShop_Atk;
             case ItemType.DEF:  return ga.gShop_Def;
+            case ItemType.HealthPotion: return ga.gShop_Hp;
+            case ItemType.SomePotion: return ga.gShop_Hp;
+            case ItemType.BooBooPotion: return ga.gShop_Hp;
+            case ItemType.ManaPotion: return ga.gShop_Hp;
+            case ItemType.AisKosong: return ga.gShop_Hp;
+            case ItemType.MiloIce: return ga.gShop_Hp;
+            case ItemType.TehTarik: return ga.gShop_Hp;
+            case ItemType.KopiOPeng: return ga.gShop_Hp;
         }
     }
 }

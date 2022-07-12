@@ -2,11 +2,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Stat
+public class Stat 
 {
-    [SerializeField] private int baseValue = 0;
+    [SerializeField] private int baseValue = 1;
+    
+    //[HideInInspector]
+    [SerializeField] private List<float> modifiers =  new List<float>();
 
-    private List<int> _modifiers = new List<int>();
+    [Space][Space]
+    [Header("Caps:")]
+    [SerializeField] private bool hasCap;
+    [SerializeField] [Range(1f, 20f)] private float cap = 1;
     
     public int BaseValue 
     { 
@@ -19,11 +25,11 @@ public class Stat
         {
             int currentValue = baseValue;
             
-            foreach (int modifier in _modifiers)
+            for (int i = 0; i < modifiers.Count; i++)
             {
-                currentValue += modifier;
-            }
-
+                currentValue += (int) modifiers[i];
+            }   
+            
             return currentValue;
         }
     }
@@ -34,18 +40,34 @@ public class Stat
     }
 
     //Main functions to modify stats
-    public void AddModifier(int modifier)
+    public void AddModifier(float modifier)
     {
-        _modifiers.Add(modifier);
+        bool isOverCap = (this.CurrentValue / (float) this.baseValue) > cap;
+        
+        if (hasCap && isOverCap)
+        {
+            Debug.LogError("exceed cap");
+            return;
+        }
+        
+        modifiers.Add(modifier);
     }
 
-    public void RemoveModifier(int modifier)
+    public void RemoveModifier(float modifier)
     {
-        _modifiers.Remove(modifier);
+        modifiers.Remove(modifier);
     }
 
     public void ModifyBaseValue(int amount)
     {
+        bool isOverCap = (this.baseValue + amount / baseValue) > cap;
+
+        if (hasCap && isOverCap)
+        {
+            Debug.LogError("base cannot be over cap");
+            return;
+        }
+        
         this.baseValue = amount;
     }
 }

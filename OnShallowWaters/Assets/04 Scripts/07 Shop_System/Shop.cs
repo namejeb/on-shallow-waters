@@ -14,12 +14,20 @@ public class Shop : MonoBehaviour
     private void Awake()
     {
         _container = transform.Find("container");
-        _shopButtonTemplate = _container.Find("shopButtonTemplate");
+        _shopButtonTemplate = _container.Find("gShopButtonTemplate");
         _shopButtonTemplate.gameObject.SetActive(false);
 
-        _shopCustomer = PlayerStats.Instance;
+        _shopCustomer = PlayerHandler.Instance.PlayerStats;
     }
-    
+    private void Start()
+    {
+        CreateShopButton(ShopItem.ItemType.AisKosong, CurrencyType.SOULS, ShopItem.GetSprite(ShopItem.ItemType.HP), "Ais Kosong", 100, 0);
+        CreateShopButton(ShopItem.ItemType.MiloIce, CurrencyType.SOULS, ShopItem.GetSprite(ShopItem.ItemType.HP), "MILO ICE", 20, 1);
+
+        Hide();
+
+        //Hide Shop when start
+    }
     protected void CreateShopButton(ShopItem.ItemType itemType, CurrencyType currencyType, Sprite itemSprite, string itemName, int itemCost, int positionIndex)
     {
         Transform newShopButtonTransform = Instantiate(_shopButtonTemplate, _container);
@@ -31,8 +39,7 @@ public class Shop : MonoBehaviour
         
         //set ui images, texts
         newShopButtonTransform.Find("nameText").GetComponent<TextMeshProUGUI>().SetText(itemName);
-    
-        
+        newShopButtonTransform.Find("PriceText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
         //click function
         newShopButtonTransform.GetComponent<Button_UI>().ClickEvent (() => TryBuyItem(itemType, currencyType))  ;
     }

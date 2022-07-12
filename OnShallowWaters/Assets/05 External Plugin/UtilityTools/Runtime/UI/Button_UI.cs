@@ -11,7 +11,7 @@ public class Button_UI : MonoBehaviour
 
     private void OnDestroy()
     {
-        _button.onClick.RemoveAllListeners();
+        ClearAllListeners();
     }
     
     private void Awake()
@@ -30,5 +30,13 @@ public class Button_UI : MonoBehaviour
     private void Event_Click(UnityAction clickAction)
     {
         _button.onClick.AddListener(clickAction);
+    }
+
+    public void ClearAllListeners()
+    {
+       // print(_button.onClick.GetPersistentEventCount());
+        
+        _button.onClick.RemoveAllListeners();
+        
     }
 }

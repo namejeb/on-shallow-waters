@@ -1,54 +1,59 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [SerializeField] private int hp = 5;
-    protected int _currHp;
+    [SerializeField] private float maxHp = 5;
+    protected float currHp;
     
+    [Space][Space]
+    [Header("Stats:")]
     [SerializeField] private Stat atk;
-    [SerializeField] private Stat def;
-    
-    public static Dictionary<Stat, int> statsDict = new Dictionary<Stat, int>();
 
-    public int Hp { get; protected set ; }
+    public float MaxHp
+    {
+        get => maxHp; 
+        protected set => maxHp = value;
+    }
     public Stat Atk { get => atk; }
-    public Stat Def { get => def; }
+    
     
     public float CurrHpPercentage
     {
-        get => (float) _currHp / hp;
+        get => currHp / MaxHp;
+    }
+
+    private void OnDisable()
+    {
+        currHp = maxHp;
     }
     
-    private void Awake()
+    protected void Awake()
     {
-        _currHp = hp;
+        currHp = maxHp;
     }
     
-    public void TakeDamage(int dmg)
+    protected void TakeDamage(float dmg)
     {
-        if (_currHp - dmg < 0) return;  //prevent dying again
+        currHp -= dmg;
         
-        _currHp -= dmg;
-        
-        if (_currHp <= 0)
+        if (currHp <= 0f)
         {
-            _currHp = 0;
+            currHp = 0;
             Die();
         }
     }
 
-    public virtual void Die()
+    protected virtual void Die()
     {
         // implement different die functionalities      
     }
 
-    public void AddModifier(Stat statToModify, int modifier)
+    public void AddModifier(Stat statToModify, float modifier)
     {
         statToModify.AddModifier(modifier);
     }
 
-    public void RemoveModifier(Stat statToModify, int modifier)
+    public void RemoveModifier(Stat statToModify, float modifier)
     {
         statToModify.RemoveModifier(modifier);
     }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
+
 public enum CurrencyType
 {
     SOULS,
@@ -10,14 +11,10 @@ public enum CurrencyType
 
 public class CurrencySystem : MonoBehaviour
 {
-    public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType,int>();
+    public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType, int>();
 
-    public static event Action OnCurrencyChanged;
-
-    private void OnDestroy()
-    {
-        OnCurrencyChanged -= Print;
-    }
+    public static event Action<Vector2Int> OnCurrencyChanged;
+    private static Vector2Int _goldSoulAmount;
     
     private void Awake()
     {
@@ -28,20 +25,29 @@ public class CurrencySystem : MonoBehaviour
         {
             currencyDict.Add((CurrencyType) i, 0);
         }
-
-        AddCurrency(CurrencyType.GOLD, 50);
-        AddCurrency(CurrencyType.SOULS, 80);
-        Print();
-        OnCurrencyChanged += Print;
     }
-    
+
+    private void Start()
+    {
+        _goldSoulAmount = Vector2Int.zero;
+        if (OnCurrencyChanged != null)  OnCurrencyChanged.Invoke(_goldSoulAmount); 
+    }
+
     public static void AddCurrency(CurrencyType currencyType, int amount)
     {
         currencyDict[currencyType] += amount;
+        UpdateVector2Int();
         
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();
+        if (OnCurrencyChanged != null)  OnCurrencyChanged.Invoke(_goldSoulAmount); 
     }
 
+    //Overload for adding in a range
+    public static void AddCurrency(CurrencyType currencyType, int minAmount, int maxAmount)
+    {
+        int amountToAdd = UnityEngine.Random.Range(minAmount, maxAmount);
+        AddCurrency(currencyType, amountToAdd);
+    }
+    
     //Main function for shop systems
     public static void RemoveCurrency(CurrencyType currencyType, int amount)
     {
@@ -54,12 +60,14 @@ public class CurrencySystem : MonoBehaviour
         {
             currencyDict[currencyType] = 0;
         }
-        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke();   
+        UpdateVector2Int();
+        
+        if(OnCurrencyChanged != null) OnCurrencyChanged.Invoke(_goldSoulAmount);   
     }
 
-    private void Print()
+    private static void UpdateVector2Int()
     {
-        print("Current GOLD: " + currencyDict[CurrencyType.GOLD]);
-        print("Current SOULS: " + currencyDict[CurrencyType.SOULS]);
+        _goldSoulAmount.x = currencyDict[CurrencyType.GOLD];
+        _goldSoulAmount.y = currencyDict[CurrencyType.SOULS];
     }
 }
