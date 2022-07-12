@@ -16,8 +16,9 @@ public class BreakParts : MonoBehaviour
     private void Awake()
     {
         _numOfParts = transform.childCount;
-        _partRbs = new Rigidbody[_numOfParts];
+        _partRbs = new Rigidbody[ _numOfParts ];
 
+        // get references
         for (int i = 0; i < _numOfParts; i++)
         {
             _partRbs[i] = transform.GetChild(i).GetComponent<Rigidbody>();
@@ -28,6 +29,7 @@ public class BreakParts : MonoBehaviour
     {
         RoomSpawnerV2.OnRoomChangeStart += DestroySelf;
         
+        // break effect
         for (int i = 0; i < _numOfParts; i++)
         {
             _partRbs[i].AddForce( GetDirection() * flingForce, ForceMode.Impulse );
