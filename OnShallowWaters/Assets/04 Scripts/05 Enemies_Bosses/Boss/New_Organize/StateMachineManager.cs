@@ -114,7 +114,7 @@ public class StateMachineManager : MonoBehaviour
     }
 
     [Button]
-    private void Shake()
+    public void Shake()
     {
         Debug.Log("Shake");
         float time = 2;
