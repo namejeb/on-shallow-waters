@@ -41,7 +41,9 @@ public class BossAI_Rest : State
         {
             float rand = Random.Range(0, 2);
             if (rand == 0)
+            {
                 sm.RotateTowards();
+            }
             else if (rand == 1)
             {
                 sm.Agent.speed = restMoveSpeed;
