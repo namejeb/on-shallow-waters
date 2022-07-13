@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using _04_Scripts._05_Enemies_Bosses;
-using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
+using NaughtyAttributes;
 
 public class SkBlessing : MonoBehaviour
 {
@@ -32,6 +32,8 @@ public class SkBlessing : MonoBehaviour
 
     private PlayerStats playerStats;
     private TimeManager timeManager;
+    
+    
 
     public float Skb2Duration
     {
@@ -129,20 +131,24 @@ public class SkBlessing : MonoBehaviour
         startCountdown = true;
     }
 
+    [Button]
     public void SKB3()
     {
-        if (startCountdown)
-            return;
+        //if (startCountdown)
+        //    return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
 
         currSoul = 0;
         timer = duration;
         startCountdown = true;
+
+        
+
         timeManager.StartSlowMo(duration);
     }
     

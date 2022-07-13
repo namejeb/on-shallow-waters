@@ -27,9 +27,10 @@ public class BossAI_Rest : State
         {
             sm.inStateTimer = 0;
             sm.Agent.speed = sm.speed;
+            sm.Agent.ResetPath();
             sm.BossRandomState();
         }
-
+        
         //if (canRotate)
         //    sm.RotateTowards();
         else if (usingNavmesh)
@@ -41,7 +42,9 @@ public class BossAI_Rest : State
         {
             float rand = Random.Range(0, 2);
             if (rand == 0)
+            {
                 sm.RotateTowards();
+            }
             else if (rand == 1)
             {
                 sm.Agent.speed = restMoveSpeed;
