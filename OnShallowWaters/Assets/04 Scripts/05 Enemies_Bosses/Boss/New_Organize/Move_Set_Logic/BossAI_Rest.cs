@@ -33,8 +33,12 @@ public class BossAI_Rest : State
             sm.Agent.stoppingDistance = sm.chaseMinDistance;
             sm.BossRandomState();
         }
-        Debug.Log(sm.Agent.velocity);
-        if (usingNavmesh)
+        
+        if (canRotate)
+        {
+            sm.RotateTowards();
+        }
+        else if (usingNavmesh)
         {
             sm.Agent.speed = restMoveSpeed;
             if (sm.Agent.velocity == Vector3.zero)

@@ -59,7 +59,7 @@ public class StateMachineManager : MonoBehaviour
     }
 
 
-    float velocity = 2;
+    float velocity = 10;
     void Update()
     {
         _currentState.UpdateState(this);
@@ -69,7 +69,7 @@ public class StateMachineManager : MonoBehaviour
             faceAngle = transform.rotation.eulerAngles.y;// -5;
             //_animator.SetLayerWeight(1, 1);
             float currentWeight = _animator.GetLayerWeight(1);
-            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.2f));
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.1f));
         }
 
         else if (transform.rotation.eulerAngles.y < (faceAngle - 5))
@@ -77,7 +77,7 @@ public class StateMachineManager : MonoBehaviour
             faceAngle = transform.rotation.eulerAngles.y;// +5;
             //_animator.SetLayerWeight(1, 1);
             float currentWeight = _animator.GetLayerWeight(1);
-            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.2f));
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.1f));
         }
 
         else if (transform.rotation.eulerAngles.y <= (faceAngle + 5) && transform.rotation.eulerAngles.y >= (faceAngle - 5))
@@ -101,6 +101,18 @@ public class StateMachineManager : MonoBehaviour
         SetState(stateList[3]);
     }
 
+    [Button]
+    public void Slam()
+    {
+        SetState(stateList[4]);
+    }
+
+    [Button]
+    public void Slice()
+    {
+        SetState(stateList[2]);
+    }
+
     public void BossRandomState()
     {
         int randNum = Random.Range(0, stateList.Count);
@@ -110,7 +122,7 @@ public class StateMachineManager : MonoBehaviour
             randNum = Random.Range(0, stateList.Count);
         }
 
-        SetState(stateList[randNum]);
+        SetState(stateList[0]);
     }
 
     public void HitBoxOn(int i)
