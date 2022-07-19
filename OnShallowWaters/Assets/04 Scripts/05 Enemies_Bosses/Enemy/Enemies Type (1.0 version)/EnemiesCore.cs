@@ -159,17 +159,26 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         //     yield return new WaitForSeconds(3f);
         // }
 
-        public void ShieldBar(int damage) {
-            switch (shieldDestroy){
-                case true: _enemyStats.Damage(damage); return;
-                case false:
-                    currentShield -= damage * shieldDmgBonus;
-                    if (currentShield <= 0){
-                        shieldDestroy = true;
-                        rb3d.AddForce(25, 0, 25, ForceMode.Impulse);
-                        StartCoroutine(WaitForStaggerToEnd());
-                    }
-                    return;
+        // public void ShieldBar(int damage) {
+        //     switch (shieldDestroy){
+        //         case true: _enemyStats.TakeDamage(damage); return;
+        //         case false:
+        //             currentShield -= damage * shieldDmgBonus;
+        //             if (currentShield <= 0){
+        //                 shieldDestroy = true;
+        //                 rb3d.AddForce(25, 0, 25, ForceMode.Impulse);
+        //                 StartCoroutine(WaitForStaggerToEnd());
+        //             }
+        //             return;
+        //     }
+        // }
+        
+        public void ShieldBar(int damage){
+            currentShield -= damage * shieldDmgBonus;
+            if (currentShield <= 0){
+                shieldDestroy = true;
+                rb3d.AddForce(25, 0, 25, ForceMode.Impulse);
+                StartCoroutine(WaitForStaggerToEnd());
             }
         }
         

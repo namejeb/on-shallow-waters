@@ -36,7 +36,11 @@ public class EnemyStats : CharacterStats, IDamageable
     
     public void Damage(int damageAmount)
     {
-        if (_enemiesCore.armourType) _enemiesCore.ShieldBar(damageAmount);
+        if (_enemiesCore.armourType)
+        {
+            if (!_enemiesCore.shieldDestroy) _enemiesCore.ShieldBar(damageAmount);
+            else TakeDamage(damageAmount);
+        }
         else TakeDamage(damageAmount);
 
         healthBar.UpdateHealthBar(CurrHpPercentage);

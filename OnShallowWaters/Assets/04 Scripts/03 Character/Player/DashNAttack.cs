@@ -1,6 +1,8 @@
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
 using System;
+using System.Collections.Generic;
+using UnityEngine.Timeline;
 
 
 public class DashNAttack : MonoBehaviour
@@ -37,12 +39,29 @@ public class DashNAttack : MonoBehaviour
     private BoonDamageModifiers _boonDamageModifiers;
     private SkBlessing _skBlessing;
 
+    [SerializeField] private Transform boonEffectsManagerTransform;
+    
+    private List<Boon_Attack> _boonAttackList = new List<Boon_Attack>();
+    private BM_DmgWhenArmorBreak _dmgWhenShieldBreak;
+
+    private void InitBoonRefs()
+    {
+        Transform b = boonEffectsManagerTransform;
+        
+        // if is BA, add to list
+        _boonAttackList.Add( b.GetComponent<BA_SingleEnemyDmgBonus>() );
+        _boonAttackList.Add(b.GetComponent<BA_FirstTimeDmgBonus>());
+        
+        _dmgWhenShieldBreak = b.GetComponent<BM_DmgWhenArmorBreak>();
+    }
+
 
     public static event Action OnCrit;
     
     private void Awake()
     {
         _skBlessing = GetComponent<SkBlessing>();
+        InitBoonRefs();
     }
 
     private void Start()
@@ -195,45 +214,67 @@ public class DashNAttack : MonoBehaviour
 
         nextAttack /= stats.AtkSpeed;
 
-        
-
         // Debug.Log(attackSequence.ToString());
     }
 
     private void HandleDamaging(float outDamage)
     {
-        outDamage = Mathf.RoundToInt(outDamage);
+        //outDamage = Mathf.RoundToInt(outDamage);
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
         
         for (int i = 0; i < hitColliders.Length; i++)
         {
 
-            Debug.Log(hitColliders[i].gameObject.name);
+           // Debug.Log(hitColliders[i].gameObject.name);
             if (hitColliders[i] == null) continue;  //skip if null
             
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
             if (damagable == null) continue;
 
-            outDamage = ApplyCrit(outDamage);
-            
             //if hit an enemy
             EnemyHandler enemyHandler = null;
             if (hitColliders[i].CompareTag("Enemy"))
             {
                 enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
-                if(enemyHandler != null)            //if still null, meaning its a boss
-                    outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
-                
+                if (enemyHandler != null) // if still null, meaning its a boss
+                {
+
+                    outDamage = HandleBoonDmgModifications(outDamage, enemyHandler);
+                }
                 _skBlessing.AddSoul(2);
             }
+            
+            
+            // print(outDamage);
+            //outDamage = ApplyCrit(outDamage);
             damagable.Damage( (int) outDamage);
+           
             if (enemyHandler == null) continue;
-            if (_boonDamageModifiers.DmgWhenShieldBreakActivated && enemyHandler.EnemiesCore != null)
+            if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
             {
-                _boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
+                //_boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
+                _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
             }
         }
+    }
+
+    private float HandleBoonDmgModifications(float outDamage, EnemyHandler e)
+    {
+        // outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
+        for (int j = 0; j < _boonAttackList.Count; j++)
+        { 
+            Boon_Attack b = _boonAttackList[j];
+            if (b.Activated)
+            {
+                if (b.Type == DmgModificationType.DMG_ONLY)
+                    outDamage = b.ApplyEffect(outDamage);
+                else if (b.Type == DmgModificationType.DMG_ENEMY)
+                    outDamage = b.ApplyEffect(outDamage, e);
+            }
+        }
+
+        return outDamage;
     }
 
     private float ApplyCrit(float outgoingDamage)

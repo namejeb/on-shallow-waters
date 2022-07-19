@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Drawing;
+
 
 [System.Serializable]
 public class StatIncreaseAmounts
@@ -64,6 +63,8 @@ public class StatIncreaseAmountsInt
 public class BoonEffects : MonoBehaviour {
     
     private PlayerStats _playerStats;
+    [SerializeField] private BoonEffectsManager boonEffectsManager;
+    
 
     [Space] public int boonToUse;
 
@@ -109,28 +110,25 @@ public class BoonEffects : MonoBehaviour {
     
     public void HandleEffectActivation(int boonItemId)
     {
-       // boonItemId = boonToUse;
+        boonItemId = boonToUse;
         
         switch (boonItemId)
         {
-            case 0: IncreaseMaxHp();      break;        //--x
-            case 1: IncreaseDefense();  break;          //--x
-            case 2: IncreaseMovementSpeed();  break;       //--x
-            case 3: ReduceDamageWhenHpLow(); break;    //--x
+            case 0: boonEffectsManager.MaxHp();      break;        //--x
+            case 1: boonEffectsManager.Defense();  break;          //--x
+            case 2: boonEffectsManager.MovementSpeed();  break;       //--x
+            case 3: boonEffectsManager.LowHpDmgReduction(); break;    //--x
             
-            case 4: DmgToArmorIncrease();  break;       //--x
-            case 5: DmgWhenArmorBreak();  break;        //--x
-            case 6: SingleEnemyDmgIncrease();  break;   //---x
-            case 7: FirstTimeDmgBonus();  break;        //--x
+            case 4: boonEffectsManager.ArmorDmgBonus();  break;       //--x
+            case 5: boonEffectsManager.DmgWhenArmorBreak(); break;
+            case 6: boonEffectsManager.IncreaseDmgIncreaseSingleEnemy(); break;
+            case 7: boonEffectsManager.FirstTimeDmgBonus(); break;
             
-            case 8: UpgradeAtkPercent();  break;        //---x
-            case 9: UpgradeAtkSpd();      break;        //--x
-            case 10: UpgradeCritChance();  break;        //--x
-            case 11: UpgradeCritDamage();  break;        //--x
+            case 8: boonEffectsManager.UpgradeAtkPercent(); break;   //---x
+            case 9: boonEffectsManager.UpgradeAtkSpeed();      break;        //--x
+            case 10: boonEffectsManager.UpgradeCritChance();  break;        //--x
+            case 11: boonEffectsManager.UpgradeCritDamage();  break;        //--x
         }
-
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(boonItemId);
-        UpdateTracker(s);
     }
 
 

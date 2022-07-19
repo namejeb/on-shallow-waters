@@ -17,7 +17,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
                 if (_noRepeat) return;
                 anim.SetBool("isWalk", false);
                 anim.SetTrigger("isAttack");
-                print("Activate");
+                // print("Activate");
                 _noRepeat = true;
             } else{
                 StartCoroutine(waitThenChase());
