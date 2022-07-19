@@ -34,9 +34,13 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
     private BoonDamageModifiers _boonDamageModifiers;
 
+    public PlayerHealthBar playerHealthBar;
+
     private new void Awake()
     {
         _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
+        currHp = MaxHp;
+        playerHealthBar.SetMaxHealth(MaxHp);
     }
     
     protected override void Die()
@@ -138,6 +142,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
+        playerHealthBar.SetHealth(currHp);
+        //Debug.Log(currHp);
     }
     
     private float ReceiveIncomingDmg(float incomingDamage)
@@ -172,5 +178,17 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         {
             AddModifier(Atk , 25.9f);
         }
+
     }
+
+    public void DamageTest(int damage)
+    {
+        currHp -= damage;
+        playerHealthBar.SetHealth(currHp);
+    }
+
+
+
+
+
 }

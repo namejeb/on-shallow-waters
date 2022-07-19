@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
 using UnityEngine.EventSystems;
@@ -75,6 +76,7 @@ public class DashNAttack : MonoBehaviour
         playerMovement.enabled = false;
         
         _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo 
+        animator.SetTrigger("Dash");
     }
 
     public void Update()
@@ -91,7 +93,7 @@ public class DashNAttack : MonoBehaviour
             {
 
                 isSlash = true;
-                Debug.Log("KAHHHHHHHBIIIIIN");
+                //Debug.Log("KAHHHHHHHBIIIIIN");
                 if (isSlash)
                     HeavySlash();
             }
@@ -99,13 +101,14 @@ public class DashNAttack : MonoBehaviour
             else if (chargedTimer >= 2)
             {
                 isSlam = true;
-                Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+                //Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
                 if (isSlam)
                     HeavySlam();
             }
             else if (chargedTimer >= 0.01)
             {
                 //detect normal
+                playerMovement.enabled = false;
                 Attack();
             }
 
@@ -125,6 +128,8 @@ public class DashNAttack : MonoBehaviour
         playerMovement.enabled = false;
         animator.SetTrigger("slashATK");
         attackSequence = 0;
+
+        StartCoroutine(EnableMove(1f));
     }
 
     public void HeavySlam()
@@ -138,13 +143,13 @@ public class DashNAttack : MonoBehaviour
         playerMovement.enabled = false;
         animator.SetTrigger("slamATK");
         attackSequence = 0;
+
+        StartCoroutine(EnableMove(1f));
     }
 
 
     public void Attack()
     {
-        //playerMovement.enabled = false;
-
         //Attack Sequence(What attack/aniamtion it will do)
 
         float baseAtk = (float) stats.Atk.CurrentValue;
@@ -157,43 +162,43 @@ public class DashNAttack : MonoBehaviour
         {
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
          //   Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
             animator.SetTrigger("Attack");
             attackSequence++;
             nextAttack = Time.time + 1;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
+
+            StartCoroutine(EnableMove(0.5f));
         }
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
             attackSequence++;
             nextAttack = Time.time + 1;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
+
+            StartCoroutine(EnableMove(0.5f));
         }
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
             attackSequence = 0;
             nextAttack = Time.time + 1.5f;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
+
+            StartCoroutine(EnableMove(1.5f));
         }
 
         nextAttack /= stats.AtkSpeed;
-
-        
-
         // Debug.Log(attackSequence.ToString());
     }
 
@@ -242,6 +247,12 @@ public class DashNAttack : MonoBehaviour
         }
 
         return outgoingDamage;
+    }
+
+    IEnumerator EnableMove(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        playerMovement.enabled = true;
     }
 
 
