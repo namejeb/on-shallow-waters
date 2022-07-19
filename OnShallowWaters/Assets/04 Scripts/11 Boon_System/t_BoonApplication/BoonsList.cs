@@ -15,8 +15,6 @@ public class BoonsList : MonoBehaviour
        {
            boonList.Add(foundBoons[i]);
        }
-       
-       print(boonList[2].boonId);
     }
 
     public Boon GetBoon(int boonId)
@@ -28,7 +26,6 @@ public class BoonsList : MonoBehaviour
             if (b.boonId == boonId)
             {
                 foundBoon = b;
-                print(foundBoon.boonId);
             }
         }
 

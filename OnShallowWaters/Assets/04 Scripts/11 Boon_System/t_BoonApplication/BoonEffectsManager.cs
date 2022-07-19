@@ -76,7 +76,7 @@ public class BoonEffectsManager : MonoBehaviour
         BM_AtkSpeed b = GetComponent<BM_AtkSpeed>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-        print(PlayerHandler.Instance.PlayerStats.AtkSpeed);
+      //  print(PlayerHandler.Instance.PlayerStats.AtkSpeed);
     }
 
     public void UpgradeCritChance()
@@ -84,7 +84,7 @@ public class BoonEffectsManager : MonoBehaviour
         BM_CritChance b = GetComponent<BM_CritChance>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-        print(PlayerHandler.Instance.PlayerStats.CritChance);
+       // print(PlayerHandler.Instance.PlayerStats.CritChance);
     }
     
     public void UpgradeCritDamage()
@@ -92,7 +92,7 @@ public class BoonEffectsManager : MonoBehaviour
         BM_CritDamage b = GetComponent<BM_CritDamage>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-        print(PlayerHandler.Instance.PlayerStats.CritDamage);
+      //  print(PlayerHandler.Instance.PlayerStats.CritDamage);
     }
 
 

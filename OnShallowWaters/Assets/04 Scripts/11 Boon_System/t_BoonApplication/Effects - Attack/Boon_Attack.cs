@@ -14,15 +14,9 @@ public class Boon_Attack : Boon
     // Set DmgModificationType on Awake() based on arguments of ApplyEffect() to work properly
     protected virtual void Awake() { }
 
-    public virtual float ApplyEffect(float outgoingDmg)
-    {
-        return 0f;
-    }
+    public virtual float ApplyEffect(float outgoingDmg) { return 0f; }
 
-    public virtual float ApplyEffect(float outgoingDmg, EnemyHandler e)
-    {
-        return 0f;
-    }
+    public virtual float ApplyEffect(float outgoingDmg, EnemyHandler e) { return 0f; }
 
     protected void SetType(DmgModificationType t)
     {

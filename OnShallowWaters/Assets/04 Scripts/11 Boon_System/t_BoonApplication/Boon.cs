@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using System.Collections.Generic;
 
 
 /*
@@ -20,7 +18,7 @@ public class Boon : MonoBehaviour
     
     public bool Activated { get => _activated; set =>_activated = value; }
     public float EffectAmount => effectAmounts[_tracker];
-
+    
     
     public void Upgrade(){
         _tracker++;

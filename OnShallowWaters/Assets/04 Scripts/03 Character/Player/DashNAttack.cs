@@ -239,7 +239,6 @@ public class DashNAttack : MonoBehaviour
                 enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
                 if (enemyHandler != null) // if still null, meaning its a boss
                 {
-
                     outDamage = HandleBoonDmgModifications(outDamage, enemyHandler);
                 }
                 _skBlessing.AddSoul(2);
