@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Drawing;
 
 [System.Serializable]
 public class StatIncreaseAmounts
@@ -132,25 +133,6 @@ public class BoonEffects : MonoBehaviour {
         UpdateTracker(s);
     }
 
-    private StatIncreaseAmountsFloat GetStatIncreaseAmountFloat(int boonItemId)
-    {
-        StatIncreaseAmountsFloat s = null;
-
-        for (int i = 0; i < statIncreaseAmounts.Count; i++)
-        {
-            if (statIncreaseAmounts[i].idFromBoonItem == boonItemId)
-            {
-                s = statIncreaseAmounts[i];
-            }
-        }
-
-        return s;
-    }
-
-    private void UpdateTracker(StatIncreaseAmountsFloat s)
-    {
-        s.tracker++;
-    }
 
 
     //------Survival------
@@ -182,6 +164,7 @@ public class BoonEffects : MonoBehaviour {
        _playerStats.IncreaseDamageReduction( s.GetIncreaseAmount() );
        PlayerHandler.Instance.BoonDamageModifiers.EnableDmgReductionWhenLowHp( s.GetIncreaseAmount() );
     }
+    
     
 
 
@@ -260,6 +243,27 @@ public class BoonEffects : MonoBehaviour {
         
         statIncreaseAmounts.tracker++;
     }
+    
+    private StatIncreaseAmountsFloat GetStatIncreaseAmountFloat(int boonItemId)
+    {
+        StatIncreaseAmountsFloat s = null;
+
+        for (int i = 0; i < statIncreaseAmounts.Count; i++)
+        {
+            if (statIncreaseAmounts[i].idFromBoonItem == boonItemId)
+            {
+                s = statIncreaseAmounts[i];
+            }
+        }
+
+        return s;
+    }
+
+    private void UpdateTracker(StatIncreaseAmountsFloat s)
+    {
+        s.tracker++;
+    }
+
     
     //Get modifier to remove and add for a Stat
     private Vector2Int CalcModifierValues(StatIncreaseAmounts statIncreaseAmounts)

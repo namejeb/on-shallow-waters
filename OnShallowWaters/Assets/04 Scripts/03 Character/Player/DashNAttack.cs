@@ -1,7 +1,7 @@
-using System;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
-using UnityEngine.EventSystems;
+using System;
+
 
 public class DashNAttack : MonoBehaviour
 {
@@ -36,6 +36,9 @@ public class DashNAttack : MonoBehaviour
     
     private BoonDamageModifiers _boonDamageModifiers;
     private SkBlessing _skBlessing;
+
+
+    public static event Action OnCrit;
     
     private void Awake()
     {
@@ -239,10 +242,9 @@ public class DashNAttack : MonoBehaviour
         if (cr < stats.CritChance)
         {
             outgoingDamage *= stats.CritDamage;
+            if(OnCrit != null) OnCrit.Invoke();
         }
 
         return outgoingDamage;
     }
-
-
 }
