@@ -91,8 +91,7 @@ public class StateMachineManager : MonoBehaviour
 
     public void SetState(State state)
     {
-        //_currentState = state;
-        _currentState = stateList[0];
+        _currentState = state;
         _currentState.EnterState(this);
     }
 
