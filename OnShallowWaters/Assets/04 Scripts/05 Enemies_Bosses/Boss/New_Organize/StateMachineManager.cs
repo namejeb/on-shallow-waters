@@ -38,6 +38,9 @@ public class StateMachineManager : MonoBehaviour
     public Animator Anim => _animator;
     public Rigidbody Rb { get { return rb; } set { rb = value; } }
 
+
+    public float faceAngle;
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -49,22 +52,54 @@ public class StateMachineManager : MonoBehaviour
     private void Start()
     {
         target = PlayerHandler.Instance.transform;
-
         Agent.stoppingDistance = chaseMinDistance;
-
+        faceAngle = transform.rotation.eulerAngles.y;
         _agent.speed = speed;
         SetState(stateList[0]);
     }
 
+
+    float velocity = 2;
     void Update()
     {
         _currentState.UpdateState(this);
+
+        if (transform.rotation.eulerAngles.y > (faceAngle + 5))
+        {
+            faceAngle = transform.rotation.eulerAngles.y;// -5;
+            //_animator.SetLayerWeight(1, 1);
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.2f));
+        }
+
+        else if (transform.rotation.eulerAngles.y < (faceAngle - 5))
+        {
+            faceAngle = transform.rotation.eulerAngles.y;// +5;
+            //_animator.SetLayerWeight(1, 1);
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.2f));
+        }
+
+        else if (transform.rotation.eulerAngles.y <= (faceAngle + 5) && transform.rotation.eulerAngles.y >= (faceAngle - 5))
+        {
+            //_animator.SetLayerWeight(1, 0);
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 0, ref velocity, 0.2f));
+        }
+ 
     }
 
     public void SetState(State state)
     {
-        _currentState = state;
+        //_currentState = state;
+        _currentState = stateList[0];
         _currentState.EnterState(this);
+    }
+
+    [Button]
+    public void Shoot()
+    {
+        SetState(stateList[3]);
     }
 
     public void BossRandomState()
