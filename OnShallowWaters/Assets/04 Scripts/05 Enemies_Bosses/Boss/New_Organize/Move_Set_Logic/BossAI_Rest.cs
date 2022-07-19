@@ -53,12 +53,10 @@ public class BossAI_Rest : State
 
             if (sm.Agent.velocity == Vector3.zero)
             {
-                Debug.Log("STANDING");
                 sm.Anim.SetBool("isWalk", false);
             }
             else
             {
-                Debug.Log("WALKING");
                 sm.Anim.SetBool("isWalk", true);
             }
 
