@@ -122,7 +122,7 @@ public class StateMachineManager : MonoBehaviour
             randNum = Random.Range(0, stateList.Count);
         }
 
-        SetState(stateList[0]);
+        SetState(stateList[randNum]);
     }
 
     public void HitBoxOn(int i)

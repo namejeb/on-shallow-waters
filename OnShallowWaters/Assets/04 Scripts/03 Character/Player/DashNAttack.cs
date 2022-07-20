@@ -24,7 +24,7 @@ public class DashNAttack : MonoBehaviour
 
     private bool _isDash = false;
     
-    private float _elapsedTime = 0f;
+    //private float _elapsedTime = 0f;
     private float _endTime = 0f;
 
     [SerializeField] private LayerMask damageableLayer;
@@ -120,8 +120,9 @@ public class DashNAttack : MonoBehaviour
                 playerMovement.enabled = false;
                 Attack();
                 resetTimer = Time.time + resetSequence;
-            }
 
+            }
+            
             chargedTimer = 0;
         }
             
@@ -192,7 +193,7 @@ public class DashNAttack : MonoBehaviour
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
 
-            StartCoroutine(EnableMove(0.5f));
+            StartCoroutine(EnableMove(0.8f));
         }
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
@@ -200,12 +201,12 @@ public class DashNAttack : MonoBehaviour
           //  Debug.Log(tempOutDamage);
             animator.SetTrigger("Attack3");
             attackSequence = 0;
-            nextAttack = Time.time + 1.5f;
+            nextAttack = Time.time + 1f;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
 
-            StartCoroutine(EnableMove(1.5f));
+            StartCoroutine(EnableMove(1f));
         }
 
         nextAttack /= stats.AtkSpeed;
@@ -268,6 +269,12 @@ public class DashNAttack : MonoBehaviour
     public void ResetATK()
     {
         attackSequence = 0;
+        animator.ResetTrigger("Attack");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
     }
 
 
