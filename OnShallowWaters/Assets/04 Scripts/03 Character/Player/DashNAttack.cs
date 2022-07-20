@@ -14,6 +14,8 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float resetTimer;
+    [SerializeField] private float resetSequence = 3f;
 
     //Heavy Attack Variables
     [SerializeField] private float chargedTimer;
@@ -81,6 +83,11 @@ public class DashNAttack : MonoBehaviour
 
     public void Update()
     {
+        if(Time.time >= resetTimer)
+        {
+            ResetATK();
+            Debug.Log(attackSequence);
+        }
         
         if(pressedButton.isPressed)
            chargedTimer += Time.deltaTime;
@@ -96,6 +103,7 @@ public class DashNAttack : MonoBehaviour
                 //Debug.Log("KAHHHHHHHBIIIIIN");
                 if (isSlash)
                     HeavySlash();
+                    resetTimer = Time.time + resetSequence;
             }
 
             else if (chargedTimer >= 2)
@@ -104,12 +112,14 @@ public class DashNAttack : MonoBehaviour
                 //Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
                 if (isSlam)
                     HeavySlam();
+                    resetTimer = Time.time + resetSequence;
             }
             else if (chargedTimer >= 0.01)
             {
                 //detect normal
                 playerMovement.enabled = false;
                 Attack();
+                resetTimer = Time.time + resetSequence;
             }
 
             chargedTimer = 0;
@@ -163,8 +173,8 @@ public class DashNAttack : MonoBehaviour
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
          //   Debug.Log(tempOutDamage);
             animator.SetTrigger("Attack");
+            nextAttack = Time.time + 0.5f;
             attackSequence++;
-            nextAttack = Time.time + 1;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
@@ -176,8 +186,8 @@ public class DashNAttack : MonoBehaviour
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
             animator.SetTrigger("Attack2");
+            nextAttack = Time.time + 0.8f;
             attackSequence++;
-            nextAttack = Time.time + 1;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
@@ -253,6 +263,11 @@ public class DashNAttack : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(duration);
         playerMovement.enabled = true;
+    }
+
+    public void ResetATK()
+    {
+        attackSequence = 0;
     }
 
 
