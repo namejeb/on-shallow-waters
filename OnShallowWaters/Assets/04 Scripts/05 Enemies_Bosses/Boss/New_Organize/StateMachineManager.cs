@@ -37,6 +37,7 @@ public class StateMachineManager : MonoBehaviour
     public NavMeshAgent Agent => _agent;
     public Animator Anim => _animator;
     public Rigidbody Rb { get { return rb; } set { rb = value; } }
+    public List<GameObject> MH { get { return meleeHitbox; } set { meleeHitbox = value; } }
 
 
     public float faceAngle;
@@ -162,10 +163,9 @@ public class StateMachineManager : MonoBehaviour
     [Button]
     public void Shake()
     {
-        Debug.Log("Shake");
         float time = 2;
-        impSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = time;
-        impSource.m_DefaultVelocity.x = impSource.m_DefaultVelocity.y = -0.5f;
+        //impSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = time;
+        //impSource.m_DefaultVelocity.x = impSource.m_DefaultVelocity.y = -0.5f;
         impSource.GenerateImpulse();
     }
 }

@@ -69,7 +69,7 @@ public class DashNAttack : MonoBehaviour
             playerMovement.enabled = true;
         }
 
-        Debug.Log("dash");
+        //Debug.Log("dash");
     }
 
     public void ActivateDash()
@@ -86,7 +86,7 @@ public class DashNAttack : MonoBehaviour
         if(Time.time >= resetTimer)
         {
             ResetATK();
-            Debug.Log(attackSequence);
+            //Debug.Log(attackSequence);
         }
         
         if(pressedButton.isPressed)

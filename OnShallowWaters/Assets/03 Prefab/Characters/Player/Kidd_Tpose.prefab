@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 1799349630}
   m_Layer: 0
   m_Name: Kidd_Tpose
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -539,6 +539,7 @@ MonoBehaviour:
     modifiers: []
     hasCap: 0
     cap: 0
+  playerHealthBar: {fileID: 0}
 --- !u!114 &1799349628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,6 +554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1799349632}
   joystick: {fileID: 0}
+  animator: {fileID: 0}
   speed: 10
   rotationSpeed: 1000
   canMove: 0
@@ -575,6 +577,8 @@ MonoBehaviour:
   dashDuration: 0.2
   range: 0
   speed: 5
+  resetTimer: 0
+  resetSequence: 3
   chargedTimer: 0
   isSlash: 0
   isSlam: 0

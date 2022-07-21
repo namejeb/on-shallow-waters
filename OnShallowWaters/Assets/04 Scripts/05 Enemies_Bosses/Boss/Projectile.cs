@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            col.gameObject.GetComponent<PlayerStats>().Damage(10);
+            col.gameObject.GetComponent<PlayerStats>().Damage(20);
             gameObject.SetActive(false);
 
         }
