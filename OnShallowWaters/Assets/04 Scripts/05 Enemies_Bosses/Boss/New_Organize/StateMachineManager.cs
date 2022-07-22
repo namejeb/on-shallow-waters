@@ -60,7 +60,8 @@ public class StateMachineManager : MonoBehaviour
     }
 
 
-    float velocity = 10;
+    float velocity = 100;
+    float velocity2 = 50;
     void Update()
     {
         _currentState.UpdateState(this);
@@ -85,7 +86,7 @@ public class StateMachineManager : MonoBehaviour
         {
             //_animator.SetLayerWeight(1, 0);
             float currentWeight = _animator.GetLayerWeight(1);
-            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 0, ref velocity, 0.2f));
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 0, ref velocity, 0.3f));
         }
  
     }
@@ -121,6 +122,14 @@ public class StateMachineManager : MonoBehaviour
         while (_currentState == stateList[randNum])
         {
             randNum = Random.Range(0, stateList.Count);
+        }
+
+        while (_currentState == stateList[1] && randNum == 4)
+        {
+            int[] num = { 0, 2, 3 };
+            randNum = Random.Range(0, num.Length);
+            randNum = num[randNum];
+            Debug.Log(randNum);
         }
 
         SetState(stateList[randNum]);

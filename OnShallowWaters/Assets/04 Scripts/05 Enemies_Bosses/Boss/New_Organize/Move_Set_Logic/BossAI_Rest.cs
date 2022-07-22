@@ -31,7 +31,6 @@ public class BossAI_Rest : State
             sm.inStateTimer = 0;
             sm.Agent.speed = sm.speed;
             sm.Agent.stoppingDistance = sm.chaseMinDistance;
-            sm.Agent.ResetPath();
             sm.BossRandomState();
         }
         
@@ -50,7 +49,9 @@ public class BossAI_Rest : State
             {
                 sm.Anim.SetBool("isWalk", true);
             }
-            sm.Agent.SetDestination(sm.Target.position);
+
+            if (sm.Agent.enabled)
+                sm.Agent.SetDestination(sm.Target.position);
             
         }
         else if (!canRotate && !usingNavmesh)
@@ -71,8 +72,11 @@ public class BossAI_Rest : State
             }
             else if (rand == 1)
             {
-                sm.Agent.speed = restMoveSpeed;
-                sm.Agent.SetDestination(sm.Target.position);
+                if (sm.Agent.enabled)
+                {
+                    sm.Agent.speed = restMoveSpeed;
+                    sm.Agent.SetDestination(sm.Target.position);
+                }  
             }
         }
     }

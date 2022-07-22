@@ -65,7 +65,7 @@ public class SkBlessing : MonoBehaviour
         // this is setting for skb, if 1st skb got change need change here too
         duration = 10;
         requiredSoul = 100;
-        soulButton.onClick.AddListener(SKB1);
+        soulButton.onClick.AddListener(SKB3);
     }
 
     private void Update()

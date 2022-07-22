@@ -238,7 +238,7 @@ public class DashNAttack : MonoBehaviour
                 if(enemyHandler != null)            //if still null, meaning its a boss
                     outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
                 
-                _skBlessing.AddSoul(2);
+                _skBlessing.AddSoul(5);
             }
             damagable.Damage( (int) outDamage);
             if (enemyHandler == null) continue;
