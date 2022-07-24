@@ -6,12 +6,12 @@ using UnityEngine;
 public class BossAI_Stunted : State
 {
     [SerializeField] private float stuntTimeout;
+    [SerializeField] private string stuntAnimation;
 
     public override void EnterState(StateMachineManager sm)
     {
         sm.Agent.enabled = false;
-        // play stunt animation
-        //Debug.Log("Boss Stunted");
+        sm.Anim.SetTrigger(stuntAnimation);
     }
 
     public override void UpdateState(StateMachineManager sm)

@@ -17,7 +17,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
                 if (_noRepeat) return;
                 anim.SetBool("isWalk", false);
                 anim.SetTrigger("isAttack");
-                print("Activate");
                 _noRepeat = true;
             } else{
                 StartCoroutine(waitThenChase());
@@ -27,7 +26,8 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         private IEnumerator waitThenChase(){
             yield return new WaitForSeconds(1.5f);
             behaviour = CoreStage.Move;
-            missAttack = _noRepeat = false;
+            missAttack = false;
+            _noRepeat = false;
             targetHit = 0;
         }
     }

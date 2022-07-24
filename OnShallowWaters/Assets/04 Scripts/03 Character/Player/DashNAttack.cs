@@ -1,7 +1,8 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using _04_Scripts._05_Enemies_Bosses;
-using System;
-
+using UnityEngine.EventSystems;
 
 public class DashNAttack : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float range;
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float resetTimer;
+    [SerializeField] private float resetSequence = 3f;
 
     //Heavy Attack Variables
     [SerializeField] private float chargedTimer;
@@ -21,7 +24,7 @@ public class DashNAttack : MonoBehaviour
 
     private bool _isDash = false;
     
-    private float _elapsedTime = 0f;
+    //private float _elapsedTime = 0f;
     private float _endTime = 0f;
 
     [SerializeField] private LayerMask damageableLayer;
@@ -36,9 +39,6 @@ public class DashNAttack : MonoBehaviour
     
     private BoonDamageModifiers _boonDamageModifiers;
     private SkBlessing _skBlessing;
-
-
-    public static event Action OnCrit;
     
     private void Awake()
     {
@@ -69,7 +69,7 @@ public class DashNAttack : MonoBehaviour
             playerMovement.enabled = true;
         }
 
-        Debug.Log("dash");
+        //Debug.Log("dash");
     }
 
     public void ActivateDash()
@@ -78,10 +78,16 @@ public class DashNAttack : MonoBehaviour
         playerMovement.enabled = false;
         
         _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo 
+        animator.SetTrigger("Dash");
     }
 
     public void Update()
     {
+        if(Time.time >= resetTimer)
+        {
+            ResetATK();
+            //Debug.Log(attackSequence);
+        }
         
         if(pressedButton.isPressed)
            chargedTimer += Time.deltaTime;
@@ -94,24 +100,29 @@ public class DashNAttack : MonoBehaviour
             {
 
                 isSlash = true;
-                Debug.Log("KAHHHHHHHBIIIIIN");
+                //Debug.Log("KAHHHHHHHBIIIIIN");
                 if (isSlash)
                     HeavySlash();
+                    resetTimer = Time.time + resetSequence;
             }
 
             else if (chargedTimer >= 2)
             {
                 isSlam = true;
-                Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+                //Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
                 if (isSlam)
                     HeavySlam();
+                    resetTimer = Time.time + resetSequence;
             }
             else if (chargedTimer >= 0.01)
             {
                 //detect normal
+                playerMovement.enabled = false;
                 Attack();
-            }
+                resetTimer = Time.time + resetSequence;
 
+            }
+            
             chargedTimer = 0;
         }
             
@@ -128,6 +139,8 @@ public class DashNAttack : MonoBehaviour
         playerMovement.enabled = false;
         animator.SetTrigger("slashATK");
         attackSequence = 0;
+
+        StartCoroutine(EnableMove(1f));
     }
 
     public void HeavySlam()
@@ -141,13 +154,13 @@ public class DashNAttack : MonoBehaviour
         playerMovement.enabled = false;
         animator.SetTrigger("slamATK");
         attackSequence = 0;
+
+        StartCoroutine(EnableMove(1f));
     }
 
 
     public void Attack()
     {
-        //playerMovement.enabled = false;
-
         //Attack Sequence(What attack/aniamtion it will do)
 
         float baseAtk = (float) stats.Atk.CurrentValue;
@@ -160,43 +173,43 @@ public class DashNAttack : MonoBehaviour
         {
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
          //   Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
             animator.SetTrigger("Attack");
+            nextAttack = Time.time + 0.5f;
             attackSequence++;
-            nextAttack = Time.time + 1;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
+
+            StartCoroutine(EnableMove(0.5f));
         }
         else if (attackSequence == 1 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
+            nextAttack = Time.time + 0.8f;
             attackSequence++;
-            nextAttack = Time.time + 1;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
+
+            StartCoroutine(EnableMove(0.8f));
         }
         else if (attackSequence == 2 && Time.time > nextAttack)
         {
             tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) ;
           //  Debug.Log(tempOutDamage);
-            playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
             attackSequence = 0;
-            nextAttack = Time.time + 1.5f;
+            nextAttack = Time.time + 1f;
 
             outDamage = Mathf.RoundToInt(tempOutDamage);
             HandleDamaging(tempOutDamage);
+
+            StartCoroutine(EnableMove(1f));
         }
 
         nextAttack /= stats.AtkSpeed;
-
-        
-
         // Debug.Log(attackSequence.ToString());
     }
 
@@ -225,7 +238,7 @@ public class DashNAttack : MonoBehaviour
                 if(enemyHandler != null)            //if still null, meaning its a boss
                     outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
                 
-                _skBlessing.AddSoul(2);
+                _skBlessing.AddSoul(5);
             }
             damagable.Damage( (int) outDamage);
             if (enemyHandler == null) continue;
@@ -242,9 +255,27 @@ public class DashNAttack : MonoBehaviour
         if (cr < stats.CritChance)
         {
             outgoingDamage *= stats.CritDamage;
-            if(OnCrit != null) OnCrit.Invoke();
         }
 
         return outgoingDamage;
     }
+
+    IEnumerator EnableMove(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        playerMovement.enabled = true;
+    }
+
+    public void ResetATK()
+    {
+        attackSequence = 0;
+        animator.ResetTrigger("Attack");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
+
 }

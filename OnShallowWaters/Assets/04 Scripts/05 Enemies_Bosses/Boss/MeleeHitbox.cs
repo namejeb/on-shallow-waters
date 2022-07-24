@@ -38,7 +38,6 @@ public class MeleeHitbox : MonoBehaviour
             if (!isDamaged)
             {
                 isDamaged = true;
-                Debug.Log("Player Damaged: " + damage);
                 col.gameObject.GetComponent<PlayerStats>().Damage(damage);
             }
         }

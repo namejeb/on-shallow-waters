@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
     public class EnemiesCore : MonoBehaviour {
         #region Basic Attributes
         [Space][Space]
@@ -14,18 +12,17 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         public NavMeshAgent agent;
         public Transform puppet;
         public Rigidbody rb3d;
-        public bool armourType;
         public Animator anim;
+        
         private EnemyStats _enemyStats;
-
-        //Enemies Detection & AttackRange
+        public bool armourType;
+        
         [Space][Space]
         [Header("Detection & Attack Range: ")]
         [FormerlySerializedAs("_dist")] public float dist;
-        public float detectRange = 10;
         public float attackRange = 5;
-        
-        //! Field of View
+        public float detectRange;
+
         [Space][Space]
         [Header("Field of View: ")]
         [Range(0, 30)]public float radius;
@@ -41,8 +38,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         public int stunTimer = 3;
         public bool shieldRecover;
         public bool shieldDestroy;
-        
-        //Enemies Stats
+
         [Space] [Space] 
         [Header("Stats: ")]
         public float maxHealth;
@@ -55,29 +51,31 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         #endregion
 
         private protected enum CoreStage{
-            Idle, Move, Attack, SpecialMove
+            Idle, Move, Attack
         } private protected CoreStage behaviour;
 
         #region Processing Field [Awake, Start, Update]
-
         protected virtual void Start(){
             agent = GetComponent<NavMeshAgent>();
             rb3d = GetComponent<Rigidbody>();
+            anim = GetComponent<Animator>();
             puppet = GameObject.FindWithTag("Player").transform;
-            
-            _coreHealth = maxHealth;
-            agent.speed = coreSpeed;
+
+            _enemyStats = GetComponent<EnemyStats>();
+            detectRange = radius;
         }
+
+        public bool one;
 
         protected virtual void Update(){
             dist = (puppet.position - transform.position).sqrMagnitude;
             ShieldRecover();
-            
+  
+            //if(_enemyStats.isDead) return;
             switch(behaviour){
                 case CoreStage.Idle: Detection(); break;
                 case CoreStage.Move: LookAtDirection(); Movement(); break;
                 case CoreStage.Attack: LookAtDirection(); Attack(); break;
-                case CoreStage.SpecialMove: UniqueMove(); break;
                 default: throw new ArgumentOutOfRangeException();
             }
         }
@@ -126,39 +124,10 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         }
 
         protected virtual void UniqueMove(){
-            //Temporary
         }
         #endregion
     
         #region Basic Buff, Health and Damage
-
-        public virtual void ReceivedBuff(){
-            if (_coreHealth + maxHealth * 0.2f < maxHealth){
-                _coreHealth += maxHealth * 0.2f;
-                return;
-            }
-
-            int buff = Random.Range(0,2);
-            switch (buff){
-                case 0 when coreSpeed < 10: agent.speed = coreSpeed *= 0.2f; return;
-                case 1 when coreDamage < 30: coreDamage *= 0.2f; return;
-            }
-        }
-
-        // protected virtual void HealthBar(int dmg){
-        //     _coreHealth -= dmg;
-        //     Debug.Log("Enemy Health: " + _coreHealth);
-        //     //Set Health UI
-        //
-        //     if (_coreHealth > 0) return;
-        //     StartCoroutine(Death());
-        // }
-
-        // private IEnumerator Death()
-        // {
-        //     yield return new WaitForSeconds(3f);
-        // }
-
         public void ShieldBar(int damage) {
             switch (shieldDestroy){
                 case true: _enemyStats.Damage(damage); return;
@@ -187,19 +156,6 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             yield return new WaitForSeconds(stunTimer);
             shieldRecover = false;
         }
-
-        // public void Damage(int damageAmount){
-        //     switch (armourType){
-        //         case false: _enemyStats.Damage(damageAmount); break;
-        //         case true: ShieldBar(damageAmount); break;
-        //     }
-        // }
-        
-        //
-        // public float LostHP()
-        // {
-        //     return maxHealth - _coreHealth;
-        // }
         #endregion
     }
-}
+
