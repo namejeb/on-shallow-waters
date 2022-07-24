@@ -367,7 +367,6 @@ GameObject:
   - component: {fileID: 1799349626}
   - component: {fileID: 1799349627}
   - component: {fileID: 1799349628}
-  - component: {fileID: 1799349629}
   - component: {fileID: 1799349630}
   - component: {fileID: 3169301569289797843}
   - component: {fileID: 3169301569289797832}
@@ -544,6 +543,7 @@ MonoBehaviour:
     modifiers: []
     hasCap: 0
     cap: 0
+  playerHealthBar: {fileID: 0}
 --- !u!114 &1799349628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,27 +558,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1799349632}
   joystick: {fileID: 0}
+  animator: {fileID: 0}
   speed: 10
   rotationSpeed: 1000
   canMove: 0
---- !u!114 &1799349629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3094721992105115447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda4b15f0b90a404db6cf4279e67901e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swipeRange: 0
-  tapRange: 0
-  playerMovement: {fileID: 1799349628}
-  animator: {fileID: 2752755525584072773}
-  tapAttack: 0
-  swipeDuration: 0.2
 --- !u!114 &1799349630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,6 +581,8 @@ MonoBehaviour:
   dashDuration: 0.2
   range: 0
   speed: 5
+  resetTimer: 0
+  resetSequence: 3
   chargedTimer: 0
   isSlash: 0
   isSlam: 0

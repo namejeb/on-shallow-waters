@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace _04_Scripts._05_Enemies_Bosses.Enemy {
+
     public class EnemiesProjectile : MonoBehaviour{
         public float speed = 10;
         public float fireRate;
@@ -33,4 +33,4 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
             gameObject.SetActive(false);
         }
     }
-}
+

@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 
 namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
-    public sealed class SlowHeavyShooter : EnemiesCore{
+    public class SlowHeavyShooter : EnemiesCore{
         public Transform firePoint;
-        // public List<GameObject> vfx = new List<GameObject>();
+        
         [SerializeField] private GameObject effectToSpawn;
         [SerializeField] private float timeToFire;
         private EnemiesProjectile _enemiesProjectile;
@@ -12,12 +12,16 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         private Quaternion _rotate;
         private Vector3 _pos;
 
-        protected override void Start(){
-            base.Start();
-            //_effectToSpawn = vfx[0];
+        private int firedNum;
+        public int firedLimit;
+
+        private void Awake(){
             shieldRecover = true;
             currentShield = maxShield;
-            
+        }
+
+        protected override void Start(){
+            base.Start();
             _enemiesProjectile = effectToSpawn.GetComponent<EnemiesProjectile>();
         }
 
@@ -26,11 +30,15 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         }
 
         protected override void Attack(){
-            if (dist > detectRange * detectRange){
+            if (dist > radius * radius){
                 behaviour = CoreStage.Idle;
                 return;
             }
 
+            FireBullet();
+        }
+
+        protected virtual void FireBullet(){
             Transform trans;
             (trans = transform).LookAt(puppet);
             _direction = puppet.position - trans.position;
@@ -38,9 +46,16 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
             if (Time.time >= timeToFire){
                 timeToFire = Time.time + (1 / _enemiesProjectile.fireRate);
+
                 Quaternion rotation = _rotate;
                 Instantiate(effectToSpawn, firePoint.position, rotation);
+
+                firedNum += 1;
             }
+
+            if (firedNum != firedLimit) return;
+            behaviour = CoreStage.Move;
+            firedNum = 0;
         }
     }
 }

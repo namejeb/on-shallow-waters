@@ -34,6 +34,7 @@ public class Boss_Stats : CharacterStats, IDamageable
             if (!_uiManager.IsActive(1))
             {
                 _uiManager.EnableSlider(1);
+                smm.MH[3].SetActive(true);
             }
 
             if (currArmour > 0)
@@ -49,13 +50,13 @@ public class Boss_Stats : CharacterStats, IDamageable
                 currArmour = 0;
                 armState = false;
                 _uiManager.DisableSlider(1);
+                smm.MH[3].SetActive(false);
                 currArmour = maxArmour;
                 smm.SetState(smm.passiveStates[1]);
             }
         }
         else
         {
-            Debug.Log("Boss Attacked");
             TakeDamage(damageAmount);
             _uiManager.UpdateSlider(0, CurrHpPercentage);
         }
