@@ -38,6 +38,7 @@ public class StateMachineManager : MonoBehaviour
     public Animator Anim => _animator;
     public Rigidbody Rb { get { return rb; } set { rb = value; } }
     public List<GameObject> MH { get { return meleeHitbox; } set { meleeHitbox = value; } }
+    public State CurrentState { get { return _currentState; } }
 
 
     public float faceAngle;
@@ -101,6 +102,12 @@ public class StateMachineManager : MonoBehaviour
     public void Shoot()
     {
         SetState(stateList[3]);
+    }
+
+    [Button]
+    public void Dash()
+    {
+        SetState(stateList[1]);
     }
 
     [Button]

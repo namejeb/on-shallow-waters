@@ -64,10 +64,14 @@ public class Boss_Stats : CharacterStats, IDamageable
 
     protected override void Die()
     {
-        smm.SetState(smm.passiveStates[0]);
-        _uiManager.DisableSlider(0);
-        
-        if(OnBossDead != null) OnBossDead.Invoke();
+        if (smm.CurrentState != smm.passiveStates[0])
+        {
+            smm.SetState(smm.passiveStates[0]);
+            _uiManager.DisableGameObject();
+            gameObject.GetComponent<Collider>().enabled = false;
+
+            if (OnBossDead != null) OnBossDead.Invoke();
+        }
     }
 
     public float LostHP()

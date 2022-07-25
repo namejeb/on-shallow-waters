@@ -63,7 +63,7 @@ public class SkBlessing : MonoBehaviour
         soulButton.interactable = false;
 
         // this is setting for skb, if 1st skb got change need change here too
-        duration = 10;
+        duration = 5;
         requiredSoul = 100;
         soulButton.onClick.AddListener(SKB3);
     }
@@ -134,8 +134,8 @@ public class SkBlessing : MonoBehaviour
     [Button]
     public void SKB3()
     {
-        //if (startCountdown)
-        //    return;
+        if (startCountdown)
+            return;
 
         //if (CanSpendSoul())
         //{
@@ -146,8 +146,6 @@ public class SkBlessing : MonoBehaviour
         currSoul = 0;
         timer = duration;
         startCountdown = true;
-
-        
 
         timeManager.StartSlowMo(duration);
     }
