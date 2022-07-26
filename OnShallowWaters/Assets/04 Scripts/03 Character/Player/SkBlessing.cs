@@ -62,7 +62,7 @@ public class SkBlessing : MonoBehaviour
     {
         soulButton.interactable = false;
 
-        // this is setting for skb, if 1st skb got change need change here too
+        // this is default settings for skb, currently is skb3
         duration = 5;
         requiredSoul = 100;
         soulButton.onClick.AddListener(SKB3);
@@ -137,11 +137,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         currSoul = 0;
         timer = duration;
@@ -155,11 +155,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         currSoul = 0;
         timer = duration;
@@ -189,11 +189,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         currSoul = 0;
         timer = duration;
