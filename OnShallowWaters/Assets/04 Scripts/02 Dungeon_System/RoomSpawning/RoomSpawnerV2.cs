@@ -64,6 +64,11 @@ public class RoomSpawnerV2 : MonoBehaviour
         IsBossRoom = false;
     }
 
+    private void HandleInitialRooms()
+    {
+        
+    }
+
     private void SortRooms()
     {
         for (int i = 0; i < levelList.Count; i++)

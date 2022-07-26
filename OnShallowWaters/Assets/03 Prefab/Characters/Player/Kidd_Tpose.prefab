@@ -368,7 +368,11 @@ GameObject:
   - component: {fileID: 1799349627}
   - component: {fileID: 1799349628}
   - component: {fileID: 1799349630}
-  m_Layer: 0
+  - component: {fileID: 3169301569289797843}
+  - component: {fileID: 3169301569289797832}
+  - component: {fileID: 3169301569289797845}
+  - component: {fileID: 3169301569289797844}
+  m_Layer: 3
   m_Name: Kidd_Tpose
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -525,7 +529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 150
   atk:
-    baseValue: 1
+    baseValue: 100
     modifiers: []
     hasCap: 0
     cap: 1
@@ -591,6 +595,61 @@ MonoBehaviour:
   inDamage: 0
   pressedButton: {fileID: 0}
   isSlashTigger: 0
+--- !u!114 &3169301569289797843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094721992105115447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edabd91fb2ddfb24fac56eb4bbdceac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3169301569289797832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094721992105115447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2719eb83e4c037489adfeebed8726d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectAmounts:
+  - 1.2
+  - 1.4
+--- !u!114 &3169301569289797845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094721992105115447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023993aa6aaf9474fbb359cbaa5486ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectAmounts:
+  - 1.5
+--- !u!114 &3169301569289797844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094721992105115447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8e0b5f81f91574ca0b44088134865e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectAmounts:
+  - 50
 --- !u!1 &3177204676630031157
 GameObject:
   m_ObjectHideFlags: 0

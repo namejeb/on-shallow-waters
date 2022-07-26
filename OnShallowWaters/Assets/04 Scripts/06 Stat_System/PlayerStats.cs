@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
+    [Space][Space]
+    [SerializeField] private PlayerHealthBar playerHealthBar;
+    [SerializeField] private BM_LowHpDmgReduction bmLowHpDmgReduction;
+    
+    [Space][Space]
     [SerializeField] private Stat movementSpeed;
     [SerializeField] private Stat defense;
     
@@ -32,13 +37,11 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
     public float DamageReduction { get => _damageReduction; }
 
-    private BoonDamageModifiers _boonDamageModifiers;
-
-    public PlayerHealthBar playerHealthBar;
+  //  private BoonDamageModifiers _boonDamageModifiers;
 
     private new void Awake()
     {
-        _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
+    //    _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
         currHp = MaxHp;
         playerHealthBar.SetMaxHealth(MaxHp);
     }
@@ -62,6 +65,11 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         _critChance *= multiplier;
     }
+    
+    public void IncreaseCritDmg(float multiplierToSet)
+    {
+        _critDamage *= multiplierToSet;
+    }
 
     public void IncreaseDef(float multiplierToSet)
     {
@@ -77,10 +85,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         _atkSpeed = multiplierToSet;
     }
     
-    public void IncreaseCritDmg(float multiplierToSet)
-    {
-        _critDamage *= multiplierToSet;
-    }
+
     public void IncreaseMaxHp(float multiplier)
     {
         MaxHp *= multiplier;
@@ -150,9 +155,9 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         incomingDamage *= (100 / (100 + (DefMultiplier * (Defense.CurrentValue + 0))) * DamageReduction);
 
-        if (_boonDamageModifiers.dmgReductionActivated)
+        if (bmLowHpDmgReduction.Activated)
         {
-            if (CurrHpPercentage < _boonDamageModifiers.dmgReductionActivationThreshold)
+            if (CurrHpPercentage < bmLowHpDmgReduction.DmgReductionActivationThreshold)
             {
                 //decrease by 25%
                 incomingDamage *= (1 - .25f);
@@ -166,29 +171,24 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         throw new System.NotImplementedException();
     }
-
-    void Update()
-    {
-        if (Input.GetKeyDown("r"))
-        {
-            RemoveModifier(Atk, 25.9f);
-        }
-
-        if (Input.GetKeyDown("a"))
-        {
-            AddModifier(Atk , 25.9f);
-        }
-
-    }
+    //
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown("r"))
+    //     {
+    //         RemoveModifier(Atk, 25.9f);
+    //     }
+    //
+    //     if (Input.GetKeyDown("a"))
+    //     {
+    //         AddModifier(Atk , 25.9f);
+    //     }
+    //
+    // }
 
     public void DamageTest(int damage)
     {
         currHp -= damage;
         playerHealthBar.SetHealth(currHp);
     }
-
-
-
-
-
 }

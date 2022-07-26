@@ -127,7 +127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &846332881
 Transform:
   m_ObjectHideFlags: 0
@@ -230,6 +230,279 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1694942709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1694942710}
+  - component: {fileID: 1694942723}
+  - component: {fileID: 6190626877273168002}
+  - component: {fileID: 1694942722}
+  - component: {fileID: 1694942721}
+  - component: {fileID: 1694942720}
+  - component: {fileID: 1694942719}
+  - component: {fileID: 1694942718}
+  - component: {fileID: 1694942717}
+  - component: {fileID: 1694942716}
+  - component: {fileID: 1694942715}
+  - component: {fileID: 1694942714}
+  - component: {fileID: 1694942713}
+  - component: {fileID: 1694942712}
+  - component: {fileID: 1694942711}
+  m_Layer: 0
+  m_Name: BoonEffectsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1694942710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3169301569515499348}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1694942723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edabd91fb2ddfb24fac56eb4bbdceac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6190626877273168002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d9287633cb8a342bb09c53195afe7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonList: []
+--- !u!114 &1694942722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14f33eb0cf58264aa7af789db2b11db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 0
+  effectAmounts:
+  - 1.3
+  - 1.7
+  - 2.1
+--- !u!114 &1694942721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79724d99d82ebb14babde84c603cb0da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 1
+  effectAmounts:
+  - 1.3
+  - 1.5
+  - 1.7
+--- !u!114 &1694942720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6bcabd1e18d7cb42bcf282d68937e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 2
+  effectAmounts:
+  - 1.15
+  - 1.25
+  - 1.35
+  - 1.5
+--- !u!114 &1694942719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b31614994eb6fb448b925185085c929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 3
+  effectAmounts:
+  - 0.2
+  - 0.3
+  notes: 'Effect Amount percentage is compared directly as the activation threshold
+    of this boon, as such, provide the values as such: 0.1, 0.2 instead of 1.1, 1.2.'
+--- !u!114 &1694942718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc27d8b57add5bd48be15adc81653665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 4
+  effectAmounts:
+  - 1.2
+  - 1.5
+--- !u!114 &1694942717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8e0b5f81f91574ca0b44088134865e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 5
+  effectAmounts:
+  - 50
+  notes: Specified Effect Amount value is applied directly to Enemies as damage,
+    do not put as percentage.
+--- !u!114 &1694942716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2719eb83e4c037489adfeebed8726d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 6
+  effectAmounts:
+  - 1.2
+  - 1.4
+--- !u!114 &1694942715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023993aa6aaf9474fbb359cbaa5486ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 7
+  effectAmounts:
+  - 1
+  - 1.5
+--- !u!114 &1694942714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfce278697aaa34bb54a341433cb612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 8
+  effectAmounts:
+  - 1.5
+  - 1.85
+  - 2.2
+--- !u!114 &1694942713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d4370ea243ed849a894be264634c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 9
+  effectAmounts:
+  - 1.15
+  - 1.25
+  - 1.3
+--- !u!114 &1694942712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63dff388bb347ca49aa6e4c9e99e6491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 10
+  effectAmounts:
+  - 1.15
+  - 1.25
+  - 1.3
+--- !u!114 &1694942711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694942709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033b059c2a4e5d3428d021e1b2f67517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boonId: 11
+  effectAmounts:
+  - 1.2
+  - 1.3
+  - 1.4
 --- !u!1 &3169301569515499351
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +533,7 @@ Transform:
   m_Children:
   - {fileID: 9068724994173585291}
   - {fileID: 8215346829264037645}
+  - {fileID: 1694942710}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -439,6 +713,10 @@ PrefabInstance:
       propertyPath: playerHealthBar
       value: 
       objectReference: {fileID: 7163226754796189672}
+    - target: {fileID: 1799349627, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
+      propertyPath: bmLowHpDmgReduction
+      value: 
+      objectReference: {fileID: 1694942719}
     - target: {fileID: 1799349628, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
       propertyPath: animator
       value: 
@@ -451,6 +729,10 @@ PrefabInstance:
       propertyPath: pressedButton
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1799349630, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
+      propertyPath: boonEffectsManagerTransform
+      value: 
+      objectReference: {fileID: 1694942710}
     - target: {fileID: 1799349631, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
       propertyPath: m_Height
       value: 2.4409494
@@ -787,7 +1069,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.00005635088
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3169301569289797843, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
+    - {fileID: 3169301569289797832, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
+    - {fileID: 3169301569289797845, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
+    - {fileID: 3169301569289797844, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
 --- !u!4 &8215346829264037645 stripped
 Transform:

@@ -23,6 +23,8 @@ public class BoonItemsTimesUsed
 public class BoonSelection : MonoBehaviour
 {
     [SerializeField] private BoonEffects boonEffects;
+    [SerializeField] private BoonsList boonList;
+    
     
     [Space][Space]
     [SerializeField] private BoonItemsSO boonItemsSo;
@@ -185,11 +187,11 @@ public class BoonSelection : MonoBehaviour
         boonTransform.Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
             
         float effectAmount = 0f;
-        
-        effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id);
+
+        effectAmount = boonList.GetBoon(boonItem.id).EffectAmount;
         
         if(boonItem.isPercentage)
-            boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} +{effectAmount * 100}%");
+            boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount * 100}%");
         else
             boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount}");
     }

@@ -17,6 +17,7 @@ public class BoonDamageModifiers : MonoBehaviour
 
    public bool DmgWhenShieldBreakActivated { get => _dmgWhenShieldBreakActivated; }
    
+   // Main application function
    public float ApplyModifiers(float outgoingDmg, EnemyHandler enemyHandler)
    {
       if (_dmgIncreaseSingleEnemyActivated)
@@ -37,6 +38,8 @@ public class BoonDamageModifiers : MonoBehaviour
       return outgoingDmg;
    }
    
+   
+   // Application
    private float ApplyDamageIncreaseToSingleEnemy(float outgoingDmg)
    {
       return outgoingDmg * _dmgIncreaseSingleEnemyModifier;
@@ -54,7 +57,10 @@ public class BoonDamageModifiers : MonoBehaviour
          enemyHandler.EnemyStats.Damage( (int) _dmgWhenShieldBreakModifier );
       }
    }
-
+   
+   
+   
+   // Enabling
    public void EnableSingleEnemyDmgIncrease(float effectAmount)
    {
       _dmgIncreaseSingleEnemyActivated = true;
