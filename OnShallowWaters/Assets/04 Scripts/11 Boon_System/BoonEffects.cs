@@ -72,7 +72,7 @@ public class BoonEffects : MonoBehaviour {
     [SerializeField] private BoonItemsSO boonItemsSo;
 
     [Header("Gets id from BoonItemSo, so make sure each index corresponds to the effects in BoonItemSo")]
-    [SerializeField] private List<StatIncreaseAmountsFloat> statIncreaseAmounts;
+   // [SerializeField] private List<StatIncreaseAmountsFloat> statIncreaseAmounts;
 
 
     private Hashtable HIncreaseAmounts = new Hashtable();
@@ -80,34 +80,34 @@ public class BoonEffects : MonoBehaviour {
 
     private void OnValidate()
     {
-        InitStatIncreaseAmounts();
+      //  InitStatIncreaseAmounts();
     }
 
     private void Start()
     {
         _playerStats = PlayerHandler.Instance.PlayerStats;
-        InitStatIncreaseAmounts();
-        InitHash();
+      //  InitStatIncreaseAmounts();
+      //  InitHash();
     }
 
-    private void InitHash()
-    {
-        HIncreaseAmounts.Clear();
-
-        for(int i = 0; i < statIncreaseAmounts.Count; i++){
-            HIncreaseAmounts.Add(statIncreaseAmounts[i].idFromBoonItem, statIncreaseAmounts[i]);
-        }
-    }
-
-    private void InitStatIncreaseAmounts()
-    {
-        //init id
-        for (int i = 0; i < boonItemsSo.boonItems.Length; i++)
-        {
-            statIncreaseAmounts[i].idFromBoonItem = boonItemsSo.boonItems[i].id;
-        }
-    }
-    
+    // private void InitHash()
+    // {
+    //     HIncreaseAmounts.Clear();
+    //
+    //     for(int i = 0; i < statIncreaseAmounts.Count; i++){
+    //         HIncreaseAmounts.Add(statIncreaseAmounts[i].idFromBoonItem, statIncreaseAmounts[i]);
+    //     }
+    // }
+    //
+    // private void InitStatIncreaseAmounts()
+    // {
+    //     //init id
+    //     for (int i = 0; i < boonItemsSo.boonItems.Length; i++)
+    //     {
+    //         statIncreaseAmounts[i].idFromBoonItem = boonItemsSo.boonItems[i].id;
+    //     }
+    // }
+    //
     public void HandleEffectActivation(int boonItemId)
     {
        // boonItemId = boonToUse;
@@ -135,186 +135,186 @@ public class BoonEffects : MonoBehaviour {
 
     //------Survival------
     //Increase max hp by 30%/70%/110% 
-    private void IncreaseMaxHp()
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(0);
-        _playerStats.IncreaseMaxHp( s.GetIncreaseAmount() );
-    }
-    
-    //Increase defense by 30%/50%/70%
-    private void IncreaseDefense()                   
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(1);
-        _playerStats.IncreaseDef( s.GetIncreaseAmount() );
-    }
-
-    //Increase movement speed by 15%/25%/35%/50%   
-    private void IncreaseMovementSpeed()              
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(2);
-        _playerStats.IncreaseMvmntSpd( s.GetIncreaseAmount() );
-    }
-
-    //Reduce 25% dmg taken while 30%/40% hp or lower.
-    private void ReduceDamageWhenHpLow()            
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(3);
-       _playerStats.IncreaseDamageReduction( s.GetIncreaseAmount() );
-       PlayerHandler.Instance.BoonDamageModifiers.EnableDmgReductionWhenLowHp( s.GetIncreaseAmount() );
-    }
-    
-    
-
-
-    //------Combat------
-    // ATK % increase 50%/85%/120%
-    private void UpgradeAtkPercent()
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(8);
-        _playerStats.IncreaseAtkPercent( s.GetIncreaseAmount() ); // print(_playerStats.AtkPercent);
-    }
-
-    //ATK speed increase 15%/25%/30%
-    private void UpgradeAtkSpd()                 
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(9);
-        _playerStats.IncreaseAtkSpd( s.GetIncreaseAmount() ); // print(_playerStats.AtkSpeed);
-    }
-    
-        
-    //Crit chance increase 15%/25%/30% ( Normal crit deal 50% more dmg)
-    private void UpgradeCritChance()          
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(10);
-       _playerStats.IncreaseCritChance(s.GetIncreaseAmount());
-    }
-
-    //Crit dmg increase 20%/30%/40%
-    private void UpgradeCritDamage()              
-    { 
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(11);
-        _playerStats.IncreaseCritDmg(s.GetIncreaseAmount());
-    }
-
-
-    //Deal 20% more dmg to enemy's armor
-    private void DmgToArmorIncrease()          
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(4);
-        PlayerHandler.Instance.BoonDamageModifiers.EnableExtraShieldDmg( s.GetIncreaseAmount() );
-    }
-
-
-    //Deal dmg when enemy's armor break
-    //sus - Deal 100 true dmg when enemy's armor break    
-    private void DmgWhenArmorBreak()             
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(5);
-        PlayerHandler.Instance.BoonDamageModifiers.EnableDmgWhenShieldBreak(s.GetIncreaseAmount());
-    }
-
-    
-    //Deal 40% more dmg when there is only one enemy
-    private void SingleEnemyDmgIncrease()        
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(6);
-        PlayerHandler.Instance.BoonDamageModifiers.EnableSingleEnemyDmgIncrease( s.GetIncreaseAmount() );
-    }
-    
-    //Undamaged enemies will receive 100% more damage
-    private void FirstTimeDmgBonus()             
-    {
-        StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(7);
-        PlayerHandler.Instance.BoonDamageModifiers.EnableFirstTimeDmgBonus( s.GetIncreaseAmount() );
-    }
-    
-
-
-    //Utility
-    private void UpgradeStat(StatIncreaseAmounts statIncreaseAmounts)
-    {
-        Stat stat = statIncreaseAmounts.stat;
-        
-        Vector2Int modifierValues = CalcModifierValues(statIncreaseAmounts);
-        stat.AddModifier( modifierValues.x );
-        stat.RemoveModifier( modifierValues.y );
-        
-        statIncreaseAmounts.tracker++;
-    }
-    
-    private StatIncreaseAmountsFloat GetStatIncreaseAmountFloat(int boonItemId)
-    {
-        StatIncreaseAmountsFloat s = null;
-
-        for (int i = 0; i < statIncreaseAmounts.Count; i++)
-        {
-            if (statIncreaseAmounts[i].idFromBoonItem == boonItemId)
-            {
-                s = statIncreaseAmounts[i];
-            }
-        }
-
-        return s;
-    }
-
-    private void UpdateTracker(StatIncreaseAmountsFloat s)
-    {
-        s.tracker++;
-    }
-
-    
-    //Get modifier to remove and add for a Stat
-    private Vector2Int CalcModifierValues(StatIncreaseAmounts statIncreaseAmounts)
-    {
-        //data
-        int tracker = statIncreaseAmounts.tracker;
-        Stat stat = statIncreaseAmounts.stat;
-        float[] increaseAmounts = statIncreaseAmounts.increaseAmounts;
-        
-        //calculation
-        float revertedValue = statIncreaseAmounts.stat.CurrentValue;
-        int modifierToRemove = 0;
-        
-        if (tracker > 0)
-        {
-            float lastMultiplier = increaseAmounts[tracker - 1];
-            revertedValue = stat.CurrentValue / lastMultiplier;
-
-            float valWithLastMultiplier = revertedValue * lastMultiplier;
-            modifierToRemove = Mathf.RoundToInt(GetDifference(revertedValue, valWithLastMultiplier));
-        }
-        float newValue = revertedValue * increaseAmounts[tracker];
-        int modifierToAdd =  Mathf.RoundToInt(GetDifference(newValue, revertedValue));
-
-        Vector2Int modifierValues = new Vector2Int(modifierToAdd, modifierToRemove);
-        return modifierValues;
-    }
-    
-    private float GetDifference(float val1, float val2)
-    {
-        return Mathf.Abs(val1 - val2);
-    }
-
-
-    public float GetStatIncreaseAmounts(int id)
-    {
-        if (HIncreaseAmounts[id] is StatIncreaseAmounts)
-        {
-            StatIncreaseAmounts sia = (StatIncreaseAmounts) HIncreaseAmounts[id];
-            return sia.GetIncreaseAmount();
-        }
-        if (HIncreaseAmounts[id] is StatIncreaseAmountsFloat)
-        {
-            StatIncreaseAmountsFloat sia = (StatIncreaseAmountsFloat) HIncreaseAmounts[id];
-            return sia.GetIncreaseAmount();
-        }
-        if (HIncreaseAmounts[id] is StatIncreaseAmountsInt)
-        {
-            StatIncreaseAmountsInt sia = (StatIncreaseAmountsInt) HIncreaseAmounts[id];
-            return sia.GetIncreaseAmount();
-        }
-        return 0f;
-    }
+   //  private void IncreaseMaxHp()
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(0);
+   //      _playerStats.IncreaseMaxHp( s.GetIncreaseAmount() );
+   //  }
+   //  
+   //  //Increase defense by 30%/50%/70%
+   //  private void IncreaseDefense()                   
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(1);
+   //      _playerStats.IncreaseDef( s.GetIncreaseAmount() );
+   //  }
+   //
+   //  //Increase movement speed by 15%/25%/35%/50%   
+   //  private void IncreaseMovementSpeed()              
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(2);
+   //      _playerStats.IncreaseMvmntSpd( s.GetIncreaseAmount() );
+   //  }
+   //
+   //  //Reduce 25% dmg taken while 30%/40% hp or lower.
+   //  private void ReduceDamageWhenHpLow()            
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(3);
+   //     _playerStats.IncreaseDamageReduction( s.GetIncreaseAmount() );
+   //    // PlayerHandler.Instance.BoonDamageModifiers.EnableDmgReductionWhenLowHp( s.GetIncreaseAmount() );
+   //  }
+   //  
+   //  
+   //
+   //
+   //  //------Combat------
+   //  // ATK % increase 50%/85%/120%
+   //  private void UpgradeAtkPercent()
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(8);
+   //      _playerStats.IncreaseAtkPercent( s.GetIncreaseAmount() ); // print(_playerStats.AtkPercent);
+   //  }
+   //
+   //  //ATK speed increase 15%/25%/30%
+   //  private void UpgradeAtkSpd()                 
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(9);
+   //      _playerStats.IncreaseAtkSpd( s.GetIncreaseAmount() ); // print(_playerStats.AtkSpeed);
+   //  }
+   //  
+   //      
+   //  //Crit chance increase 15%/25%/30% ( Normal crit deal 50% more dmg)
+   //  private void UpgradeCritChance()          
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(10);
+   //     _playerStats.IncreaseCritChance(s.GetIncreaseAmount());
+   //  }
+   //
+   //  //Crit dmg increase 20%/30%/40%
+   //  private void UpgradeCritDamage()              
+   //  { 
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(11);
+   //      _playerStats.IncreaseCritDmg(s.GetIncreaseAmount());
+   //  }
+   //
+   //
+   //  //Deal 20% more dmg to enemy's armor
+   //  private void DmgToArmorIncrease()          
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(4);
+   //    //  PlayerHandler.Instance.BoonDamageModifiers.EnableExtraShieldDmg( s.GetIncreaseAmount() );
+   //  }
+   //
+   //
+   //  //Deal dmg when enemy's armor break
+   //  //sus - Deal 100 true dmg when enemy's armor break    
+   //  private void DmgWhenArmorBreak()             
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(5);
+   //  //    PlayerHandler.Instance.BoonDamageModifiers.EnableDmgWhenShieldBreak(s.GetIncreaseAmount());
+   //  }
+   //
+   //  
+   //  //Deal 40% more dmg when there is only one enemy
+   //  private void SingleEnemyDmgIncrease()        
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(6);
+   // //     PlayerHandler.Instance.BoonDamageModifiers.EnableSingleEnemyDmgIncrease( s.GetIncreaseAmount() );
+   //  }
+   //  
+   //  //Undamaged enemies will receive 100% more damage
+   //  private void FirstTimeDmgBonus()             
+   //  {
+   //      StatIncreaseAmountsFloat s = GetStatIncreaseAmountFloat(7);
+   //    //  PlayerHandler.Instance.BoonDamageModifiers.EnableFirstTimeDmgBonus( s.GetIncreaseAmount() );
+   //  }
+   //  
+   //
+   //
+   //  //Utility
+   //  private void UpgradeStat(StatIncreaseAmounts statIncreaseAmounts)
+   //  {
+   //      Stat stat = statIncreaseAmounts.stat;
+   //      
+   //      Vector2Int modifierValues = CalcModifierValues(statIncreaseAmounts);
+   //      stat.AddModifier( modifierValues.x );
+   //      stat.RemoveModifier( modifierValues.y );
+   //      
+   //      statIncreaseAmounts.tracker++;
+   //  }
+   //  
+   //  private StatIncreaseAmountsFloat GetStatIncreaseAmountFloat(int boonItemId)
+   //  {
+   //      StatIncreaseAmountsFloat s = null;
+   //
+   //      for (int i = 0; i < statIncreaseAmounts.Count; i++)
+   //      {
+   //          if (statIncreaseAmounts[i].idFromBoonItem == boonItemId)
+   //          {
+   //              s = statIncreaseAmounts[i];
+   //          }
+   //      }
+   //
+   //      return s;
+   //  }
+   //
+   //  private void UpdateTracker(StatIncreaseAmountsFloat s)
+   //  {
+   //      s.tracker++;
+   //  }
+   //
+   //  
+   //  //Get modifier to remove and add for a Stat
+   //  private Vector2Int CalcModifierValues(StatIncreaseAmounts statIncreaseAmounts)
+   //  {
+   //      //data
+   //      int tracker = statIncreaseAmounts.tracker;
+   //      Stat stat = statIncreaseAmounts.stat;
+   //      float[] increaseAmounts = statIncreaseAmounts.increaseAmounts;
+   //      
+   //      //calculation
+   //      float revertedValue = statIncreaseAmounts.stat.CurrentValue;
+   //      int modifierToRemove = 0;
+   //      
+   //      if (tracker > 0)
+   //      {
+   //          float lastMultiplier = increaseAmounts[tracker - 1];
+   //          revertedValue = stat.CurrentValue / lastMultiplier;
+   //
+   //          float valWithLastMultiplier = revertedValue * lastMultiplier;
+   //          modifierToRemove = Mathf.RoundToInt(GetDifference(revertedValue, valWithLastMultiplier));
+   //      }
+   //      float newValue = revertedValue * increaseAmounts[tracker];
+   //      int modifierToAdd =  Mathf.RoundToInt(GetDifference(newValue, revertedValue));
+   //
+   //      Vector2Int modifierValues = new Vector2Int(modifierToAdd, modifierToRemove);
+   //      return modifierValues;
+   //  }
+   //  
+   //  private float GetDifference(float val1, float val2)
+   //  {
+   //      return Mathf.Abs(val1 - val2);
+   //  }
+   //
+   //
+   //  public float GetStatIncreaseAmounts(int id)
+   //  {
+   //      if (HIncreaseAmounts[id] is StatIncreaseAmounts)
+   //      {
+   //          StatIncreaseAmounts sia = (StatIncreaseAmounts) HIncreaseAmounts[id];
+   //          return sia.GetIncreaseAmount();
+   //      }
+   //      if (HIncreaseAmounts[id] is StatIncreaseAmountsFloat)
+   //      {
+   //          StatIncreaseAmountsFloat sia = (StatIncreaseAmountsFloat) HIncreaseAmounts[id];
+   //          return sia.GetIncreaseAmount();
+   //      }
+   //      if (HIncreaseAmounts[id] is StatIncreaseAmountsInt)
+   //      {
+   //          StatIncreaseAmountsInt sia = (StatIncreaseAmountsInt) HIncreaseAmounts[id];
+   //          return sia.GetIncreaseAmount();
+   //      }
+   //      return 0f;
+   //  }
     
     //Reduce damage taken by 10%/20%
     // public void ReduceDamageTaken()                 //---N

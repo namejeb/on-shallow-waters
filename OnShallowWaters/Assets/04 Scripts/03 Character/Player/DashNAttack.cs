@@ -36,7 +36,7 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private AttackButtonUI pressedButton;
     [SerializeField] private bool isSlashTigger;
     
-    private BoonDamageModifiers _boonDamageModifiers;
+   // private BoonDamageModifiers _boonDamageModifiers;
     private SkBlessing _skBlessing;
 
     [SerializeField] private Transform boonEffectsManagerTransform;
@@ -67,7 +67,7 @@ public class DashNAttack : MonoBehaviour
     private void Start()
     {
         stats = PlayerHandler.Instance.PlayerStats;
-        _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
+       // _boonDamageModifiers = PlayerHandler.Instance.BoonDamageModifiers;
     }
 
     private void FixedUpdate()
