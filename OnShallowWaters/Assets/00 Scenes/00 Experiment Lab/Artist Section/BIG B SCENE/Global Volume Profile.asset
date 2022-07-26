@@ -1,5 +1,45 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5388586862613359327
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
+  m_Name: Bloom
+  m_EditorClassIdentifier: 
+  active: 1
+  threshold:
+    m_OverrideState: 1
+    m_Value: 0.17
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.15
+  scatter:
+    m_OverrideState: 0
+    m_Value: 0.7
+  clamp:
+    m_OverrideState: 0
+    m_Value: 65472
+  tint:
+    m_OverrideState: 1
+    m_Value: {r: 0.7264151, g: 0.57381046, b: 0.22888926, a: 1}
+  highQualityFiltering:
+    m_OverrideState: 0
+    m_Value: 0
+  skipIterations:
+    m_OverrideState: 0
+    m_Value: 1
+  dirtTexture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+  dirtIntensity:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!114 &-4785029494568512675
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -27,7 +67,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 29
+    m_Value: 40
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,6 +87,7 @@ MonoBehaviour:
   - {fileID: 22928217616937667}
   - {fileID: 264865858264195958}
   - {fileID: 7167799082630824787}
+  - {fileID: -5388586862613359327}
 --- !u!114 &22928217616937667
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -127,13 +168,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.6287495, y: 0.6084338, z: 1, w: 0.5028968}
+    m_Value: {x: 0.7878572, y: 0.8628958, z: 1, w: 0.41838974}
   midtones:
     m_OverrideState: 1
     m_Value: {x: 0.8916734, y: 0.928733, z: 1, w: 0.10892231}
   highlights:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0.976825}
+    m_Value: {x: 1, y: 1, z: 1, w: 1}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
