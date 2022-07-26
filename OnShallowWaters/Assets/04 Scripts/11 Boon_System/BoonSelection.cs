@@ -185,6 +185,7 @@ public class BoonSelection : MonoBehaviour
     {
         //Set info
         boonTransform.Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
+        //boonTransform.Find("icon").GetComponent<Image>().sprite = boonItem.icon;
             
         float effectAmount = 0f;
 
