@@ -1,10 +1,14 @@
 
 public static class GameManager
 {
-    public static bool IsTutorial { get; private set; }
+    private static bool _isTutorial = false;
+    public static bool IsTutorial { 
+        get => _isTutorial;
+    }
+
 
     public static void SetIsTutorial(bool status)
     {
-        IsTutorial = status;
+        _isTutorial = status;
     }
 }

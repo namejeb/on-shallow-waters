@@ -12,6 +12,8 @@ public class ExitRoomTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (GameManager.IsTutorial) SceneManager.LoadScene(0); 
+            
             if (RoomSpawnerV2.IsBossRoom)
             {
                 SceneManager.LoadScene("GIMMEMAHNEY");
