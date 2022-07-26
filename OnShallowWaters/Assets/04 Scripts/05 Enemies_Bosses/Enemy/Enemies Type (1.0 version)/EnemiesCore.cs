@@ -128,17 +128,27 @@ using Random = UnityEngine.Random;
         #endregion
     
         #region Basic Buff, Health and Damage
-        public void ShieldBar(int damage) {
-            switch (shieldDestroy){
-                case true: _enemyStats.Damage(damage); return;
-                case false:
-                    currentShield -= damage * shieldDmgBonus;
-                    if (currentShield <= 0){
-                        shieldDestroy = true;
-                        rb3d.AddForce(25, 0, 25, ForceMode.Impulse);
-                        StartCoroutine(WaitForStaggerToEnd());
-                    }
-                    return;
+        // public void ShieldBar(int damage) {
+        //     switch (shieldDestroy){
+        //         case true: _enemyStats.Damage(damage); return;
+        //         case false:
+        //             currentShield -= damage * shieldDmgBonus;
+        //             if (currentShield <= 0){
+        //                 shieldDestroy = true;
+        //                 rb3d.AddForce(25, 0, 25, ForceMode.Impulse);
+        //                 StartCoroutine(WaitForStaggerToEnd());
+        //             }
+        //             return;
+        //     }
+        // }
+
+        public void ShieldBar(int damage)
+        {
+            currentShield -= damage * shieldDmgBonus;
+            if (currentShield <= 0){
+                shieldDestroy = true;
+                rb3d.AddForce(25, 0, 25, ForceMode.Impulse);
+                StartCoroutine(WaitForStaggerToEnd());
             }
         }
         

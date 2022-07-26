@@ -294,4 +294,9 @@ public class DashNAttack : MonoBehaviour
 
         return outgoingDamage;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }
