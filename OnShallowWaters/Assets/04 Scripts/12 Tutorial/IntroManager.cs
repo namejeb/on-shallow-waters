@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
-public class TutorialManager : MonoBehaviour, IPointerDownHandler
+public class IntroManager : MonoBehaviour, IPointerDownHandler
 {
     [Header("Descriptions of each controls")]
     [SerializeField] private Transform[] descriptionTexts;
