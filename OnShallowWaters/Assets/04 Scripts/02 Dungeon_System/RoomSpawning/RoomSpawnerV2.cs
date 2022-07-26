@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using UnityEditor;
 
 public enum RoomEntranceDir
 {
@@ -26,6 +27,7 @@ public class Room
 public class RoomSpawnerV2 : MonoBehaviour
 {
     [SerializeField] [Range(0f, 1f)] private float soulShopSpawnRate = .2f;
+    public static readonly float TransitionDuration = 1f;
     
     [Space][Space]
     [Header("Special Rooms:")]
@@ -68,7 +70,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     {
         SetRoomActive(rSoulShop, false);
         SetRoomActive(rBasic, false);
-        //SetRoomActive(rTutorial, false);
+        SetRoomActive(rTutorial, false);
         
         IsBossRoom = false;
     }
@@ -78,7 +80,8 @@ public class RoomSpawnerV2 : MonoBehaviour
         if (GameManager.IsTutorial)
         {
             // spawn tutorial room
-
+            SetRoomActive(rTutorial.transform, true);
+            _prevRoom = rTutorial.transform;
         }
         else
         {
@@ -86,7 +89,12 @@ public class RoomSpawnerV2 : MonoBehaviour
             SetRoomActive(rBasic.transform, true);
             _prevRoom = rBasic.transform;
         }
-        // if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
+        if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
+    }
+
+    public static void TriggerTransition()
+    {
+        if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
     }
 
     private void SortRooms()
@@ -202,7 +210,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     
     private IEnumerator EnableRoom(Room room)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(TransitionDuration);
         
         //Remove old room
         SetRoomActive(_prevRoom, false);
@@ -219,7 +227,7 @@ public class RoomSpawnerV2 : MonoBehaviour
 
     private IEnumerator EnableSoulShop()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(TransitionDuration);
         
         //Remove old room
         SetRoomActive(_prevRoom, false);
