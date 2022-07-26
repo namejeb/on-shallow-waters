@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
+    [Space][Space]
+    [SerializeField] private PlayerHealthBar playerHealthBar;
+    [SerializeField] private BM_LowHpDmgReduction bmLowHpDmgReduction;
+    
+    [Space][Space]
     [SerializeField] private Stat movementSpeed;
     [SerializeField] private Stat defense;
     
@@ -32,14 +37,11 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
     public float DamageReduction { get => _damageReduction; }
 
-    private BoonDamageModifiers _boonDamageModifiers;
-    private BM_LowHpDmgReduction _bmLowHpDmgReduction;
-
-    public PlayerHealthBar playerHealthBar;
+  //  private BoonDamageModifiers _boonDamageModifiers;
 
     private new void Awake()
     {
-        _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
+    //    _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
         currHp = MaxHp;
         playerHealthBar.SetMaxHealth(MaxHp);
     }
@@ -153,9 +155,9 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         incomingDamage *= (100 / (100 + (DefMultiplier * (Defense.CurrentValue + 0))) * DamageReduction);
 
-        if (_bmLowHpDmgReduction.Activated)
+        if (bmLowHpDmgReduction.Activated)
         {
-            if (CurrHpPercentage < _bmLowHpDmgReduction.DmgReductionActivationThreshold)
+            if (CurrHpPercentage < bmLowHpDmgReduction.DmgReductionActivationThreshold)
             {
                 //decrease by 25%
                 incomingDamage *= (1 - .25f);
@@ -169,29 +171,24 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         throw new System.NotImplementedException();
     }
-
-    void Update()
-    {
-        if (Input.GetKeyDown("r"))
-        {
-            RemoveModifier(Atk, 25.9f);
-        }
-
-        if (Input.GetKeyDown("a"))
-        {
-            AddModifier(Atk , 25.9f);
-        }
-
-    }
+    //
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown("r"))
+    //     {
+    //         RemoveModifier(Atk, 25.9f);
+    //     }
+    //
+    //     if (Input.GetKeyDown("a"))
+    //     {
+    //         AddModifier(Atk , 25.9f);
+    //     }
+    //
+    // }
 
     public void DamageTest(int damage)
     {
         currHp -= damage;
         playerHealthBar.SetHealth(currHp);
     }
-
-
-
-
-
 }

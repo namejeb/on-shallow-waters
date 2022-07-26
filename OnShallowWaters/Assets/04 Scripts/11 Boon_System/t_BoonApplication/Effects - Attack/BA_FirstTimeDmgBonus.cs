@@ -12,7 +12,7 @@ public class BA_FirstTimeDmgBonus : Boon_Attack
         float finalDmg = outgoingDmg; 
         if (e.EnemyStats.CurrHpPercentage >= 1f)
         {
-            finalDmg = outgoingDmg * EffectAmount;
+            finalDmg = outgoingDmg * (1 + EffectAmount);
         }
 
         return finalDmg;
