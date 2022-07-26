@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class SwipeDash : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class SwipeDash : MonoBehaviour
     [SerializeField]float tapAttack;
     Vector3 firstTouchPos;
     public float swipeDuration;
+
 
     private void Awake()
     {
@@ -34,6 +36,7 @@ public class SwipeDash : MonoBehaviour
                  dna.Attack();
              }
          }
+
          //SWIPE
          if (Input.GetMouseButtonUp(0))
          {
