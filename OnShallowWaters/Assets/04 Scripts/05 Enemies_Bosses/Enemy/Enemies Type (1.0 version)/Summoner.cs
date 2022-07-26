@@ -1,34 +1,21 @@
 using UnityEngine;
 
 namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_{
-    public class Summoner : EnemiesCore{
+    public class Summoner : SlowHeavyShooter{
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private Transform[] spawnList;
         public GameObject enemies;
-
-        //! Fire Point
-        public Transform firePoint;
-        [SerializeField] private GameObject effectToSpawn;
-        [SerializeField] private float timeToFire;
-        private EnemiesProjectile _enemiesProjectile;
         private bool _readyToSummon;
 
-
         [SerializeField] private float timeToSummon;
-        private Quaternion _rotate1;
-        private Vector3 _direction1;
-        private Vector3 _pos1;
-
-        public int setBehaviour;
-        public int hasFired;
-        public int firedNum;
-        public int summonNum;
+        private int setBehaviour;
+        private int hasFired;
+        private int summonNum;
 
         protected override void Start(){
             base.Start();
-
             _readyToSummon = true;
-            _enemiesProjectile = effectToSpawn.GetComponent<EnemiesProjectile>();
+
             var size = spawnPoint.childCount;
             spawnList = new Transform[size];
             for(int i = 0; i < size; i++){
@@ -50,13 +37,13 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_{
 
         protected override void Attack(){
             if (dist > radius * radius){
-                behaviour = CoreStage.Move;
+                behaviour = CoreStage.Idle;
                 return;
             }
 
             switch (setBehaviour){
                 case 2 when _readyToSummon: UniqueMove(); break;
-                default:  Fire(); break;
+                default:  FireBullet(); break;
             }
         }
 
@@ -75,27 +62,13 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_{
 
         }
 
-        private void Fire(){
-            Transform trans;
-            
-            (trans = transform).LookAt(puppet);
-            _direction1 = puppet.position - trans.position;
-            _rotate1 = Quaternion.LookRotation(_direction1);
-
-            if (Time.time >= timeToFire){
-                timeToFire = Time.time + (1 / _enemiesProjectile.fireRate);
-                Quaternion rotation = _rotate1;
-                Instantiate(effectToSpawn, firePoint.position, rotation);
-                firedNum += 1;
-            }
-            
-            if (firedNum != 3) return;
-            behaviour = CoreStage.Move;
-            firedNum = 0;
+        protected override void FireBullet(){
+            base.FireBullet();
             
             if (!_readyToSummon){
                 hasFired += 1;
             }
         }
+        
     }
 }

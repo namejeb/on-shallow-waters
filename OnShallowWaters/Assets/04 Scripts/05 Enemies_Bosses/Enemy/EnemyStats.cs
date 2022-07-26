@@ -1,5 +1,4 @@
 using _04_Scripts._05_Enemies_Bosses;
-using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
 using UnityEngine;
 using System;
 
@@ -17,7 +16,8 @@ public class EnemyStats : CharacterStats, IDamageable
     [SerializeField] private new Collider collider;
     public Stat Defense { get => defense; }
 
-    private bool isDead = false;
+    public bool isDead = false;
+    public Animator anim1;
 
     private new void Awake()
     {
@@ -36,8 +36,12 @@ public class EnemyStats : CharacterStats, IDamageable
     
     public void Damage(int damageAmount)
     {
-        if (_enemiesCore.armourType) _enemiesCore.ShieldBar(damageAmount);
-        else TakeDamage(damageAmount);
+        if (_enemiesCore.armourType) {
+            _enemiesCore.ShieldBar(damageAmount);
+        } else {
+            //anim1.SetTrigger("isHit");
+            TakeDamage(damageAmount);
+        } 
 
         healthBar.UpdateHealthBar(CurrHpPercentage);
     }
@@ -51,6 +55,7 @@ public class EnemyStats : CharacterStats, IDamageable
     {
         if (isDead) return;
         isDead = true;
+        anim1.SetTrigger("isDead");
         
         _dropSouls.Drop();
 
@@ -61,6 +66,7 @@ public class EnemyStats : CharacterStats, IDamageable
         }
 
         collider.enabled = false;
+        
         Invoke(nameof(DisableSelf), 1f);
     }
 

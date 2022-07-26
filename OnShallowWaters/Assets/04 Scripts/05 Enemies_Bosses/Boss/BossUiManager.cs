@@ -34,4 +34,9 @@ public class BossUiManager : MonoBehaviour
     {
         statsSlider[sliderIndex].gameObject.SetActive(false);
     }
+
+    public void DisableGameObject()
+    {
+        gameObject.SetActive(false);
+    }
 }

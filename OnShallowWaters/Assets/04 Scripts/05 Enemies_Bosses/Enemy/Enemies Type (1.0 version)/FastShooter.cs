@@ -1,33 +1,37 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
-    public sealed class FastShooter : EnemiesCore {
+
+public sealed class FastShooter : EnemiesCore {
+        [Header("Basic Attributes: ")]
         [SerializeField] private GameObject projectile;
-        [SerializeField] private float repositioning, timeToFire;
+        private float repositioning;
+        private float timeToFire;
         
+        [Space][Space]
+        [Header("Fire Attributes: ")]
         private EnemiesProjectile _enemiesProjectile;
-        private Transform _transform2;
-        
+        private Transform transRecord;
         private Quaternion _rotation;
         private Vector3 _position, _direct;
 
         public Transform fireSpawn;
-        public float maxDist = 5f;
-        public bool isPrepared;
-        public int bulletFired;
+        private bool isPrepared;
+        private int bulletFired;
         
-        //! Walk Circle
+        [Space]
+        [Header("Orbit Rotation: ")]
         [SerializeField] private float rotationRadius = 2f, angularSpeed = 2f;
-        public float posX, posZ, angle1;
-
+        private float posX, posZ, angle1;
         private Vector3 _offset;
+        public float randomRadius;
+
 
         protected override void Start(){
             base.Start();
             isPrepared = true;
             _enemiesProjectile = projectile.GetComponent<EnemiesProjectile>();
+            randomRadius = radius;
         }
 
         protected override void Movement(){
@@ -39,15 +43,10 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             }
         }
 
-        private IEnumerator Delay(){
-            yield return new WaitForSeconds(repositioning);
-            isPrepared = true;
-        }
-
         protected override void Attack(){ 
-            (_transform2 = transform).LookAt(puppet);
+            (transRecord = transform).LookAt(puppet);
             
-            _direct = puppet.position - _transform2.position;
+            _direct = puppet.position - transRecord.position;
             _rotation = Quaternion.LookRotation(_direct);
             Quaternion rotation1 = _rotation;
             
@@ -59,7 +58,13 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
 
             if (bulletFired != 3) return;
             behaviour = CoreStage.Move;
+            randomRadius = Random.Range(radius, radius + 5);
             bulletFired = 0;
+        }
+
+        private IEnumerator Delay(){
+            yield return new WaitForSeconds(repositioning);
+            isPrepared = true;
         }
 
         private bool RaycastSingle(){
@@ -67,20 +72,23 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             Vector3 origin = trans1.position;
             Vector3 direction = trans1.forward;
 
+            //Here
+            Debug.DrawRay(origin, direction * randomRadius, Color.cyan);
             Ray ray = new Ray(origin, direction);
-            Debug.DrawRay(origin, direction * radius, Color.cyan);
-            
-            bool result = Physics.Raycast(ray, radius, targetMask, QueryTriggerInteraction.Ignore);
+
+            //Here
+            bool result = Physics.Raycast(ray, randomRadius, targetMask, QueryTriggerInteraction.Ignore);
             return result;
         }
 
         private void RotateMovement(){
             var position13 = puppet.position;
 
+            //Here
             _offset.Set(
-                Mathf.Cos(angle1) * radius,
+                Mathf.Cos(angle1) * randomRadius,
                 0,
-                Mathf.Sin(angle1) * radius
+                Mathf.Sin(angle1) * randomRadius
             );
             
             agent.SetDestination(position13 + _offset);
@@ -92,4 +100,3 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             }
         }
     }
-}

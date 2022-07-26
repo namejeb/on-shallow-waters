@@ -6,6 +6,10 @@ public class DisplayBoonList : MonoBehaviour
 {
     [SerializeField] private float offsetX;
 
+    [SerializeField] private Transform chosenBoonList;
+    private bool _isOpened = false;
+    
+
     private Transform _containerDisplayList;      
     private Transform _boonDisplayTemplate;
     private Transform _scrollContent;
@@ -93,5 +97,11 @@ public class DisplayBoonList : MonoBehaviour
         {
             indicators[i].gameObject.SetActive(true);
         }
+    }
+
+    public void ToggleList()
+    {
+        _isOpened = !_isOpened;
+        chosenBoonList.gameObject.SetActive(_isOpened); 
     }
 }

@@ -15,17 +15,18 @@ public class BossAI_RangeAttack : State
 
     public override void EnterState(StateMachineManager sm)
     {
-        sm.Agent.enabled = false;
         sm.Anim.SetTrigger(animationTrigger);
+        sm.Agent.enabled = false;
     }
 
     public override void UpdateState(StateMachineManager sm)
     {
         sm.inStateTimer += Time.deltaTime;
 
+
         sm.RotateTowards();
 
-        if (sm.inStateTimer > shootInterval)
+        if (sm.inStateTimer > maxShootCount)
         {
             shootCount += 1;
             sm.inStateTimer = 0;

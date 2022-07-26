@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using _04_Scripts._05_Enemies_Bosses;
-using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
+using NaughtyAttributes;
 
 public class SkBlessing : MonoBehaviour
 {
@@ -32,6 +32,8 @@ public class SkBlessing : MonoBehaviour
 
     private PlayerStats playerStats;
     private TimeManager timeManager;
+    
+    
 
     public float Skb2Duration
     {
@@ -60,10 +62,10 @@ public class SkBlessing : MonoBehaviour
     {
         soulButton.interactable = false;
 
-        // this is setting for skb, if 1st skb got change need change here too
-        duration = 10;
+        // this is default settings for skb, currently is skb3
+        duration = 5;
         requiredSoul = 100;
-        soulButton.onClick.AddListener(SKB1);
+        soulButton.onClick.AddListener(SKB3);
     }
 
     private void Update()
@@ -129,6 +131,7 @@ public class SkBlessing : MonoBehaviour
         startCountdown = true;
     }
 
+    [Button]
     public void SKB3()
     {
         if (startCountdown)
@@ -143,6 +146,7 @@ public class SkBlessing : MonoBehaviour
         currSoul = 0;
         timer = duration;
         startCountdown = true;
+
         timeManager.StartSlowMo(duration);
     }
     
@@ -151,11 +155,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         currSoul = 0;
         timer = duration;
@@ -185,11 +189,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         currSoul = 0;
         timer = duration;

@@ -14,7 +14,8 @@ public class EnemyHandler : MonoBehaviour
     public EnemyStats EnemyStats { get => _enemyStats; }
     public EnemiesCore EnemiesCore { get => _enemiesCore; }
 
-    private new void  Awake()
+    //private new void Awake()
+    private void Awake()
     {
         _enemyStats = GetComponent<EnemyStats>();
 

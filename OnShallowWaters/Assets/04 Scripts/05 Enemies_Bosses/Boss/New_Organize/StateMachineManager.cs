@@ -37,6 +37,11 @@ public class StateMachineManager : MonoBehaviour
     public NavMeshAgent Agent => _agent;
     public Animator Anim => _animator;
     public Rigidbody Rb { get { return rb; } set { rb = value; } }
+    public List<GameObject> MH { get { return meleeHitbox; } set { meleeHitbox = value; } }
+    public State CurrentState { get { return _currentState; } }
+
+
+    public float faceAngle;
 
     private void Awake()
     {
@@ -49,22 +54,72 @@ public class StateMachineManager : MonoBehaviour
     private void Start()
     {
         target = PlayerHandler.Instance.transform;
-
         Agent.stoppingDistance = chaseMinDistance;
-
+        faceAngle = transform.rotation.eulerAngles.y;
         _agent.speed = speed;
         SetState(stateList[0]);
     }
 
+
+    float velocity = 100;
+    float velocity2 = 50;
     void Update()
     {
         _currentState.UpdateState(this);
+
+        if (transform.rotation.eulerAngles.y > (faceAngle + 5))
+        {
+            faceAngle = transform.rotation.eulerAngles.y;// -5;
+            //_animator.SetLayerWeight(1, 1);
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.1f));
+        }
+
+        else if (transform.rotation.eulerAngles.y < (faceAngle - 5))
+        {
+            faceAngle = transform.rotation.eulerAngles.y;// +5;
+            //_animator.SetLayerWeight(1, 1);
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.1f));
+        }
+
+        else if (transform.rotation.eulerAngles.y <= (faceAngle + 5) && transform.rotation.eulerAngles.y >= (faceAngle - 5))
+        {
+            //_animator.SetLayerWeight(1, 0);
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 0, ref velocity, 0.3f));
+        }
+ 
     }
 
     public void SetState(State state)
     {
         _currentState = state;
         _currentState.EnterState(this);
+    }
+
+    [Button]
+    public void Shoot()
+    {
+        SetState(stateList[3]);
+    }
+
+    [Button]
+    public void Dash()
+    {
+        SetState(stateList[1]);
+    }
+
+    [Button]
+    public void Slam()
+    {
+        SetState(stateList[4]);
+    }
+
+    [Button]
+    public void Slice()
+    {
+        SetState(stateList[2]);
     }
 
     public void BossRandomState()
@@ -74,6 +129,14 @@ public class StateMachineManager : MonoBehaviour
         while (_currentState == stateList[randNum])
         {
             randNum = Random.Range(0, stateList.Count);
+        }
+
+        while (_currentState == stateList[1] && randNum == 4)
+        {
+            int[] num = { 0, 2, 3 };
+            randNum = Random.Range(0, num.Length);
+            randNum = num[randNum];
+            Debug.Log(randNum);
         }
 
         SetState(stateList[randNum]);
@@ -116,10 +179,9 @@ public class StateMachineManager : MonoBehaviour
     [Button]
     public void Shake()
     {
-        Debug.Log("Shake");
         float time = 2;
-        impSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = time;
-        impSource.m_DefaultVelocity.x = impSource.m_DefaultVelocity.y = -0.5f;
+        //impSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = time;
+        //impSource.m_DefaultVelocity.x = impSource.m_DefaultVelocity.y = -0.5f;
         impSource.GenerateImpulse();
     }
 }
