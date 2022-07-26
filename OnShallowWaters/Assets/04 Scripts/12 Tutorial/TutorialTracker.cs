@@ -1,18 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TutorialTracker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public int numAttack;
+    enum Stage{
+        move, dash, attack, puppet, exit
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Start(){
+        DashNAttack.OnAttack += Attack;
+        DashNAttack.OnDash += Dash;
+        Destination.OnMove += Move; 
+    }
+
+    
+
+    public void Dash(){
+
+    }
+
+    public void Move(){
+
+    }
+
+    public void Attack(){
+        if(numAttack != 3) return;
+        numAttack++;
+    }
+
+    void OnDestroy(){
+        DashNAttack.OnAttack -= Attack;
+        DashNAttack.OnDash -= Dash;
+        Destination.OnMove -= Move; 
     }
 }

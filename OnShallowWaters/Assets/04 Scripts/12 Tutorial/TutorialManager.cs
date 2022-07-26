@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
 
 public class TutorialManager : MonoBehaviour, IPointerDownHandler
 {
@@ -7,21 +8,22 @@ public class TutorialManager : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Transform[] descriptionTexts;
     private int _descCounter = 0;
 
+     public static event Action SwitchStage;
+
     public void OnPointerDown(PointerEventData eventData)
     {
         // tapped
         _descCounter++;
         
         // If finished all descriptionTexts
-        if (_descCounter == descriptionTexts.Length - 1)
-        {
+        if (_descCounter == descriptionTexts.Length - 1){
             // enable task part
-        }
-        else
-        {
+            if(SwitchStage != null) SwitchStage();
+        } else {
             SetObjectActive(descriptionTexts[_descCounter], true);
         }
     }
+
     private void Start()
     {
         Init();
