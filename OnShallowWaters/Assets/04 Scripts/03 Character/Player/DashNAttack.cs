@@ -35,7 +35,6 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private int inDamage;
     [SerializeField] private AttackButtonUI pressedButton;
     [SerializeField] private bool isSlashTigger;
-    
 
     private SkBlessing _skBlessing;
 
@@ -43,6 +42,10 @@ public class DashNAttack : MonoBehaviour
     
     private List<Boon_Attack> _boonAttackList = new List<Boon_Attack>();
     private BM_DmgWhenArmorBreak _dmgWhenShieldBreak;
+
+    //Tutorial Event
+    public static event Action OnAttack;
+    public static event Action OnDash;
 
     private void InitBoonRefs()
     {
@@ -79,8 +82,11 @@ public class DashNAttack : MonoBehaviour
 
     private void Dash()
     {
-        playerMovement.Move(transform.forward, speed, true);
+        if(OnDash != null){
+            OnDash();
+        }
 
+        playerMovement.Move(transform.forward, speed, true);
         if (Time.time > _endTime)
         {
             _isDash = false;
@@ -172,7 +178,9 @@ public class DashNAttack : MonoBehaviour
         float atkPercent = (float) stats.AtkPercent;
         float tempOutDamage = 0f;
 
-        
+        if(OnAttack != null){
+            OnAttack();
+        }
 
         if (attackSequence == 0 && Time.time > nextAttack)
         {
