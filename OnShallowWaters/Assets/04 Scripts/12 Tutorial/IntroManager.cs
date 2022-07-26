@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.UI;
 
 public class IntroManager : MonoBehaviour, IPointerDownHandler
 {
@@ -8,7 +9,7 @@ public class IntroManager : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Transform[] descriptionTexts;
     private int _descCounter = 0;
 
-     public static event Action SwitchStage;
+    public static event Action SwitchStage;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -16,11 +17,25 @@ public class IntroManager : MonoBehaviour, IPointerDownHandler
         _descCounter++;
         
         // If finished all descriptionTexts
-        if (_descCounter == descriptionTexts.Length - 1){
+        if (_descCounter == descriptionTexts.Length){
+      
+            // disable last text
+            SetObjectActive(descriptionTexts[_descCounter- 1], false);
+            
+            // disable image to disallow more tapping
+            GetComponent<Image>().enabled = false;
+            
             // enable task part
             if(SwitchStage != null) SwitchStage();
+            
         } else {
             SetObjectActive(descriptionTexts[_descCounter], true);
+            
+            // disable previous text
+            if (_descCounter - 1 >= 0)
+            {
+                SetObjectActive(descriptionTexts[_descCounter- 1], false);
+            }
         }
     }
 
