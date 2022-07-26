@@ -47,6 +47,8 @@ public class RoomSpawnerV2 : MonoBehaviour
     private int _roomFinishedCount = -1; //to exclude basic room
     private int _bossRoomsIndex;
 
+    public static readonly float TransitionDuration = 1f;
+
     public static bool IsBossRoom { get; private set; }
 
     private void OnDestroy()
@@ -78,7 +80,8 @@ public class RoomSpawnerV2 : MonoBehaviour
         if (GameManager.IsTutorial)
         {
             // spawn tutorial room
-
+            // SetRoomActive(rBasic.transform, true);
+            // _prevRoom = rBasic.transform;
         }
         else
         {
@@ -86,7 +89,12 @@ public class RoomSpawnerV2 : MonoBehaviour
             SetRoomActive(rBasic.transform, true);
             _prevRoom = rBasic.transform;
         }
-        // if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
+        if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
+    }
+
+    public static void ChangeRoomDelegate()
+    {
+        if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
     }
 
     private void SortRooms()
@@ -202,7 +210,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     
     private IEnumerator EnableRoom(Room room)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(TransitionDuration);
         
         //Remove old room
         SetRoomActive(_prevRoom, false);
@@ -219,7 +227,7 @@ public class RoomSpawnerV2 : MonoBehaviour
 
     private IEnumerator EnableSoulShop()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(TransitionDuration);
         
         //Remove old room
         SetRoomActive(_prevRoom, false);
