@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 namespace _04_Scripts._01_Event_System.Start_Pause {
     public class MainMenu : MonoBehaviour {
         public void StartGame(){
+            GameManager.SetIsTutorial(false);
             LoadLevelScene();
         }
 
@@ -13,18 +14,14 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
 
         public void Tutorial()
         {
-            LoadTutorialScene();
+            GameManager.SetIsTutorial(true);
+            LoadLevelScene();
         }
 
 
         private void LoadLevelScene()
         {
             SceneManager.LoadScene(1);
-        }
-
-        private void LoadTutorialScene()
-        {
-            SceneManager.LoadScene(3);
         }
     }
 }

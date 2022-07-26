@@ -27,10 +27,14 @@ public class RoomSpawnerV2 : MonoBehaviour
 {
     [SerializeField] [Range(0f, 1f)] private float soulShopSpawnRate = .2f;
     
+    [Space][Space]
+    [Header("Special Rooms:")]
+    [SerializeField] private Transform rTutorial;
     [SerializeField] private Transform rBasic;
     [SerializeField] private Transform rSoulShop;
     private bool _sShopSpawnedInCurrLevel;
     
+    [Space][Space]
     [SerializeField] private List<Room> bossRooms;
     [SerializeField] private List<Level> levelList = new List<Level>();
     private int _levelCounter = 0;
@@ -55,18 +59,33 @@ public class RoomSpawnerV2 : MonoBehaviour
     {
         SortRooms();
         ExitRoomTrigger.OnExitRoom += SpawnRoom;
-        
-        SetRoomActive(rSoulShop, false);
-        
-        SetRoomActive(rBasic.transform, true);
-        _prevRoom = rBasic.transform;
 
+        ResetValues();
+        HandleInitialRooms();
+    }
+
+    private void ResetValues()
+    {
+        SetRoomActive(rSoulShop, false);
+        SetRoomActive(rBasic, false);
+        //SetRoomActive(rTutorial, false);
+        
         IsBossRoom = false;
     }
 
     private void HandleInitialRooms()
     {
-        
+        if (GameManager.IsTutorial)
+        {
+            // spawn tutorial room
+        }
+        else
+        {
+            // spawn basic room
+            SetRoomActive(rBasic.transform, true);
+            _prevRoom = rBasic.transform;
+        }
+        // if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
     }
 
     private void SortRooms()
@@ -174,7 +193,7 @@ public class RoomSpawnerV2 : MonoBehaviour
                 roomIndex = UnityEngine.Random.Range(0, level.westEntranceRooms.Count);
                 room = level.westEntranceRooms[roomIndex];
             } 
-             room = level.southEntranceRooms[1];
+            //  room = level.southEntranceRooms[1];
         }
         StartCoroutine(EnableRoom(room));
     }
