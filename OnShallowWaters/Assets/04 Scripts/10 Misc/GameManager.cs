@@ -1,7 +1,7 @@
 
 public static class GameManager
 {
-    private static bool _isTutorial = true;
+    private static bool _isTutorial = false;
     public static bool IsTutorial { 
         get => _isTutorial;
     }
