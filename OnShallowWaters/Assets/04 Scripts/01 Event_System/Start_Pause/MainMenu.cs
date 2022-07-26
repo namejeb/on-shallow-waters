@@ -17,8 +17,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             GameManager.SetIsTutorial(true);
             LoadLevelScene();
         }
-
-
+        
         private void LoadLevelScene()
         {
             SceneManager.LoadScene(1);
