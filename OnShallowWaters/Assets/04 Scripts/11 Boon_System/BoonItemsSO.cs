@@ -8,6 +8,7 @@ public class BoonItem
     public string description;
     public int maxUsageCount;
     public bool isPercentage = true;
+    public Sprite icon;
 }
 
 
