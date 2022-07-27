@@ -10,15 +10,15 @@ public class IntroManager : MonoBehaviour, IPointerDownHandler
     private int _descCounter = 0;
 
     public static event Action SwitchStage;
+    public bool introActivated;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        // tapped
-        _descCounter++;
+        if(!introActivated) return;
+        _descCounter++; //! tapped
         
         // If finished all descriptionTexts
         if (_descCounter == descriptionTexts.Length){
-      
             // disable last text
             SetObjectActive(descriptionTexts[_descCounter- 1], false);
             
@@ -26,8 +26,10 @@ public class IntroManager : MonoBehaviour, IPointerDownHandler
             GetComponent<Image>().enabled = false;
             
             // enable task part
-            if(SwitchStage != null) SwitchStage();
-            
+            if(SwitchStage != null){
+                introActivated = false;
+                SwitchStage();
+            } 
         } else {
             SetObjectActive(descriptionTexts[_descCounter], true);
             
@@ -42,6 +44,7 @@ public class IntroManager : MonoBehaviour, IPointerDownHandler
     private void Start()
     {
         Init();
+        introActivated = true;
         SetObjectActive(descriptionTexts[0], true);
     }
 

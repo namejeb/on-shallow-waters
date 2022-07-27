@@ -10,10 +10,4 @@ public class TutorialManager : MonoBehaviour
     void Start(){
         currentStage = tutorialStage.Intro;
     }
-
-    void Update(){
-        
-    }
-
-
 }
