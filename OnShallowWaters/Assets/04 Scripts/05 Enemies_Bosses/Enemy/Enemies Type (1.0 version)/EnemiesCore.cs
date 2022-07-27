@@ -58,7 +58,7 @@ using Random = UnityEngine.Random;
         protected virtual void Start(){
             agent = GetComponent<NavMeshAgent>();
             rb3d = GetComponent<Rigidbody>();
-            anim = GetComponent<Animator>();
+            //anim = GetComponent<Animator>();
             puppet = GameObject.FindWithTag("Player").transform;
 
             _enemyStats = GetComponent<EnemyStats>();
