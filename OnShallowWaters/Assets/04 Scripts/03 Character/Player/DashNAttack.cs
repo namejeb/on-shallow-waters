@@ -82,7 +82,8 @@ public class DashNAttack : MonoBehaviour
 
     private void Dash()
     {
-        if(OnDash != null){
+        animator.SetTrigger("Dash");
+        if (OnDash != null){
             OnDash();
         }
 
