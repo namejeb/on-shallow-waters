@@ -97,8 +97,6 @@ public class DashNAttack : MonoBehaviour
             _isDash = false;
             playerMovement.enabled = true;
         }
-
-        Debug.Log("dash");
     }
 
     public void ActivateDash()
@@ -123,7 +121,6 @@ public class DashNAttack : MonoBehaviour
             {
 
                 isSlash = true;
-                //Debug.Log("KAHHHHHHHBIIIIIN");
                 if (isSlash)
                     HeavySlash();
             }
@@ -131,7 +128,6 @@ public class DashNAttack : MonoBehaviour
             else if (chargedTimer >= 1)
             {
                 isSlam = true;
-                //Debug.Log("BOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
                 if (isSlam)
                     HeavySlam();
             }

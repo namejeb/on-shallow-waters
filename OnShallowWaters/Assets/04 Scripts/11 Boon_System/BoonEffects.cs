@@ -1,11 +1,17 @@
+using System;
 using UnityEngine;
 
 
 public class BoonEffects : MonoBehaviour {
     
-    [SerializeField] private BoonEffectsManager boonEffectsManager;
+    private BoonEffectsManager boonEffectsManager;
     
     [Space] public int boonToUse;
+
+    private void Start()
+    {
+        boonEffectsManager = PlayerHandler.Instance.BoonEffectsManager;
+    }
 
     public void HandleEffectActivation(int boonItemId)
     {

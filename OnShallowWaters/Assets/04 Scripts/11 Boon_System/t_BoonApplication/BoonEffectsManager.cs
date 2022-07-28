@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class BoonEffectsManager : MonoBehaviour
 {
+    public static BoonsList BoonsList { get; private set; }
+
+    private void Awake()
+    {
+        BoonsList = GetComponent<BoonsList>();
+    }
+    
     public void MaxHp()
     {
         BM_MaxHp b = GetComponent<BM_MaxHp>();

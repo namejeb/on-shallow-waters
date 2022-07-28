@@ -5,18 +5,25 @@ using System.Collections;
 public class PlayerHandler : MonoBehaviour
 {
     [SerializeField] private Transform cameraTarget;
-
+  
     private static PlayerStats _playerStats;
     private static PlayerMovement _playerMovement;
+    private BoonEffectsManager _boonEffectsManager;
+    
+    public Transform CameraTarget
+    {
+        get => cameraTarget;
+    }
 
     public PlayerStats PlayerStats
     {
         get => _playerStats; 
     }
 
-    public Transform CameraTarget
+
+    public BoonEffectsManager BoonEffectsManager
     {
-        get => cameraTarget;
+        get => _boonEffectsManager;
     }
 
 
@@ -35,6 +42,8 @@ public class PlayerHandler : MonoBehaviour
         RoomSpawnerV2.OnResetPlayerPos += ResetPosition;
 
         _playerStats = GetComponent<PlayerStats>();
+
+        _boonEffectsManager = transform.root.Find("BoonEffectsManager").GetComponent<BoonEffectsManager>();
     }
     
     public void SavePlayer()
