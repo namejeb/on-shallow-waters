@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using UnityEditor;
 
 public enum RoomEntranceDir
 {
@@ -26,6 +27,7 @@ public class Room
 public class RoomSpawnerV2 : MonoBehaviour
 {
     [SerializeField] [Range(0f, 1f)] private float soulShopSpawnRate = .2f;
+    public static readonly float TransitionDuration = 1f;
     
     [Space][Space]
     [Header("Special Rooms:")]
@@ -46,8 +48,6 @@ public class RoomSpawnerV2 : MonoBehaviour
 
     private int _roomFinishedCount = -1; //to exclude basic room
     private int _bossRoomsIndex;
-
-    public static readonly float TransitionDuration = 1f;
 
     public static bool IsBossRoom { get; private set; }
 
@@ -70,7 +70,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     {
         SetRoomActive(rSoulShop, false);
         SetRoomActive(rBasic, false);
-        //SetRoomActive(rTutorial, false);
+        SetRoomActive(rTutorial, false);
         
         IsBossRoom = false;
     }
@@ -80,8 +80,8 @@ public class RoomSpawnerV2 : MonoBehaviour
         if (GameManager.IsTutorial)
         {
             // spawn tutorial room
-            // SetRoomActive(rBasic.transform, true);
-            // _prevRoom = rBasic.transform;
+            SetRoomActive(rTutorial.transform, true);
+            _prevRoom = rTutorial.transform;
         }
         else
         {
@@ -92,7 +92,7 @@ public class RoomSpawnerV2 : MonoBehaviour
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
     }
 
-    public static void ChangeRoomDelegate()
+    public static void TriggerTransition()
     {
         if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
     }

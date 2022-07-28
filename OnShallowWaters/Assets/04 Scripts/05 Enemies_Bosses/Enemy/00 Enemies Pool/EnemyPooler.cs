@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,12 @@ public class EnemyPooler : MonoBehaviour
 	}
 	
 	[SerializeField] private List<PoolInfo> listOfPool;
+
+	public static EnemyPooler Instance;
+	private void Awake()
+	{
+		Instance = this;
+	}
 
 
 	void Start()

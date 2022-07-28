@@ -31,6 +31,7 @@ public class DisplayBoonList : MonoBehaviour
         _boonSelection = GetComponent<BoonSelection>();
         
         SetupDisplayList();
+        chosenBoonList.gameObject.SetActive(false);
     }
     
     private void SetupDisplayList()                                      
@@ -50,7 +51,7 @@ public class DisplayBoonList : MonoBehaviour
                                                                                                                                                                                   
         float shopButtonWidth = newDisplayRect.rect.width;                                                                                                            
         newDisplayRect.anchoredPosition = new Vector2(shopButtonWidth * _numOfDisplays * -offsetX, newDisplayRect.anchoredPosition.y);
-
+        
         _numOfDisplays++;
         
         _createdDisplays.Add(newDisplay);
@@ -83,19 +84,36 @@ public class DisplayBoonList : MonoBehaviour
     private void UpdateLevelIndicators(Transform displayTransform, BoonItemsTimesUsed boonItemsTimesUsed)
     {
         Transform upgradeLevels = displayTransform.Find("upgradeLevels");
-        Transform[] indicators = new Transform[3];
+        
+        Transform unfilledIndicatorsContainer = upgradeLevels.Find("unfilled");
+        Transform filledIndicatorsContainer = upgradeLevels.Find("filled");
+
+        Transform[] unfilledIndicators = new Transform[4];
+        Transform[] filledIndicators = new Transform[4];
 
         // disable all first
-        for (int i = 0; i < upgradeLevels.childCount; i++)
+        for (int i = 0; i < filledIndicatorsContainer.childCount; i++)
         {
-            indicators[i] = upgradeLevels.transform.GetChild(i);
-            indicators[i].gameObject.SetActive(false);
+            // unfilled
+            unfilledIndicators[i] = unfilledIndicatorsContainer.GetChild(i);
+            SetIndicatorActive(unfilledIndicators[i], false);
+            
+            // filled
+            filledIndicators[i] = filledIndicatorsContainer.GetChild(i);
+            SetIndicatorActive(filledIndicators[i], false);
         }
+        
+        // enable back according to maxUsageCount
+        for (int i = 0; i < boonItemsTimesUsed.boonItem.maxUsageCount; i++)
+        {
+            SetIndicatorActive(unfilledIndicators[i], true);
+        }
+
 
         // enable back according to usageCount
         for (int i = 0; i < boonItemsTimesUsed.usageCount; i++)
         {
-            indicators[i].gameObject.SetActive(true);
+            SetIndicatorActive(filledIndicators[i], true);
         }
     }
 
@@ -103,5 +121,10 @@ public class DisplayBoonList : MonoBehaviour
     {
         _isOpened = !_isOpened;
         chosenBoonList.gameObject.SetActive(_isOpened); 
+    }
+
+    private void SetIndicatorActive(Transform indicatorTransform, bool status)
+    {
+        indicatorTransform.gameObject.SetActive(status);
     }
 }

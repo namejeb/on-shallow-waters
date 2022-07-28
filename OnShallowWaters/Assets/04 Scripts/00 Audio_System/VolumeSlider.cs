@@ -3,31 +3,32 @@ using UnityEngine.UI;
 
 public class VolumeSlider : MonoBehaviour {
     [Header("Volume Sliders")] 
-    [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider effectsSlider;
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider bgmSlider;
 
     private void OnDestroy()
     {
         SoundManager sm = SoundManager.Instance;
         
-        musicSlider.onValueChanged.RemoveListener(sm.ChangeMusicVol);
-        effectsSlider.onValueChanged.RemoveListener(sm.ChangeEffectVol);
+        bgmSlider.onValueChanged.RemoveListener(sm.ChangeMusicVol);
+        sfxSlider.onValueChanged.RemoveListener(sm.ChangeEffectVol);
     }
 
-    void Start()
+    private void Start()
     {
         SetVolumeSliderValues();
         
         SoundManager sm = SoundManager.Instance;
-        musicSlider.onValueChanged.AddListener(sm.ChangeMusicVol);
-        effectsSlider.onValueChanged.AddListener(sm.ChangeEffectVol);
+        bgmSlider.onValueChanged.AddListener(sm.ChangeMusicVol);
+        sfxSlider.onValueChanged.AddListener(sm.ChangeEffectVol);
     }
     
     private void SetVolumeSliderValues()
     {
         SoundManager sm = SoundManager.Instance;
 
-        musicSlider.value = sm.MusicVolume;
-        effectsSlider.value = sm.EffectsVolume;
+        bgmSlider.value = sm.MusicVolume;
+        sfxSlider.value = sm.EffectsVolume;
     }
 }

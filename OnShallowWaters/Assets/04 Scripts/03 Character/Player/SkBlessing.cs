@@ -9,6 +9,7 @@ public class SkBlessing : MonoBehaviour
 {
     [SerializeField] private Image soulMeter;
     [SerializeField] private Button soulButton;
+    private Image soulButtonImage;
 
     [Header("SKB 1")]
     [SerializeField] private int atkAdd;
@@ -56,6 +57,7 @@ public class SkBlessing : MonoBehaviour
     {
         playerStats = GetComponent<PlayerStats>();
         timeManager = FindObjectOfType<TimeManager>();
+        soulButtonImage = soulButton.GetComponent<Image>();
     }
 
     private void Start()
@@ -104,6 +106,7 @@ public class SkBlessing : MonoBehaviour
         }
         else return;
 
+        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         playerStats.Atk.AddModifier(atkAdd);
@@ -124,6 +127,7 @@ public class SkBlessing : MonoBehaviour
         }
         else return;
 
+        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         duration = regenPerSec * regenAmount;
         timer = duration;
@@ -137,12 +141,13 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
 
+        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -161,6 +166,7 @@ public class SkBlessing : MonoBehaviour
         }
         else return;
 
+        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -195,6 +201,7 @@ public class SkBlessing : MonoBehaviour
         }
         else return;
 
+        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -241,6 +248,7 @@ public class SkBlessing : MonoBehaviour
         if (currSoul >= requiredSoul)
         {
             soulButton.interactable = true;
+            soulButtonImage.color = Color.HSVToRGB(210, 100, 100);
         }
     }
 }
