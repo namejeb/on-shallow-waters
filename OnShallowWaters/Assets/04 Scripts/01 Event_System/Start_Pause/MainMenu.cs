@@ -1,11 +1,23 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 namespace _04_Scripts._01_Event_System.Start_Pause {
     public class MainMenu : MonoBehaviour {
+
+        [SerializeField] private Transform loadingScreen;
+
+        private void Awake()
+        {
+            loadingScreen.gameObject.SetActive(false);
+        }
+
         public void StartGame(){
+            loadingScreen.gameObject.SetActive(true);
             GameManager.SetIsTutorial(false);
-            LoadLevelScene();
+            StartCoroutine(LoadLevelScene());
         }
 
         public void ExitGame(){
@@ -14,13 +26,15 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
 
         public void Tutorial()
         {
+            loadingScreen.gameObject.SetActive(true);
             GameManager.SetIsTutorial(true);
-            LoadLevelScene();
+            StartCoroutine(LoadLevelScene());
         }
         
-        private void LoadLevelScene()
+        private IEnumerator LoadLevelScene()
         {
-            SceneManager.LoadScene(1);
+            yield return new WaitForSeconds(2f);
+            SceneManager.LoadSceneAsync(1);
         }
     }
 }
