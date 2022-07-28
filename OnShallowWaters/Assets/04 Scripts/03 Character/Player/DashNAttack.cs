@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Timeline;
 using System.Collections;
+using System.Net;
+using Unity.VisualScripting;
 
 public class DashNAttack : MonoBehaviour
 {
@@ -47,6 +49,8 @@ public class DashNAttack : MonoBehaviour
     public static event Action OnAttack;
     public static event Action OnDash;
 
+    private bool _canAttack = true;
+    
     private void InitBoonRefs()
     {
         Transform b = boonEffectsManagerTransform;
@@ -174,98 +178,120 @@ public class DashNAttack : MonoBehaviour
     public void Attack()
     {
         //playerMovement.enabled = false;
-
+        
         //Attack Sequence(What attack/aniamtion it will do)
 
+        if (Time.time <= nextAttack) return;
+        if (!_canAttack) return;
+        
         float baseAtk = (float) stats.Atk.CurrentValue;
         float atkPercent = (float) stats.AtkPercent;
 
-        if (attackSequence == 0 && Time.time > nextAttack)
+        float timeTillNextAtk = 0f;
+
+
+        if ( attackSequence == 0 )
         {
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
-         //   Debug.Log(tempOutDamage);
+            
             playerMovement.enabled = true;
             animator.SetTrigger("Attack");
+            
             attackSequence++;
-            nextAttack = Time.time + 0.5f;
-            StartCoroutine(EnableMove(0.5f));
-            outDamage = Mathf.RoundToInt(tempOutDamage);
-            //HandleDamaging(tempOutDamage);
+            timeTillNextAtk = .5f;
         }
-        else if (attackSequence == 1 && Time.time > nextAttack)
+        else if ( attackSequence == 1 )
         {
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) ;
-          //  Debug.Log(tempOutDamage);
+
             playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
+            
             attackSequence++;
-            nextAttack = Time.time + 0.8f;
-            StartCoroutine(EnableMove(0.8f));
-            outDamage = Mathf.RoundToInt(tempOutDamage);
-            //HandleDamaging(tempOutDamage);
+            timeTillNextAtk = .8f;
         }
-        else if (attackSequence == 2 && Time.time > nextAttack)
+        else if ( attackSequence == 2 )
         {
             tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) ;
-          //  Debug.Log(tempOutDamage);
+
             playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
+            
             attackSequence = 0;
-            nextAttack = Time.time + 1f;
-            StartCoroutine(EnableMove(1));
-            outDamage = Mathf.RoundToInt(tempOutDamage);
-            //HandleDamaging(tempOutDamage);
+            timeTillNextAtk = 1f;
         }
-
-        nextAttack /= stats.AtkSpeed;
-
-        // Debug.Log(attackSequence.ToString());
+        
+        nextAttack =  (Time.time + timeTillNextAtk) / stats.AtkSpeed;
+        
+        StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
+        StartCoroutine(EnableAttack(timeTillNextAtk / stats.AtkSpeed));
+        
+        outDamage = Mathf.RoundToInt(tempOutDamage);
     }
 
-     public void HandleDamaging(float outDamage)
+
+    public void HandleDamaging(Collider hitObject)
     {
-        //outDamage = Mathf.RoundToInt(outDamage);
-
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
+        IDamageable damagable = hitObject.GetComponent<IDamageable>();
+        if (damagable == null) return;
         
-        for (int i = 0; i < hitColliders.Length; i++)
+        EnemyHandler enemyHandler = null;
+        if (hitObject.CompareTag("Enemy"))
         {
-
-           // Debug.Log(hitColliders[i].gameObject.name);
-            if (hitColliders[i] == null) continue;  //skip if null
-            
-            IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
-            if (damagable == null) continue;
-
-            //if hit an enemy
-            EnemyHandler enemyHandler = null;
-            if (hitColliders[i].CompareTag("Enemy"))
+            enemyHandler = hitObject.GetComponent<EnemyHandler>();
+            if (enemyHandler != null) // if still null, meaning its a boss
             {
-                enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
-                if (enemyHandler != null) // if still null, meaning its a boss
-                {
-                    outDamage = HandleBoonDmgModifications(outDamage, enemyHandler);
-                }
-                _skBlessing.AddSoul(2);
+                outDamage = (int) HandleBoonDmgModifications( outDamage, enemyHandler);
             }
-            
-            
-            // print(outDamage);
-            //outDamage = ApplyCrit(outDamage);
-            damagable.Damage( (int) outDamage);
-           
-            if (enemyHandler == null) continue;
-            if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
-            {
-                //_boonDamageModifiers.ApplyShieldBreakDamage(enemyHandler);
-                _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
-            }
+            _skBlessing.AddSoul(2);
         }
+        // outDamage = ApplyCrit(outDamage);
+        damagable.Damage( outDamage);
+        
+        if (enemyHandler == null) return;
+        if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
+        {
+            _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
+        }
+    }
+
+      public void HandleDamaging(float outDamage)
+     {
+         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f, damageableLayer);
+         
+         for (int i = 0; i < hitColliders.Length; i++)
+         {
+             // Debug.Log(hitColliders[i].gameObject.name);
+             if (hitColliders[i] == null) continue;  //skip if null
+             
+             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
+             if (damagable == null) continue;
+    
+             //if hit an enemy
+             EnemyHandler enemyHandler = null;
+             if (hitColliders[i].CompareTag("Enemy"))
+             {
+                 enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
+                 if (enemyHandler != null) // if still null, meaning its a boss
+                 {
+                     outDamage = HandleBoonDmgModifications(outDamage, enemyHandler);
+                 }
+                 _skBlessing.AddSoul(2);
+             }
+             
+             //outDamage = ApplyCrit(outDamage);
+             damagable.Damage( (int) outDamage);
+            
+             if (enemyHandler == null) continue;
+             if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
+             {
+                 _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
+             }
+         }
     }
 
     public float HandleBoonDmgModifications(float outDamage, EnemyHandler e)
     {
-        // outDamage = (int) _boonDamageModifiers.ApplyModifiers(outDamage, enemyHandler); 
         for (int j = 0; j < _boonAttackList.Count; j++)
         { 
             Boon_Attack b = _boonAttackList[j];
@@ -293,10 +319,19 @@ public class DashNAttack : MonoBehaviour
         return outgoingDamage;
     }
 
-    IEnumerator EnableMove(float timer)
+    private IEnumerator EnableMove(float timer)
     {
         yield return new WaitForSeconds(timer);
         playerMovement.enabled = true;
     }
+    
+    private IEnumerator EnableAttack(float duration)
+    {
+        _canAttack = false;
+        
+        yield return new WaitForSeconds(duration);
+        _canAttack = true;
+    }
+
 
 }

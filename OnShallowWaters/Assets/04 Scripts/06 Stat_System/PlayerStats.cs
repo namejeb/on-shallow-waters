@@ -22,7 +22,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     private float _critChance = .3f;
     private float _critDamage = 1.5f;
     
-    private float _atkSpeed = 1f;
+    [SerializeField]private float _atkSpeed = 1f;
     
     public Stat MovementSpeed { get => movementSpeed; }
     public Stat Defense { get => defense; }
