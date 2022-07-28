@@ -18,6 +18,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             loadingScreen.gameObject.SetActive(true);
             GameManager.SetIsTutorial(false);
             StartCoroutine(LoadLevelScene());
+          // LoadLevelScene();
         }
 
         public void ExitGame(){
@@ -29,12 +30,18 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             loadingScreen.gameObject.SetActive(true);
             GameManager.SetIsTutorial(true);
             StartCoroutine(LoadLevelScene());
+            //LoadLevelScene();
         }
         
         private IEnumerator LoadLevelScene()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(.5f);
             SceneManager.LoadSceneAsync(1);
         }
+
+        // private void LoadLevelScene()
+        // {
+        //     SceneManager.LoadSceneAsync(1);
+        // }
     }
 }
