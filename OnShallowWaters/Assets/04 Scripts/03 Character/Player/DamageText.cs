@@ -40,6 +40,11 @@ public class DamageText : MonoBehaviour
 
     public void SpawnText(Transform hitTransform, float damageDealt, bool isCrit)
     {
+        if (_damageTextPool[0] == null)
+        {
+            InitTexts();
+        }
+        
         Transform textToSpawn = _damageTextPool[0];
         textToSpawn.gameObject.SetActive(true);
   
