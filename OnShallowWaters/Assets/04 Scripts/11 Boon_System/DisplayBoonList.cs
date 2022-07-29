@@ -83,10 +83,10 @@ public class DisplayBoonList : MonoBehaviour
 
     private void UpdateLevelIndicators(Transform displayTransform, BoonItemsTimesUsed boonItemsTimesUsed)
     {
-        Transform upgradeLevels = displayTransform.Find("upgradeLevels");
+        Transform indicators = displayTransform.Find("upgradeLevels").Find("Indicators");
         
-        Transform unfilledIndicatorsContainer = upgradeLevels.Find("unfilled");
-        Transform filledIndicatorsContainer = upgradeLevels.Find("filled");
+        Transform unfilledIndicatorsContainer = indicators.Find("unfilled");
+        Transform filledIndicatorsContainer = indicators.Find("filled");
 
         Transform[] unfilledIndicators = new Transform[4];
         Transform[] filledIndicators = new Transform[4];
@@ -102,9 +102,11 @@ public class DisplayBoonList : MonoBehaviour
             filledIndicators[i] = filledIndicatorsContainer.GetChild(i);
             SetIndicatorActive(filledIndicators[i], false);
         }
-        
+
+        int maxUsageCount = boonItemsTimesUsed.boonItem.maxUsageCount;
+
         // enable back according to maxUsageCount
-        for (int i = 0; i < boonItemsTimesUsed.boonItem.maxUsageCount; i++)
+        for (int i = 0; i < maxUsageCount; i++)
         {
             SetIndicatorActive(unfilledIndicators[i], true);
         }
@@ -115,6 +117,8 @@ public class DisplayBoonList : MonoBehaviour
         {
             SetIndicatorActive(filledIndicators[i], true);
         }
+        PositionIndicators(indicators.parent, maxUsageCount);
+
     }
 
     public void ToggleList()
@@ -126,5 +130,37 @@ public class DisplayBoonList : MonoBehaviour
     private void SetIndicatorActive(Transform indicatorTransform, bool status)
     {
         indicatorTransform.gameObject.SetActive(status);
+    }
+
+    private void PositionIndicators(Transform indicatorsTransform, int maxUpgradeLevels)
+    {
+        Transform pivotContainer = indicatorsTransform.Find("Pivots");
+        Transform[] pivots = new Transform[pivotContainer.childCount];
+
+        // get children in reversed order
+        for (int i = 0; i < pivots.Length; i++)
+        {
+            pivots[i] = pivotContainer.GetChild(i);
+        }
+
+        pivots = ReverseArray(pivots);
+
+        int index = maxUpgradeLevels - 1;
+      //  indicatorsTransform.position = pivots[index].position;
+      indicatorsTransform.GetComponent<RectTransform>().anchoredPosition =
+          pivots[index].GetComponent<RectTransform>().anchoredPosition;
+    }
+
+    private Transform[] ReverseArray(Transform[] arrayToReverse)
+    {
+        Transform[] reversedArray = new Transform[arrayToReverse.Length];
+        int j = arrayToReverse.Length - 1;
+        for (int i = 0; i < reversedArray.Length; i++)
+        {
+            reversedArray[i] = arrayToReverse[j];
+            j--;
+        }
+        
+        return reversedArray;
     }
 }
