@@ -41,6 +41,7 @@ public class DamageText : MonoBehaviour
     public void SpawnText(Transform hitTransform, float damageDealt, bool isCrit)
     {
         Transform textToSpawn = _damageTextPool[0];
+        textToSpawn.gameObject.SetActive(true);
   
 
         // textToSpawn.localScale = _scaleNonCrit;
@@ -63,6 +64,7 @@ public class DamageText : MonoBehaviour
             text.LookAt(text.position + _camRot * Vector3.forward, _camRot * Vector3.up);
         
             _damageTextPool.Add(text);
+            text.gameObject.SetActive(false);
         }
         
         // save scale for use when resetting
@@ -71,12 +73,6 @@ public class DamageText : MonoBehaviour
     }
 
 
-
-    private IEnumerator DisableText(Transform textToDisable, float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        textToDisable.gameObject.SetActive(false);
-    }
 
     private void Animate()
     {
@@ -96,9 +92,17 @@ public class DamageText : MonoBehaviour
         }
         else
         {
-            
             dmgText.color = nonCritColor;
             dmgTextTransform.localScale = _scaleNonCrit;
         }
+    }
+    
+    
+    private IEnumerator DisableText(Transform textToDisable, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        
+        _damageTextPool.Add(textToDisable);
+        textToDisable.gameObject.SetActive(false);
     }
 }

@@ -483,9 +483,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742205976946539987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.020567624, y: -0.73311335, z: -0.67932934, w: 0.025169041}
+  m_LocalPosition: {x: 1.0678372, y: 1.8766203, z: -0.044877443}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1232278118344507063}
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3552b65a5064e5418cdec41ced847b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: {fileID: 5446594251638130625}
+  dna: {fileID: 5446594251638130625}
 --- !u!1 &3735192623627521896
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,6 +1242,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3094721992105115447, guid: 54ded60edc8ba8643bff569d0af00d36, type: 3}
   m_PrefabInstance: {fileID: 5446594251287470783}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1742205976878174953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017903291227905416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ae8caa3f4a12b4186e36073cc59620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextContainer: {fileID: 0}
+  poolSize: 10
+  damageTextPrefab: {fileID: 3373212814839186469, guid: 9ce91863dda6caa428d606ccf47f8a40, type: 3}
+  offsets: {x: 5, y: 5, z: 0}
+  critColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  nonCritColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &8882624437305087959
 MonoBehaviour:
   m_ObjectHideFlags: 0
