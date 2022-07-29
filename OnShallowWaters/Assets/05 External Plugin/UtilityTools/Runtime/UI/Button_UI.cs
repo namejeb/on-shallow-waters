@@ -34,9 +34,6 @@ public class Button_UI : MonoBehaviour
 
     public void ClearAllListeners()
     {
-       // print(_button.onClick.GetPersistentEventCount());
-        
         _button.onClick.RemoveAllListeners();
-        
     }
 }
