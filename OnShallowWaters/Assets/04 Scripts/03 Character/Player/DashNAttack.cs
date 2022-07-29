@@ -48,6 +48,7 @@ public class DashNAttack : MonoBehaviour
     //Tutorial Event
     public static event Action OnAttack;
     public static event Action OnDash;
+    public static event Action<Transform, float, bool> OnHitLanded;
 
     private bool _canAttack = true;
 
@@ -125,7 +126,6 @@ public class DashNAttack : MonoBehaviour
         {
             if (chargedTimer >= 0.5f && chargedTimer < 1)
             {
-
                 isSlash = true;
                 if (isSlash)
                     HeavySlash();
@@ -255,7 +255,9 @@ public class DashNAttack : MonoBehaviour
         }
         
         damagable.Damage( outDamage );
-        _damageText.SpawnText(hitObject.transform, outDamage, isCrit);
+        
+        // display damage text
+        if(OnHitLanded != null) OnHitLanded.Invoke(hitObject.transform, outDamage, isCrit);
         
         if (enemyHandler == null) return;
         if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
@@ -270,13 +272,11 @@ public class DashNAttack : MonoBehaviour
          
          for (int i = 0; i < hitColliders.Length; i++)
          {
-             // Debug.Log(hitColliders[i].gameObject.name);
              if (hitColliders[i] == null) continue;  //skip if null
              
              IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
              if (damagable == null) continue;
     
-     
              
              //if hit an enemy
              EnemyHandler enemyHandler = null;
@@ -298,7 +298,9 @@ public class DashNAttack : MonoBehaviour
              
              //outDamage = ApplyCrit(outDamage);
              damagable.Damage( (int) outDamage );
-             _damageText.SpawnText(hitColliders[i].transform, outDamage, isCrit);
+             
+             // display damage text
+             if(OnHitLanded != null) OnHitLanded.Invoke(hitColliders[i].transform, outDamage, isCrit);
             
              if (enemyHandler == null) continue;
              if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)

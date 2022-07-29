@@ -6,7 +6,6 @@ using System.Collections;
 public class DamageText : MonoBehaviour
 {
     [Header("System")]
-    [SerializeField] private Transform damageTextContainer;
     [SerializeField] private int poolSize = 10;
     [SerializeField] private Transform damageTextPrefab;
     
@@ -29,16 +28,23 @@ public class DamageText : MonoBehaviour
     private Quaternion _camRot;
 
     private float _popupDuration = .6f;
-  
+
+    private void OnDestroy()
+    {
+        DashNAttack.OnHitLanded -= SpawnText;
+    }
+
     private void Start()
     {
+        DashNAttack.OnHitLanded += SpawnText;
+        
         _cam = Camera.main;
         _damageTextPool.Clear();
         
         InitTexts();
     }
 
-    public void SpawnText(Transform hitTransform, float damageDealt, bool isCrit)
+    private void SpawnText(Transform hitTransform, float damageDealt, bool isCrit)
     {
         if (_damageTextPool[0] == null)
         {
@@ -47,9 +53,7 @@ public class DamageText : MonoBehaviour
         
         Transform textToSpawn = _damageTextPool[0];
         textToSpawn.gameObject.SetActive(true);
-  
-
-        // textToSpawn.localScale = _scaleNonCrit;
+        
         HandleIsCrit(textToSpawn, damageDealt, isCrit);
         textToSpawn.position = hitTransform.position + offsets;
         
@@ -64,7 +68,7 @@ public class DamageText : MonoBehaviour
     {
         for (int i = 0; i < poolSize; i++)
         {
-            Transform text = Instantiate(damageTextPrefab, Vector3.zero, Quaternion.identity, damageTextContainer);
+            Transform text = Instantiate(damageTextPrefab, Vector3.zero, Quaternion.identity, transform);
             _camRot = _cam.transform.rotation;
             text.LookAt(text.position + _camRot * Vector3.forward, _camRot * Vector3.up);
         
