@@ -18,8 +18,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     private float _defMutliplier = 1f;
     
     private float _damageReduction = 1f;
-    
-    private float _critChance = .3f;
+
+    [SerializeField] private float _critChance = .3f;  
     private float _critDamage = 1.5f;
     
     private float _atkSpeed = 1f;
@@ -37,11 +37,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
     public float DamageReduction { get => _damageReduction; }
 
-  //  private BoonDamageModifiers _boonDamageModifiers;
-
     private new void Awake()
     {
-    //    _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
         currHp = MaxHp;
         playerHealthBar.SetMaxHealth(MaxHp);
     }
@@ -148,7 +145,6 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
         playerHealthBar.SetHealth(currHp);
-        //Debug.Log(currHp);
     }
     
     private float ReceiveIncomingDmg(float incomingDamage)

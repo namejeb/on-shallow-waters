@@ -50,6 +50,11 @@ public class DashNAttack : MonoBehaviour
     public static event Action OnDash;
 
     private bool _canAttack = true;
+
+    // Damage text popup
+    private DamageText _damageText;
+    
+    public LayerMask DamageableLayer { get => damageableLayer; }
     
     private void InitBoonRefs()
     {
@@ -68,6 +73,7 @@ public class DashNAttack : MonoBehaviour
     private void Awake()
     {
         _skBlessing = GetComponent<SkBlessing>();
+        _damageText = GetComponent<DamageText>();
         InitBoonRefs();
     }
 
@@ -241,8 +247,15 @@ public class DashNAttack : MonoBehaviour
             }
             _skBlessing.AddSoul(2);
         }
-        // outDamage = ApplyCrit(outDamage);
-        damagable.Damage( outDamage);
+        
+        bool isCrit = CheckIfCrit();
+        if (isCrit)
+        {
+            outDamage = (int) ApplyCrit(outDamage);
+        }
+        
+        damagable.Damage( outDamage );
+        _damageText.SpawnText(hitObject.transform, outDamage, isCrit);
         
         if (enemyHandler == null) return;
         if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
@@ -263,6 +276,8 @@ public class DashNAttack : MonoBehaviour
              IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
              if (damagable == null) continue;
     
+     
+             
              //if hit an enemy
              EnemyHandler enemyHandler = null;
              if (hitColliders[i].CompareTag("Enemy"))
@@ -274,9 +289,16 @@ public class DashNAttack : MonoBehaviour
                  }
                  _skBlessing.AddSoul(2);
              }
+
+             bool isCrit = CheckIfCrit();
+             if (isCrit)
+             {
+                 outDamage = ApplyCrit(outDamage);
+             }
              
              //outDamage = ApplyCrit(outDamage);
-             damagable.Damage( (int) outDamage);
+             damagable.Damage( (int) outDamage );
+             _damageText.SpawnText(hitColliders[i].transform, outDamage, isCrit);
             
              if (enemyHandler == null) continue;
              if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
@@ -303,14 +325,17 @@ public class DashNAttack : MonoBehaviour
         return outDamage;
     }
 
-    private float ApplyCrit(float outgoingDamage)
+    private bool CheckIfCrit()
     {
         float cr = UnityEngine.Random.Range(0f, 1f);
-        if (cr < stats.CritChance)
-        {
-            outgoingDamage *= stats.CritDamage;
-            if(OnCrit != null) OnCrit.Invoke();
-        }
+        if (cr < stats.CritChance) return true;
+        return false;
+    }
+
+    private float ApplyCrit(float outgoingDamage)
+    {
+        outgoingDamage *= stats.CritDamage;
+        if(OnCrit != null) OnCrit.Invoke();
 
         return outgoingDamage;
     }
