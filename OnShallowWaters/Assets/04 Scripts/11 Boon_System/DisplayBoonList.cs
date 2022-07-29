@@ -146,8 +146,8 @@ public class DisplayBoonList : MonoBehaviour
         pivots = ReverseArray(pivots);
 
         int index = maxUpgradeLevels - 1;
-      //  indicatorsTransform.position = pivots[index].position;
-      indicatorsTransform.GetComponent<RectTransform>().anchoredPosition =
+      
+        indicatorsTransform.GetComponent<RectTransform>().anchoredPosition =
           pivots[index].GetComponent<RectTransform>().anchoredPosition;
     }
 
