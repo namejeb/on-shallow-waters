@@ -7,15 +7,16 @@ using NaughtyAttributes;
 
 public class StateMachineManager : MonoBehaviour
 {
-    public enum BossMode { BOSS1, BOSS2 }
-
-    [SerializeField] private BossMode bossType;
     [SerializeField] private Transform target;
     public int speed;
     public float inStateTimer;
     public float rotationSpeed;
+    public float faceAngle;
+    public bool startBattle;
     public List<State> stateList;
     public List<State> passiveStates;
+
+    float velocity = 100;
 
     [Header("Melee Settings")]
     [SerializeField] private List<GameObject> meleeHitbox;
@@ -40,9 +41,6 @@ public class StateMachineManager : MonoBehaviour
     public List<GameObject> MH { get { return meleeHitbox; } set { meleeHitbox = value; } }
     public State CurrentState { get { return _currentState; } }
 
-
-    public float faceAngle;
-
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -57,12 +55,19 @@ public class StateMachineManager : MonoBehaviour
         Agent.stoppingDistance = chaseMinDistance;
         faceAngle = transform.rotation.eulerAngles.y;
         _agent.speed = speed;
-        SetState(stateList[0]);
+        SetState(passiveStates[2]);
     }
 
+    private void OnEnable()
+    {
+        DialogueManager.OnDialogueEnd += StartBattle;
+    }
 
-    float velocity = 100;
-    float velocity2 = 50;
+    private void OnDisable()
+    {
+        DialogueManager.OnDialogueEnd -= StartBattle;
+    }
+
     void Update()
     {
         _currentState.UpdateState(this);
@@ -96,6 +101,11 @@ public class StateMachineManager : MonoBehaviour
     {
         _currentState = state;
         _currentState.EnterState(this);
+    }
+
+    private void StartBattle()
+    {
+        startBattle = true;
     }
 
     [Button]
@@ -179,7 +189,7 @@ public class StateMachineManager : MonoBehaviour
     [Button]
     public void Shake()
     {
-        float time = 2;
+        //float time = 2;
         //impSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = time;
         //impSource.m_DefaultVelocity.x = impSource.m_DefaultVelocity.y = -0.5f;
         impSource.GenerateImpulse();

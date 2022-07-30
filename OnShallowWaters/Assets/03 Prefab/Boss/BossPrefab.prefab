@@ -9993,7 +9993,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &388700929
 Transform:
   m_ObjectHideFlags: 0
@@ -10020,8 +10020,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.5585127, y: 1.5024798, z: 1.8817046}
-  m_Center: {x: -0.27925614, y: -0.035300676, z: 0.44084975}
+  m_Size: {x: 4.5585127, y: 1.5024797, z: 3.3471785}
+  m_Center: {x: -0.27925602, y: -0.03530058, z: 0.10133236}
 --- !u!114 &388700930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19772,7 +19772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1000510364
 Transform:
   m_ObjectHideFlags: 0
@@ -19799,8 +19799,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.5495894, y: 1.8179951, z: 1}
-  m_Center: {x: -0.27479443, y: 0.40899527, z: 0.0000004618094}
+  m_Size: {x: 3.5495894, y: 1.817995, z: 2.757596}
+  m_Center: {x: -0.27479437, y: 0.40899518, z: 0.1602861}
 --- !u!114 &1000510362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39702,11 +39702,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6360fffc00a24c94496debcce599c94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossType: 0
   target: {fileID: 0}
   speed: 3
   inStateTimer: 0
   rotationSpeed: 100
+  faceAngle: 0
+  startBattle: 0
   stateList:
   - {fileID: 11400000, guid: 957c1278277554846acc1307f507a25e, type: 2}
   - {fileID: 11400000, guid: d452f280d77be6645bca7671a9949e62, type: 2}
@@ -39716,6 +39717,7 @@ MonoBehaviour:
   passiveStates:
   - {fileID: 11400000, guid: 4685a10fb1ef9d24a9b3a6f5ce591035, type: 2}
   - {fileID: 11400000, guid: 74e1128ffe80f9044bf8ed6618904756, type: 2}
+  - {fileID: 11400000, guid: 93dd8ce22fd65bd479cb03d3f7cc7ba1, type: 2}
   meleeHitbox:
   - {fileID: 388700928}
   - {fileID: 1000510361}
@@ -39730,7 +39732,6 @@ MonoBehaviour:
   shootPrefab:
   - {fileID: 2340048271368717124, guid: d5b4c05345e42234993375d3aa3d65fd, type: 3}
   - {fileID: 1118084676728948650, guid: 18d828dc7ef5dfd45b514088e62977b9, type: 3}
-  faceAngle: 0
 --- !u!1 &665400825283625182
 GameObject:
   m_ObjectHideFlags: 0

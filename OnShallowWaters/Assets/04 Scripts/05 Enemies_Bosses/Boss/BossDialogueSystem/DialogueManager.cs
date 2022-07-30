@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
 using UnityEngine.EventSystems;
-
 
 public class DialogueManager : MonoBehaviour
 {
@@ -22,6 +22,8 @@ public class DialogueManager : MonoBehaviour
     
     private Queue<string> sentences;
     private IEnumerator coroutine;
+
+    public static event Action OnDialogueEnd;
 
     [Space][Space]
     [Header("Settings: ")]
@@ -101,6 +103,11 @@ public class DialogueManager : MonoBehaviour
     {
         PlayerHandler.Instance.EnableAnDisableMove();
         isInteracted = false;
+
+        if (OnDialogueEnd != null)
+        {
+            OnDialogueEnd.Invoke();
+        }
     }
 
     private IEnumerator Delay(float waitDuration)
