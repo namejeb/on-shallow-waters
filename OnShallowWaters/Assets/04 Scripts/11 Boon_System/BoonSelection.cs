@@ -190,7 +190,7 @@ public class BoonSelection : MonoBehaviour
         float effectAmount = 0f;
 
         effectAmount = boonList.GetBoon(boonItem.id).EffectAmount;
-        
+
         if(boonItem.isPercentage)
             boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount * 100}%");
         else

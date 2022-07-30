@@ -39,8 +39,7 @@ public class BoonEffectsManager : MonoBehaviour
         b.ApplyEffect();
     }
     
-    
-    
+
     
     public void ArmorDmgBonus()
     {
@@ -82,7 +81,7 @@ public class BoonEffectsManager : MonoBehaviour
         BM_AtkSpeed b = GetComponent<BM_AtkSpeed>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-      //  print(PlayerHandler.Instance.PlayerStats.AtkSpeed);
+       // print(PlayerHandler.Instance.PlayerStats.AtkSpeed);
     }
 
     public void UpgradeCritChance()

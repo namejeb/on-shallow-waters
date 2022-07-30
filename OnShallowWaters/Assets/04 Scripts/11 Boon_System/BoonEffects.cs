@@ -14,8 +14,8 @@ public class BoonEffects : MonoBehaviour {
     }
 
     public void HandleEffectActivation(int boonItemId)
-    {
-       // boonItemId = boonToUse;
+    { 
+        //boonItemId = boonToUse;
         
         switch (boonItemId)
         {
