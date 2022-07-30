@@ -66,7 +66,8 @@ public class WaveSpawner : MonoBehaviour
     
     private void Start()
     {
-        _enemyPooler = transform.Find("EnemyPooler").GetComponent<EnemyPooler>();
+        //_enemyPooler = transform.Find("EnemyPooler").GetComponent<EnemyPooler>();
+        _enemyPooler = FindObjectOfType<EnemyPooler>();
     }
 
     private void OnDisable()
@@ -169,7 +170,7 @@ public class WaveSpawner : MonoBehaviour
         int spawnIndex = Random.Range(0, _spawnPoints.Count);
 
 		//Spawn enemy (Object Pooling)
-		Transform e = _enemyPooler.GetFromPool(enemyType, transform);
+		Transform e = _enemyPooler.GetFromPool(enemyType);
 		e.position = _spawnPoints[spawnIndex].position;
         e.gameObject.SetActive(true);
     }

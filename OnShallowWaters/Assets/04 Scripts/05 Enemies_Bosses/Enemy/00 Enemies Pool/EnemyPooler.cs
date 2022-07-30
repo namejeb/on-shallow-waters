@@ -66,7 +66,7 @@ public class EnemyPooler : MonoBehaviour
 		}
 	}
 
-	public Transform GetFromPool(EnemyPoolType type, Transform objTransform)
+	public Transform GetFromPool(EnemyPoolType type)
 	{
 		EnemyPoolInfo pool = GetPoolByType(type);
 
@@ -78,7 +78,7 @@ public class EnemyPooler : MonoBehaviour
 			}
 		}
 
-		Transform newEnemy = Instantiate(pool.enemyPrefab, objTransform.position, Quaternion.identity, pool.container);
+		Transform newEnemy = Instantiate(pool.enemyPrefab, pool.container);
 		pool.enemyPoolList.Add(newEnemy);
 		return newEnemy;
 	}
