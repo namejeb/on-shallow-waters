@@ -78,8 +78,7 @@ public class EnemyPooler : MonoBehaviour
 			}
 		}
 
-		Transform newEnemy = Instantiate(pool.enemyPrefab, pool.container);
-		newEnemy.GetComponent<NavMeshAgent>().Warp(objTransform.position);
+		Transform newEnemy = Instantiate(pool.enemyPrefab, objTransform.position, Quaternion.identity, pool.container);
 		pool.enemyPoolList.Add(newEnemy);
 		return newEnemy;
 	}
