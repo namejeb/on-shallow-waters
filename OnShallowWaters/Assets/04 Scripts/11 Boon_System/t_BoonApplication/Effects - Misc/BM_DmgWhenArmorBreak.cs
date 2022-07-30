@@ -8,7 +8,7 @@ public class BM_DmgWhenArmorBreak : Boon_Misc
     {
         if (e.EnemiesCore.shieldDestroy)
         {
-            e.EnemyStats.Damage( (int) EffectAmount );
+            e.EnemyStats.Damage( (int) EffectAmountCurrent );
         }
     }
 }

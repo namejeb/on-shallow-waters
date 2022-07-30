@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 
 public class DisplayBoonList : MonoBehaviour
@@ -12,8 +13,11 @@ public class DisplayBoonList : MonoBehaviour
     [SerializeField] private Transform chosenBoonList;
     private bool _isOpened = false;
 
+    [Space][Space]
+    [Header("Info Display: ")]
     [SerializeField] private Transform infoDisplay;
     [SerializeField] private Transform exitInfoDisplayButton;
+    [SerializeField] private Transform bgButton;
     
     
     private Transform _containerDisplayList;      
@@ -32,6 +36,12 @@ public class DisplayBoonList : MonoBehaviour
         infoDisplay.gameObject.SetActive(false);
         exitInfoDisplayButton.gameObject.SetActive(false);
     }
+
+    private void ExitChosenBoons()
+    {
+        ExitDisplayInfo();
+        ToggleList();
+    }
     private void OnDestroy()
     {
         BoonSelection.OnListChanged -= UpdateList;
@@ -48,6 +58,10 @@ public class DisplayBoonList : MonoBehaviour
         
         infoDisplay.gameObject.SetActive(false);
         exitInfoDisplayButton.gameObject.SetActive(false);
+
+        Button_UI buttonUI = bgButton.GetComponent<Button_UI>();
+        buttonUI.ClearAllListeners();
+        buttonUI.ClickEvent(() => ExitChosenBoons() );
     }
     
     private void SetupDisplayList()                                      
@@ -65,7 +79,7 @@ public class DisplayBoonList : MonoBehaviour
         RectTransform newDisplayRect = newDisplay.GetComponent<RectTransform>();         
         newDisplay.gameObject.SetActive(true);
 
-        float shopButtonHeight = newDisplayRect.rect.height;
+        float shopButtonHeight = newDisplayRect.rect.height + 10f;
         float shopButtonWidth = newDisplayRect.rect.width;                                                                                                            
         newDisplayRect.anchoredPosition = new Vector2(offsetsPos.x + shopButtonWidth * offsetWidth * _col, offsetsPos.y + shopButtonHeight * -_row);
 
@@ -77,17 +91,70 @@ public class DisplayBoonList : MonoBehaviour
         {
             _col = 0;
             _row++;
-        }  
+            RelocateContents(shopButtonHeight);
+        }
     }
 
-    private void DisplayInfo(BoonItemsTimesUsed boonItemsTimesUsed)
+    private void RelocateContents(float shopButtonHeight)
+    {
+        RectTransform contentRect = _scrollContent.GetComponent<RectTransform>();
+        contentRect.sizeDelta += new Vector2(0f, shopButtonHeight + 60f);
+            
+        //offset by half the height increased
+        float heightOffset = shopButtonHeight * .5f;
+        contentRect.anchoredPosition += new Vector2(0f, -heightOffset);   //move down
+        RelocateBoonDisplays(heightOffset);   // move up
+    }
+    private void RelocateBoonDisplays(float height)
+    {
+        int size = _scrollContent.childCount;
+        for (int i = 0; i < size; i++)
+        {
+            Transform boonDisplay = _scrollContent.GetChild(i);
+            boonDisplay.GetComponent<RectTransform>().anchoredPosition += new Vector2(0f, height);
+        }
+    }
+
+    private void DisplayInfo(BoonItemsTimesUsed boonItemsTimesUsed, Transform buttonTransform)
     {
         exitInfoDisplayButton.gameObject.SetActive(true);
         infoDisplay.gameObject.SetActive(true);
 
+        // Info setting
         Transform infoDisplayTemplate = infoDisplay.Find("infoDisplayTemplate");
-        _boonSelection.SetBoonInfo(infoDisplayTemplate, boonItemsTimesUsed.boonItem);
+        _boonSelection.SetBoonInfo(infoDisplayTemplate, boonItemsTimesUsed.boonItem, false);
         UpdateLevelIndicators(infoDisplayTemplate, boonItemsTimesUsed);
+
+        TextMeshProUGUI text = infoDisplayTemplate.Find("typeText").GetComponent<TextMeshProUGUI>();
+        SetBoonType(text, boonItemsTimesUsed.boonItem.boonType);
+        
+        
+        // Animation
+        infoDisplay.localScale = new Vector3(0f, 0f, 0f);
+        RectTransform infoDisplayRect = infoDisplay.GetComponent<RectTransform>();
+        infoDisplayRect.position = buttonTransform.position;
+     
+        LeanTween.scale(infoDisplayRect, Vector3.one, .15f);
+        LeanTween.move(infoDisplayRect, Vector3.zero, .15f);
+    }
+
+    private void SetBoonType(TextMeshProUGUI text, BoonType boonType)
+    {
+        string str = "";
+        switch (boonType)
+        {
+            case BoonType.COMBAT:
+                str = "-COMBAT-";
+                break;
+            case BoonType.SURVIVAL:
+                str = "-SURVIVAL-";
+                break;
+            case BoonType.BONUS:
+                str = "-BONUS-";
+                break;
+        }
+
+        text.text = str;
     }
 
     private void SetInfo(List<BoonItemsTimesUsed> boonItemsTimesUsedList)
@@ -115,7 +182,7 @@ public class DisplayBoonList : MonoBehaviour
             //Remove previous clickEvents
             buttonUI.ClearAllListeners();          
             
-            buttonUI.ClickEvent(() => DisplayInfo(currBoonItemsTimesUsed));
+            buttonUI.ClickEvent(() => DisplayInfo(currBoonItemsTimesUsed, buttonUI.transform ) );
         }
         
         // close list again

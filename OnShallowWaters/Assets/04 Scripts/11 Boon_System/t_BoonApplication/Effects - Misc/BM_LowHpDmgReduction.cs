@@ -9,7 +9,6 @@ public class BM_LowHpDmgReduction : Boon_Misc
     
     public override void ApplyEffect()
     {
-        DmgReductionActivationThreshold = EffectAmount;
-        //PlayerHandler.Instance.PlayerStats.IncreaseDamageReduction( EffectAmount );
+        DmgReductionActivationThreshold = EffectAmountCurrent;
     }
 }

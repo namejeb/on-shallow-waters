@@ -181,15 +181,22 @@ public class BoonSelection : MonoBehaviour
         }
     }
 
-    public void SetBoonInfo(Transform boonTransform, BoonItem boonItem)
+    public void SetBoonInfo(Transform boonTransform, BoonItem boonItem, bool isUpgrade = true)
     {
         //Set info
         boonTransform.Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
         boonTransform.Find("icon").GetComponent<Image>().sprite = boonItem.icon;
             
         float effectAmount = 0f;
-
-        effectAmount = boonList.GetBoon(boonItem.id).EffectAmount;
+        Boon boon = boonList.GetBoon(boonItem.id);
+        if (isUpgrade)
+        {
+            effectAmount = boon.EffectAmountToUpgrade;
+        }
+        else
+        {
+            effectAmount = boon.EffectAmountCurrent;
+        }
 
         if(boonItem.isPercentage)
             boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount * 100}%");
