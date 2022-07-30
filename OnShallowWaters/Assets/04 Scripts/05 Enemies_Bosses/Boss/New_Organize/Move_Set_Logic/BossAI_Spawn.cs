@@ -10,7 +10,6 @@ public class BossAI_Spawn : State
 
     public override void EnterState(StateMachineManager sm)
     {
-        sm.Agent.ResetPath();
         sm.Agent.enabled = false;
         sm.Anim.SetTrigger(animationTrigger);
     }
@@ -26,8 +25,5 @@ public class BossAI_Spawn : State
             sm.Agent.enabled = true;
             sm.BossRandomState();
         }
-
-        //if (sm.inStateTimer < spawnTimeout - 3)
-        //    sm.RotateTowards();
     }
 }
