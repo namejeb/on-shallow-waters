@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using Cinemachine;
+using UnityEngine.UI;
 
 
 public class DashNAttack : MonoBehaviour
@@ -12,6 +13,7 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerStats stats;
+    [SerializeField] private Button dashButton;
 
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float speed = 5f;
@@ -102,10 +104,13 @@ public class DashNAttack : MonoBehaviour
 
     public void ActivateDash()
     {
+        
+        dashButton.interactable = false;
         _isDash = true;
         playerMovement.enabled = false;
         
         _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo 
+        StartCoroutine(EnableButton(1f));
     }
 
     public void Update()
@@ -373,6 +378,12 @@ public class DashNAttack : MonoBehaviour
         
         yield return new WaitForSeconds(duration);
         _canAttack = true;
+    }
+
+    private IEnumerator EnableButton(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        dashButton.interactable = true;
     }
 
 
