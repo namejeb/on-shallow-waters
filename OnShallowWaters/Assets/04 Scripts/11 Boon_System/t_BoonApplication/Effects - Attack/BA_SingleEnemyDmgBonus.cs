@@ -11,7 +11,7 @@ public class BA_SingleEnemyDmgBonus : Boon_Attack
         float finalDmg = outgoingDmg;
         if (WaveSpawner.WaveTotalEnemies == 1)
         {
-            finalDmg = outgoingDmg * EffectAmount;
+            finalDmg = outgoingDmg * EffectAmountCurrent;
         }
 
         return finalDmg;

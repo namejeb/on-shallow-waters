@@ -13,14 +13,24 @@ public class Boon : MonoBehaviour
 {
     public int boonId;
     [SerializeField] private float[] effectAmounts;
-    private int _tracker = 0;
+    private int _upgradeTracker = 0;
+    private int _currTracker = -1;
     private bool _activated = false;
     
     public bool Activated { get => _activated; set =>_activated = value; }
-    public float EffectAmount => effectAmounts[_tracker];
-    
-    
+    public float EffectAmountToUpgrade { get => effectAmounts[_upgradeTracker]; }
+    public float EffectAmountCurrent { get => effectAmounts[_currTracker]; }
+
     public void Upgrade(){
-        _tracker++;
+
+        if (_upgradeTracker + 1 < effectAmounts.Length )
+        {
+            _upgradeTracker++;
+            _currTracker++;
+        }
+        else
+        {
+            _currTracker = _upgradeTracker;
+        }
     }
 }

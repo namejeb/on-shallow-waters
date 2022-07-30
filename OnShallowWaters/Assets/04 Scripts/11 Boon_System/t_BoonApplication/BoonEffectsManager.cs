@@ -74,7 +74,7 @@ public class BoonEffectsManager : MonoBehaviour
         BM_AtkPercent b = GetComponent<BM_AtkPercent>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-        //print(PlayerHandler.Instance.PlayerStats.AtkPercent);
+        print(PlayerHandler.Instance.PlayerStats.AtkPercent);
     }
     public void UpgradeAtkSpeed()
     {
@@ -104,7 +104,10 @@ public class BoonEffectsManager : MonoBehaviour
 
 
     private void HandleEnablingAndUpgrading(Boon b){
-        if(b.Activated) { b.Upgrade(); }
-        else { b.Activated = true; }
+        // if(b.Activated) { b.Upgrade(); }
+        // else { b.Activated = true; }
+
+        if (!b.Activated) { b.Activated = true; }
+        b.Upgrade();
     }
 }

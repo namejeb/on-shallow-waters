@@ -9,6 +9,8 @@ public class Button_UI : MonoBehaviour
     public delegate void ClickEventDelegate(UnityAction clickAction);
     public ClickEventDelegate ClickEvent;
 
+    public Button EventSender { get => _button; }
+    
     private void OnDestroy()
     {
         ClearAllListeners();
