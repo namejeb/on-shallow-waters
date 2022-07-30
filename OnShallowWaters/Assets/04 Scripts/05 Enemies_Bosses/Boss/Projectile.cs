@@ -27,7 +27,11 @@ public class Projectile : MonoBehaviour
         {
             col.gameObject.GetComponent<PlayerStats>().Damage(20);
             gameObject.SetActive(false);
+        }
 
+        if (col.gameObject.CompareTag("Obstacles"))
+        {
+            gameObject.SetActive(false);
         }
     }
 }

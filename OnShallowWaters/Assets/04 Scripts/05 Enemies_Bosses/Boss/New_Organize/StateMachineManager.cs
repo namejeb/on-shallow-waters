@@ -105,7 +105,10 @@ public class StateMachineManager : MonoBehaviour
 
     private void StartBattle()
     {
-        startBattle = true;
+        if (_currentState == passiveStates[2])
+        {
+            startBattle = true;
+        }
     }
 
     [Button]
