@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyPooler : MonoBehaviour
 {
@@ -36,26 +37,26 @@ public class EnemyPooler : MonoBehaviour
 	{
 		for (int i = 0; i < listOfPool.Count; i++)
 		{
-			FillEnemyPools(listOfPool[i]);
+			FillEnemyPool(listOfPool[i]);
 		}
 
 		for (int i = 0; i < projectilePool.Count; i++)
 		{
-			FillProjectilePools(projectilePool[i]);
+			FillProjectilePool(projectilePool[i]);
 		}
 	}
 	
-	void FillEnemyPools(EnemyPoolInfo info)
+	void FillEnemyPool(EnemyPoolInfo info)
 	{ 
 		for (int i = 0; i < info.amount; i++)
 		{
-			Transform newEnemy = Instantiate(info.enemyPrefab, info.container);
+			Transform newEnemy = Instantiate(info.enemyPrefab, Vector3.zero, Quaternion.identity, info.container);
 			newEnemy.gameObject.SetActive(false);
 			info.enemyPoolList.Add(newEnemy);
 		}
 	}
 
-	void FillProjectilePools(ProjectilePoolInfo info)
+	void FillProjectilePool(ProjectilePoolInfo info)
 	{
 		for (int i = 0; i < info.amount; i++)
 		{
@@ -65,7 +66,7 @@ public class EnemyPooler : MonoBehaviour
 		}
 	}
 
-	public Transform GetFromPool(EnemyPoolType type)
+	public Transform GetFromPool(EnemyPoolType type, Transform objTransform)
 	{
 		EnemyPoolInfo pool = GetPoolByType(type);
 
@@ -78,6 +79,7 @@ public class EnemyPooler : MonoBehaviour
 		}
 
 		Transform newEnemy = Instantiate(pool.enemyPrefab, pool.container);
+		newEnemy.GetComponent<NavMeshAgent>().Warp(objTransform.position);
 		pool.enemyPoolList.Add(newEnemy);
 		return newEnemy;
 	}
