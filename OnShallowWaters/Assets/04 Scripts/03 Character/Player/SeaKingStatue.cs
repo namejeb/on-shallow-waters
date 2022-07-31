@@ -72,10 +72,10 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("STATUE CLICKED");
+        //Debug.Log("STATUE CLICKED");
         if (isInteractable)
         {
-            print('s');
+            //print('s');
             BlessUI.SetActive(true);
             bg.enabled = true;
             equipButton.onClick.AddListener(ChangeBlessing);
