@@ -40,7 +40,7 @@ public class WaveSpawner : MonoBehaviour
     [Header("Wave Settings")]
     [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
-    private List<Transform> _spawnPoints = new List<Transform>();
+    [SerializeField] private List<Transform> _spawnPoints = new List<Transform>();
 
     private int _roomTotalEnemies = 0;
     public bool IsLastEnemy => _roomTotalEnemies == 0;
@@ -170,7 +170,7 @@ public class WaveSpawner : MonoBehaviour
         int spawnIndex = Random.Range(0, _spawnPoints.Count);
 
 		//Spawn enemy (Object Pooling)
-		Transform e = _enemyPooler.GetFromPool(enemyType);
+		Transform e = _enemyPooler.GetFromPool(enemyType, _spawnPoints[spawnIndex].position);
 		e.position = _spawnPoints[spawnIndex].position;
         e.gameObject.SetActive(true);
     }
