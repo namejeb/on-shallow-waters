@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using TMPro;
+using Random = UnityEngine.Random;
+using System.Collections.Generic;
 
 
 [Serializable]
@@ -10,24 +12,46 @@ public class Shop : MonoBehaviour
     private Transform _shopButtonTemplate;
 
     private IShopCustomer _shopCustomer;
-    
+
+    private List<ShopItem.ItemType> Values = new List<ShopItem.ItemType>(); 
     private void Awake()
     {
         _container = transform.Find("container");
-        _shopButtonTemplate = _container.Find("gShopButtonTemplate");
+        _shopButtonTemplate = _container.Find("ShopButtonTemplate");
         _shopButtonTemplate.gameObject.SetActive(false);
 
-        _shopCustomer = PlayerHandler.Instance.PlayerStats;
+      
     }
+
     private void Start()
     {
-        CreateShopButton(ShopItem.ItemType.AisKosong, CurrencyType.SOULS, ShopItem.GetSprite(ShopItem.ItemType.HP), "Ais Kosong", 100, 0);
-        CreateShopButton(ShopItem.ItemType.MiloIce, CurrencyType.SOULS, ShopItem.GetSprite(ShopItem.ItemType.HP), "MILO ICE", 20, 1);
-
+        _shopCustomer = PlayerHandler.Instance.PlayerStats;
+        CreateButton();
         Hide();
-
-        //Hide Shop when start
     }
+
+    private void CreateButton()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+
+            ShopItem.ItemType type = RandomItems();
+            CreateShopButton(type, CurrencyType.SOULS, ShopItem.GetSprite(type), ShopItem.GetName(type), ShopItem.GetCost(type), i*3);
+            
+        }
+    }
+  
+    public ShopItem.ItemType RandomItems()
+    {
+        ShopItem.ItemType RandomItem = (ShopItem.ItemType)Random.Range(0, 11);
+        while (Values.Contains(RandomItem))
+        {
+            RandomItem = (ShopItem.ItemType)Random.Range(0, 11);
+        }
+        return RandomItem;
+    }
+
+
     protected void CreateShopButton(ShopItem.ItemType itemType, CurrencyType currencyType, Sprite itemSprite, string itemName, int itemCost, int positionIndex)
     {
         Transform newShopButtonTransform = Instantiate(_shopButtonTemplate, _container);
@@ -41,7 +65,7 @@ public class Shop : MonoBehaviour
         newShopButtonTransform.Find("nameText").GetComponent<TextMeshProUGUI>().SetText(itemName);
         newShopButtonTransform.Find("PriceText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
         //click function
-        newShopButtonTransform.GetComponent<Button_UI>().ClickEvent (() => TryBuyItem(itemType, currencyType))  ;
+       //newShopButtonTransform.GetComponent<Button_UI>().ClickEvent (() => TryBuyItem(itemType, currencyType))  ;
     }
     
     private void TryBuyItem(ShopItem.ItemType itemType, CurrencyType currencyType)
