@@ -104,12 +104,13 @@ public class DashNAttack : MonoBehaviour
 
     public void ActivateDash()
     {
-        
+
         dashButton.interactable = false;
         _isDash = true;
         playerMovement.enabled = false;
         
-        _endTime = Time.time + dashDuration * Time.timeScale;       //multiply timeScale to account for SlowMo 
+        _endTime = Time.time + dashDuration * Time.timeScale;
+        //multiply timeScale to account for SlowMo 
         StartCoroutine(EnableButton(1f));
     }
 
