@@ -15,7 +15,6 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     private Animator _anim;
     
     // Death
-    //[SerializeField] private Transform loseScreenContainer;    
     public static event Action OnPlayerDeath;
 
     [Space][Space]
@@ -151,7 +150,6 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
     private void HandleSoulShopUpgrades(ShopItem.ItemType itemType)
     {
-        //print("Soul Shop not implemented yet");
         switch (itemType)
         {
             //souls shop upgrades   
@@ -214,7 +212,13 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         throw new System.NotImplementedException();
     }
-    //
+    
+    public void DamageTest(int damage)
+    {
+        currHp -= damage;
+        playerHealthBar.SetHealth(currHp);
+    }
+    
     // void Update()
     // {
     //     if (Input.GetKeyDown("r"))
@@ -228,10 +232,4 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     //     }
     //
     // }
-
-    public void DamageTest(int damage)
-    {
-        currHp -= damage;
-        playerHealthBar.SetHealth(currHp);
-    }
 }
