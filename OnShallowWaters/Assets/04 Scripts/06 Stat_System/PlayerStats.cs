@@ -152,7 +152,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     private float ReceiveIncomingDmg(float incomingDamage)
     {
-        incomingDamage *= (100 / (100 + (DefMultiplier * (Defense.CurrentValue + 0))) * DamageReduction);
+        incomingDamage *= (100 / (25 + (DefMultiplier * (Defense.CurrentValue + 0))) * DamageReduction);
 
         if (bmLowHpDmgReduction.Activated)
         {

@@ -5082,7 +5082,7 @@ GameObject:
   - component: {fileID: 43465248205748928}
   - component: {fileID: 2056799798026533173}
   m_Layer: 5
-  m_Name: Master Volume Title
+  m_Name: BGM Volume Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5282,7 +5282,7 @@ GameObject:
   - component: {fileID: 8352994471007858094}
   - component: {fileID: 3997031331216783212}
   m_Layer: 5
-  m_Name: Master Volume Slider
+  m_Name: BGM Volume Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5355,10 +5355,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 6879599259159124184}
   m_HandleRect: {fileID: 522447915558553380}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 0.0001
+  m_MaxValue: 2.2
   m_WholeNumbers: 0
-  m_Value: 0.244
+  m_Value: 1.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7807,6 +7807,7 @@ GameObject:
   - component: {fileID: 5067732618421055366}
   - component: {fileID: 5067732618421055367}
   - component: {fileID: 5067732618421055360}
+  - component: {fileID: 3536600253246675046}
   m_Layer: 5
   m_Name: UI_Canvas
   m_TagString: Untagged
@@ -7907,6 +7908,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3536600253246675046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5067732618421055362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a2b6d68b32e5d429c9e0f897d406ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: db15861225e50724391f89ab11942ae4, type: 2}
+  masterSlider: {fileID: 1380122594201270521}
+  sfxSlider: {fileID: 5313227208130402269}
+  bgmSlider: {fileID: 3997031331216783212}
 --- !u!1 &5138794596900328012
 GameObject:
   m_ObjectHideFlags: 0
@@ -7995,7 +8012,7 @@ GameObject:
   - component: {fileID: 8718603877802810016}
   - component: {fileID: 8464758781533726190}
   m_Layer: 5
-  m_Name: Master Volume Title
+  m_Name: SFX Volume Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8853,7 +8870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5530509783960442092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9417,7 +9434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6693366104558423587}
   m_Layer: 5
-  m_Name: MasterVolume (2)
+  m_Name: BGMVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9646,7 +9663,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6293808625122907407}
   m_Layer: 5
-  m_Name: MasterVolume (1)
+  m_Name: SFXVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10623,7 +10640,7 @@ GameObject:
   - component: {fileID: 6436431437256561243}
   - component: {fileID: 5313227208130402269}
   m_Layer: 5
-  m_Name: Master Volume Slider
+  m_Name: SFX Volume Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10696,10 +10713,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 3208472246471396357}
   m_HandleRect: {fileID: 5988152926682154886}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 0.0001
+  m_MaxValue: 2.2
   m_WholeNumbers: 0
-  m_Value: 0.244
+  m_Value: 1.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -11335,10 +11352,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 8734072139539059929}
   m_HandleRect: {fileID: 7976437843996410228}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 0.0001
+  m_MaxValue: 2.2
   m_WholeNumbers: 0
-  m_Value: 0.244
+  m_Value: 1.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

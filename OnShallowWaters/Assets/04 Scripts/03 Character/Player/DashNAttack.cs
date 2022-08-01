@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class DashNAttack : MonoBehaviour
 {
     [Header("System:")]
+    [SerializeField] private SoundData attkSFX;
     [SerializeField] private CinemachineImpulseSource impulseSource;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Animator animator;
@@ -220,7 +221,8 @@ public class DashNAttack : MonoBehaviour
             
             playerMovement.enabled = true;
             animator.SetTrigger("Attack");
-            
+            SoundManager.instance.PlaySFX(attkSFX, "Attack 1");
+
             attackSequence++;
             timeTillNextAtk = .5f;
         }
@@ -230,7 +232,7 @@ public class DashNAttack : MonoBehaviour
 
             playerMovement.enabled = true;
             animator.SetTrigger("Attack2");
-            
+            SoundManager.instance.PlaySFX(attkSFX, "Attack 2");
             attackSequence++;
             timeTillNextAtk = .8f;
         }
@@ -240,7 +242,7 @@ public class DashNAttack : MonoBehaviour
 
             playerMovement.enabled = true;
             animator.SetTrigger("Attack3");
-            
+            SoundManager.instance.PlaySFX(attkSFX, "Attack 3");
             attackSequence = 0;
             timeTillNextAtk = 1f;
         }
