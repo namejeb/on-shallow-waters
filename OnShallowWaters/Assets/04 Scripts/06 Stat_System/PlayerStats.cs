@@ -75,7 +75,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-        rb.velocity = new Vector3(0, 5f, 0f);
+        rb.velocity = new Vector3(0, 7.5f, 0f);
     }
     
     public void IncreaseAtkPercent(float multiplierToSet)
