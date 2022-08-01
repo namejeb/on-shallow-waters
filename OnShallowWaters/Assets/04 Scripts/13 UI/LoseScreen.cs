@@ -24,6 +24,11 @@ public class LoseScreen : MonoBehaviour
 
     private void EnableLoseScreen()
     {
+        Invoke(nameof(Enable), 3f);
+    }
+
+    private void Enable()
+    {
         loseScreenContainer.gameObject.SetActive(true);
         GetComponent<Animator>().SetTrigger("fadeTrigger");
         
@@ -33,7 +38,7 @@ public class LoseScreen : MonoBehaviour
 
     private void LoadLevelScene()
     {
-        SceneManager.LoadScene( (int) SceneData.LevelScene);
+        SceneManager.LoadScene( (int) SceneData.LevelScene );
     }
     
 
