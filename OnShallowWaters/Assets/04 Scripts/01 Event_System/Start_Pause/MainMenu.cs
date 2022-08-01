@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,8 +15,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         public void StartGame(){
             loadingScreen.gameObject.SetActive(true);
             GameManager.SetIsTutorial(false);
-            StartCoroutine(LoadLevelScene());
-          // LoadLevelScene();
+            LoadLevelScene();
         }
 
         public void ExitGame(){
@@ -29,19 +26,12 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         {
             loadingScreen.gameObject.SetActive(true);
             GameManager.SetIsTutorial(true);
-            StartCoroutine(LoadLevelScene());
-            //LoadLevelScene();
+            LoadLevelScene();
         }
         
-        private IEnumerator LoadLevelScene()
+        private void LoadLevelScene()
         {
-            yield return new WaitForSeconds(.5f);
             SceneManager.LoadSceneAsync(1);
         }
-
-        // private void LoadLevelScene()
-        // {
-        //     SceneManager.LoadSceneAsync(1);
-        // }
     }
 }
