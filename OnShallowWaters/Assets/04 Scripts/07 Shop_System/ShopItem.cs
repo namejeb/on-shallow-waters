@@ -55,4 +55,23 @@ public class ShopItem
             case ItemType.KopiOPeng: return ga.gShop_Hp;
         }
     }
+
+    public static string GetName(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            default:
+            case ItemType.HP: return "HP";
+            case ItemType.ATK: return "ATK";
+            case ItemType.DEF: return "DEF";
+            case ItemType.HealthPotion: return "HealthPotion";
+            case ItemType.SomePotion: return "SomePotion";
+            case ItemType.BooBooPotion: return "BooBooPotion";
+            case ItemType.ManaPotion: return "Mana Potion";
+            case ItemType.AisKosong: return "AisKosong";
+            case ItemType.MiloIce: return "MiloKosong";
+            case ItemType.TehTarik: return "TehTarik";
+            case ItemType.KopiOPeng: return "KopiOpeng";
+        }
+    }
 }
