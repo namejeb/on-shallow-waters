@@ -1,16 +1,25 @@
 using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
+using System;
 
 
 public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 {
     [Space][Space]
+    [Header("System Refs:")]
     [SerializeField] private PlayerHealthBar playerHealthBar;
     [SerializeField] private BM_LowHpDmgReduction bmLowHpDmgReduction;
+   
+    // Animation
     private Animator _anim;
     
+    // Death
+    //[SerializeField] private Transform loseScreenContainer;    
+    public static event Action OnPlayerDeath;
+
     [Space][Space]
+    [Header("Stats:")]
     [SerializeField] private Stat movementSpeed;
     [SerializeField] private Stat defense;
     
@@ -56,6 +65,9 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         // disable controls
         GetComponent<DashNAttack>().enabled = false;
         GetComponent<PlayerMovement>().enabled = false;
+        
+        // Enable lose screen
+        if(OnPlayerDeath != null) OnPlayerDeath.Invoke();
     }
 
     // Called in animation - "Death"
@@ -161,16 +173,16 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
     }
 
-    // [Button]
-    // private void TempDamage()
-    // {
-    //     _anim.Play("Get hit");
-    //     float damageAmount = 20;
-    //     
-    //     int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
-    //     TakeDamage(effectiveDmg);
-    //     playerHealthBar.SetHealth(currHp);
-    // }
+    [Button]
+    private void TempDamage()
+    {
+        _anim.Play("Get hit");
+        float damageAmount = 20;
+        
+        int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
+        TakeDamage(effectiveDmg);
+        playerHealthBar.SetHealth(currHp);
+    }
     
     public void Damage(int damageAmount)
     {
