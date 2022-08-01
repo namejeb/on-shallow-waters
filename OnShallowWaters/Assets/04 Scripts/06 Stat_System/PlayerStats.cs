@@ -37,12 +37,14 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     public float CritDamage { get => _critDamage; }
 
     public float DamageReduction { get => _damageReduction; }
+    
 
     private new void Awake()
     {
         currHp = MaxHp;
         playerHealthBar.SetMaxHealth(MaxHp);
 
+        // Animation
         _anim = GetComponent<Animator>();
     }
     
@@ -159,16 +161,16 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
     }
 
-    [Button]
-    private void TempDamage()
-    {
-        _anim.Play("Get hit");
-        float damageAmount = 20;
-        
-        int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
-        TakeDamage(effectiveDmg);
-        playerHealthBar.SetHealth(currHp);
-    }
+    // [Button]
+    // private void TempDamage()
+    // {
+    //     _anim.Play("Get hit");
+    //     float damageAmount = 20;
+    //     
+    //     int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
+    //     TakeDamage(effectiveDmg);
+    //     playerHealthBar.SetHealth(currHp);
+    // }
     
     public void Damage(int damageAmount)
     {
