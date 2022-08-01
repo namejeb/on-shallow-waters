@@ -1,5 +1,5 @@
 using System.Collections;
-using _04_Scripts._05_Enemies_Bosses;
+using NaughtyAttributes;
 using UnityEngine;
 
 
@@ -8,6 +8,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     [Space][Space]
     [SerializeField] private PlayerHealthBar playerHealthBar;
     [SerializeField] private BM_LowHpDmgReduction bmLowHpDmgReduction;
+    private Animator _anim;
     
     [Space][Space]
     [SerializeField] private Stat movementSpeed;
@@ -41,13 +42,28 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         currHp = MaxHp;
         playerHealthBar.SetMaxHealth(MaxHp);
+
+        _anim = GetComponent<Animator>();
     }
     
     protected override void Die()
     {
         //game end logics
+        _anim.Play("Death");
+        
+        // disable controls
+        GetComponent<DashNAttack>().enabled = false;
+        GetComponent<PlayerMovement>().enabled = false;
     }
 
+    // Called in animation - "Death"
+    public void PlayDeathFloat()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.velocity = new Vector3(0, 5f, 0f);
+    }
+    
     public void IncreaseAtkPercent(float multiplierToSet)
     {
         _atkPercent = multiplierToSet;
@@ -142,14 +158,28 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         }
 
     }
-    
-    public void Damage(int damageAmount)
+
+    [Button]
+    private void TempDamage()
     {
+        _anim.Play("Get hit");
+        float damageAmount = 20;
+        
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
         playerHealthBar.SetHealth(currHp);
     }
     
+    public void Damage(int damageAmount)
+    {
+        _anim.Play("Get hit");
+        
+        int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
+        TakeDamage(effectiveDmg);
+        playerHealthBar.SetHealth(currHp);
+    }
+
+
     private float ReceiveIncomingDmg(float incomingDamage)
     {
         incomingDamage *= (100 / (25 + (DefMultiplier * (Defense.CurrentValue + 0))) * DamageReduction);
