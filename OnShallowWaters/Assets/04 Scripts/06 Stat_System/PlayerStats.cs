@@ -133,8 +133,11 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         for (int i = 0; i < regenCount; i++)
         {
             yield return new WaitForSeconds(regenPerSeconds);
-            currHp += regenHp;
-            // player hp bar should updated
+            if (currHp < MaxHp)
+            {
+                currHp += regenHp;
+            }
+            playerHealthBar.SetHealth(currHp);
             Debug.Log(currHp);
         }
 
