@@ -6,10 +6,15 @@ using UnityEngine.UI;
 
 public class DisplayBoonList : MonoBehaviour
 {
+    [Header("Settings:")]
     [SerializeField] private float offsetWidth;
     [SerializeField] private Vector2 offsetsPos;
+
+    [Space][Space]
+    [Header("Ref:")]
+    [SerializeField] private Button backButton;
     
-    
+    [Space][Space]
     [SerializeField] private Transform chosenBoonList;
     private bool _isOpened = false;
 
@@ -36,7 +41,7 @@ public class DisplayBoonList : MonoBehaviour
         infoDisplay.gameObject.SetActive(false);
         exitInfoDisplayButton.gameObject.SetActive(false);
     }
-
+    
     private void ExitChosenBoons()
     {
         ExitDisplayInfo();
@@ -45,6 +50,7 @@ public class DisplayBoonList : MonoBehaviour
     private void OnDestroy()
     {
         BoonSelection.OnListChanged -= UpdateList;
+        backButton.onClick.RemoveListener(ExitChosenBoons);
     }
 
     private void Start()
@@ -58,10 +64,12 @@ public class DisplayBoonList : MonoBehaviour
         
         infoDisplay.gameObject.SetActive(false);
         exitInfoDisplayButton.gameObject.SetActive(false);
-
+        
         Button_UI buttonUI = bgButton.GetComponent<Button_UI>();
         buttonUI.ClearAllListeners();
         buttonUI.ClickEvent(() => ExitChosenBoons() );
+        
+        backButton.onClick.AddListener(ExitChosenBoons);
     }
     
     private void SetupDisplayList()                                      

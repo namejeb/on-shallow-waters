@@ -54,7 +54,7 @@ public class BoonEffectsManager : MonoBehaviour
         HandleEnablingAndUpgrading(b);
     }
 
-    public void IncreaseDmgIncreaseSingleEnemy()
+    public void DmgIncreaseSingleEnemy()
     {
         BA_SingleEnemyDmgBonus b = GetComponent<BA_SingleEnemyDmgBonus>();
         HandleEnablingAndUpgrading(b);

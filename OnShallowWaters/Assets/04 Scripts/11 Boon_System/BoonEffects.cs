@@ -26,7 +26,7 @@ public class BoonEffects : MonoBehaviour {
             
             case 4: boonEffectsManager.ArmorDmgBonus();  break;       //--x
             case 5: boonEffectsManager.DmgWhenArmorBreak(); break;
-            case 6: boonEffectsManager.IncreaseDmgIncreaseSingleEnemy(); break;
+            case 6: boonEffectsManager.DmgIncreaseSingleEnemy(); break;
             case 7: boonEffectsManager.FirstTimeDmgBonus(); break;
             
             case 8: boonEffectsManager.UpgradeAtkPercent(); break;   //---x
