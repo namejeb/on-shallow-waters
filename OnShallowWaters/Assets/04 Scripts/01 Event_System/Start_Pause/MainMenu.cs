@@ -14,7 +14,11 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
 
         public void StartGame(){
             loadingScreen.gameObject.SetActive(true);
+            
+            // Game settings
             GameManager.SetIsTutorial(false);
+            GameManager.SetIsRetry(false);
+            
             LoadLevelScene();
         }
 
@@ -25,7 +29,11 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         public void Tutorial()
         {
             loadingScreen.gameObject.SetActive(true);
+            
+            // Game settings
             GameManager.SetIsTutorial(true);
+            GameManager.SetIsRetry(false);
+            
             LoadLevelScene();
         }
         
