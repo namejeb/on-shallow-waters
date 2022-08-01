@@ -30,9 +30,9 @@ public class BoonEffects : MonoBehaviour {
             case 7: boonEffectsManager.FirstTimeDmgBonus(); break;
             
             case 8: boonEffectsManager.UpgradeAtkPercent(); break;   //---x
-            case 9: boonEffectsManager.UpgradeAtkSpeed();      break;        //--x
-            case 10: boonEffectsManager.UpgradeCritChance();  break;        //--x
-            case 11: boonEffectsManager.UpgradeCritDamage();  break;        //--x
+            //case 9: boonEffectsManager.UpgradeAtkSpeed();      break;        //--x
+            case 9: boonEffectsManager.UpgradeCritChance();  break;        //--x
+            case 10: boonEffectsManager.UpgradeCritDamage();  break;        //--x
         }
     }
     
