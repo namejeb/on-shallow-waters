@@ -7,6 +7,13 @@ using NaughtyAttributes;
 
 public class StateMachineManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class ProjectileObj
+    {
+        public Transform aimer;
+        public ProjectileType type;
+    }
+
     [SerializeField] private Transform target;
     public int speed;
     public float inStateTimer;
@@ -25,8 +32,9 @@ public class StateMachineManager : MonoBehaviour
     public bool isAttackFin;
 
     [Header("Range Settings")]
-    public List<Transform> aimDirection;
-    public List<GameObject> shootPrefab;
+    //public List<Transform> aimDirection;
+    //public List<GameObject> shootPrefab;
+    public List<ProjectileObj> projectiles;
 
     [Header("Audio Settings")]
     [SerializeField] private SoundData bossSFX;
@@ -36,6 +44,7 @@ public class StateMachineManager : MonoBehaviour
     private Animator _animator;
     private Rigidbody rb;
     private CinemachineImpulseSource impSource;
+    private EnemyPooler pooler;
 
     public Transform Target => target;
     public NavMeshAgent Agent => _agent;
@@ -50,6 +59,7 @@ public class StateMachineManager : MonoBehaviour
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         impSource = FindObjectOfType<CinemachineImpulseSource>();
+        pooler = FindObjectOfType<EnemyPooler>();
     }
 
     private void Start()
@@ -144,10 +154,14 @@ public class StateMachineManager : MonoBehaviour
 
     public void ShootProjectile(int index)
     {
-        Vector3 targetDirection = (target.position - aimDirection[index].position).normalized;
+        Vector3 targetDirection = (target.position - projectiles[index].aimer.position).normalized;
         float angle = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
-        aimDirection[index].eulerAngles = new Vector3(0, angle - 90, 0);
-        GameObject bullet = Instantiate(shootPrefab[index], aimDirection[index].position, aimDirection[index].rotation);
+        projectiles[index].aimer.eulerAngles = new Vector3(0, angle - 90, 0);
+
+        Transform bullet = pooler.GetFromPool(projectiles[index].type);
+        bullet.position = projectiles[index].aimer.position;
+        bullet.rotation = projectiles[index].aimer.rotation;
+        bullet.gameObject.SetActive(true);
 
         if (bullet.GetComponent<Projectile>() != null)
             bullet.GetComponent<Projectile>().SetDirection(target);
@@ -155,7 +169,10 @@ public class StateMachineManager : MonoBehaviour
 
     public void ShootProjectile2(int index)
     {
-        GameObject bullet = Instantiate(shootPrefab[index], aimDirection[index].position, transform.rotation);
+        Transform bullet = pooler.GetFromPool(projectiles[index].type);
+        bullet.position = projectiles[index].aimer.position;
+        bullet.rotation = projectiles[index].aimer.rotation;
+        bullet.gameObject.SetActive(true);
     }
 
     public void RotateTowards()

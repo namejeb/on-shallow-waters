@@ -221,7 +221,7 @@ public class SkBlessing : MonoBehaviour
             {
                 if (enemy.gameObject.activeInHierarchy)
                 {
-                    Transform vfx = pooler.GetFromPool(ProjectileType.skb5);
+                    Transform vfx = pooler.GetFromPool(ProjectileType.PlayerSKB5);
                     vfx.position = new Vector3(enemy.transform.position.x, vfx.position.y, enemy.transform.position.z);
                     vfx.gameObject.SetActive(true);
                     enemy.GetComponent<IDamageable>().Damage(skb5Damage);
