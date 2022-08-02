@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,7 +8,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
 
         [SerializeField] private Transform loadingScreen;
 
-        private void Awake()
+        private void Start()
         {
             loadingScreen.gameObject.SetActive(false);
         }
@@ -19,7 +20,8 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             GameManager.SetIsTutorial(false);
             GameManager.SetIsRetry(false);
             
-            LoadLevelScene();
+          //  LoadLevelScene();
+          StartCoroutine(LoadLevelSceneWithDelay());
         }
 
         public void ExitGame(){
@@ -34,18 +36,24 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             GameManager.SetIsTutorial(true);
             GameManager.SetIsRetry(false);
             
-            LoadLevelScene();
+            //LoadLevelScene();
+            StartCoroutine(LoadLevelSceneWithDelay());
         }
         
         private void LoadLevelScene()
         {
             SceneManager.LoadSceneAsync(1);
         }
+        
+        private IEnumerator LoadLevelSceneWithDelay()
+        {
+            yield return new WaitForSeconds(1f);
+            LoadLevelScene();
+        }
 
         private void PlayLoadingScreen()
         {
-           // loadingScreen.gameObject.SetActive(true);
-            loadingScreen.Find("VideoPlayer").GetComponent<VideoPlaying>().VP.Play();
+            loadingScreen.gameObject.SetActive(true);
         }
     }
 }
