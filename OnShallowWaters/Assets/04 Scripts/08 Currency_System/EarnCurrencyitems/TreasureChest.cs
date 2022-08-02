@@ -31,6 +31,11 @@ public class TreasureChest : EarnCurrencyItems, IDamageable
         OpenChest();
     }
 
+    public float GetReceivedDamage(float outDamage)
+    {
+        return outDamage;
+    }
+
     public void DisableSelf()
     {
         gameObject.SetActive(false);

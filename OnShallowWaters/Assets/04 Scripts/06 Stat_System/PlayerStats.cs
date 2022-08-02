@@ -10,7 +10,15 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     [Header("System Refs:")]
     [SerializeField] private PlayerHealthBar playerHealthBar;
     [SerializeField] private BM_LowHpDmgReduction bmLowHpDmgReduction;
-   
+
+
+    [Space]
+    [Space]
+    [Header("Settings:")]
+    [SerializeField] private float stunLockTimer = 1.5f;
+    private float _nextStunLockTime;
+    
+    
     // Animation
     private Animator _anim;
     
@@ -28,10 +36,10 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     private float _damageReduction = 1f;
 
-    [SerializeField] private float _critChance = .3f;  
+    private float _critChance = .2f;  
     private float _critDamage = 1.5f;
     
-    private float _atkSpeed = 1f;
+    private float _atkSpeed = 1.5f;
     
     public Stat MovementSpeed { get => movementSpeed; }
     public Stat Defense { get => defense; }
@@ -58,6 +66,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     protected override void Die()
     {
+        _anim.SetBool("isDead", true);
+        
         //game end logics
         _anim.Play("Death");
         
@@ -67,6 +77,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         
         // Enable lose screen
         if(OnPlayerDeath != null) OnPlayerDeath.Invoke();
+
+        enabled = false;
     }
 
     // Called in animation - "Death"
@@ -174,7 +186,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     [Button]
     private void TempDamage()
     {
-        _anim.Play("Get hit");
+        _anim.SetTrigger("hitTrigger");
         float damageAmount = 20;
         
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
@@ -184,11 +196,20 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     public void Damage(int damageAmount)
     {
-        _anim.Play("Get hit");
+        if (Time.time > _nextStunLockTime)
+        {
+            _anim.SetTrigger("hitTrigger");
+            _nextStunLockTime = Time.time + stunLockTimer;
+        }
         
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
         playerHealthBar.SetHealth(currHp);
+    }
+
+    public float GetReceivedDamage(float outDamage)
+    {
+        return ReceiveIncomingDmg(outDamage);
     }
 
 

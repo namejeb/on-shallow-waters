@@ -12,7 +12,9 @@ public class EnemyStats : CharacterStats, IDamageable
     [Space]
     [Header("Settings:")]
     [SerializeField] private Stat defense;
-
+    private float _defPercent = 1f;
+    
+    
     [SerializeField] private new Collider collider;
     public Stat Defense { get => defense; }
 
@@ -43,10 +45,23 @@ public class EnemyStats : CharacterStats, IDamageable
             anim1.SetTrigger("isHit");
             anim1.ResetTrigger("isAttack1");
             anim1.ResetTrigger("isAttack2");
+
+            damageAmount = (int) ReceiveIncomingDamage(damageAmount);
             TakeDamage(damageAmount);
         } 
 
         healthBar.UpdateHealthBar(CurrHpPercentage);
+    }
+
+    public float GetReceivedDamage(float incomingDamage)
+    {
+        return ReceiveIncomingDamage(incomingDamage);
+    }
+
+    private float ReceiveIncomingDamage(float incomingDamage)
+    {
+        incomingDamage *= (100 / (25 + (_defPercent * defense.CurrentValue)));
+        return incomingDamage;
     }
 
     public float LostHP()

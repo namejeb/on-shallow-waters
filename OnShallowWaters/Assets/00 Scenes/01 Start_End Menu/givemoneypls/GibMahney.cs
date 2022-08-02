@@ -30,6 +30,6 @@ public class GibMahney : MonoBehaviour
 
     public void ExtendFreeTrial()
     {
-        SceneManager.LoadSceneAsync("MainMenu");
+        SceneManager.LoadSceneAsync( (int) SceneData.MainMenu );
     }
 }
