@@ -27,7 +27,7 @@ public class VideoPlaying : MonoBehaviour
         EndVideo();
     }
 
-    protected void EndVideo(){
+    protected virtual void EndVideo(){
         //end video logic
     }
 }

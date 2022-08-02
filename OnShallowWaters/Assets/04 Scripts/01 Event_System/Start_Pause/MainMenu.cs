@@ -20,8 +20,8 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             GameManager.SetIsTutorial(false);
             GameManager.SetIsRetry(false);
             
-          //  LoadLevelScene();
-          StartCoroutine(LoadLevelSceneWithDelay());
+            // LoadLevelScene();
+            StartCoroutine(LoadLevelSceneWithDelay());
         }
 
         public void ExitGame(){
