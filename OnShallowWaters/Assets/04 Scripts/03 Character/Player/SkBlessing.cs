@@ -26,10 +26,10 @@ public class SkBlessing : MonoBehaviour
     [Header("SKB 4")]
     [SerializeField] private float executeDistance;
     [SerializeField] private float executePercentage;
+    [SerializeField] private GameObject skb4_vfx;
 
     [Header("SKB 5")]
     [SerializeField] private int skb5Damage;
-    [SerializeField] private GameObject skb5_vfx;
 
     private float timer, duration, requiredSoul, currSoul;
     private bool startCountdown;
@@ -166,35 +166,37 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
 
+        skb4_vfx.SetActive(true);
         impulse.GenerateImpulse();
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         startCountdown = true;
         EnemyStats[] enemies = FindObjectsOfType<EnemyStats>();
-        Debug.Log("in");
+
         foreach (EnemyStats enemy in enemies)
         {
-            Debug.Log("lol");
             float distanceToEnemy = (enemy.transform.position - transform.position).magnitude;
-            Debug.Log("hai");
+
             if (enemy.gameObject.activeInHierarchy && distanceToEnemy < executeDistance)
             {
                 IDamageable e = enemy.GetComponent<IDamageable>();
+
                 int damage = Mathf.CeilToInt(e.LostHP() * executePercentage);
 
                 if (damage <= 0)
                     damage = 1;
-                Debug.Log(damage);
+
                 e.Damage(damage);
             }
         }
+        StartCoroutine(CloseSKB4());
     }
 
     public void SKB5()
@@ -228,6 +230,13 @@ public class SkBlessing : MonoBehaviour
                 }
             }
         }
+        
+    }
+
+    IEnumerator CloseSKB4()
+    {
+        yield return new WaitForSeconds(1);
+        skb4_vfx.SetActive(false);
     }
     
     IEnumerator ResetCharacter(float waitTime)
