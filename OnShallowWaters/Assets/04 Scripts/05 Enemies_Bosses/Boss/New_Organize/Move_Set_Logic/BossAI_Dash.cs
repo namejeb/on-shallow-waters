@@ -42,6 +42,7 @@ public class BossAI_Dash : State
         if (sm.inStateTimer > dashTimeout)
         {
             isDashing = false;
+            //sm.Anim.ResetTrigger("Dash");
             sm.Anim.SetTrigger("toNormal");
             sm.inStateTimer = 0;
             sm.HitBoxOff(2);

@@ -28,6 +28,9 @@ public class StateMachineManager : MonoBehaviour
     public List<Transform> aimDirection;
     public List<GameObject> shootPrefab;
 
+    [Header("Audio Settings")]
+    [SerializeField] private SoundData bossSFX;
+
     private State _currentState;
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -74,23 +77,20 @@ public class StateMachineManager : MonoBehaviour
 
         if (transform.rotation.eulerAngles.y > (faceAngle + 5))
         {
-            faceAngle = transform.rotation.eulerAngles.y;// -5;
-            //_animator.SetLayerWeight(1, 1);
+            faceAngle = transform.rotation.eulerAngles.y;
             float currentWeight = _animator.GetLayerWeight(1);
             _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.1f));
         }
 
         else if (transform.rotation.eulerAngles.y < (faceAngle - 5))
         {
-            faceAngle = transform.rotation.eulerAngles.y;// +5;
-            //_animator.SetLayerWeight(1, 1);
+            faceAngle = transform.rotation.eulerAngles.y;
             float currentWeight = _animator.GetLayerWeight(1);
             _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.1f));
         }
 
         else if (transform.rotation.eulerAngles.y <= (faceAngle + 5) && transform.rotation.eulerAngles.y >= (faceAngle - 5))
         {
-            //_animator.SetLayerWeight(1, 0);
             float currentWeight = _animator.GetLayerWeight(1);
             _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 0, ref velocity, 0.3f));
         }
@@ -109,30 +109,6 @@ public class StateMachineManager : MonoBehaviour
         {
             startBattle = true;
         }
-    }
-
-    [Button]
-    public void Shoot()
-    {
-        SetState(stateList[3]);
-    }
-
-    [Button]
-    public void Dash()
-    {
-        SetState(stateList[1]);
-    }
-
-    [Button]
-    public void Slam()
-    {
-        SetState(stateList[4]);
-    }
-
-    [Button]
-    public void Slice()
-    {
-        SetState(stateList[2]);
     }
 
     public void BossRandomState()
@@ -189,12 +165,38 @@ public class StateMachineManager : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
+    public void PlaySFX(string soundName)
+    {
+        SoundManager.instance.PlaySFX(bossSFX, soundName);
+    }
+
     [Button]
     public void Shake()
     {
-        //float time = 2;
-        //impSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = time;
-        //impSource.m_DefaultVelocity.x = impSource.m_DefaultVelocity.y = -0.5f;
         impSource.GenerateImpulse();
+    }
+
+    [Button]
+    public void Shoot()
+    {
+        SetState(stateList[3]);
+    }
+
+    [Button]
+    public void Dash()
+    {
+        SetState(stateList[1]);
+    }
+
+    [Button]
+    public void Slam()
+    {
+        SetState(stateList[4]);
+    }
+
+    [Button]
+    public void Slice()
+    {
+        SetState(stateList[2]);
     }
 }
