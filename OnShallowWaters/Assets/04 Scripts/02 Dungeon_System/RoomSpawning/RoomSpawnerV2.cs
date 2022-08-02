@@ -212,7 +212,7 @@ public class RoomSpawnerV2 : MonoBehaviour
                 roomIndex = UnityEngine.Random.Range(0, level.westEntranceRooms.Count);
                 room = level.westEntranceRooms[roomIndex];
             } 
-            //  room = level.southEntranceRooms[1];
+            //  room = level.southEntranceRooms[0];
         }
         StartCoroutine(EnableRoom(room));
     }
