@@ -20,7 +20,7 @@ public class ExitRoomTrigger : MonoBehaviour
             }
             
             if (RoomSpawnerV2.IsBossRoom)
-                SceneManager.LoadScene("GIMMEMAHNEY");
+                SceneManager.LoadScene( (int) SceneData.WinScene);
             else
                 if (OnExitRoom != null) OnExitRoom.Invoke(nextRoomEntranceDir);
         }
@@ -28,8 +28,8 @@ public class ExitRoomTrigger : MonoBehaviour
 
     private IEnumerator LoadMainMenu()
     {
-        RoomSpawnerV2.TriggerTransition();
+        RoomSpawnerV2.TriggerTransitionStart();
         yield return new WaitForSeconds(RoomSpawnerV2.TransitionDuration);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene( (int) SceneData.MainMenu );
     }
 }

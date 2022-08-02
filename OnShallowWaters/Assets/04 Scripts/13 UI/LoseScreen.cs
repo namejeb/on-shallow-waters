@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class LoseScreen : MonoBehaviour
 {
     [SerializeField] private Transform loseScreenContainer;
-    [SerializeField] private float reloadDelay = 3f;
+    [SerializeField] private float reloadDelay = 5f;
     
 
     private void OnDestroy()
@@ -33,9 +33,14 @@ public class LoseScreen : MonoBehaviour
         GetComponent<Animator>().SetTrigger("fadeTrigger");
         
         GameManager.SetIsRetry(true);
+        Invoke(nameof(TriggerTransition), reloadDelay - 2f);
         Invoke(nameof(LoadLevelScene), reloadDelay);
     }
 
+    private void TriggerTransition()
+    {
+        RoomSpawnerV2.TriggerTransitionStart();
+    }
     private void LoadLevelScene()
     {
         SceneManager.LoadScene( (int) SceneData.LevelScene );
