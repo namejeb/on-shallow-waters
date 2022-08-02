@@ -2,14 +2,15 @@ using System;
 using _04_Scripts._05_Enemies_Bosses;
 using UnityEngine;
 
-
 public class Boss_Stats : CharacterStats, IDamageable
 {
     public int maxArmour;
     public int currArmour;
     public bool armState;
 
-    //private Boss_FSM _bossFsm;
+    public int defense;
+    private float buffDefense = 1f;
+
     StateMachineManager smm;
     private BossUiManager _uiManager;
 
@@ -29,6 +30,8 @@ public class Boss_Stats : CharacterStats, IDamageable
 
     public void Damage(int damageAmount)
     {
+        damageAmount = (int)(damageAmount * 100 / ((25 + (buffDefense * defense))));
+
         if (armState)
         {
             if (!_uiManager.IsActive(1))
