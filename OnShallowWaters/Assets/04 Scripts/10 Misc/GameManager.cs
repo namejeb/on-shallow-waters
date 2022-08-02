@@ -6,10 +6,12 @@ public class GameManager : MonoBehaviour
 {
     private static bool _isTutorial = false;
     private static bool _isRetry = false;
+    private static bool _isFirstPlayThrough = true;
+    
     
     public static bool IsTutorial { get => _isTutorial; }
-
     public static bool IsRetry { get => _isRetry; }
+    public static bool IsFirstPlayThrough { get => _isFirstPlayThrough; }
 
 
     public static GameManager Instance;
@@ -30,5 +32,10 @@ public class GameManager : MonoBehaviour
     public static void SetIsRetry(bool status)
     {
         _isRetry = status;
+    }
+
+    public static void SetIsFirstPlayThrough(bool status)
+    {
+        _isFirstPlayThrough = status;
     }
 }

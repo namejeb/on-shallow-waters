@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum EnemyPoolType { enemy1, enemy2 }
+public enum ProjectileType { skb5 }
+
 public class EnemyPooler : MonoBehaviour
 {
-	public enum EnemyPoolType { enemy1, enemy2 }
-	public enum ProjectileType { e1p1, e2p1, b1p1 }
-	
+
 	[System.Serializable]
 	public class EnemyPoolInfo
 	{

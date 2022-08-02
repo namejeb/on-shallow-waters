@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using _04_Scripts._05_Enemies_Bosses;
+using Cinemachine;
 using NaughtyAttributes;
 
 public class SkBlessing : MonoBehaviour
@@ -14,12 +14,14 @@ public class SkBlessing : MonoBehaviour
     [Header("SKB 1")]
     [SerializeField] private int atkAdd;
     [SerializeField] private int mvSpeedAdd;
+    [SerializeField] private GameObject skb1_vfx;
 
     [Header("SKB 2")]
     [SerializeField] private int hpRegenAdd;
     [SerializeField] private int armRegenAdd;
     [SerializeField] private int regenAmount;
     [SerializeField] private float regenPerSec;
+    [SerializeField] private GameObject skb2_vfx;
 
     [Header("SKB 4")]
     [SerializeField] private float executeDistance;
@@ -27,14 +29,15 @@ public class SkBlessing : MonoBehaviour
 
     [Header("SKB 5")]
     [SerializeField] private int skb5Damage;
+    [SerializeField] private GameObject skb5_vfx;
 
     private float timer, duration, requiredSoul, currSoul;
     private bool startCountdown;
 
     private PlayerStats playerStats;
     private TimeManager timeManager;
-    
-    
+    private CinemachineImpulseSource impulse;
+    private EnemyPooler pooler;
 
     public float Skb2Duration
     {
@@ -57,6 +60,8 @@ public class SkBlessing : MonoBehaviour
     {
         playerStats = GetComponent<PlayerStats>();
         timeManager = FindObjectOfType<TimeManager>();
+        impulse = FindObjectOfType<CinemachineImpulseSource>();
+        pooler = FindObjectOfType<EnemyPooler>();
         soulButtonImage = soulButton.GetComponent<Image>();
     }
 
@@ -100,18 +105,18 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
 
+        skb1_vfx.SetActive(true);
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         playerStats.Atk.AddModifier(atkAdd);
         playerStats.MovementSpeed.AddModifier(mvSpeedAdd);
-        Debug.Log("Atk and Spd buff increase start");
         StartCoroutine(ResetCharacter(duration));
         startCountdown = true;
     }
@@ -121,17 +126,18 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
 
+        skb2_vfx.SetActive(true);
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         duration = regenPerSec * regenAmount;
         timer = duration;
-        StartCoroutine(playerStats.RegenLoop(hpRegenAdd, armRegenAdd, regenAmount, regenPerSec));
+        StartCoroutine(playerStats.RegenLoop(hpRegenAdd, armRegenAdd, regenAmount, regenPerSec, skb2_vfx));
         startCountdown = true;
     }
 
@@ -141,11 +147,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
 
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
@@ -166,6 +172,7 @@ public class SkBlessing : MonoBehaviour
         }
         else return;
 
+        impulse.GenerateImpulse();
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
@@ -195,24 +202,30 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        }
-        else return;
+        //if (CanSpendSoul())
+        //{
+        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        //}
+        //else return;
 
+        impulse.GenerateImpulse();
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         startCountdown = true;
         EnemyStats[] enemies = FindObjectsOfType<EnemyStats>();
 
-        foreach (EnemyStats enemy in enemies)
+        if (enemies != null)
         {
-            if (enemy.gameObject.activeInHierarchy)
+            foreach (EnemyStats enemy in enemies)
             {
-                
-                enemy.GetComponent<IDamageable>().Damage(skb5Damage);
+                if (enemy.gameObject.activeInHierarchy)
+                {
+                    Transform vfx = pooler.GetFromPool(ProjectileType.skb5);
+                    vfx.position = new Vector3(enemy.transform.position.x, vfx.position.y, enemy.transform.position.z);
+                    vfx.gameObject.SetActive(true);
+                    enemy.GetComponent<IDamageable>().Damage(skb5Damage);
+                }
             }
         }
     }
@@ -220,7 +233,7 @@ public class SkBlessing : MonoBehaviour
     IEnumerator ResetCharacter(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        Debug.Log("Atk & Spd buff end");
+        skb1_vfx.SetActive(false);
         playerStats.Atk.RemoveModifier(atkAdd);
         playerStats.MovementSpeed.RemoveModifier(mvSpeedAdd);
     }
@@ -234,7 +247,7 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
             return;
-        //soul = 100; // debug purpose
+        soul = 100; // debug purpose
         if (!soulButton.interactable)
         {
             if (currSoul >= requiredSoul)

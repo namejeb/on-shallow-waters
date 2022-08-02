@@ -28,15 +28,24 @@ public class ScreenFade : MonoBehaviour
     {
         LeanTween.alpha(_image, 1f, .5f).setIgnoreTimeScale(true);
     }
-
+    
     private void FadeOut()
     {
         StartCoroutine(CFadeOut());
     }
 
+    // private void FadeOutWithDuration(float duration)
+    // {
+    //     StartCoroutine(CFadeOutWithDuration(duration));
+    // }
     private IEnumerator CFadeOut()
     {
         yield return new WaitForSeconds(.5f);
         LeanTween.alpha(_image, 0f, .5f).setIgnoreTimeScale(true);
     }
+    // private IEnumerator CFadeOutWithDuration(float duration)
+    // {
+    //     yield return new WaitForSeconds(duration);
+    //     LeanTween.alpha(_image, 0f, .5f).setIgnoreTimeScale(true);
+    // }
 }
