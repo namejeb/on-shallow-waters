@@ -13,11 +13,15 @@ public class UpdateCurrencies : MonoBehaviour
     private void Awake()
     {
         CurrencySystem.OnCurrencyChanged += UpdateUI;
+
+      
     }
     
     private void UpdateUI(Vector2Int goldSoulAmount)
     {
+       
         goldAmountText.text = goldSoulAmount.x.ToString();
         soulAmountText.text = goldSoulAmount.y.ToString();
     }
+  
 }
