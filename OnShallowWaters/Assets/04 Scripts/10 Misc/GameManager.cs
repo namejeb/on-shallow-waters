@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static bool _isTutorial = true;
+    private static bool _isTutorial = false;
     private static bool _isRetry = false;
     private static bool _isFirstPlayThrough = true;
     
