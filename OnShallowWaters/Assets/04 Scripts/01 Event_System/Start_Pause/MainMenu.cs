@@ -15,13 +15,19 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
 
         public void StartGame(){
             PlayLoadingScreen();
+
+            if (GameManager.IsFirstPlayThrough)
+            {
+                StartCoroutine(LoadSceneWithDelay( SceneData.CutsceneScene ));
+                return;
+            }
             
             // Game settings
             GameManager.SetIsTutorial(false);
             GameManager.SetIsRetry(false);
             
             // LoadLevelScene();
-            StartCoroutine(LoadLevelSceneWithDelay());
+            StartCoroutine(LoadSceneWithDelay( SceneData.LevelScene ));
         }
 
         public void ExitGame(){
@@ -37,18 +43,18 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             GameManager.SetIsRetry(false);
             
             //LoadLevelScene();
-            StartCoroutine(LoadLevelSceneWithDelay());
+            StartCoroutine(LoadSceneWithDelay( SceneData.LevelScene ));
         }
         
-        private void LoadLevelScene()
+        private void LoadScene(SceneData sceneData)
         {
-            SceneManager.LoadSceneAsync(1);
+            SceneManager.LoadSceneAsync( (int) sceneData);
         }
         
-        private IEnumerator LoadLevelSceneWithDelay()
+        private IEnumerator LoadSceneWithDelay(SceneData sceneData)
         {
             yield return new WaitForSeconds(1f);
-            LoadLevelScene();
+            LoadScene(sceneData);
         }
 
         private void PlayLoadingScreen()

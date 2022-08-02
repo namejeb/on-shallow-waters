@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private static bool _isRetry = false;
     private static bool _isFirstPlayThrough = true;
     
+    
     public static bool IsTutorial { get => _isTutorial; }
     public static bool IsRetry { get => _isRetry; }
     public static bool IsFirstPlayThrough { get => _isFirstPlayThrough; }
