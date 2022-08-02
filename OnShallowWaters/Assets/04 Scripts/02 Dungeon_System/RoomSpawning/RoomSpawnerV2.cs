@@ -57,7 +57,7 @@ public class RoomSpawnerV2 : MonoBehaviour
         _roomFinishedCount = -1;
     }
     
-    private void Awake()
+    private void Start()
     {
         SortRooms();
         ExitRoomTrigger.OnExitRoom += SpawnRoom;
