@@ -35,20 +35,23 @@ public sealed class FastShooter : EnemiesCore {
 
         protected override void Movement(){
             if (RaycastSingle() && isPrepared){
+                anim.SetBool("isWalk", false);
                 behaviour = CoreStage.Attack;
                 isPrepared = false;
             } else {
+                anim.SetBool("isWalk", true);
                 RotateMovement();
             }
         }
 
         protected override void Attack(){ 
+            anim.SetTrigger("isAttack2");
             var position = puppet.position;
             Vector3 rotation3 = new Vector3(position.x, transform.position.y, position.z);
 
             (transRecord = transform).LookAt(rotation3);
             
-            _direct = rotation3 - transRecord.position;
+            _direct = position - transRecord.position;
             _rotation = Quaternion.LookRotation(_direct);
             Quaternion rotation1 = _rotation;
             
@@ -70,8 +73,8 @@ public sealed class FastShooter : EnemiesCore {
         }
 
         private bool RaycastSingle(){
-            var trans1 = transform;
-            Vector3 origin = trans1.position;
+            Transform trans1 = transform;
+            Vector3 origin = trans1.position + new Vector3(0, 1, 0);
             Vector3 direction = trans1.forward;
 
             //Here

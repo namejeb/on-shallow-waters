@@ -25,7 +25,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         }
 
         private IEnumerator waitThenChase(){
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.5f);
             behaviour = CoreStage.Move;
             missAttack = false;
             _noRepeat = false;
