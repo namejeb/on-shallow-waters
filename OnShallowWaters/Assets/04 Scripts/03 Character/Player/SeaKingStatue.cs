@@ -80,7 +80,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
             bg.enabled = true;
             equipButton.onClick.AddListener(ChangeBlessing);
             blessNameText.text = blessName;
-            descriptionText.text = "Time: " + soulDuration.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n" + blessDesc;
+            descriptionText.text = "Time: " + soulDuration.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n\n" + blessDesc;
         }
     }
 
