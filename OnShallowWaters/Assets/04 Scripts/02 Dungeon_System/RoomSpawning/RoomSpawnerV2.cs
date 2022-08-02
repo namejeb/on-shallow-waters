@@ -59,6 +59,11 @@ public class RoomSpawnerV2 : MonoBehaviour
     
     private void Start()
     {
+        if (GameManager.IsRetry)
+        {
+            TriggerTransitionFinish();
+        }
+        
         SortRooms();
         ExitRoomTrigger.OnExitRoom += SpawnRoom;
 
@@ -92,9 +97,14 @@ public class RoomSpawnerV2 : MonoBehaviour
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
     }
 
-    public static void TriggerTransition()
+    public static void TriggerTransitionStart()
     {
         if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
+    }
+
+    public static void TriggerTransitionFinish()
+    {
+        if(OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
     }
 
     private void SortRooms()

@@ -28,7 +28,7 @@ public class ExitRoomTrigger : MonoBehaviour
 
     private IEnumerator LoadMainMenu()
     {
-        RoomSpawnerV2.TriggerTransition();
+        RoomSpawnerV2.TriggerTransitionStart();
         yield return new WaitForSeconds(RoomSpawnerV2.TransitionDuration);
         SceneManager.LoadScene(0);
     }
