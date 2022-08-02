@@ -12,6 +12,11 @@ public class PunchBag : MonoBehaviour, IDamageable{
         }
     }
 
+    public float GetReceivedDamage(float outDamage)
+    {
+        return outDamage;
+    }
+
     public float LostHP(){
         throw new System.NotImplementedException();
     }

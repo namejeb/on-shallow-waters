@@ -277,7 +277,8 @@ public class DashNAttack : MonoBehaviour
         {
             outDamage = (int) ApplyCrit(outDamage);
         }
-        
+
+        outDamage = (int) damagable.GetReceivedDamage( outDamage);
         damagable.Damage( outDamage );
         
         // display damage text
@@ -324,8 +325,8 @@ public class DashNAttack : MonoBehaviour
             {
                 outDamage = ApplyCrit(outDamage);
             }
-             
-            //outDamage = ApplyCrit(outDamage);
+            
+            outDamage = (int) damagable.GetReceivedDamage( outDamage);
             damagable.Damage( (int) outDamage );
              
             // display damage text

@@ -62,6 +62,11 @@ public class Boss_Stats : CharacterStats, IDamageable
         }
     }
 
+    public float GetReceivedDamage(float outDamage)
+    {
+        return outDamage;
+    }
+
     protected override void Die()
     {
         if (smm.CurrentState != smm.passiveStates[0])

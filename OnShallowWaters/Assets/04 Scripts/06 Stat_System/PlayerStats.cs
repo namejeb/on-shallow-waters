@@ -66,6 +66,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     protected override void Die()
     {
+        _anim.SetBool("isDead", true);
+        
         //game end logics
         _anim.Play("Death");
         
@@ -75,6 +77,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         
         // Enable lose screen
         if(OnPlayerDeath != null) OnPlayerDeath.Invoke();
+
+        enabled = false;
     }
 
     // Called in animation - "Death"
@@ -182,7 +186,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     [Button]
     private void TempDamage()
     {
-        _anim.Play("Get hit");
+        _anim.SetTrigger("hitTrigger");
         float damageAmount = 20;
         
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
@@ -194,14 +198,18 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     {
         if (Time.time > _nextStunLockTime)
         {
-            _anim.Play("Get hit");
+            _anim.SetTrigger("hitTrigger");
             _nextStunLockTime = Time.time + stunLockTimer;
         }
-   
         
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
         playerHealthBar.SetHealth(currHp);
+    }
+
+    public float GetReceivedDamage(float outDamage)
+    {
+        return ReceiveIncomingDmg(outDamage);
     }
 
 

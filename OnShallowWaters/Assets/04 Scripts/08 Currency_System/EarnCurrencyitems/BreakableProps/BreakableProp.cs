@@ -23,6 +23,11 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
         Break();
     }
 
+    public float GetReceivedDamage(float outDamage)
+    {
+        return outDamage;
+    }
+
     public float LostHP()
     {
         throw new System.NotImplementedException();
