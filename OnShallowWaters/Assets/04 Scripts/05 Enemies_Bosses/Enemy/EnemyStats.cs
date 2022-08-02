@@ -66,7 +66,7 @@ public class EnemyStats : CharacterStats, IDamageable
 
     public float LostHP()
     {
-        return _enemiesCore.maxHealth - currHp;
+        return MaxHp - currHp;
     }
 
     protected override void Die()
