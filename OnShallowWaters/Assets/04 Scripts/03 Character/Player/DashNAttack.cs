@@ -102,6 +102,7 @@ public class DashNAttack : MonoBehaviour
             _isDash = false;
             playerMovement.enabled = true;
         }
+        StartCoroutine(EnableButton(2f));
     }
 
     public void ActivateDash()
@@ -113,7 +114,7 @@ public class DashNAttack : MonoBehaviour
         
         _endTime = Time.time + dashDuration * Time.timeScale;
         //multiply timeScale to account for SlowMo 
-        StartCoroutine(EnableButton(1f));
+        
     }
 
     public void Update()
@@ -178,7 +179,7 @@ public class DashNAttack : MonoBehaviour
         Vector3 pos = transform.position + (transform.forward * 1.2f);
         StartCoroutine(HandleDamaging(tempOutDamage, 3.3f, .3f, pos));
         
-        attackSequence = 0;
+        //attackSequence = 0;
         StartCoroutine(EnableMove(0.8f/stats.AtkSpeed));
     }
 
@@ -196,7 +197,7 @@ public class DashNAttack : MonoBehaviour
         tempOutDamage = (200f / 100f) * ((baseAtk + 0) * atkPercent);
         StartCoroutine(HandleDamaging(tempOutDamage, 4f, .65f, transform.position, true));
         
-        attackSequence = 0;
+        //attackSequence = 0;
         StartCoroutine(EnableMove(0.8f / stats.AtkSpeed));
     }
 
