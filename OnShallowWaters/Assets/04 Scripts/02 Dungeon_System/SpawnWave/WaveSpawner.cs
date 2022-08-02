@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class Enemies
 {
-    public EnemyPooler.EnemyPoolType enemy;
+    public EnemyPoolType enemy;
     public int count;
 }
 
@@ -164,7 +164,7 @@ public class WaveSpawner : MonoBehaviour
         yield break;
     }
 	
-    void SpawnEnemy(EnemyPooler.EnemyPoolType enemyType)
+    void SpawnEnemy(EnemyPoolType enemyType)
     {
         // Random Spawn points
         int spawnIndex = Random.Range(0, _spawnPoints.Count);
