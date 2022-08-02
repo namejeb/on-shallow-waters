@@ -17,6 +17,7 @@ public class EnemyStats : CharacterStats, IDamageable
     public Stat Defense { get => defense; }
 
     public bool isDead = false;
+    public bool isHit = false;
     public Animator anim1;
 
     private new void Awake()
@@ -39,7 +40,9 @@ public class EnemyStats : CharacterStats, IDamageable
         if (_enemiesCore.armourType && !_enemiesCore.shieldDestroy) {
             _enemiesCore.ShieldBar(damageAmount);
         } else {
-            //anim1.SetTrigger("isHit");
+            anim1.SetTrigger("isHit");
+            anim1.ResetTrigger("isAttack1");
+            anim1.ResetTrigger("isAttack2");
             TakeDamage(damageAmount);
         } 
 
