@@ -10,7 +10,15 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     [Header("System Refs:")]
     [SerializeField] private PlayerHealthBar playerHealthBar;
     [SerializeField] private BM_LowHpDmgReduction bmLowHpDmgReduction;
-   
+
+
+    [Space]
+    [Space]
+    [Header("Settings:")]
+    [SerializeField] private float stunLockTimer = 1.5f;
+    private float _nextStunLockTime;
+    
+    
     // Animation
     private Animator _anim;
     
@@ -184,7 +192,12 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     public void Damage(int damageAmount)
     {
-        _anim.Play("Get hit");
+        if (Time.time > _nextStunLockTime)
+        {
+            _anim.Play("Get hit");
+            _nextStunLockTime = Time.time + stunLockTimer;
+        }
+   
         
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
