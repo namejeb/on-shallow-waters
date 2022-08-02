@@ -1,18 +1,22 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TutorialTracker : MonoBehaviour
 {
     public bool actionOn;
 
     [SerializeField] private Transform[] descriptionTexts;
-    private int _descCounter = 0;
+    public int _descCounter = 0;
     public int actionStage = 0;
 
     public static event Action changePunchBagMode;
     public int numAttack = 0;
     public int numDash = 0;
+
+    public TextMeshProUGUI attackCount;
+    public TextMeshProUGUI dashCount;
 
     void Start(){
         actionOn = false;
@@ -34,6 +38,7 @@ public class TutorialTracker : MonoBehaviour
 
         numAttack++;
         if (numAttack == 3){
+            attackCount.text = numAttack + " / 3";
             ActionActivated();
         }
     }
@@ -44,6 +49,7 @@ public class TutorialTracker : MonoBehaviour
 
         numDash++;
         if (numDash == 3){
+            dashCount.text = numDash + " / 3";
             ActionActivated();
         }
     }
