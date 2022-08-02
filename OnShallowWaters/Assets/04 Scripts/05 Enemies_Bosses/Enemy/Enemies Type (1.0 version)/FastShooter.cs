@@ -26,7 +26,6 @@ public sealed class FastShooter : EnemiesCore {
         private Vector3 _offset;
         public float randomRadius;
 
-
         protected override void Start(){
             base.Start();
             isPrepared = true;
@@ -44,9 +43,12 @@ public sealed class FastShooter : EnemiesCore {
         }
 
         protected override void Attack(){ 
-            (transRecord = transform).LookAt(puppet);
+            var position = puppet.position;
+            Vector3 rotation3 = new Vector3(position.x, transform.position.y, position.z);
+
+            (transRecord = transform).LookAt(rotation3);
             
-            _direct = puppet.position - transRecord.position;
+            _direct = rotation3 - transRecord.position;
             _rotation = Quaternion.LookRotation(_direct);
             Quaternion rotation1 = _rotation;
             

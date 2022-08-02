@@ -13,18 +13,19 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         }
 
         protected override void Attack() {
-            if (!missAttack && targetHit != 1){
-                if (_noRepeat) return;
+            if (!missAttack && targetHit != 2){
                 anim.SetBool("isWalk", false);
-                anim.SetTrigger("isAttack");
-                _noRepeat = true;
+                switch(targetHit){
+                    case 0: anim.SetTrigger("isAttack1"); break;
+                    case 1: anim.SetTrigger("isAttack2"); break;
+                }
             } else{
                 StartCoroutine(waitThenChase());
             }
         }
 
         private IEnumerator waitThenChase(){
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
             behaviour = CoreStage.Move;
             missAttack = false;
             _noRepeat = false;

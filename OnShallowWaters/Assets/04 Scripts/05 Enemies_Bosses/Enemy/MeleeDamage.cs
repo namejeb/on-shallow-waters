@@ -19,10 +19,9 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
         }
 
         private void OnTriggerEnter(Collider col){
-            //var check = col.GetComponent<HealthBar>();
-
             if (!col.CompareTag("Player")) return;
             enemy.GetComponent<LightAttacker>().targetHit += 1;
+            col.GetComponent<PlayerStats>().Damage(attackDamage);
             _isAttackOn = false;
             _targetHit = true;
         }

@@ -164,7 +164,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         }
     }
 
-    public IEnumerator RegenLoop(int regenHp, int regenArm, int regenCount, float regenPerSeconds)
+    public IEnumerator RegenLoop(int regenHp, int regenArm, int regenCount, float regenPerSeconds, GameObject vfx)
     {
         for (int i = 0; i < regenCount; i++)
         {
@@ -176,7 +176,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
             playerHealthBar.SetHealth(currHp);
             Debug.Log(currHp);
         }
-
+        vfx.SetActive(false);
     }
 
     [Button]
