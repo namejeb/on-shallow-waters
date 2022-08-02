@@ -13,7 +13,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         }
 
         public void StartGame(){
-            loadingScreen.gameObject.SetActive(true);
+            PlayLoadingScreen();
             
             // Game settings
             GameManager.SetIsTutorial(false);
@@ -28,7 +28,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
 
         public void Tutorial()
         {
-            loadingScreen.gameObject.SetActive(true);
+            PlayLoadingScreen();
             
             // Game settings
             GameManager.SetIsTutorial(true);
@@ -40,6 +40,12 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         private void LoadLevelScene()
         {
             SceneManager.LoadSceneAsync(1);
+        }
+
+        private void PlayLoadingScreen()
+        {
+           // loadingScreen.gameObject.SetActive(true);
+            loadingScreen.Find("VideoPlayer").GetComponent<VideoPlaying>().VP.Play();
         }
     }
 }

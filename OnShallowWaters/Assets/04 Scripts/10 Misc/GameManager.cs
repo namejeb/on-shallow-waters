@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static bool _isTutorial = false;
-    private static bool _isRetry = true;
+    private static bool _isRetry = false;
     
     public static bool IsTutorial { get => _isTutorial; }
 

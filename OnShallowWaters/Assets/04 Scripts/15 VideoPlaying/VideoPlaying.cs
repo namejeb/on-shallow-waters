@@ -5,13 +5,17 @@ public class VideoPlaying : MonoBehaviour
 {
     private VideoPlayer _vp;
 
+    public VideoPlayer VP
+    {
+        get => _vp;
+    }
+
     private void OnDestroy()
     {
         _vp.loopPointReached -= EndPointReached;
     }
-
-
-    private void Start()
+    
+    private void Awake()
     {
         _vp = GetComponent<VideoPlayer>();
    
