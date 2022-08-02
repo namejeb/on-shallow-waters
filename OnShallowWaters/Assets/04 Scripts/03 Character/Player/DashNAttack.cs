@@ -167,7 +167,7 @@ public class DashNAttack : MonoBehaviour
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent;
         float tempOutDamage = 0f;
-        tempOutDamage = (float)(130f / 100f) * ((baseAtk + 0) * atkPercent);
+        tempOutDamage = (float)(170f / 100f) * ((baseAtk + 0) * atkPercent);
 
         Vector3 pos = transform.position + (transform.forward * 1.2f);
         StartCoroutine(HandleDamaging(tempOutDamage, 3.3f, .3f, pos));
@@ -187,7 +187,7 @@ public class DashNAttack : MonoBehaviour
         float baseAtk = stats.Atk.CurrentValue;
         float atkPercent = stats.AtkPercent;
         float tempOutDamage = 0f;
-        tempOutDamage = (150f / 100f) * ((baseAtk + 0) * atkPercent);
+        tempOutDamage = (200f / 100f) * ((baseAtk + 0) * atkPercent);
         StartCoroutine(HandleDamaging(tempOutDamage, 4f, .65f, transform.position, true));
         
         attackSequence = 0;
