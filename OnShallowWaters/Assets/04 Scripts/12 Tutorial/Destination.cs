@@ -6,7 +6,8 @@ public class Destination : MonoBehaviour{
     public static event Action OnMove;
 
     private void OnTriggerEnter(Collider col){
-        if(!col.GetComponent("Player")) return;
+        //if(!col.GetComponent("Player")) return;
+        if (!col.CompareTag("Player")) return;
         if(OnMove != null) OnMove();
     }
 }

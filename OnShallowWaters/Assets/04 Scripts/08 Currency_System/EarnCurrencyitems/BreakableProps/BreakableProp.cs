@@ -6,7 +6,8 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
-    
+
+    public const string BREAKABLE_KEY = "BreakableCoins";
     private void Awake()
     {
         _meshRenderer =GetComponent<MeshRenderer>();
