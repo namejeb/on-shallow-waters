@@ -50,7 +50,7 @@ public class DashNAttack : MonoBehaviour
     private BM_DmgWhenArmorBreak _dmgWhenShieldBreak;
 
     //Tutorial Event
-    public static event Action OnAttack;
+    //public static event Action OnAttack;
     public static event Action OnDash;
     
     public static event Action<Transform, float, bool> OnHitLanded;
@@ -92,9 +92,7 @@ public class DashNAttack : MonoBehaviour
     private void Dash()
     {
         animator.SetTrigger("Dash");
-        if (OnDash != null){
-            OnDash();
-        }
+
 
         playerMovement.Move(transform.forward, speed, true);
         if (Time.time > _endTime)
@@ -107,7 +105,9 @@ public class DashNAttack : MonoBehaviour
 
     public void ActivateDash()
     {
-
+        if (OnDash != null){
+            OnDash();
+        }
         dashButton.interactable = false;
         _isDash = true;
         playerMovement.enabled = false;
