@@ -9971,7 +9971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b41814b9ade07043904ee3af797c50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 40
   delayBox: 0
   offBoxTime: 0
   slam: 0
@@ -9993,7 +9993,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &388700929
 Transform:
   m_ObjectHideFlags: 0
@@ -10034,7 +10034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b41814b9ade07043904ee3af797c50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
+  damage: 20
   delayBox: 0
   offBoxTime: 0
   slam: 0
@@ -19772,7 +19772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1000510364
 Transform:
   m_ObjectHideFlags: 0
@@ -19813,7 +19813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b41814b9ade07043904ee3af797c50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
+  damage: 20
   delayBox: 0
   offBoxTime: 0
   slam: 0
@@ -39676,6 +39676,7 @@ MonoBehaviour:
   maxArmour: 3000
   currArmour: 0
   armState: 0
+  defense: 0
 --- !u!114 &807354648438553470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39688,8 +39689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff91341b9f79b1248bed3071802ccbbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashTimeout: 3
-  dashSpeed: 8
 --- !u!114 &2381748224943288206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39726,12 +39725,6 @@ MonoBehaviour:
   chaseMinDistance: 4
   isAttacking: 0
   isAttackFin: 0
-  aimDirection:
-  - {fileID: 1820384150}
-  - {fileID: 1334104246}
-  shootPrefab:
-  - {fileID: 2340048271368717124, guid: d5b4c05345e42234993375d3aa3d65fd, type: 3}
-  - {fileID: 1118084676728948650, guid: 18d828dc7ef5dfd45b514088e62977b9, type: 3}
   projectiles:
   - aimer: {fileID: 1820384150}
     type: 1
