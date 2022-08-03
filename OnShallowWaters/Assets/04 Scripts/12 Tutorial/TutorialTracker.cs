@@ -145,5 +145,6 @@ public class TutorialTracker : MonoBehaviour
         DummyStatsWithHp.OnDeath -= NextAction;
         DashNAttack.OnDash -= Dash;
         Destination.OnMove -= NextAction; 
+        IntroManager.SwitchStage -= ActionActivated;
     }
 }
