@@ -7,16 +7,21 @@ public class TutorialTracker : MonoBehaviour
 {
     public bool actionOn;
 
+    // Description
     [SerializeField] private Transform[] descriptionTexts;
     public int _descCounter = 0;
     public int actionStage = 0;
 
+    // Action
     public static event Action changePunchBagMode;
     public int numAttack = 0;
     public int numDash = 0;
 
     public TextMeshProUGUI attackCount;
     public TextMeshProUGUI dashCount;
+
+    [Header("Location To Move Towards:")] 
+    [SerializeField] private Transform location;
 
     void Start(){
         actionOn = false;
