@@ -105,11 +105,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         skb1_vfx.SetActive(true);
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
@@ -126,11 +126,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         skb2_vfx.SetActive(true);
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
@@ -147,11 +147,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
@@ -166,11 +166,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         skb4_vfx.SetActive(true);
         impulse.GenerateImpulse();
@@ -204,11 +204,11 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+        }
+        else return;
 
         impulse.GenerateImpulse();
         soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
@@ -256,7 +256,7 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
             return;
-        soul = 100; // debug purpose
+        //soul = 100; // debug purpose
         if (!soulButton.interactable)
         {
             if (currSoul >= requiredSoul)
