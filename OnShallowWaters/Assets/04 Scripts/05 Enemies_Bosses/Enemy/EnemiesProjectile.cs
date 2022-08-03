@@ -5,6 +5,7 @@ using UnityEngine;
     public class EnemiesProjectile : MonoBehaviour{
         public float speed = 10;
         public float fireRate;
+        public int bulletDamage = 10;
 
         private void Start(){
             StartCoroutine(Removed());
@@ -16,20 +17,16 @@ using UnityEngine;
         }
 
         private void OnTriggerEnter(Collider other){
-            if (!other.CompareTag("Enemy")){
-                AreaImpact();
-                gameObject.SetActive(false);
+            if (other.CompareTag("Player")){
+                print("Hit");
+                other.GetComponent<PlayerStats>().Damage(bulletDamage);
             }
-            
-            //! IF PLAYER, APPLY DMG
-        }
-        
-        protected virtual void AreaImpact(){
-            //Does nothing for now
+
+            gameObject.SetActive(false);
         }
 
         private IEnumerator Removed(){
-            yield return new WaitForSeconds(4.5f);
+            yield return new WaitForSeconds(2.5f);
             gameObject.SetActive(false);
         }
     }

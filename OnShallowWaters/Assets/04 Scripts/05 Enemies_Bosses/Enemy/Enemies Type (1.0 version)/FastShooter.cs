@@ -11,13 +11,8 @@ public sealed class FastShooter : EnemiesCore {
         [Space][Space]
         [Header("Fire Attributes: ")]
         private EnemiesProjectile _enemiesProjectile;
-        private Transform transRecord;
-        private Quaternion _rotation;
-        private Vector3 _position, _direct;
-
-        public Transform fireSpawn;
         private bool isPrepared;
-        private int bulletFired;
+        public int bulletFired;
         
         [Space]
         [Header("Orbit Rotation: ")]
@@ -34,31 +29,23 @@ public sealed class FastShooter : EnemiesCore {
         }
 
         protected override void Movement(){
+            anim.SetBool("isWalk", true);
+            
             if (RaycastSingle() && isPrepared){
-                anim.SetBool("isWalk", false);
                 behaviour = CoreStage.Attack;
                 isPrepared = false;
             } else {
-                anim.SetBool("isWalk", true);
                 RotateMovement();
             }
         }
 
-        protected override void Attack(){ 
-            anim.SetTrigger("isAttack2");
-            var position = puppet.position;
-            Vector3 rotation3 = new Vector3(position.x, transform.position.y, position.z);
+        protected override void Attack(){
+            anim.SetBool("isWalk", false);
 
-            (transRecord = transform).LookAt(rotation3);
-            
-            _direct = position - transRecord.position;
-            _rotation = Quaternion.LookRotation(_direct);
-            Quaternion rotation1 = _rotation;
-            
             if (Time.time >= timeToFire) {
+                print("Fire");
+                anim.SetTrigger("isAttack2");
                 timeToFire = Time.time + 1 / _enemiesProjectile.fireRate;
-                Instantiate(projectile, fireSpawn.position, rotation1);
-                bulletFired += 1;
             }
 
             if (bulletFired != 3) return;
@@ -89,7 +76,6 @@ public sealed class FastShooter : EnemiesCore {
         private void RotateMovement(){
             var position13 = puppet.position;
 
-            //Here
             _offset.Set(
                 Mathf.Cos(angle1) * randomRadius,
                 0,
