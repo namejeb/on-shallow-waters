@@ -6,6 +6,7 @@ public class DisableInviDoor : MonoBehaviour
     {
         BoonSelection.OnSelectedBoon -= OpenDoor;
         Boss_Stats.OnBossDead -= OpenDoor;
+        DummyStatsWithHp.OnDeath -= OpenDoor;
     }
 
     private void OnEnable()
@@ -17,6 +18,7 @@ public class DisableInviDoor : MonoBehaviour
     {
         BoonSelection.OnSelectedBoon += OpenDoor;
         Boss_Stats.OnBossDead += OpenDoor;
+        DummyStatsWithHp.OnDeath += OpenDoor;
     }
 
     private void OpenDoor()
