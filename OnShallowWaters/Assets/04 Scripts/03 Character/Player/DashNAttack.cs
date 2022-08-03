@@ -161,7 +161,7 @@ public class DashNAttack : MonoBehaviour
         playerMovement.enabled = false;
         
         animator.SetTrigger("slashATK");
-        
+        SoundManager.instance.PlaySFX(attkSFX, "Attack 4");
         // dmg calculation + application
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent;
@@ -181,7 +181,7 @@ public class DashNAttack : MonoBehaviour
         playerMovement.enabled = false;
         
         animator.SetTrigger("slamATK");
-        
+        SoundManager.instance.PlaySFX(attkSFX, "Attack 5");
         // dmg calculation + application
         float baseAtk = stats.Atk.CurrentValue;
         float atkPercent = stats.AtkPercent;
