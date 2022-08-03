@@ -26,7 +26,7 @@ public class CurrencySystem : MonoBehaviour
     private void Start()
     {
         _goldSoulAmount.x =  PlayerPrefs.GetInt(TreasureChest.TREASURE_KEY);
-        Debug.Log("GEt::" +_goldSoulAmount.x);
+    //    Debug.Log("GEt::" +_goldSoulAmount.x);
         currencyDict.Add(CurrencyType.GOLD, _goldSoulAmount.x);
         currencyDict.Add(CurrencyType.SOULS, 0);
 
