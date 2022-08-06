@@ -14,13 +14,13 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         }
 
         public void StartGame(){
-            PlayLoadingScreen();
+            //PlayLoadingScreen();
 
-            if (GameManager.IsFirstPlayThrough)
-            {
-                StartCoroutine(LoadSceneWithDelay( SceneData.CutsceneScene ));
-                return;
-            }
+            //if (GameManager.IsFirstPlayThrough)
+            //{
+            //    StartCoroutine(LoadSceneWithDelay( SceneData.CutsceneScene ));
+            //    return;
+            //}
             
             // Game settings
             GameManager.SetIsTutorial(false);
