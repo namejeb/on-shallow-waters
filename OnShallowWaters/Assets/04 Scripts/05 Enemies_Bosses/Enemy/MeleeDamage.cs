@@ -20,7 +20,7 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy {
 
         private void OnTriggerEnter(Collider col){
             if (!col.CompareTag("Player")) return;
-            print("Hit");
+            //print("Hit");
             enemy.GetComponent<LightAttacker>().targetHit += 1;
             col.GetComponent<PlayerStats>().Damage(attackDamage);
             _isAttackOn = false;

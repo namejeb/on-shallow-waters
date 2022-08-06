@@ -43,7 +43,7 @@ public sealed class FastShooter : EnemiesCore {
             anim.SetBool("isWalk", false);
 
             if (Time.time >= timeToFire) {
-                print("Fire");
+                //print("Fire");
                 anim.SetTrigger("isAttack2");
                 timeToFire = Time.time + 1 / _enemiesProjectile.fireRate;
             }

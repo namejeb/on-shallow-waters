@@ -18,7 +18,7 @@ using UnityEngine;
 
         private void OnTriggerEnter(Collider other){
             if (other.CompareTag("Player")){
-                print("Hit");
+                //print("Hit");
                 other.GetComponent<PlayerStats>().Damage(bulletDamage);
             }
 
