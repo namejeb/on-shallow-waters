@@ -160,7 +160,7 @@ public class RoomSpawnerV2 : MonoBehaviour
         if (_sShopSpawnedInCurrLevel)
         {
             //after 5 rooms, spawn boss
-            bool isBossStage = (_roomFinishedCount == 5); 
+            bool isBossStage = (_roomFinishedCount == 2); 
             
             //isBossStage = true; //boss room debug
             HandleSpawnRoom(isBossStage, dir);
@@ -176,7 +176,7 @@ public class RoomSpawnerV2 : MonoBehaviour
         else
         {
             //after 5 rooms, spawn boss
-            bool isBossStage = (_roomFinishedCount == 5); 
+            bool isBossStage = (_roomFinishedCount == 2); 
             
             // isBossStage = true; //boss room debug
             HandleSpawnRoom(isBossStage, dir);

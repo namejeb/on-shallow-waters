@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
-using NaughtyAttributes;
 
 public class SkBlessing : MonoBehaviour
 {
@@ -103,6 +102,12 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
+        }
+
         skb1_vfx.SetActive(true);
         currSoul = 0;
         timer = duration;
@@ -117,6 +122,12 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
+        }
+
         skb2_vfx.SetActive(true);
         currSoul = 0;
         duration = regenPerSec * regenAmount;
@@ -125,7 +136,6 @@ public class SkBlessing : MonoBehaviour
         startCountdown = true;
     }
 
-    [Button]
     public void SKB3()
     {
         if (startCountdown)
@@ -134,8 +144,8 @@ public class SkBlessing : MonoBehaviour
         if (CanSpendSoul())
         {
             CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
         }
-        else return;
 
         currSoul = 0;
         timer = duration;
@@ -148,6 +158,12 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
             return;
+
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
+        }
 
         skb4_vfx.SetActive(true);
         impulse.GenerateImpulse();
@@ -180,6 +196,12 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
+        }
+
         impulse.GenerateImpulse();
         currSoul = 0;
         timer = duration;
@@ -193,7 +215,7 @@ public class SkBlessing : MonoBehaviour
                 if (enemy.gameObject.activeInHierarchy)
                 {
                     Transform vfx = pooler.GetFromPool(ProjectileType.PlayerSKB5);
-                    vfx.position = new Vector3(enemy.transform.position.x, vfx.position.y, enemy.transform.position.z);
+                    vfx.position = new Vector3(enemy.transform.position.x, 0.2f, enemy.transform.position.z);
                     vfx.gameObject.SetActive(true);
                     enemy.GetComponent<IDamageable>().Damage(skb5Damage);
                     StartCoroutine(DisableSKB_Obj(vfx.gameObject));
@@ -239,7 +261,6 @@ public class SkBlessing : MonoBehaviour
 
         if (currSoul >= requiredSoul && CanSpendSoul())
         {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
             soulButton.interactable = true;
             //soulButtonImage.color = Color.HSVToRGB(230, 100, 100, true);
         }
