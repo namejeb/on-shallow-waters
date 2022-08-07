@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum EnemyPoolType { enemy1, enemy2, enemy3 }
-public enum ProjectileType { PlayerSKB5, Boss1Shoot, Boss1Slam }
+public enum ProjectileType { PlayerSKB5, Boss1Shoot, Boss1Slam, Enemy3Ball }
 
 public class EnemyPooler : MonoBehaviour
 {
