@@ -14,7 +14,9 @@ public class CurrencySystem : MonoBehaviour
     public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType, int>();
 
     public static event Action<Vector2Int> OnCurrencyChanged;
+    
     private static Vector2Int _goldSoulAmount;
+    public static Vector2Int GoldSoulAmount { get => _goldSoulAmount; }
     
     private void Awake()
     {
