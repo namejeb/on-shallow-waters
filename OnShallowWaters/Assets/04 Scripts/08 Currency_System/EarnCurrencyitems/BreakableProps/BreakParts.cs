@@ -34,8 +34,17 @@ public class BreakParts : MonoBehaviour
         {
             _partRbs[i].AddForce( GetDirection() * flingForce, ForceMode.Impulse );
         }
-        
-        Invoke(nameof(HideParts), 10f);
+        Invoke(nameof(HideParts), 3f);
+    }
+
+
+    private void SinkInSand()
+    {
+        for (int i = 0; i < _partRbs.Length; i++)
+        {
+            _partRbs[i].transform.GetComponent<Collider>().enabled = false;
+            _partRbs[i].velocity = new Vector3(0f, -1f, 0f); 
+        }
     }
 
     private Vector3 GetDirection()
