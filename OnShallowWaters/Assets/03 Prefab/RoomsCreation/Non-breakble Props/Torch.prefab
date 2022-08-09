@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3492088813202715788}
   - component: {fileID: 565694142598822697}
   - component: {fileID: 2323092812260691939}
+  - component: {fileID: 3510028736065825254}
   m_Layer: 0
   m_Name: Torch
   m_TagString: Untagged
@@ -84,6 +85,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3510028736065825254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268766941241437750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2870f9ac9a09a384193bd124b34c94ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireVFX: {fileID: 373850398260655852}
 --- !u!1001 &5477894502803023851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -135,12 +149,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5275204942579454215, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275204942579454215, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Name
+      value: Color
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275204942579454215, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275204942579454215, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
+      value: 0.75392663
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275204942579454215, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
+      value: 3.9999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275204942579454215, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
+      value: 3.811518
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275204942579454215, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5478441798456449260, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
       propertyPath: m_Name
       value: Fire
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+--- !u!2083052967 &373850398260655852 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 5275204942579454215, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}
+  m_PrefabInstance: {fileID: 5477894502803023851}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4712137550375858220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 964197085963163591, guid: 1d4d215a14df8134bbc4626cd4b8f8b2, type: 3}

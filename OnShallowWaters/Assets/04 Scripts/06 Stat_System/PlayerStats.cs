@@ -217,7 +217,6 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         TakeDamage(effectiveDmg);
 
         playerHealthBar.SetHealth(currHp);
-        print(currHp);
     }
 
     public float GetReceivedDamage(float outDamage)
