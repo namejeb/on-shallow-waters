@@ -27,7 +27,6 @@ public class VFXCurrency : MonoBehaviour
     public void Spawn(Transform hitTransform, CurrencyType currencyType)
     {
         Transform vfxTransform = null;
-        print("sapwend");
         if (currencyType == CurrencyType.GOLD)
         {
             vfxTransform = _enemyPooler.GetFromPool(VFXCurrencyType.Gold);
