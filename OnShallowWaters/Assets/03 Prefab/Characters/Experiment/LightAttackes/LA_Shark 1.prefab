@@ -418,6 +418,7 @@ GameObject:
   - component: {fileID: 3117078348918719711}
   - component: {fileID: 8113104821957393086}
   - component: {fileID: 6419207914811466245}
+  - component: {fileID: -5034900196340209389}
   m_Layer: 9
   m_Name: LA_Shark 1
   m_TagString: Enemy
@@ -509,6 +510,7 @@ MonoBehaviour:
   maxHealth: 100
   coreSpeed: 5
   coreDamage: 20
+  behaviour: 0
   one: 0
   vfx: {fileID: 3775808620462830076}
   missAttack: 0
@@ -590,6 +592,19 @@ MonoBehaviour:
   isDead: 0
   isHit: 0
   anim1: {fileID: 5455577051281746282}
+--- !u!114 &-5034900196340209389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6723508662131914625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eb4aca788816394bb36704ecc649dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currencyType: 1
 --- !u!1 &7569082710719955055
 GameObject:
   m_ObjectHideFlags: 0

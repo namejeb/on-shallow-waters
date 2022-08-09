@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using Cinemachine;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine.UI;
 
 
@@ -51,9 +50,7 @@ public class DashNAttack : MonoBehaviour
     private BM_DmgWhenArmorBreak _dmgWhenShieldBreak;
 
     //Tutorial Event
-    //public static event Action OnAttack;
     public static event Action OnDash;
-    
     public static event Action<Transform, float, bool> OnHitLanded;
 
 
@@ -115,7 +112,6 @@ public class DashNAttack : MonoBehaviour
         
         _endTime = Time.time + dashDuration * Time.timeScale;
         //multiply timeScale to account for SlowMo 
-        
     }
 
     public void Update()
@@ -179,8 +175,7 @@ public class DashNAttack : MonoBehaviour
 
         Vector3 pos = transform.position + (transform.forward * 1.2f);
         StartCoroutine(HandleDamaging(tempOutDamage, 3.3f, .3f, pos));
-        
-        //attackSequence = 0;
+
         StartCoroutine(EnableMove(0.8f/stats.AtkSpeed));
     }
 
@@ -197,8 +192,7 @@ public class DashNAttack : MonoBehaviour
         float tempOutDamage = 0f;
         tempOutDamage = (200f / 100f) * ((baseAtk + 0) * atkPercent);
         StartCoroutine(HandleDamaging(tempOutDamage, 4f, .65f, transform.position, true));
-        
-        //attackSequence = 0;
+
         StartCoroutine(EnableMove(0.8f / stats.AtkSpeed));
     }
 
@@ -294,7 +288,6 @@ public class DashNAttack : MonoBehaviour
         damagable.Damage( outDamage );
         
         // display damage text
-        // if(OnHitLanded != null) OnHitLanded.Invoke(hitObject.transform, outDamage, isCrit);
         HandleDamageText(hitObject.transform, outDamage, isCrit);
         
         if (enemyHandler == null) return;

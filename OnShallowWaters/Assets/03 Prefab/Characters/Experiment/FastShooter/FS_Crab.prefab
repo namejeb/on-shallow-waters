@@ -974,6 +974,7 @@ GameObject:
   - component: {fileID: 2818039554138211078}
   - component: {fileID: 8619319385063253848}
   - component: {fileID: 3653577845054888018}
+  - component: {fileID: 5961970152128808095}
   m_Layer: 0
   m_Name: FS_Crab
   m_TagString: Enemy
@@ -1096,6 +1097,7 @@ MonoBehaviour:
   maxHealth: 100
   coreSpeed: 10
   coreDamage: 10
+  behaviour: 0
   one: 0
   vfx: {fileID: 124415975106001396}
   projectile: {fileID: 5108699635585412751, guid: 6d0798f33ec067945ba3a4638f6f7ae6, type: 3}
@@ -1178,6 +1180,19 @@ MonoBehaviour:
   isDead: 0
   isHit: 0
   anim1: {fileID: 4354099538917297650}
+--- !u!114 &5961970152128808095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479611737059045414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eb4aca788816394bb36704ecc649dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currencyType: 1
 --- !u!1 &7899572610405828330
 GameObject:
   m_ObjectHideFlags: 0
