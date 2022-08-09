@@ -71,7 +71,6 @@ using Random = UnityEngine.Random;
             dist = (puppet.position - transform.position).sqrMagnitude;
             ShieldRecover();
   
-            //if(_enemyStats.isDead) return;
             switch(behaviour){
                 case CoreStage.Idle: Detection(); break;
                 case CoreStage.Move: LookAtDirection(); Movement(); break;
@@ -153,5 +152,11 @@ using Random = UnityEngine.Random;
             shieldRecover = false;
         }
         #endregion
+
+        public GameObject vfx;
+        void OnEnable(){
+            vfx.SetActive(true);
+            behaviour = CoreStage.Idle;
+        }
     }
 

@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
     public class LightAttacker : EnemiesCore {
-        public bool missAttack;
         private bool _noRepeat;
+        public bool missAttack;
         public int targetHit;
 
         protected override void Start(){
@@ -25,10 +25,14 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
         }
 
         private IEnumerator waitThenChase(){
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
             behaviour = CoreStage.Move;
             missAttack = false;
-            _noRepeat = false;
+            targetHit = 0;
+        }
+
+        private void OnDisable(){
+            missAttack = false;
             targetHit = 0;
         }
     }
