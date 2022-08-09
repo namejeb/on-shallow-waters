@@ -70,6 +70,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
         // Animation
         _anim = GetComponent<Animator>();
+
     }
     
     protected override void Die()
@@ -214,7 +215,9 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
+
         playerHealthBar.SetHealth(currHp);
+        print(currHp);
     }
 
     public float GetReceivedDamage(float outDamage)
