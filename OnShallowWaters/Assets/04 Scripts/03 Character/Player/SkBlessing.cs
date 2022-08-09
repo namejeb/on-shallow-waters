@@ -66,10 +66,10 @@ public class SkBlessing : MonoBehaviour
     {
         soulButton.interactable = false;
 
-        // this is default settings for skb, currently is skb3
-        duration = 5;
+        // this is default settings for skb, currently is skb1
+        duration = 10;
         requiredSoul = 100;
-        soulButton.onClick.AddListener(SKB3);
+        soulButton.onClick.AddListener(SKB1);
     }
 
     private void Update()

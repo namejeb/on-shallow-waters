@@ -198,16 +198,24 @@ public class BoonSelection : MonoBehaviour
             effectAmount = boon.EffectAmountCurrent;
         }
 
+        string str = "";
+        string decimalFormat = "F0";
         if (boonItem.isPercentage)
         {
-            if(boonItem.minusHundred)
-                boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {(effectAmount * 100) - 100}%");
+            if (boonItem.minusHundred)
+                str = (effectAmount * 100 - 100).ToString(decimalFormat);
+            
             else
-                boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount * 100}%");
+                str =(effectAmount * 100).ToString(decimalFormat);
+            
+            str += "%";
+        }
+        else
+        {
+            str = effectAmount.ToString(decimalFormat);
         }
         
-        else
-            boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount}");
+        boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {str}");    
     }
     
     public void RollBoons()

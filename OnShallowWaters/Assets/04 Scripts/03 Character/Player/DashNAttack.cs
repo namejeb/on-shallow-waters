@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using Cinemachine;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine.UI;
 
 
@@ -292,7 +293,8 @@ public class DashNAttack : MonoBehaviour
         damagable.Damage( outDamage );
         
         // display damage text
-        if(OnHitLanded != null) OnHitLanded.Invoke(hitObject.transform, outDamage, isCrit);
+        // if(OnHitLanded != null) OnHitLanded.Invoke(hitObject.transform, outDamage, isCrit);
+        HandleDamageText(hitObject.transform, outDamage, isCrit);
         
         if (enemyHandler == null) return;
         if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
@@ -340,7 +342,7 @@ public class DashNAttack : MonoBehaviour
             damagable.Damage( (int) outDamage );
              
             // display damage text
-            if(OnHitLanded != null) OnHitLanded.Invoke(hitColliders[i].transform, outDamage, isCrit);
+            HandleDamageText(hitColliders[i].transform, outDamage, isCrit);
             
             if (enemyHandler == null) continue;
             if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
@@ -348,6 +350,13 @@ public class DashNAttack : MonoBehaviour
                 _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
             }
         }
+    }
+
+    private void HandleDamageText(Transform hitTransform, float outDamage, bool isCrit)
+    {
+        bool canSpawn = !hitTransform.CompareTag("BreakableProps") && !hitTransform.CompareTag("TreasureChest");
+        if (!canSpawn) return;
+        if(OnHitLanded != null) OnHitLanded.Invoke(hitTransform, outDamage, isCrit);
     }
 
     public float HandleBoonDmgModifications(float outDamage, EnemyHandler e)

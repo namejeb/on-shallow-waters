@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    [SerializeField] private bool isPlayer = false;
     [SerializeField] private float maxHp = 5;
     protected float currHp;
     
@@ -24,7 +25,8 @@ public class CharacterStats : MonoBehaviour
 
     private void OnDisable()
     {
-        currHp = maxHp;
+        if(!isPlayer)
+            currHp = maxHp;
     }
     
     protected void Awake()
