@@ -232,7 +232,7 @@ public class DashNAttack : MonoBehaviour
             SoundManager.instance.PlaySFX(attkSFX, "Attack 1");
             
             attackSequence++;
-            timeTillNextAtk = 1f;
+            timeTillNextAtk = .6f;
             resetAttackTimer = Time.time + 2;
         }
         else if ( attackSequence == 1 )
@@ -243,7 +243,7 @@ public class DashNAttack : MonoBehaviour
             animator.SetTrigger("Attack2");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 2");
             attackSequence++;
-            timeTillNextAtk = 1f;
+            timeTillNextAtk = .8f;
             resetAttackTimer = Time.time + 2;
         }
         else if ( attackSequence == 2 )
@@ -254,15 +254,16 @@ public class DashNAttack : MonoBehaviour
             animator.SetTrigger("Attack3");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 3");
             attackSequence = 0;
-            timeTillNextAtk = 1.2f;
+            timeTillNextAtk = 1f;
             resetAttackTimer = Time.time + 2;
         }
         
         nextAttack =  (Time.time + timeTillNextAtk) / stats.AtkSpeed;
         
-        StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
+        //StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
         StartCoroutine(EnableAttack(timeTillNextAtk / stats.AtkSpeed));
-        
+        StartCoroutine(EnableMove(1 / stats.AtkSpeed));
+
         outDamage = Mathf.RoundToInt(tempOutDamage);
     }
 
