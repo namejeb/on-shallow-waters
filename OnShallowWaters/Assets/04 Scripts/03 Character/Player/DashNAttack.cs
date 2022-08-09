@@ -322,8 +322,7 @@ public class DashNAttack : MonoBehaviour
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
             if (damagable == null) continue;
             
-       
-             
+            
             //if hit an enemy
             EnemyHandler enemyHandler = null;
             if (hitColliders[i].CompareTag("Enemy"))
