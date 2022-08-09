@@ -45,8 +45,7 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
         EarnGold(minMaxAmount.x, minMaxAmount.y);
         
         //visual
-        _vfxCurrency.Spawn();
-        
+  
         Vector3 rot = transform.eulerAngles;
         Vector3 rotOffset = new Vector3(90f, 0f, 0f);
         Quaternion targetRot = Quaternion.Euler(rot + rotOffset);

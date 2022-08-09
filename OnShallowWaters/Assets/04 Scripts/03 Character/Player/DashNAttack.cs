@@ -53,6 +53,8 @@ public class DashNAttack : MonoBehaviour
     public static event Action OnDash;
     public static event Action<Transform, float, bool> OnHitLanded;
 
+    public static event Action<Transform, CurrencyType> OnSpawnCurrency;
+
 
 
     public LayerMask DamageableLayer { get => damageableLayer; }
@@ -267,6 +269,7 @@ public class DashNAttack : MonoBehaviour
         IDamageable damagable = hitObject.GetComponent<IDamageable>();
         if (damagable == null) return;
         
+        
         EnemyHandler enemyHandler = null;
         if (hitObject.CompareTag("Enemy"))
         {
@@ -277,7 +280,11 @@ public class DashNAttack : MonoBehaviour
             }
             _skBlessing.AddSoul(2);
         }
-        
+        else
+        {
+            HandleSpawnCurrency(hitObject.transform, CurrencyType.GOLD);
+        }
+
         bool isCrit = CheckIfCrit();
         if (isCrit)
         {
@@ -288,13 +295,15 @@ public class DashNAttack : MonoBehaviour
         damagable.Damage( outDamage );
         
         // display damage text
-        HandleDamageText(hitObject.transform, outDamage, isCrit);
+        Transform hitTransform = hitObject.transform;
+        HandleDamageText(hitTransform, outDamage, isCrit);
         
         if (enemyHandler == null) return;
         if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
         {
             _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
         }
+        HandleSpawnCurrency(hitTransform, CurrencyType.SOULS, enemyHandler);
     }
 
     private IEnumerator HandleDamaging(float outDamage, float radius, float delay, Vector3 pos, bool shake = false)
@@ -312,7 +321,8 @@ public class DashNAttack : MonoBehaviour
              
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
             if (damagable == null) continue;
-    
+            
+       
              
             //if hit an enemy
             EnemyHandler enemyHandler = null;
@@ -325,6 +335,10 @@ public class DashNAttack : MonoBehaviour
                 }
                 _skBlessing.AddSoul(2);
             }
+            else
+            {
+                HandleSpawnCurrency(hitColliders[i].transform, CurrencyType.GOLD);
+            }
 
             bool isCrit = CheckIfCrit();
             if (isCrit)
@@ -336,20 +350,42 @@ public class DashNAttack : MonoBehaviour
             damagable.Damage( (int) outDamage );
              
             // display damage text
-            HandleDamageText(hitColliders[i].transform, outDamage, isCrit);
-            
+            Transform hitTransform = hitColliders[i].transform;
+            HandleDamageText(hitTransform, outDamage, isCrit);
+
             if (enemyHandler == null) continue;
             if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
             {
                 _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
             }
+            HandleSpawnCurrency(hitTransform, CurrencyType.SOULS, enemyHandler);
         }
+    }
+    
+    private void HandleSpawnCurrency(Transform hitTransform, CurrencyType currencyType, EnemyHandler enemyHandler = null)
+    {
+ 
+        if (currencyType == CurrencyType.GOLD)
+        {
+            if(OnSpawnCurrency != null) OnSpawnCurrency.Invoke(hitTransform, CurrencyType.GOLD);
+        }
+        else
+        {
+            if (!enemyHandler.EnemyStats.isDead) return;
+            if(OnSpawnCurrency != null) OnSpawnCurrency.Invoke(hitTransform, CurrencyType.SOULS);
+        }
+    }
+
+    private bool IsEnemy(Transform hitTransform)
+    {
+        return !hitTransform.CompareTag("BreakableProps") && !hitTransform.CompareTag("TreasureChest");
     }
 
     private void HandleDamageText(Transform hitTransform, float outDamage, bool isCrit)
     {
-        bool canSpawn = !hitTransform.CompareTag("BreakableProps") && !hitTransform.CompareTag("TreasureChest");
-        if (!canSpawn) return;
+        bool isEnemy = IsEnemy(hitTransform);
+
+        if (!isEnemy) return;
         if(OnHitLanded != null) OnHitLanded.Invoke(hitTransform, outDamage, isCrit);
     }
 
