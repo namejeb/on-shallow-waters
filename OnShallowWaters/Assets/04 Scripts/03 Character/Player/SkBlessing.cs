@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using _04_Scripts._05_Enemies_Bosses;
-using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
+using Cinemachine;
 
 public class SkBlessing : MonoBehaviour
 {
@@ -13,16 +12,19 @@ public class SkBlessing : MonoBehaviour
     [Header("SKB 1")]
     [SerializeField] private int atkAdd;
     [SerializeField] private int mvSpeedAdd;
+    [SerializeField] private GameObject skb1_vfx;
 
     [Header("SKB 2")]
     [SerializeField] private int hpRegenAdd;
     [SerializeField] private int armRegenAdd;
     [SerializeField] private int regenAmount;
     [SerializeField] private float regenPerSec;
+    [SerializeField] private GameObject skb2_vfx;
 
     [Header("SKB 4")]
     [SerializeField] private float executeDistance;
     [SerializeField] private float executePercentage;
+    [SerializeField] private GameObject skb4_vfx;
 
     [Header("SKB 5")]
     [SerializeField] private int skb5Damage;
@@ -32,6 +34,8 @@ public class SkBlessing : MonoBehaviour
 
     private PlayerStats playerStats;
     private TimeManager timeManager;
+    private CinemachineImpulseSource impulse;
+    private EnemyPooler pooler;
 
     public float Skb2Duration
     {
@@ -54,16 +58,18 @@ public class SkBlessing : MonoBehaviour
     {
         playerStats = GetComponent<PlayerStats>();
         timeManager = FindObjectOfType<TimeManager>();
+        impulse = FindObjectOfType<CinemachineImpulseSource>();
+        pooler = FindObjectOfType<EnemyPooler>();
     }
 
     private void Start()
     {
         soulButton.interactable = false;
 
-        // this is setting for skb, if 1st skb got change need change here too
-        duration = 10;
+        // this is default settings for skb, currently is skb3
+        duration = 5;
         requiredSoul = 100;
-        soulButton.onClick.AddListener(SKB1);
+        soulButton.onClick.AddListener(SKB3);
     }
 
     private void Update()
@@ -99,14 +105,14 @@ public class SkBlessing : MonoBehaviour
         if (CanSpendSoul())
         {
             CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
         }
-        else return;
 
+        skb1_vfx.SetActive(true);
         currSoul = 0;
         timer = duration;
         playerStats.Atk.AddModifier(atkAdd);
         playerStats.MovementSpeed.AddModifier(mvSpeedAdd);
-        Debug.Log("Atk and Spd buff increase start");
         StartCoroutine(ResetCharacter(duration));
         startCountdown = true;
     }
@@ -119,13 +125,14 @@ public class SkBlessing : MonoBehaviour
         if (CanSpendSoul())
         {
             CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
         }
-        else return;
 
+        skb2_vfx.SetActive(true);
         currSoul = 0;
         duration = regenPerSec * regenAmount;
         timer = duration;
-        StartCoroutine(playerStats.RegenLoop(hpRegenAdd, armRegenAdd, regenAmount, regenPerSec));
+        StartCoroutine(playerStats.RegenLoop(hpRegenAdd, armRegenAdd, regenAmount, regenPerSec, skb2_vfx));
         startCountdown = true;
     }
 
@@ -137,12 +144,13 @@ public class SkBlessing : MonoBehaviour
         if (CanSpendSoul())
         {
             CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
         }
-        else return;
 
         currSoul = 0;
         timer = duration;
         startCountdown = true;
+
         timeManager.StartSlowMo(duration);
     }
     
@@ -151,33 +159,36 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
+        }
 
+        skb4_vfx.SetActive(true);
+        impulse.GenerateImpulse();
         currSoul = 0;
         timer = duration;
         startCountdown = true;
         EnemyStats[] enemies = FindObjectsOfType<EnemyStats>();
-        Debug.Log("in");
+
         foreach (EnemyStats enemy in enemies)
         {
-            Debug.Log("lol");
             float distanceToEnemy = (enemy.transform.position - transform.position).magnitude;
-            Debug.Log("hai");
+
             if (enemy.gameObject.activeInHierarchy && distanceToEnemy < executeDistance)
             {
                 IDamageable e = enemy.GetComponent<IDamageable>();
+
                 int damage = Mathf.CeilToInt(e.LostHP() * executePercentage);
 
                 if (damage <= 0)
                     damage = 1;
-                Debug.Log(damage);
+
                 e.Damage(damage);
             }
         }
+        StartCoroutine(DisableSKB_Obj(skb4_vfx));
     }
 
     public void SKB5()
@@ -185,31 +196,45 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        if (CanSpendSoul())
+        {
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            return;
+        }
 
+        impulse.GenerateImpulse();
         currSoul = 0;
         timer = duration;
         startCountdown = true;
         EnemyStats[] enemies = FindObjectsOfType<EnemyStats>();
 
-        foreach (EnemyStats enemy in enemies)
+        if (enemies != null)
         {
-            if (enemy.gameObject.activeInHierarchy)
+            foreach (EnemyStats enemy in enemies)
             {
-                
-                enemy.GetComponent<IDamageable>().Damage(skb5Damage);
+                if (enemy.gameObject.activeInHierarchy)
+                {
+                    Transform vfx = pooler.GetFromPool(ProjectileType.PlayerSKB5);
+                    vfx.position = new Vector3(enemy.transform.position.x, 0.2f, enemy.transform.position.z);
+                    vfx.gameObject.SetActive(true);
+                    enemy.GetComponent<IDamageable>().Damage(skb5Damage);
+                    StartCoroutine(DisableSKB_Obj(vfx.gameObject));
+                }
             }
         }
+        
+    }
+
+    IEnumerator DisableSKB_Obj(GameObject sfx)
+    {
+        yield return new WaitForSeconds(1);
+        sfx.SetActive(false);
     }
     
     IEnumerator ResetCharacter(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        Debug.Log("Atk & Spd buff end");
+        skb1_vfx.SetActive(false);
         playerStats.Atk.RemoveModifier(atkAdd);
         playerStats.MovementSpeed.RemoveModifier(mvSpeedAdd);
     }
@@ -223,7 +248,7 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
             return;
-
+        //soul = 100; // debug purpose
         if (!soulButton.interactable)
         {
             if (currSoul >= requiredSoul)
@@ -234,9 +259,10 @@ public class SkBlessing : MonoBehaviour
         }
         
 
-        if (currSoul >= requiredSoul)
+        if (currSoul >= requiredSoul && CanSpendSoul())
         {
             soulButton.interactable = true;
+            //soulButtonImage.color = Color.HSVToRGB(230, 100, 100, true);
         }
     }
 }

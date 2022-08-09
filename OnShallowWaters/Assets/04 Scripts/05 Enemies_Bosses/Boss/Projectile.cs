@@ -6,6 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public Vector3 moveDir;
+    public int damage;
     public float speed;
 
     void Update()
@@ -25,9 +26,13 @@ public class Projectile : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            col.gameObject.GetComponent<PlayerStats>().Damage(10);
+            col.gameObject.GetComponent<PlayerStats>().Damage(damage);
             gameObject.SetActive(false);
+        }
 
+        if (col.gameObject.CompareTag("Obstacles"))
+        {
+            gameObject.SetActive(false);
         }
     }
 }

@@ -7,15 +7,23 @@ using NaughtyAttributes;
 
 public class StateMachineManager : MonoBehaviour
 {
-    public enum BossMode { BOSS1, BOSS2 }
+    [System.Serializable]
+    public class ProjectileObj
+    {
+        public Transform aimer;
+        public ProjectileType type;
+    }
 
-    [SerializeField] private BossMode bossType;
     [SerializeField] private Transform target;
     public int speed;
     public float inStateTimer;
     public float rotationSpeed;
+    public float faceAngle;
+    public bool startBattle;
     public List<State> stateList;
     public List<State> passiveStates;
+
+    float velocity = 100;
 
     [Header("Melee Settings")]
     [SerializeField] private List<GameObject> meleeHitbox;
@@ -24,19 +32,26 @@ public class StateMachineManager : MonoBehaviour
     public bool isAttackFin;
 
     [Header("Range Settings")]
-    public List<Transform> aimDirection;
-    public List<GameObject> shootPrefab;
+    //public List<Transform> aimDirection;
+    //public List<GameObject> shootPrefab;
+    public List<ProjectileObj> projectiles;
+
+    [Header("Audio Settings")]
+    [SerializeField] private SoundData bossSFX;
 
     private State _currentState;
     private NavMeshAgent _agent;
     private Animator _animator;
     private Rigidbody rb;
     private CinemachineImpulseSource impSource;
+    private EnemyPooler pooler;
 
     public Transform Target => target;
     public NavMeshAgent Agent => _agent;
     public Animator Anim => _animator;
     public Rigidbody Rb { get { return rb; } set { rb = value; } }
+    public List<GameObject> MH { get { return meleeHitbox; } set { meleeHitbox = value; } }
+    public State CurrentState { get { return _currentState; } }
 
     private void Awake()
     {
@@ -44,27 +59,66 @@ public class StateMachineManager : MonoBehaviour
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         impSource = FindObjectOfType<CinemachineImpulseSource>();
+        pooler = FindObjectOfType<EnemyPooler>();
     }
 
     private void Start()
     {
         target = PlayerHandler.Instance.transform;
-
         Agent.stoppingDistance = chaseMinDistance;
-
+        faceAngle = transform.rotation.eulerAngles.y;
         _agent.speed = speed;
-        SetState(stateList[0]);
+        SetState(passiveStates[2]);
+    }
+
+    private void OnEnable()
+    {
+        DialogueManager.OnDialogueEnd += StartBattle;
+    }
+
+    private void OnDisable()
+    {
+        DialogueManager.OnDialogueEnd -= StartBattle;
     }
 
     void Update()
     {
         _currentState.UpdateState(this);
+
+        if (transform.rotation.eulerAngles.y > (faceAngle + 5))
+        {
+            faceAngle = transform.rotation.eulerAngles.y;
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.1f));
+        }
+
+        else if (transform.rotation.eulerAngles.y < (faceAngle - 5))
+        {
+            faceAngle = transform.rotation.eulerAngles.y;
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 1, ref velocity, 0.1f));
+        }
+
+        else if (transform.rotation.eulerAngles.y <= (faceAngle + 5) && transform.rotation.eulerAngles.y >= (faceAngle - 5))
+        {
+            float currentWeight = _animator.GetLayerWeight(1);
+            _animator.SetLayerWeight(1, Mathf.SmoothDamp(currentWeight, 0, ref velocity, 0.3f));
+        }
+ 
     }
 
     public void SetState(State state)
     {
         _currentState = state;
         _currentState.EnterState(this);
+    }
+
+    private void StartBattle()
+    {
+        if (_currentState == passiveStates[2])
+        {
+            startBattle = true;
+        }
     }
 
     public void BossRandomState()
@@ -74,6 +128,14 @@ public class StateMachineManager : MonoBehaviour
         while (_currentState == stateList[randNum])
         {
             randNum = Random.Range(0, stateList.Count);
+        }
+
+        while (_currentState == stateList[1] && randNum == 4)
+        {
+            int[] num = { 0, 2, 3 };
+            randNum = Random.Range(0, num.Length);
+            randNum = num[randNum];
+            Debug.Log(randNum);
         }
 
         SetState(stateList[randNum]);
@@ -92,10 +154,14 @@ public class StateMachineManager : MonoBehaviour
 
     public void ShootProjectile(int index)
     {
-        Vector3 targetDirection = (target.position - aimDirection[index].position).normalized;
+        Vector3 targetDirection = (target.position - projectiles[index].aimer.position).normalized;
         float angle = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
-        aimDirection[index].eulerAngles = new Vector3(0, angle - 90, 0);
-        GameObject bullet = Instantiate(shootPrefab[index], aimDirection[index].position, aimDirection[index].rotation);
+        projectiles[index].aimer.eulerAngles = new Vector3(0, angle - 90, 0);
+
+        Transform bullet = pooler.GetFromPool(projectiles[index].type);
+        bullet.position = projectiles[index].aimer.position;
+        bullet.rotation = projectiles[index].aimer.rotation;
+        bullet.gameObject.SetActive(true);
 
         if (bullet.GetComponent<Projectile>() != null)
             bullet.GetComponent<Projectile>().SetDirection(target);
@@ -103,7 +169,10 @@ public class StateMachineManager : MonoBehaviour
 
     public void ShootProjectile2(int index)
     {
-        GameObject bullet = Instantiate(shootPrefab[index], aimDirection[index].position, transform.rotation);
+        Transform bullet = pooler.GetFromPool(projectiles[index].type);
+        bullet.position = projectiles[index].aimer.position;
+        bullet.rotation = projectiles[index].aimer.rotation;
+        bullet.gameObject.SetActive(true);
     }
 
     public void RotateTowards()
@@ -113,13 +182,38 @@ public class StateMachineManager : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
+    public void PlaySFX(string soundName)
+    {
+        SoundManager.instance.PlaySFX(bossSFX, soundName);
+    }
+
     [Button]
     public void Shake()
     {
-        Debug.Log("Shake");
-        float time = 2;
-        impSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = time;
-        impSource.m_DefaultVelocity.x = impSource.m_DefaultVelocity.y = -0.5f;
         impSource.GenerateImpulse();
+    }
+
+    [Button]
+    public void Shoot()
+    {
+        SetState(stateList[3]);
+    }
+
+    [Button]
+    public void Dash()
+    {
+        SetState(stateList[1]);
+    }
+
+    [Button]
+    public void Slam()
+    {
+        SetState(stateList[4]);
+    }
+
+    [Button]
+    public void Slice()
+    {
+        SetState(stateList[2]);
     }
 }

@@ -1,36 +1,34 @@
 using System.Collections;
 using UnityEngine;
 
-namespace _04_Scripts._05_Enemies_Bosses.Enemy {
-    public class EnemiesProjectile : MonoBehaviour{
-        public float speed = 10;
-        public float fireRate;
 
-        private void Start(){
-            StartCoroutine(Removed());
-        }
+public class EnemiesProjectile : MonoBehaviour{
+    public float speed = 10;
+    public float fireRate;
+    public int bulletDamage = 10;
+    public Vector3 dir;
+
+    private void OnEnable(){
+        StartCoroutine(Removed());
+    }
         
-        protected virtual void Update() {
-            Transform trans = transform;
-            trans.position += trans.forward * (speed * Time.deltaTime);
+    protected virtual void Update() {
+        Transform trans = transform;
+        trans.position += dir.normalized * (speed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other){
+        if (other.CompareTag("Player")){
+            //print("Hit");
+            other.GetComponent<PlayerStats>().Damage(bulletDamage);
         }
 
-        private void OnTriggerEnter(Collider other){
-            if (!other.CompareTag("Enemy")){
-                AreaImpact();
-                gameObject.SetActive(false);
-            }
-            
-            //! IF PLAYER, APPLY DMG
-        }
-        
-        protected virtual void AreaImpact(){
-            //Does nothing for now
-        }
+        gameObject.SetActive(false);
+    }
 
-        private IEnumerator Removed(){
-            yield return new WaitForSeconds(4.5f);
-            gameObject.SetActive(false);
-        }
+    private IEnumerator Removed(){
+        yield return new WaitForSeconds(2.5f);
+        gameObject.SetActive(false);
     }
 }
+

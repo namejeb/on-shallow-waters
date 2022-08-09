@@ -5,25 +5,27 @@ using System.Collections;
 public class PlayerHandler : MonoBehaviour
 {
     [SerializeField] private Transform cameraTarget;
-
+  
     private static PlayerStats _playerStats;
     private static PlayerMovement _playerMovement;
-    private static BoonDamageModifiers _boonDamageModifiers;
+    private BoonEffectsManager _boonEffectsManager;
     
-    public PlayerStats PlayerStats
-    {
-        get => _playerStats; 
-    }
-
     public Transform CameraTarget
     {
         get => cameraTarget;
     }
 
-    public BoonDamageModifiers BoonDamageModifiers
+    public PlayerStats PlayerStats
     {
-        get => _boonDamageModifiers;
+        get => _playerStats; 
     }
+
+
+    public BoonEffectsManager BoonEffectsManager
+    {
+        get => _boonEffectsManager;
+    }
+
 
     public static PlayerHandler Instance;
 
@@ -40,7 +42,8 @@ public class PlayerHandler : MonoBehaviour
         RoomSpawnerV2.OnResetPlayerPos += ResetPosition;
 
         _playerStats = GetComponent<PlayerStats>();
-        _boonDamageModifiers = GetComponent<BoonDamageModifiers>();
+
+        _boonEffectsManager = transform.root.Find("BoonEffectsManager").GetComponent<BoonEffectsManager>();
     }
     
     public void SavePlayer()

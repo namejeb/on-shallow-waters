@@ -15,9 +15,12 @@ public class BossAI_Rest : State
     [SerializeField] private bool usingNavmesh;
     [SerializeField] private float restMoveSpeed;
 
+    private int rand;
+
     public override void EnterState(StateMachineManager sm)
     {
-        sm.Agent.speed = 0;
+        sm.Agent.stoppingDistance = 6.45f;
+        rand = Random.Range(0, 2);
     }
 
     public override void UpdateState(StateMachineManager sm)
@@ -27,27 +30,53 @@ public class BossAI_Rest : State
         {
             sm.inStateTimer = 0;
             sm.Agent.speed = sm.speed;
+            sm.Agent.stoppingDistance = sm.chaseMinDistance;
             sm.BossRandomState();
         }
-
-        //if (canRotate)
-        //    sm.RotateTowards();
+        
+        if (canRotate)
+        {
+            sm.RotateTowards();
+        }
         else if (usingNavmesh)
         {
             sm.Agent.speed = restMoveSpeed;
-            sm.Agent.SetDestination(sm.Target.position);
+            if (sm.Agent.velocity == Vector3.zero)
+            {
+                sm.Anim.SetBool("isWalk", false);
+            }
+            else
+            {
+                sm.Anim.SetBool("isWalk", true);
+            }
+
+            if (sm.Agent.enabled)
+                sm.Agent.SetDestination(sm.Target.position);
+            
         }
         else if (!canRotate && !usingNavmesh)
         {
-            float rand = Random.Range(0, 2);
+
+            if (sm.Agent.velocity == Vector3.zero)
+            {
+                sm.Anim.SetBool("isWalk", false);
+            }
+            else
+            {
+                sm.Anim.SetBool("isWalk", true);
+            }
+
             if (rand == 0)
             {
                 sm.RotateTowards();
             }
             else if (rand == 1)
             {
-                sm.Agent.speed = restMoveSpeed;
-                sm.Agent.SetDestination(sm.Target.position);
+                if (sm.Agent.enabled)
+                {
+                    sm.Agent.speed = restMoveSpeed;
+                    sm.Agent.SetDestination(sm.Target.position);
+                }  
             }
         }
     }

@@ -9,6 +9,8 @@ public class Button_UI : MonoBehaviour
     public delegate void ClickEventDelegate(UnityAction clickAction);
     public ClickEventDelegate ClickEvent;
 
+    public Button EventSender { get => _button; }
+    
     private void OnDestroy()
     {
         ClearAllListeners();
@@ -34,9 +36,6 @@ public class Button_UI : MonoBehaviour
 
     public void ClearAllListeners()
     {
-       // print(_button.onClick.GetPersistentEventCount());
-        
         _button.onClick.RemoveAllListeners();
-        
     }
 }

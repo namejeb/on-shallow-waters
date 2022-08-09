@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum BoonType {
+    COMBAT,
+    SURVIVAL,
+    BONUS
+}
+
 [System.Serializable]
 public class BoonItem
 {
@@ -8,6 +14,9 @@ public class BoonItem
     public string description;
     public int maxUsageCount;
     public bool isPercentage = true;
+    public bool minusHundred = true;
+    public Sprite icon;
+    public BoonType boonType;
 }
 
 

@@ -1,4 +1,3 @@
-using _04_Scripts._05_Enemies_Bosses;
 using UnityEngine;
 
 public class BreakableProp : EarnCurrencyItems, IDamageable
@@ -7,10 +6,11 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
-    
+
+    public const string BREAKABLE_KEY = "BreakableCoins";
     private void Awake()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
+        _meshRenderer =GetComponent<MeshRenderer>();
         _collider = GetComponent<Collider>();
     }
 
@@ -22,6 +22,11 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
     public void Damage(int damageAmount)
     {
         Break();
+    }
+
+    public float GetReceivedDamage(float outDamage)
+    {
+        return outDamage;
     }
 
     public float LostHP()

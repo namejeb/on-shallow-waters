@@ -29,21 +29,20 @@ public class BossAI_Dash : State
         if (sm.inStateTimer < rotateTime)
         {
             sm.RotateTowards();
-            _direction = (sm.Target.position - sm.transform.position);
+            _direction = (sm.Target.position - sm.transform.position).normalized;
         }
 
         if (sm.inStateTimer > dashStartTime)
         {
             sm.Anim.SetTrigger(dashAnimation);
-            sm.HitBoxOn(2);
             sm.Rb.isKinematic = false;
             sm.Rb.AddForce(new Vector3(_direction.x, 0, _direction.z) * dashForce);
         }
 
         if (sm.inStateTimer > dashTimeout)
         {
-            Debug.Log("Exit Dash");
             isDashing = false;
+            sm.Anim.ResetTrigger("isDash");
             sm.Anim.SetTrigger("toNormal");
             sm.inStateTimer = 0;
             sm.HitBoxOff(2);

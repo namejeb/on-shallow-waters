@@ -25,8 +25,5 @@ public class BossAI_Spawn : State
             sm.Agent.enabled = true;
             sm.BossRandomState();
         }
-
-        //if (sm.inStateTimer < spawnTimeout - 3)
-        //    sm.RotateTowards();
     }
 }

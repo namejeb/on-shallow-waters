@@ -1,5 +1,4 @@
 using _04_Scripts._05_Enemies_Bosses;
-using _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_;
 using UnityEngine;
 using System;
 
@@ -13,11 +12,17 @@ public class EnemyStats : CharacterStats, IDamageable
     [Space]
     [Header("Settings:")]
     [SerializeField] private Stat defense;
-
+    private float _defPercent = 1f;
+    
+    //  private float _movementSpeed = 1f;
+    //  private float _attackSpeed = 1f;
+    
     [SerializeField] private new Collider collider;
     public Stat Defense { get => defense; }
 
-    private bool isDead = false;
+    public bool isDead = false;
+    public bool isHit = false;
+    public Animator anim1;
 
     private new void Awake()
     {
@@ -36,21 +41,41 @@ public class EnemyStats : CharacterStats, IDamageable
     
     public void Damage(int damageAmount)
     {
-        if (_enemiesCore.armourType) _enemiesCore.ShieldBar(damageAmount);
-        else TakeDamage(damageAmount);
+        if (_enemiesCore.armourType && !_enemiesCore.shieldDestroy) {
+            _enemiesCore.ShieldBar(damageAmount);
+        } else {
+            anim1.SetTrigger("isHit");
+            anim1.ResetTrigger("isAttack1");
+            anim1.ResetTrigger("isAttack2");
+
+            damageAmount = (int) ReceiveIncomingDamage(damageAmount);
+            TakeDamage(damageAmount);
+        } 
 
         healthBar.UpdateHealthBar(CurrHpPercentage);
     }
 
+    public float GetReceivedDamage(float incomingDamage)
+    {
+        return ReceiveIncomingDamage(incomingDamage);
+    }
+
+    private float ReceiveIncomingDamage(float incomingDamage)
+    {
+        incomingDamage *= (100 / (25 + (_defPercent * defense.CurrentValue)));
+        return incomingDamage;
+    }
+
     public float LostHP()
     {
-        return _enemiesCore.maxHealth - currHp;
+        return MaxHp - currHp;
     }
 
     protected override void Die()
     {
         if (isDead) return;
         isDead = true;
+        anim1.SetTrigger("isDead");
         
         _dropSouls.Drop();
 
@@ -61,6 +86,7 @@ public class EnemyStats : CharacterStats, IDamageable
         }
 
         collider.enabled = false;
+        
         Invoke(nameof(DisableSelf), 1f);
     }
 

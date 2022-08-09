@@ -23,6 +23,8 @@ public class BoonItemsTimesUsed
 public class BoonSelection : MonoBehaviour
 {
     [SerializeField] private BoonEffects boonEffects;
+    [SerializeField] private BoonsList boonList;
+    
     
     [Space][Space]
     [SerializeField] private BoonItemsSO boonItemsSo;
@@ -179,19 +181,41 @@ public class BoonSelection : MonoBehaviour
         }
     }
 
-    public void SetBoonInfo(Transform boonTransform, BoonItem boonItem)
+    public void SetBoonInfo(Transform boonTransform, BoonItem boonItem, bool isUpgrade = true)
     {
         //Set info
         boonTransform.Find("titleText").GetComponent<TextMeshProUGUI>().SetText(boonItem.title);
+        boonTransform.Find("icon").GetComponent<Image>().sprite = boonItem.icon;
             
         float effectAmount = 0f;
-        
-        effectAmount =  boonEffects.GetStatIncreaseAmounts(boonItem.id);
-        
-        if(boonItem.isPercentage)
-            boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} +{effectAmount * 100}%");
+        Boon boon = boonList.GetBoon(boonItem.id);
+        if (isUpgrade)
+        {
+            effectAmount = boon.EffectAmountToUpgrade;
+        }
         else
-            boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {effectAmount}");
+        {
+            effectAmount = boon.EffectAmountCurrent;
+        }
+
+        string str = "";
+        string decimalFormat = "F0";
+        if (boonItem.isPercentage)
+        {
+            if (boonItem.minusHundred)
+                str = (effectAmount * 100 - 100).ToString(decimalFormat);
+            
+            else
+                str =(effectAmount * 100).ToString(decimalFormat);
+            
+            str += "%";
+        }
+        else
+        {
+            str = effectAmount.ToString(decimalFormat);
+        }
+        
+        boonTransform.Find("descText").GetComponent<TextMeshProUGUI>().SetText($"{boonItem.description} {str}");    
     }
     
     public void RollBoons()

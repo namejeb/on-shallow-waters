@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using UnityEditor;
 
 public enum RoomEntranceDir
 {
@@ -26,11 +27,22 @@ public class Room
 public class RoomSpawnerV2 : MonoBehaviour
 {
     [SerializeField] [Range(0f, 1f)] private float soulShopSpawnRate = .2f;
+    public static readonly float TransitionDuration = 1f;
     
+    [Space][Space]
+    [Header("Special Rooms:")]
+    [SerializeField] private Transform rTutorial;
     [SerializeField] private Transform rBasic;
     [SerializeField] private Transform rSoulShop;
     private bool _sShopSpawnedInCurrLevel;
     
+    [Space][Space]
+    [Header("System:")]
+    [SerializeField] private Transform tutorialContainer;
+
+    
+    [Space][Space]
+    [Header("Rooms:")]
     [SerializeField] private List<Room> bossRooms;
     [SerializeField] private List<Level> levelList = new List<Level>();
     private int _levelCounter = 0;
@@ -50,18 +62,68 @@ public class RoomSpawnerV2 : MonoBehaviour
         ExitRoomTrigger.OnExitRoom -= SpawnRoom;
         _roomFinishedCount = -1;
     }
-    
+
     private void Awake()
     {
+        tutorialContainer.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        if (GameManager.IsRetry)
+        {
+            TriggerTransitionFinish();
+        }
+        
         SortRooms();
         ExitRoomTrigger.OnExitRoom += SpawnRoom;
-        
-        SetRoomActive(rSoulShop, false);
-        
-        SetRoomActive(rBasic.transform, true);
-        _prevRoom = rBasic.transform;
 
+        ResetValues();
+        HandleInitialRooms();
+    }
+
+    private void ResetValues()
+    {
+        SetRoomActive(rSoulShop, false);
+        SetRoomActive(rBasic, false);
+        SetRoomActive(rTutorial, false);
+        
         IsBossRoom = false;
+    }
+
+    private void EnableTutorialContainer()
+    {
+        tutorialContainer.gameObject.SetActive(true);
+    }
+
+    private void HandleInitialRooms()
+    {
+        if (GameManager.IsTutorial)
+        {
+            // spawn tutorial room
+            SetRoomActive(rTutorial.transform, true);
+            _prevRoom = rTutorial.transform;
+            
+            Invoke(nameof(EnableTutorialContainer), 2f);
+        }
+        else
+        {
+            // spawn basic room
+            SetRoomActive(rBasic.transform, true);
+            _prevRoom = rBasic.transform;
+        }
+        TriggerTransitionFinish();
+        if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
+    }
+
+    public static void TriggerTransitionStart()
+    {
+        if(OnRoomChangeStart != null) OnRoomChangeStart.Invoke();
+    }
+
+    public static void TriggerTransitionFinish()
+    {
+        if(OnRoomChangeFinish != null) OnRoomChangeFinish.Invoke();
     }
 
     private void SortRooms()
@@ -100,7 +162,7 @@ public class RoomSpawnerV2 : MonoBehaviour
             //after 5 rooms, spawn boss
             bool isBossStage = (_roomFinishedCount == 5); 
             
-            // isBossStage = true; //boss room debug
+            //isBossStage = true; //boss room debug
             HandleSpawnRoom(isBossStage, dir);
 
             return;
@@ -169,7 +231,7 @@ public class RoomSpawnerV2 : MonoBehaviour
                 roomIndex = UnityEngine.Random.Range(0, level.westEntranceRooms.Count);
                 room = level.westEntranceRooms[roomIndex];
             } 
-             room = level.southEntranceRooms[1];
+            //  room = level.southEntranceRooms[0];
         }
         StartCoroutine(EnableRoom(room));
     }
@@ -177,7 +239,7 @@ public class RoomSpawnerV2 : MonoBehaviour
     
     private IEnumerator EnableRoom(Room room)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(TransitionDuration);
         
         //Remove old room
         SetRoomActive(_prevRoom, false);
@@ -194,7 +256,7 @@ public class RoomSpawnerV2 : MonoBehaviour
 
     private IEnumerator EnableSoulShop()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(TransitionDuration);
         
         //Remove old room
         SetRoomActive(_prevRoom, false);

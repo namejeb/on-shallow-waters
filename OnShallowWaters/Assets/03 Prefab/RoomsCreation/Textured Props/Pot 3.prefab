@@ -11,12 +11,15 @@ GameObject:
   - component: {fileID: 2623795707258278758}
   - component: {fileID: 1424900953145613507}
   - component: {fileID: 3756763604012820489}
+  - component: {fileID: -4803414634569121347}
+  - component: {fileID: -2281990153757640398}
+  - component: {fileID: -3582877989140748584}
   m_Layer: 0
   m_Name: Pot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2623795707258278758
 Transform:
@@ -52,7 +55,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
+  m_StaticShadowCaster: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -83,3 +86,46 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-4803414634569121347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3396357229402868188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc021c24aab9244ab319c46b1a20078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMaxAmount: {x: 5, y: 10}
+  brokenVerPrefab: {fileID: 5987832691855786317, guid: d1b79e9ac5a3f2a428bb1d669f1851ae, type: 3}
+--- !u!65 &-2281990153757640398
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3396357229402868188}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.07306177, y: 0.07306179, z: 0.20476928}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &-3582877989140748584
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3396357229402868188}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.037, y: 0.037, z: 0.102000006}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

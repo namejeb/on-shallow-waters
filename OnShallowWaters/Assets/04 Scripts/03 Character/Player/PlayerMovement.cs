@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -7,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     private PlayerStats _playerStats;
     public Joystick joystick;
+    public Animator animator;
 
     public float speed = 6f;
     public float rotationSpeed = 10f;
@@ -26,16 +28,22 @@ public class PlayerMovement : MonoBehaviour
             float horizontal = joystick.Horizontal;
             float vertical = joystick.Vertical;
             _moveDir = new Vector3(horizontal, 0f, vertical).normalized;
+            
         }
         else
             _moveDir = Vector3.zero;
+        
+        if(_moveDir == Vector3.zero)
+        {
+            animator.SetBool("IsMoving", false);
+        }
 
         if (_moveDir.magnitude >= 0.2f)
         {
             //float targetAngle = Mathf.Atan2(_moveDir.x, _moveDir.z) * Mathf.Rad2Deg;
             //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
             //transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        
+            animator.SetBool("IsMoving", true);
             RotateTowards();
         }
     }
@@ -44,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Quaternion lookRotation = Quaternion.LookRotation(_moveDir);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.unscaledDeltaTime * rotationSpeed);
+        
     }
 
     private void FixedUpdate()

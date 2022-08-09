@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class Enemies
 {
-    public EnemyPooler.EnemyPoolType enemy;
+    public EnemyPoolType enemy;
     public int count;
 }
 
@@ -40,7 +40,7 @@ public class WaveSpawner : MonoBehaviour
     [Header("Wave Settings")]
     [SerializeField] private float waveCountdown;
     [SerializeField] private float waveIntervalTime = 3f;
-    private List<Transform> _spawnPoints = new List<Transform>();
+    [SerializeField] private List<Transform> _spawnPoints = new List<Transform>();
 
     private int _roomTotalEnemies = 0;
     public bool IsLastEnemy => _roomTotalEnemies == 0;
@@ -66,7 +66,8 @@ public class WaveSpawner : MonoBehaviour
     
     private void Start()
     {
-        _enemyPooler = transform.Find("EnemyPooler").GetComponent<EnemyPooler>();
+        //_enemyPooler = transform.Find("EnemyPooler").GetComponent<EnemyPooler>();
+        _enemyPooler = FindObjectOfType<EnemyPooler>();
     }
 
     private void OnDisable()
@@ -163,13 +164,13 @@ public class WaveSpawner : MonoBehaviour
         yield break;
     }
 	
-    void SpawnEnemy(EnemyPooler.EnemyPoolType enemyType)
+    void SpawnEnemy(EnemyPoolType enemyType)
     {
         // Random Spawn points
         int spawnIndex = Random.Range(0, _spawnPoints.Count);
 
 		//Spawn enemy (Object Pooling)
-		Transform e = _enemyPooler.GetFromPool(enemyType);
+		Transform e = _enemyPooler.GetFromPool(enemyType, _spawnPoints[spawnIndex].position);
 		e.position = _spawnPoints[spawnIndex].position;
         e.gameObject.SetActive(true);
     }

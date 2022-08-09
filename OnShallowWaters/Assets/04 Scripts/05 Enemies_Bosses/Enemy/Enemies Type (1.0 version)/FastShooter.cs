@@ -1,36 +1,36 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
-    public sealed class FastShooter : EnemiesCore {
-        [SerializeField] private GameObject projectile;
-        [SerializeField] private float repositioning, timeToFire;
-        
-        private EnemiesProjectile _enemiesProjectile;
-        private Transform _transform2;
-        
-        private Quaternion _rotation;
-        private Vector3 _position, _direct;
 
-        public Transform fireSpawn;
-        public float maxDist = 5f;
-        public bool isPrepared;
+public sealed class FastShooter : EnemiesCore {
+        [Header("Basic Attributes: ")]
+        [SerializeField] private GameObject projectile;
+        private float repositioning;
+        private float timeToFire;
+        
+        [Space][Space]
+        [Header("Fire Attributes: ")]
+        private EnemiesProjectile _enemiesProjectile;
+        private bool isPrepared;
         public int bulletFired;
         
-        //! Walk Circle
+        [Space]
+        [Header("Orbit Rotation: ")]
         [SerializeField] private float rotationRadius = 2f, angularSpeed = 2f;
-        public float posX, posZ, angle1;
-
+        private float posX, posZ, angle1;
         private Vector3 _offset;
+        public float randomRadius;
 
         protected override void Start(){
             base.Start();
             isPrepared = true;
             _enemiesProjectile = projectile.GetComponent<EnemiesProjectile>();
+            randomRadius = radius;
         }
 
         protected override void Movement(){
+            anim.SetBool("isWalk", true);
+            
             if (RaycastSingle() && isPrepared){
                 behaviour = CoreStage.Attack;
                 isPrepared = false;
@@ -39,38 +39,37 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             }
         }
 
+        protected override void Attack(){
+            anim.SetBool("isWalk", false);
+
+            if (Time.time >= timeToFire) {
+                //print("Fire");
+                anim.SetTrigger("isAttack2");
+                timeToFire = Time.time + 1 / _enemiesProjectile.fireRate;
+            }
+
+            if (bulletFired != 3) return;
+            behaviour = CoreStage.Move;
+            randomRadius = Random.Range(radius, radius + 5);
+            bulletFired = 0;
+        }
+
         private IEnumerator Delay(){
             yield return new WaitForSeconds(repositioning);
             isPrepared = true;
         }
 
-        protected override void Attack(){ 
-            (_transform2 = transform).LookAt(puppet);
-            
-            _direct = puppet.position - _transform2.position;
-            _rotation = Quaternion.LookRotation(_direct);
-            Quaternion rotation1 = _rotation;
-            
-            if (Time.time >= timeToFire) {
-                timeToFire = Time.time + 1 / _enemiesProjectile.fireRate;
-                Instantiate(projectile, fireSpawn.position, rotation1);
-                bulletFired += 1;
-            }
-
-            if (bulletFired != 3) return;
-            behaviour = CoreStage.Move;
-            bulletFired = 0;
-        }
-
         private bool RaycastSingle(){
-            var trans1 = transform;
-            Vector3 origin = trans1.position;
+            Transform trans1 = transform;
+            Vector3 origin = trans1.position + new Vector3(0, 1, 0);
             Vector3 direction = trans1.forward;
 
+            //Here
+            Debug.DrawRay(origin, direction * randomRadius, Color.cyan);
             Ray ray = new Ray(origin, direction);
-            Debug.DrawRay(origin, direction * radius, Color.cyan);
-            
-            bool result = Physics.Raycast(ray, radius, targetMask, QueryTriggerInteraction.Ignore);
+
+            //Here
+            bool result = Physics.Raycast(ray, randomRadius, targetMask, QueryTriggerInteraction.Ignore);
             return result;
         }
 
@@ -78,9 +77,9 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             var position13 = puppet.position;
 
             _offset.Set(
-                Mathf.Cos(angle1) * radius,
+                Mathf.Cos(angle1) * randomRadius,
                 0,
-                Mathf.Sin(angle1) * radius
+                Mathf.Sin(angle1) * randomRadius
             );
             
             agent.SetDestination(position13 + _offset);
@@ -92,4 +91,3 @@ namespace _04_Scripts._05_Enemies_Bosses.Enemy.Enemies_Type__1._0_version_ {
             }
         }
     }
-}
