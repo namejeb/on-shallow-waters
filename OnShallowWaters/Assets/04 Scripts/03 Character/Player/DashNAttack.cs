@@ -282,7 +282,10 @@ public class DashNAttack : MonoBehaviour
         }
         else
         {
-            HandleSpawnCurrency(hitObject.transform, CurrencyType.GOLD);
+            if (!hitObject.CompareTag("TrainingDummy"))
+            {
+                HandleSpawnCurrency(hitObject.transform, CurrencyType.GOLD);
+            }
         }
 
         bool isCrit = CheckIfCrit();
@@ -336,7 +339,10 @@ public class DashNAttack : MonoBehaviour
             }
             else
             {
-                HandleSpawnCurrency(hitColliders[i].transform, CurrencyType.GOLD);
+                if (!hitColliders[i].CompareTag("TrainingDummy"))
+                {
+                    HandleSpawnCurrency(hitColliders[i].transform, CurrencyType.GOLD);
+                }
             }
 
             bool isCrit = CheckIfCrit();
