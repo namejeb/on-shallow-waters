@@ -104,6 +104,7 @@ public class TutorialTracker : MonoBehaviour
         {
             DummyStatsWithHp.OnDeath += NextAction;
             dummyStatsWithHp.SetHealth(380);
+
         }
 
 
