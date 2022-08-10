@@ -28,6 +28,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
     [Header("Player Side")]
     [SerializeField] private Button skbButton;
     [SerializeField] private Sprite skbSprite;
+    [SerializeField] private Sprite skbPresedSprite;
 
     private SkBlessing skb;
     private Outline outline;
@@ -116,7 +117,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
         spriteState = skbButton.spriteState;
 
         skbButton.image.sprite = skbSprite;
-        spriteState.pressedSprite = skbSprite;
+        spriteState.pressedSprite = skbPresedSprite;
 
         switch (blessType)
         {
