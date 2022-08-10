@@ -99,7 +99,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
         {
             //print('s');
             BlessUI.SetActive(true);
-            bg.enabled = true;
+            bg.sprite = skbSprite;
             equipButton.onClick.AddListener(ChangeBlessing);
             blessNameText.text = blessName;
             descriptionText.text = "Time: " + soulDuration.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n\n" + blessDesc;
