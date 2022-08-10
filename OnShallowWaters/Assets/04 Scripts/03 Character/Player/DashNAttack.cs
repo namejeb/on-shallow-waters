@@ -130,10 +130,10 @@ public class DashNAttack : MonoBehaviour
 
         // slash
         float slashTimerStart = .5f / stats.AtkSpeed;
-        float slashTimerEnd = 1f / stats.AtkSpeed;
+        float slashTimerEnd = 1.2f / stats.AtkSpeed;
         
         // slam
-        float slamTimerStart = 1f / stats.AtkSpeed;
+        float slamTimerStart = 1.2f / stats.AtkSpeed;
   
 
         if (pressedButton.isPressed == false)
@@ -177,8 +177,9 @@ public class DashNAttack : MonoBehaviour
 
         Vector3 pos = transform.position + (transform.forward * 1.2f);
         StartCoroutine(HandleDamaging(tempOutDamage, 3.3f, .3f, pos));
-
-        StartCoroutine(EnableMove(0.8f/stats.AtkSpeed));
+        
+        //attackSequence = 0;
+        StartCoroutine(EnableMove(1/stats.AtkSpeed));
     }
 
     private void HeavySlam()
@@ -194,8 +195,9 @@ public class DashNAttack : MonoBehaviour
         float tempOutDamage = 0f;
         tempOutDamage = (200f / 100f) * ((baseAtk + 0) * atkPercent);
         StartCoroutine(HandleDamaging(tempOutDamage, 4f, .65f, transform.position, true));
-
-        StartCoroutine(EnableMove(0.8f / stats.AtkSpeed));
+        
+        //attackSequence = 0;
+        StartCoroutine(EnableMove(1 / stats.AtkSpeed));
     }
 
     public void ShakeCamera()
