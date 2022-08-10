@@ -8,6 +8,9 @@ public class SkBlessing : MonoBehaviour
 {
     [SerializeField] private Image soulMeter;
     [SerializeField] private Button soulButton;
+    [SerializeField] private Button mainButton;
+    [SerializeField] private Button interactButton;
+
 
     [Header("SKB 1")]
     [SerializeField] private int atkAdd;
@@ -36,6 +39,8 @@ public class SkBlessing : MonoBehaviour
     private TimeManager timeManager;
     private CinemachineImpulseSource impulse;
     private EnemyPooler pooler;
+    public Button MainButton { get { return mainButton; } set { mainButton = value; } }
+    public Button InteractButton { get { return interactButton; } set { interactButton = value; } }
 
     public float Skb2Duration
     {
