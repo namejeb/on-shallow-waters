@@ -60,10 +60,8 @@ public class RoomSpawnerV2 : MonoBehaviour
     private void OnDestroy()
     {
         ExitRoomTrigger.OnExitRoom -= SpawnRoom;
-
         _roomFinishedCount = -1;
     }
-
     private void Awake()
     {
         tutorialContainer.gameObject.SetActive(false);
