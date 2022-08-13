@@ -83,7 +83,7 @@ using Random = UnityEngine.Random;
         #region Basic States
         protected virtual void Movement(){
             anim.SetBool("isWalk", true);
-            print("Moving");
+            //print("Moving");
             agent.SetDestination(puppet.position);
             if(dist < attackRange * attackRange){
                 agent.stoppingDistance = attackRange;
