@@ -40,12 +40,12 @@ public class SeaKingStatue : MonoBehaviour
     {
         outline = GetComponent<Outline>();
         skb = FindObjectOfType<SkBlessing>();
-        
     }
 
     private void Start()
     {
         InitUI();
+        ChangeBlessing();
     }
 
     private void InitUI()
@@ -87,7 +87,7 @@ public class SeaKingStatue : MonoBehaviour
         {
             //print('s');
             BlessUI.SetActive(true);
-            bg.sprite = skbSprite;
+            //skbButton.image.sprite = skbSprite;
             equipButton.onClick.AddListener(ChangeBlessing);
             blessNameText.text = blessName;
             descriptionText.text = "Time: " + soulDuration.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n\n" + blessDesc;
