@@ -15,7 +15,6 @@ public class BoonEffectsManager : MonoBehaviour
         BM_MaxHp b = GetComponent<BM_MaxHp>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-        print(PlayerHandler.Instance.PlayerStats.MaxHp);
     }
 
     public void Defense()
@@ -46,7 +45,6 @@ public class BoonEffectsManager : MonoBehaviour
         BM_ArmorDmgBonus b = GetComponent<BM_ArmorDmgBonus>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-        print(EnemiesCore.shieldDmgBonus);
     }
     public void DmgWhenArmorBreak()
     {
@@ -74,14 +72,12 @@ public class BoonEffectsManager : MonoBehaviour
         BM_AtkPercent b = GetComponent<BM_AtkPercent>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-        print(PlayerHandler.Instance.PlayerStats.AtkPercent);
     }
     public void UpgradeAtkSpeed()
     {
         BM_AtkSpeed b = GetComponent<BM_AtkSpeed>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-       // print(PlayerHandler.Instance.PlayerStats.AtkSpeed);
     }
 
     public void UpgradeCritChance()
@@ -89,7 +85,6 @@ public class BoonEffectsManager : MonoBehaviour
         BM_CritChance b = GetComponent<BM_CritChance>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-       // print(PlayerHandler.Instance.PlayerStats.CritChance);
     }
     
     public void UpgradeCritDamage()
@@ -97,16 +92,12 @@ public class BoonEffectsManager : MonoBehaviour
         BM_CritDamage b = GetComponent<BM_CritDamage>();
         HandleEnablingAndUpgrading(b);
         b.ApplyEffect();
-      //  print(PlayerHandler.Instance.PlayerStats.CritDamage);
     }
 
 
 
 
     private void HandleEnablingAndUpgrading(Boon b){
-        // if(b.Activated) { b.Upgrade(); }
-        // else { b.Activated = true; }
-
         if (!b.Activated) { b.Activated = true; }
         b.Upgrade();
     }

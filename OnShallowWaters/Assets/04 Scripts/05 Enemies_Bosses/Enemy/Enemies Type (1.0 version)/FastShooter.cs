@@ -43,7 +43,7 @@ public sealed class FastShooter : EnemiesCore {
             anim.SetBool("isWalk", false);
 
             if (Time.time >= timeToFire) {
-                print("Fire");
+                //print("Fire");
                 anim.SetTrigger("isAttack2");
                 timeToFire = Time.time + 1 / _enemiesProjectile.fireRate;
             }
@@ -86,8 +86,13 @@ public sealed class FastShooter : EnemiesCore {
             angle1 += Time.deltaTime * angularSpeed;
             StartCoroutine(Delay());
 
-            if (angle >= 360f){
-                angle = 0f;
+            if (angle1 >= 360f){
+                angle1 = 0f;
             }
+        }
+
+        private void OnDisable(){
+            bulletFired = 0;
+            isPrepared = true;
         }
     }

@@ -27,6 +27,8 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
 
     [Header("Player Side")]
     [SerializeField] private Button skbButton;
+    [SerializeField] private Sprite skbSprite;
+    [SerializeField] private Sprite skbPresedSprite;
 
     private SkBlessing skb;
     private Outline outline;
@@ -37,6 +39,8 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
     private void Awake()
     {
         outline = GetComponent<Outline>();
+        skb = FindObjectOfType<SkBlessing>();
+        
     }
 
     private void Start()
@@ -59,29 +63,48 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
 
     private void OnTriggerEnter(Collider col)
     {
-        skb = col.gameObject.GetComponent<SkBlessing>();
+        skb.MainButton.gameObject.SetActive(false);
+        skb.InteractButton.gameObject.SetActive(true);
         isInteractable = true;
         outline.OutlineWidth = 5;
+        skb.InteractButton.onClick.AddListener(Interaction);
     }
+
+    //private void OnTriggerStay(Collider col)
+    //{
+    //    if (skb.mainButtonSprite.overrideSprite != skb.interactButtonSprite)
+    //    {
+    //        skb.mainButtonSprite.overrideSprite = skb.interactButtonSprite;
+    //    }
+    //}
 
     private void OnTriggerExit(Collider col)
     {
+        skb.MainButton.gameObject.SetActive(true);
+        skb.InteractButton.gameObject.SetActive(false);
         isInteractable = false;
         outline.OutlineWidth = 0;
+        skb.InteractButton.onClick.RemoveListener(Interaction);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         //Debug.Log("STATUE CLICKED");
+        
+    }
+
+    public void Interaction()
+    {
         if (isInteractable)
         {
             //print('s');
             BlessUI.SetActive(true);
-            bg.enabled = true;
+            bg.sprite = skbSprite;
             equipButton.onClick.AddListener(ChangeBlessing);
             blessNameText.text = blessName;
             descriptionText.text = "Time: " + soulDuration.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n\n" + blessDesc;
         }
+
     }
 
     public void ChangeBlessing()
@@ -89,6 +112,13 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
         skbButton.onClick.RemoveAllListeners();
         skb.Duration = soulDuration;
         skb.RequiredSoul = requiredSoul;
+
+        SpriteState spriteState = new SpriteState();
+        spriteState = skbButton.spriteState;
+
+        skbButton.image.sprite = skbSprite;
+        spriteState.pressedSprite = skbPresedSprite;
+
         switch (blessType)
         {
             case Blessing.bless1:

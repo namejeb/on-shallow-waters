@@ -29,5 +29,6 @@ public class VideoPlaying : MonoBehaviour
 
     protected virtual void EndVideo(){
         //end video logic
+        _vp.Stop();
     }
 }

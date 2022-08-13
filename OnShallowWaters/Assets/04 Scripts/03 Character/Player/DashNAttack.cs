@@ -50,10 +50,10 @@ public class DashNAttack : MonoBehaviour
     private BM_DmgWhenArmorBreak _dmgWhenShieldBreak;
 
     //Tutorial Event
-    //public static event Action OnAttack;
     public static event Action OnDash;
-    
     public static event Action<Transform, float, bool> OnHitLanded;
+
+    public static event Action<Transform, CurrencyType> OnSpawnCurrency;
 
 
 
@@ -114,7 +114,6 @@ public class DashNAttack : MonoBehaviour
         
         _endTime = Time.time + dashDuration * Time.timeScale;
         //multiply timeScale to account for SlowMo 
-        
     }
 
     public void Update()
@@ -131,10 +130,10 @@ public class DashNAttack : MonoBehaviour
 
         // slash
         float slashTimerStart = .5f / stats.AtkSpeed;
-        float slashTimerEnd = 1f / stats.AtkSpeed;
+        float slashTimerEnd = 1.2f / stats.AtkSpeed;
         
         // slam
-        float slamTimerStart = 1f / stats.AtkSpeed;
+        float slamTimerStart = 1.2f / stats.AtkSpeed;
   
 
         if (pressedButton.isPressed == false)
@@ -180,7 +179,7 @@ public class DashNAttack : MonoBehaviour
         StartCoroutine(HandleDamaging(tempOutDamage, 3.3f, .3f, pos));
         
         //attackSequence = 0;
-        StartCoroutine(EnableMove(0.8f/stats.AtkSpeed));
+        StartCoroutine(EnableMove(1/stats.AtkSpeed));
     }
 
     private void HeavySlam()
@@ -198,7 +197,7 @@ public class DashNAttack : MonoBehaviour
         StartCoroutine(HandleDamaging(tempOutDamage, 4f, .65f, transform.position, true));
         
         //attackSequence = 0;
-        StartCoroutine(EnableMove(0.8f / stats.AtkSpeed));
+        StartCoroutine(EnableMove(1 / stats.AtkSpeed));
     }
 
     public void ShakeCamera()
@@ -231,7 +230,7 @@ public class DashNAttack : MonoBehaviour
             SoundManager.instance.PlaySFX(attkSFX, "Attack 1");
             
             attackSequence++;
-            timeTillNextAtk = 1f;
+            timeTillNextAtk = .6f;
             resetAttackTimer = Time.time + 2;
         }
         else if ( attackSequence == 1 )
@@ -242,7 +241,7 @@ public class DashNAttack : MonoBehaviour
             animator.SetTrigger("Attack2");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 2");
             attackSequence++;
-            timeTillNextAtk = 1f;
+            timeTillNextAtk = .8f;
             resetAttackTimer = Time.time + 2;
         }
         else if ( attackSequence == 2 )
@@ -253,15 +252,16 @@ public class DashNAttack : MonoBehaviour
             animator.SetTrigger("Attack3");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 3");
             attackSequence = 0;
-            timeTillNextAtk = 1.2f;
+            timeTillNextAtk = 1f;
             resetAttackTimer = Time.time + 2;
         }
         
         nextAttack =  (Time.time + timeTillNextAtk) / stats.AtkSpeed;
         
-        StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
+        //StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
         StartCoroutine(EnableAttack(timeTillNextAtk / stats.AtkSpeed));
-        
+        StartCoroutine(EnableMove(1 / stats.AtkSpeed));
+
         outDamage = Mathf.RoundToInt(tempOutDamage);
     }
 
@@ -270,6 +270,7 @@ public class DashNAttack : MonoBehaviour
     {
         IDamageable damagable = hitObject.GetComponent<IDamageable>();
         if (damagable == null) return;
+        
         
         EnemyHandler enemyHandler = null;
         if (hitObject.CompareTag("Enemy"))
@@ -281,7 +282,14 @@ public class DashNAttack : MonoBehaviour
             }
             _skBlessing.AddSoul(2);
         }
-        
+        else
+        {
+            if (!hitObject.CompareTag("TrainingDummy"))
+            {
+                HandleSpawnCurrency(hitObject.transform, CurrencyType.GOLD);
+            }
+        }
+
         bool isCrit = CheckIfCrit();
         if (isCrit)
         {
@@ -292,13 +300,15 @@ public class DashNAttack : MonoBehaviour
         damagable.Damage( outDamage );
         
         // display damage text
-        if(OnHitLanded != null) OnHitLanded.Invoke(hitObject.transform, outDamage, isCrit);
+        Transform hitTransform = hitObject.transform;
+        HandleDamageText(hitTransform, outDamage, isCrit);
         
         if (enemyHandler == null) return;
         if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
         {
             _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
         }
+        HandleSpawnCurrency(hitTransform, CurrencyType.SOULS, enemyHandler);
     }
 
     private IEnumerator HandleDamaging(float outDamage, float radius, float delay, Vector3 pos, bool shake = false)
@@ -316,8 +326,8 @@ public class DashNAttack : MonoBehaviour
              
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
             if (damagable == null) continue;
-    
-             
+            
+            
             //if hit an enemy
             EnemyHandler enemyHandler = null;
             if (hitColliders[i].CompareTag("Enemy"))
@@ -328,6 +338,13 @@ public class DashNAttack : MonoBehaviour
                     outDamage = HandleBoonDmgModifications(outDamage, enemyHandler);
                 }
                 _skBlessing.AddSoul(2);
+            }
+            else
+            {
+                if (!hitColliders[i].CompareTag("TrainingDummy"))
+                {
+                    HandleSpawnCurrency(hitColliders[i].transform, CurrencyType.GOLD);
+                }
             }
 
             bool isCrit = CheckIfCrit();
@@ -340,14 +357,43 @@ public class DashNAttack : MonoBehaviour
             damagable.Damage( (int) outDamage );
              
             // display damage text
-            if(OnHitLanded != null) OnHitLanded.Invoke(hitColliders[i].transform, outDamage, isCrit);
-            
+            Transform hitTransform = hitColliders[i].transform;
+            HandleDamageText(hitTransform, outDamage, isCrit);
+
             if (enemyHandler == null) continue;
             if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
             {
                 _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
             }
+            HandleSpawnCurrency(hitTransform, CurrencyType.SOULS, enemyHandler);
         }
+    }
+    
+    private void HandleSpawnCurrency(Transform hitTransform, CurrencyType currencyType, EnemyHandler enemyHandler = null)
+    {
+ 
+        if (currencyType == CurrencyType.GOLD)
+        {
+            if(OnSpawnCurrency != null) OnSpawnCurrency.Invoke(hitTransform, CurrencyType.GOLD);
+        }
+        else
+        {
+            if (!enemyHandler.EnemyStats.isDead) return;
+            if(OnSpawnCurrency != null) OnSpawnCurrency.Invoke(hitTransform, CurrencyType.SOULS);
+        }
+    }
+
+    private bool IsEnemy(Transform hitTransform)
+    {
+        return !hitTransform.CompareTag("BreakableProps") && !hitTransform.CompareTag("TreasureChest");
+    }
+
+    private void HandleDamageText(Transform hitTransform, float outDamage, bool isCrit)
+    {
+        bool isEnemy = IsEnemy(hitTransform);
+
+        if (!isEnemy) return;
+        if(OnHitLanded != null) OnHitLanded.Invoke(hitTransform, outDamage, isCrit);
     }
 
     public float HandleBoonDmgModifications(float outDamage, EnemyHandler e)

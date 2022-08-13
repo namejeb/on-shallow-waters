@@ -16,17 +16,16 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         public void StartGame(){
             PlayLoadingScreen();
 
-            if (GameManager.IsFirstPlayThrough)
-            {
-                StartCoroutine(LoadSceneWithDelay( SceneData.CutsceneScene ));
-                return;
-            }
-            
             // Game settings
             GameManager.SetIsTutorial(false);
             GameManager.SetIsRetry(false);
-            
-            // LoadLevelScene();
+
+            if (GameManager.IsFirstPlayThrough)
+            {
+                StartCoroutine(LoadSceneWithDelay(SceneData.CutsceneScene));
+                return;
+            }
+
             StartCoroutine(LoadSceneWithDelay( SceneData.LevelScene ));
         }
 
@@ -41,8 +40,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             // Game settings
             GameManager.SetIsTutorial(true);
             GameManager.SetIsRetry(false);
-            
-            //LoadLevelScene();
+
             StartCoroutine(LoadSceneWithDelay( SceneData.LevelScene ));
         }
         

@@ -135,7 +135,6 @@ public class StateMachineManager : MonoBehaviour
             int[] num = { 0, 2, 3 };
             randNum = Random.Range(0, num.Length);
             randNum = num[randNum];
-            Debug.Log(randNum);
         }
 
         SetState(stateList[randNum]);

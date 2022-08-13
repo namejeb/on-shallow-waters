@@ -52,7 +52,7 @@ using Random = UnityEngine.Random;
 
         private protected enum CoreStage{
             Idle, Move, Attack
-        } private protected CoreStage behaviour;
+        } [SerializeField] private protected CoreStage behaviour;
 
         #region Processing Field [Awake, Start, Update]
         protected virtual void Start(){
@@ -71,7 +71,6 @@ using Random = UnityEngine.Random;
             dist = (puppet.position - transform.position).sqrMagnitude;
             ShieldRecover();
   
-            //if(_enemyStats.isDead) return;
             switch(behaviour){
                 case CoreStage.Idle: Detection(); break;
                 case CoreStage.Move: LookAtDirection(); Movement(); break;
@@ -84,6 +83,7 @@ using Random = UnityEngine.Random;
         #region Basic States
         protected virtual void Movement(){
             anim.SetBool("isWalk", true);
+            print("Moving");
             agent.SetDestination(puppet.position);
             if(dist < attackRange * attackRange){
                 agent.stoppingDistance = attackRange;
@@ -153,5 +153,11 @@ using Random = UnityEngine.Random;
             shieldRecover = false;
         }
         #endregion
+
+        public GameObject vfx;
+        void OnEnable(){
+            vfx.SetActive(true);
+            behaviour = CoreStage.Idle;
+        }
     }
 

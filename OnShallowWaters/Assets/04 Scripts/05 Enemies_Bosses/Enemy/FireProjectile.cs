@@ -8,10 +8,12 @@ public class FireProjectile : MonoBehaviour
     public Transform firePoint;
 
     private Transform target;
+    private EnemyPooler _enemyPooler;
     public FastShooter fastShooter1;
 
     private void Awake(){
         target = GameObject.FindWithTag("Player").transform;
+        _enemyPooler = FindObjectOfType<EnemyPooler>();
     }
 
     private void OnEnable(){
@@ -19,13 +21,19 @@ public class FireProjectile : MonoBehaviour
     }
 
     private void Attack(){
-        Transform trans;
-        (trans = transform).LookAt(target);
-        _direction = target.position - trans.position;
-        _rotate = Quaternion.LookRotation(_direction);
+        //Transform trans;
+        //(trans = transform).LookAt(target);
+        _direction = target.position - firePoint.position;
+        _direction = new Vector3(_direction.x, 0, _direction.z);
+        //_rotate = Quaternion.LookRotation(_direction);
 
-        Quaternion rotation = _rotate;
-        Instantiate(crabProjectile, firePoint.position, rotation);
+        //Quaternion rotation = _rotate;
+        //Instantiate(crabProjectile, firePoint.position, rotation);
+        Transform bullet = _enemyPooler.GetFromPool(ProjectileType.Enemy3Ball);
+        bullet.position = firePoint.position;
+        bullet.GetComponent<EnemiesProjectile>().dir = _direction;
+        //bullet.rotation = rotation;
+        bullet.gameObject.SetActive(true);
         fastShooter1.bulletFired += 1;
     }
 }

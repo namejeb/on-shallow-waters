@@ -23,10 +23,8 @@ public class TreasureChest : EarnCurrencyItems, IDamageable
 
     private void OpenChest()
     {
-
         _anim.enabled = true;
         EarnGold(minMaxAmount.x, minMaxAmount.y);
-        
     }
     
     public void Damage(int damageAmount)
