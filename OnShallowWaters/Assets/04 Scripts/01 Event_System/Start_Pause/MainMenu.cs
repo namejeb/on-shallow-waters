@@ -8,12 +8,15 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
 
         [SerializeField] private Transform loadingScreen;
 
+        public static float LoadingBuffer = 1f;
+
+
         private void Start()
         {
             loadingScreen.gameObject.SetActive(false);
         }
 
-        public void StartGame(){
+        public void Play(){
             PlayLoadingScreen();
 
             // Game settings
@@ -25,7 +28,6 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
                 StartCoroutine(LoadSceneWithDelay(SceneData.CutsceneScene));
                 return;
             }
-
             StartCoroutine(LoadSceneWithDelay( SceneData.LevelScene ));
         }
 
@@ -51,7 +53,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         
         private IEnumerator LoadSceneWithDelay(SceneData sceneData)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds( LoadingBuffer );
             LoadScene(sceneData);
         }
 

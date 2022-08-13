@@ -1,10 +1,10 @@
+using _04_Scripts._01_Event_System.Start_Pause;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class VideoPlaying_Cutscene : VideoPlaying
 {
-    [SerializeField] private Transform loadingScreen;
-
+    [SerializeField] private MainMenu mainMenu;
+    
 
     private void Start()
     {
@@ -13,8 +13,7 @@ public class VideoPlaying_Cutscene : VideoPlaying
 
     protected override void EndVideo()
     {
-        loadingScreen.gameObject.SetActive(true);
-        SceneManager.LoadSceneAsync(1);
+        mainMenu.Tutorial();
     }
 
     // called in Skip button
