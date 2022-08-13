@@ -73,7 +73,7 @@ public class SkBlessing : MonoBehaviour
 
         // this is default settings for skb, currently is skb1
         duration = 10;
-        requiredSoul = 100;
+        requiredSoul = 50;
         soulButton.onClick.AddListener(SKB1);
     }
 
@@ -94,7 +94,7 @@ public class SkBlessing : MonoBehaviour
 
     private bool CanSpendSoul()
     {
-        if (CurrencySystem.currencyDict[CurrencyType.SOULS] - 100 >= 0)
+        if (CurrencySystem.currencyDict[CurrencyType.SOULS] - 45 >= 0)
         {
             return true;
         }
@@ -109,7 +109,7 @@ public class SkBlessing : MonoBehaviour
 
         if (CanSpendSoul())
         {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
             return;
         }
 
@@ -129,7 +129,7 @@ public class SkBlessing : MonoBehaviour
 
         if (CanSpendSoul())
         {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
             return;
         }
 
@@ -148,7 +148,7 @@ public class SkBlessing : MonoBehaviour
 
         if (CanSpendSoul())
         {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
             return;
         }
 
@@ -166,7 +166,7 @@ public class SkBlessing : MonoBehaviour
 
         if (CanSpendSoul())
         {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
             return;
         }
 
@@ -203,7 +203,7 @@ public class SkBlessing : MonoBehaviour
 
         if (CanSpendSoul())
         {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
+            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
             return;
         }
 

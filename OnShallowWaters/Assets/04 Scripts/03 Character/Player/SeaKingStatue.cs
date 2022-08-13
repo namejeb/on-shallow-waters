@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
+public class SeaKingStatue : MonoBehaviour
 {
     /*
      
@@ -63,6 +63,7 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
 
     private void OnTriggerEnter(Collider col)
     {
+        skb.MainButton.CancelInvoke();
         skb.MainButton.gameObject.SetActive(false);
         skb.InteractButton.gameObject.SetActive(true);
         isInteractable = true;
@@ -70,27 +71,14 @@ public class SeaKingStatue : MonoBehaviour, IPointerDownHandler
         skb.InteractButton.onClick.AddListener(Interaction);
     }
 
-    //private void OnTriggerStay(Collider col)
-    //{
-    //    if (skb.mainButtonSprite.overrideSprite != skb.interactButtonSprite)
-    //    {
-    //        skb.mainButtonSprite.overrideSprite = skb.interactButtonSprite;
-    //    }
-    //}
-
     private void OnTriggerExit(Collider col)
     {
-        skb.MainButton.gameObject.SetActive(true);
+        skb.InteractButton.CancelInvoke();
         skb.InteractButton.gameObject.SetActive(false);
+        skb.MainButton.gameObject.SetActive(true);
         isInteractable = false;
         outline.OutlineWidth = 0;
         skb.InteractButton.onClick.RemoveListener(Interaction);
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //Debug.Log("STATUE CLICKED");
-        
     }
 
     public void Interaction()

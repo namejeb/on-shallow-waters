@@ -89,6 +89,16 @@ public class DashNAttack : MonoBehaviour
         }
     }
 
+    public bool completeStop;
+
+    public void SwitchMode()
+    {
+        if (completeStop)
+            completeStop = false;
+        else
+            completeStop = true;
+    }
+
     private void Dash()
     {
         animator.SetTrigger("Dash");
@@ -119,9 +129,9 @@ public class DashNAttack : MonoBehaviour
     public void Update()
     {
         if(pressedButton.isPressed)
-           chargedTimer += Time.deltaTime;
+           chargedTimer += Time.unscaledDeltaTime;
 
-        if(resetAttackTimer <= Time.time)
+        if(resetAttackTimer <= Time.unscaledTime)
         {
             attackSequence = 0;
         }
@@ -165,7 +175,7 @@ public class DashNAttack : MonoBehaviour
     private void HeavySlash()
     {
         isSlash = false;
-        playerMovement.enabled = false;
+        playerMovement.canMove = false;
         
         animator.SetTrigger("slashATK");
         SoundManager.instance.PlaySFX(attkSFX, "Attack 4");
@@ -185,7 +195,7 @@ public class DashNAttack : MonoBehaviour
     private void HeavySlam()
     {
         isSlam = false;
-        playerMovement.enabled = false;
+        playerMovement.canMove = false;
         
         animator.SetTrigger("slamATK");
         SoundManager.instance.PlaySFX(attkSFX, "Attack 5");
@@ -225,42 +235,47 @@ public class DashNAttack : MonoBehaviour
         {
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
             
-            playerMovement.enabled = false;
+            playerMovement.canMove = false;
             animator.SetTrigger("Attack");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 1");
             
             attackSequence++;
             timeTillNextAtk = .6f;
-            resetAttackTimer = Time.time + 2;
+            resetAttackTimer = Time.unscaledTime + 2;
         }
         else if ( attackSequence == 1 )
         {
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) ;
 
-            playerMovement.enabled = false;
+            playerMovement.canMove = false;
             animator.SetTrigger("Attack2");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 2");
             attackSequence++;
             timeTillNextAtk = .8f;
-            resetAttackTimer = Time.time + 2;
+            resetAttackTimer = Time.unscaledTime + 2;
         }
         else if ( attackSequence == 2 )
         {
             tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) ;
 
-            playerMovement.enabled = false;
+            playerMovement.canMove = false;
             animator.SetTrigger("Attack3");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 3");
             attackSequence = 0;
             timeTillNextAtk = 1f;
-            resetAttackTimer = Time.time + 2;
+            resetAttackTimer = Time.unscaledTime + 2;
         }
         
-        nextAttack =  (Time.time + timeTillNextAtk) / stats.AtkSpeed;
+        nextAttack =  (Time.unscaledTime + timeTillNextAtk) / stats.AtkSpeed;
         
         //StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
-        StartCoroutine(EnableAttack(timeTillNextAtk / stats.AtkSpeed));
-        StartCoroutine(EnableMove(1 / stats.AtkSpeed));
+
+        if (completeStop)
+            StartCoroutine(EnableAttack(timeTillNextAtk / stats.AtkSpeed));
+        else
+            StartCoroutine(EnableAttack(timeTillNextAtk + 0.1f / stats.AtkSpeed));
+
+        StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
 
         outDamage = Mathf.RoundToInt(tempOutDamage);
     }
@@ -429,7 +444,7 @@ public class DashNAttack : MonoBehaviour
     private IEnumerator EnableMove(float timer)
     {
         yield return new WaitForSeconds(timer);
-        playerMovement.enabled = true;
+        playerMovement.canMove = true;
     }
     
     private IEnumerator EnableAttack(float duration)
