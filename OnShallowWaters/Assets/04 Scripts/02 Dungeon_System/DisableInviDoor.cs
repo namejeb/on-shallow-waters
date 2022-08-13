@@ -23,13 +23,13 @@ public class DisableInviDoor : MonoBehaviour
 
     private void OpenDoor()
     {
-        GetComponent<MeshCollider>().enabled = false;
+        transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
         GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void ResetDoor()
     {
-        GetComponent<MeshCollider>().enabled = true;
+        transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
         GetComponent<MeshRenderer>().enabled = true;
     }
 }
