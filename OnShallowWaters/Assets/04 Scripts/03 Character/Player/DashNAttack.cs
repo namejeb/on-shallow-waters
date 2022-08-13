@@ -105,7 +105,7 @@ public class DashNAttack : MonoBehaviour
 
 
         playerMovement.Move(transform.forward, speed, true);
-        if (Time.unscaledTime > _endTime)
+        if (Time.time > _endTime)
         {
             _isDash = false;
             playerMovement.enabled = true;
