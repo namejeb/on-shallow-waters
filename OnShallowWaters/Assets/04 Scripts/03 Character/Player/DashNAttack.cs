@@ -15,6 +15,7 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerStats stats;
     [SerializeField] private Button dashButton;
+    [SerializeField] private GameObject chargingVFX;
 
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float speed = 5f;
@@ -89,16 +90,6 @@ public class DashNAttack : MonoBehaviour
         }
     }
 
-    public bool completeStop;
-
-    public void SwitchMode()
-    {
-        if (completeStop)
-            completeStop = false;
-        else
-            completeStop = true;
-    }
-
     private void Dash()
     {
         animator.SetTrigger("Dash");
@@ -128,26 +119,39 @@ public class DashNAttack : MonoBehaviour
 
     public void Update()
     {
-        if(pressedButton.isPressed)
-           chargedTimer += Time.unscaledDeltaTime;
+        // calculation for charge attacks here
+
+        // slash
+        float slashTimerStart = .5f / stats.AtkSpeed;
+        float slashTimerEnd = 1.2f / stats.AtkSpeed;
+
+        // slam
+        float slamTimerStart = 1.2f / stats.AtkSpeed;
+
+
+        if (pressedButton.isPressed)
+        {
+            chargedTimer += Time.unscaledDeltaTime;
+            if (chargedTimer >= slashTimerStart && chargedTimer < slashTimerEnd)
+            {
+                chargingVFX.SetActive(true);
+            }
+
+            //else if (chargedTimer >= slamTimerStart)
+            //{
+
+            //}
+        }
 
         if(resetAttackTimer <= Time.unscaledTime)
         {
             attackSequence = 0;
         }
 
-        // calculation for charge attacks here
-
-        // slash
-        float slashTimerStart = .5f / stats.AtkSpeed;
-        float slashTimerEnd = 1.2f / stats.AtkSpeed;
-        
-        // slam
-        float slamTimerStart = 1.2f / stats.AtkSpeed;
-  
-
         if (pressedButton.isPressed == false)
         {
+            chargingVFX.SetActive(false);
+
             if (chargedTimer >= slashTimerStart && chargedTimer < slashTimerEnd)
             {
                 isSlash = true;
@@ -270,11 +274,8 @@ public class DashNAttack : MonoBehaviour
         
         //StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
 
-        if (completeStop)
-            StartCoroutine(EnableAttack(timeTillNextAtk / stats.AtkSpeed));
-        else
-            StartCoroutine(EnableAttack(timeTillNextAtk + 0.1f / stats.AtkSpeed));
 
+        StartCoroutine(EnableAttack(timeTillNextAtk + 0.1f / stats.AtkSpeed));
         StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
 
         outDamage = Mathf.RoundToInt(tempOutDamage);
