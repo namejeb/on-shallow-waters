@@ -5,7 +5,7 @@ using UnityEngine;
 public class VFXCurrency : MonoBehaviour
 {
     private Vector3 _offset = new Vector3(0f, 1f, 1f);
-
+    public SoundData pickUpSFX;
     private enum Type { Gold, Soul }
     private EnemyPooler _enemyPooler;
 
@@ -64,6 +64,7 @@ public class VFXCurrency : MonoBehaviour
             yield return null;
         }
         vfxTransform.gameObject.SetActive(false);
+        SoundManager.instance.PlaySFX(pickUpSFX, "PickUpGoldSFX");
         _updateCurrencies.UpdateUI();
     }
 

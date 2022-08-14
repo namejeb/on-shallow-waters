@@ -12,7 +12,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioMixer mixer;
     [SerializeField] float bgmVolume;
     [SerializeField] float sfxVolume;
-
+     public AudioSource track01, track02, track03;
+    private bool isPlayingPreviousTrack;
+    public AudioClip introClip, gameplayClip, bossClip;
     public const string MASTER_KEY = "MasterVolume";
     public const string SFX_KEY = "SFXVolume";
     public const string MUSIC_KEY = "BGMVolume";
@@ -25,6 +27,41 @@ public class SoundManager : MonoBehaviour
             instance = this;
 
         LoadVolume();
+    }
+
+    private void Start()
+    {
+        track01 = gameObject.AddComponent<AudioSource>();
+        track02 = gameObject.AddComponent<AudioSource>();
+        track03 = gameObject.AddComponent<AudioSource>();
+        track01.loop = true;
+        track02.loop = true;
+        track01.volume= bgmVolume;
+        track02.volume = bgmVolume;
+        isPlayingPreviousTrack = true;
+    
+    }
+
+    public void SwapTrack(AudioClip newClip)
+    {
+        if (isPlayingPreviousTrack)
+        {
+            track02.clip = newClip;
+            track02.Play();
+            track01.Stop();
+        }
+        else
+        {
+            track01.clip = newClip;
+            track01.Play();
+            track02.Stop();
+        }
+        isPlayingPreviousTrack = !isPlayingPreviousTrack;
+    }
+
+    public void Resume()
+    {
+        SwapTrack(introClip);
     }
 
     public void LoadVolume() // Volume saced in VolumeSettings Script

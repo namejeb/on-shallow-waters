@@ -7,7 +7,7 @@ public class EnemiesProjectile : MonoBehaviour{
     public float fireRate;
     public int bulletDamage = 10;
     public Vector3 dir;
-
+    public SoundData hitSFX;
     private void OnEnable(){
         StartCoroutine(Removed());
     }
@@ -20,6 +20,7 @@ public class EnemiesProjectile : MonoBehaviour{
     private void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player")){
             //print("Hit");
+            SoundManager.instance.PlaySFX(hitSFX, "PlayerHit");
             other.GetComponent<PlayerStats>().Damage(bulletDamage);
         }
 

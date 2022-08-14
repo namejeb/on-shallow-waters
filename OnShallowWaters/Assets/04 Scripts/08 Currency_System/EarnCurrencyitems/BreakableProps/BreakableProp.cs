@@ -6,7 +6,7 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
-
+    public SoundData BreakableSFX;
     private VFXCurrency _vfxCurrency;
 
     public const string BREAKABLE_KEY = "BreakableCoins";
@@ -40,7 +40,7 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
     private void Break()
     {
         //play sound
-        
+      
         //function
         EarnGold(minMaxAmount.x, minMaxAmount.y);
         
@@ -52,6 +52,7 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
 
         Instantiate(brokenVerPrefab, transform.position, targetRot);
         SetPropActive(false);
+        SoundManager.instance.PlaySFX(BreakableSFX,"Barrel SFX");
     }
 
     private void SetPropActive(bool status)
