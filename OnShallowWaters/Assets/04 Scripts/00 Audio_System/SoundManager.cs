@@ -59,7 +59,7 @@ public class SoundManager : MonoBehaviour
         isPlayingPreviousTrack = !isPlayingPreviousTrack;
     }
 
-    public void ReturnToIntroBGM()
+    public void Resume()
     {
         SwapTrack(introClip);
     }
