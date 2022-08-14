@@ -21,10 +21,12 @@ public class SeaKingStatue : MonoBehaviour
     [Header("UI Side")]
     [SerializeField] private GameObject BlessUI;
     [SerializeField] private Image bg;
-    [SerializeField] private TMP_Text blessNameText, descriptionText;
+    [SerializeField] private TMP_Text blessNameText, timeSoulText, descriptionText;
     [SerializeField] private Button equipButton;
     [SerializeField] private Button exitButton;
-
+    private Image _blessImage;
+    
+    
     [Header("Player Side")]
     [SerializeField] private Button skbButton;
     [SerializeField] private Sprite skbSprite;
@@ -56,9 +58,11 @@ public class SeaKingStatue : MonoBehaviour
         bg = dataHolder.bg;
         blessNameText = dataHolder.blessNameText;
         descriptionText = dataHolder.descriptionText;
+        timeSoulText = dataHolder.timeSoulText;
         equipButton = dataHolder.equipButton;
         exitButton = dataHolder.exitButton;
         skbButton = dataHolder.skbButton;
+        _blessImage = dataHolder.blessImage;
     }
 
     private void OnTriggerEnter(Collider col)
@@ -69,6 +73,7 @@ public class SeaKingStatue : MonoBehaviour
         isInteractable = true;
         outline.OutlineWidth = 5;
         skb.InteractButton.onClick.AddListener(Interaction);
+
     }
 
     private void OnTriggerExit(Collider col)
@@ -85,12 +90,13 @@ public class SeaKingStatue : MonoBehaviour
     {
         if (isInteractable)
         {
-            //print('s');
             BlessUI.SetActive(true);
-            //skbButton.image.sprite = skbSprite;
+            _blessImage.sprite = skbSprite;
             equipButton.onClick.AddListener(ChangeBlessing);
             blessNameText.text = blessName;
-            descriptionText.text = "Time: " + soulDuration.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n\n" + blessDesc;
+            timeSoulText.text = $"Time: {soulDuration}\tRequired Souls: {requiredSoul}";
+            //descriptionText.text = "Time: " + soulDuration.ToString() + "\tRequired Souls: " + requiredSoul.ToString() + "\n\n" + blessDesc;
+            descriptionText.text = $"{blessDesc}";
         }
 
     }
