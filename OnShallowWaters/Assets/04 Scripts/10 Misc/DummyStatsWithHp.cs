@@ -1,5 +1,3 @@
-
-
 using UnityEngine;
 using System;
 
@@ -35,6 +33,7 @@ public class DummyStatsWithHp : DummyStats, IDamageable
 
             if (dead) return;
             dead = true;
+            Die();
             if(OnDeath != null) OnDeath.Invoke();
         }
        
@@ -44,4 +43,7 @@ public class DummyStatsWithHp : DummyStats, IDamageable
         currHp = hp;
     }
 
+    protected override void Die(){
+        LeanTween.alpha(transform.parent.gameObject, 0f, 1f);
+    }
 }
