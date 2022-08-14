@@ -20,7 +20,7 @@ public sealed class FastShooter : EnemiesCore {
         private float posX, posZ, angle1;
         private Vector3 _offset;
         public float randomRadius;
-
+        public SoundData crabShootSFX;
         protected override void Start(){
             base.Start();
             isPrepared = true;
@@ -41,12 +41,15 @@ public sealed class FastShooter : EnemiesCore {
 
         protected override void Attack(){
             anim.SetBool("isWalk", false);
-
+           
             if (Time.time >= timeToFire) {
-                //print("Fire");
-                anim.SetTrigger("isAttack2");
+            //print("Fire");
+            //SoundManager.instance.PlaySFX(crabShootSFX, "MiniCrabShoot");
+            anim.SetTrigger("isAttack2"); 
+           
                 timeToFire = Time.time + 1 / _enemiesProjectile.fireRate;
-            }
+            } 
+          
 
             if (bulletFired != 3) return;
             behaviour = CoreStage.Move;

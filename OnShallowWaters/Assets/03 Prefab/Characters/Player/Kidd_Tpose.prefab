@@ -372,6 +372,7 @@ GameObject:
   - component: {fileID: 3169301569289797832}
   - component: {fileID: 3169301569289797845}
   - component: {fileID: 3169301569289797844}
+  - component: {fileID: 4079759229847015038}
   m_Layer: 3
   m_Name: Kidd_Tpose
   m_TagString: Player
@@ -497,9 +498,7 @@ MonoBehaviour:
   soulMeter: {fileID: 0}
   soulButton: {fileID: 0}
   mainButton: {fileID: 0}
-  mainButtonSprite: {fileID: 0}
-  interactButtonSprite: {fileID: 21300000, guid: 88cd8bb6e1f060f4f8e2e3469bcde848, type: 3}
-  attackButtonSprite: {fileID: 21300000, guid: 6daf71689bfe5a749bfb0a6203d36ed8, type: 3}
+  interactButton: {fileID: 0}
   atkAdd: 20
   mvSpeedAdd: 10
   skb1_vfx: {fileID: 1928714576171701655}
@@ -608,6 +607,7 @@ MonoBehaviour:
   isSlash: 0
   isSlam: 0
   boonEffectsManagerTransform: {fileID: 0}
+  completeStop: 0
 --- !u!114 &3169301569289797843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +667,19 @@ MonoBehaviour:
   effectAmounts:
   - 50
   notes: 
+--- !u!114 &4079759229847015038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094721992105115447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eb4aca788816394bb36704ecc649dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUpSFX: {fileID: 11400000, guid: b4ed8e551093feb4582b57bc19d814a0, type: 2}
 --- !u!1 &3177204676630031157
 GameObject:
   m_ObjectHideFlags: 0

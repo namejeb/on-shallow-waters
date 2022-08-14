@@ -11,6 +11,7 @@ public class Enemies
     public int count;
 }
 
+
 [System.Serializable]
 public class Wave
 {
@@ -35,7 +36,7 @@ public class Wave
 public class WaveSpawner : MonoBehaviour
 {
     public enum SpawnState { NOTHING, SPAWNING, WAITING, COUNTING };
-
+    public SoundData waveSpawnSFX;
 
     [Header("Wave Settings")]
     [SerializeField] private float waveCountdown;
@@ -113,7 +114,12 @@ public class WaveSpawner : MonoBehaviour
         {
             if (_currentWave.IsWaveComplete)
             {
-                if (_isEnd) state = SpawnState.NOTHING;
+                if (_isEnd)
+                {
+                    state = SpawnState.NOTHING;
+                    SoundManager.instance.PlaySFX(waveSpawnSFX, "KIlledLastEnemy");
+
+                }
                 else WaveCompleted(waves[_nextWave]);
             }
             else return;
@@ -130,7 +136,8 @@ public class WaveSpawner : MonoBehaviour
 
     void WaveCompleted(Wave wave)
     {
-        state = SpawnState.COUNTING;
+        state = SpawnState.COUNTING; 
+        SoundManager.instance.PlaySFX(waveSpawnSFX, "WaveSpawnVFX");
         waveCountdown = waveIntervalTime;
     }
     
