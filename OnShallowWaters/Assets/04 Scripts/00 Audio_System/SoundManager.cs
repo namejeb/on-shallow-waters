@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
 
     public AudioSource SFX_Source, BGM_Source;
-
+    public AudioMixerGroup BGM_Mixer;
     [SerializeField] AudioMixer mixer;
     [SerializeField] float bgmVolume;
     [SerializeField] float sfxVolume;
@@ -38,6 +38,8 @@ public class SoundManager : MonoBehaviour
         track02.loop = true;
         track01.volume= bgmVolume;
         track02.volume = bgmVolume;
+        track01.outputAudioMixerGroup = BGM_Mixer;
+        track02.outputAudioMixerGroup = BGM_Mixer;
         isPlayingPreviousTrack = true;
     
     }
