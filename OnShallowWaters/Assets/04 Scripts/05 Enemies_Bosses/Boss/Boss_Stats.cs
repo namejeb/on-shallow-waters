@@ -10,7 +10,8 @@ public class Boss_Stats : CharacterStats, IDamageable
 
     public int defense;
     private float buffDefense = 1f;
-    [SerializeField] private GameObject shieldVFX;
+
+    EnemyPooler pooler;
     StateMachineManager smm;
     private BossUiManager _uiManager;
 
@@ -19,17 +20,17 @@ public class Boss_Stats : CharacterStats, IDamageable
     private new void Awake()
     {
         smm = GetComponent<StateMachineManager>();
+        pooler = FindObjectOfType<EnemyPooler>();
         _uiManager = FindObjectOfType<BossUiManager>();
-        
         base.Awake();
     }
     
     private void Start()
     {
         currArmour = maxArmour;
-        shieldVFX.SetActive(false);
+        
     }
-
+    Transform vfx;
     public void Damage(int damageAmount)
     {
         damageAmount = (int)(damageAmount * 100 / ((25 + (buffDefense * defense))));
@@ -39,7 +40,9 @@ public class Boss_Stats : CharacterStats, IDamageable
             if (!_uiManager.IsActive(1))
             {
                 _uiManager.EnableSlider(1);
-                shieldVFX.SetActive(true);
+                vfx = pooler.GetFromPool(ProjectileType.Boss1Shield);
+
+                vfx.gameObject.SetActive(true);
             }
 
             if (currArmour > 0)
@@ -55,7 +58,8 @@ public class Boss_Stats : CharacterStats, IDamageable
                 currArmour = 0;
                 armState = false;
                 _uiManager.DisableSlider(1);
-                shieldVFX.SetActive(false);
+                //shieldVFX.SetActive(false);
+                vfx.gameObject.SetActive(false);
                 currArmour = maxArmour;
                 smm.SetState(smm.passiveStates[1]);
             }

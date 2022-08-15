@@ -64,7 +64,6 @@ public class StateMachineManager : MonoBehaviour
 
     private void Start()
     {
-        meleeHitbox[3].SetActive(false);
         target = PlayerHandler.Instance.transform;
         Agent.stoppingDistance = chaseMinDistance;
         faceAngle = transform.rotation.eulerAngles.y;

@@ -107,11 +107,7 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
-            return;
-        }
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         skb1_vfx.SetActive(true);
         currSoul = 0;
@@ -127,11 +123,7 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
-            return;
-        }
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         skb2_vfx.SetActive(true);
         currSoul = 0;
@@ -146,11 +138,7 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
-            return;
-        }
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         currSoul = 0;
         timer = duration;
@@ -164,11 +152,7 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
-            return;
-        }
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         skb4_vfx.SetActive(true);
         impulse.GenerateImpulse();
@@ -201,11 +185,7 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        if (CanSpendSoul())
-        {
-            CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
-            return;
-        }
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         impulse.GenerateImpulse();
         currSoul = 0;

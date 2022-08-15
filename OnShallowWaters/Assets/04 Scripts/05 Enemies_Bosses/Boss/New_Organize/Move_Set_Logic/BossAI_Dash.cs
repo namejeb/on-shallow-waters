@@ -31,7 +31,7 @@ public class BossAI_Dash : State
             sm.RotateTowards();
 
             _direction = (sm.Target.position - sm.transform.position).normalized;
-            Debug.Log(sm.transform.eulerAngles + ", " + sm.transform.rotation + ", " + _direction);
+            //Debug.Log(sm.transform.eulerAngles + ", " + sm.transform.rotation + ", " + _direction);
         }
 
         if (sm.inStateTimer > dashStartTime && sm.inStateTimer <= dashTimeout)
