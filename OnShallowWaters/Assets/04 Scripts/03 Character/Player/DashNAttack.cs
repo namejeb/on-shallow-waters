@@ -387,14 +387,11 @@ public class DashNAttack : MonoBehaviour
     
     private void HandleSpawnPickup(Transform hitTransform, VFXPickups.PickupType pickupType = VFXPickups.PickupType.Gold, EnemyHandler enemyHandler = null)
     {
-        VFXPickups.PickupType tempType;
-        
         // not enemy
         if (enemyHandler == null)
         {
             VFXPickups.PickupType type = hitTransform.GetComponent<EarnPickups>().Type;
 
-            tempType = type;
             if(OnSpawnPickup != null) OnSpawnPickup.Invoke(hitTransform, type);
         }
         // enemy
@@ -402,12 +399,8 @@ public class DashNAttack : MonoBehaviour
         {
             if (!enemyHandler.EnemyStats.isDead) return;
             
-            tempType = pickupType;
             if(OnSpawnPickup != null) OnSpawnPickup.Invoke(hitTransform, pickupType);
         }
-        
-        print($"Hit: {hitTransform.name}, PickupType: {tempType}");
-
     }
 
     private bool IsEnemy(Transform hitTransform)
