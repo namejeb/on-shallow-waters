@@ -2,55 +2,61 @@ using System.Collections;
 using UnityEngine;
 
 
-public class VFXCurrency : MonoBehaviour
+public class VFXPickups : MonoBehaviour
 {
+    public enum PickupType { Gold, Soul, Health }
+    
     private Vector3 _offset = new Vector3(0f, 1f, 1f);
     public SoundData pickUpSFX;
-    private enum Type { Gold, Soul }
+
     private EnemyPooler _enemyPooler;
 
+    /* -- UI to update -- */ 
+    
+    //currency
     private UpdateCurrencies _updateCurrencies;
-
+   
+    // health
+    private PlayerHealthBar _playerHealthBar;
+    private PlayerStats _playerStats;
+    
     private void OnDestroy()
     {
-        DashNAttack.OnSpawnCurrency -= Spawn;
+        DashNAttack.OnSpawnPickup -= Spawn;
     }
 
     private void Start()
     {
         _enemyPooler = EnemyPooler.Instance;
         _updateCurrencies = UpdateCurrencies.Instance;
+        
+        _playerHealthBar = GetComponent<PlayerHealthBar>();
+        _playerStats = GetComponent<PlayerStats>();
 
-        DashNAttack.OnSpawnCurrency += Spawn;
+        DashNAttack.OnSpawnPickup += Spawn;
     }
     
-    public void Spawn(Transform hitTransform, CurrencyType currencyType)
+    public void Spawn(Transform hitTransform, PickupType pickupType)
     {
         Transform vfxTransform = null;
-        if (currencyType == CurrencyType.GOLD)
-        {
-            vfxTransform = _enemyPooler.GetFromPool(VFXCurrencyType.Gold);
-        }
-        else
-        {
-            vfxTransform = _enemyPooler.GetFromPool(VFXCurrencyType.Soul);
-        }
+        vfxTransform = _enemyPooler.GetFromPool(pickupType);
+
         vfxTransform.gameObject.SetActive(true);
         vfxTransform.position = hitTransform.position;
-        Animate(vfxTransform, hitTransform);
+        Animate(vfxTransform, hitTransform, pickupType);
     }
 
-    private void Animate(Transform vfxTransform, Transform hitTransform)
+    private void Animate(Transform vfxTransform, Transform hitTransform, PickupType pickupType)
     {
         float duration = .5f;
         
         float newY = hitTransform.position.y + 5f;
         LeanTween.moveY(vfxTransform.gameObject, newY, duration);
-        StartCoroutine(MoveToPlayer(vfxTransform, duration));
+        StartCoroutine(MoveToPlayer(vfxTransform, duration, pickupType));
     }
 
     
-    private IEnumerator MoveToPlayer(Transform vfxTransform, float delay)
+    private IEnumerator MoveToPlayer(Transform vfxTransform, float delay, PickupType pickupType)
     {
         yield return new WaitForSeconds(delay);
         
@@ -65,7 +71,20 @@ public class VFXCurrency : MonoBehaviour
         }
         vfxTransform.gameObject.SetActive(false);
         SoundManager.instance.PlaySFX(pickUpSFX, "PickUpGoldSFX");
-        _updateCurrencies.UpdateUI();
+        HandleUpdateUI( pickupType );
+    }
+
+    private void HandleUpdateUI(PickupType pickupType)
+    {
+        switch (pickupType)
+        {
+            case PickupType.Health:
+                _playerHealthBar.SetHealth( _playerStats.Currhp );
+                break;
+            case PickupType.Soul:
+                 _updateCurrencies.UpdateUI();
+                 break;
+        }
     }
 
     private bool IsReachedPlayer(Transform vfxTransform, Vector3 playerPos)

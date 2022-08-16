@@ -15,6 +15,12 @@ public class CharacterStats : MonoBehaviour
         get => maxHp; 
         protected set => maxHp = value;
     }
+
+    public float Currhp
+    {
+        get => currHp;
+    }
+    
     public Stat Atk { get => atk; }
     
     

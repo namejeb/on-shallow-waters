@@ -1,4 +1,3 @@
-using _04_Scripts._05_Enemies_Bosses;
 using UnityEngine;
 
 public class TreasureChest : EarnCurrencyItems, IDamageable
@@ -24,7 +23,7 @@ public class TreasureChest : EarnCurrencyItems, IDamageable
     private void OpenChest()
     {
         _anim.enabled = true;
-        EarnGold(minMaxAmount.x, minMaxAmount.y);
+        EarnSoul();
     }
     
     public void Damage(int damageAmount)

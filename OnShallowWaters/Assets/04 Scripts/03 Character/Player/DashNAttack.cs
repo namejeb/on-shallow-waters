@@ -54,7 +54,7 @@ public class DashNAttack : MonoBehaviour
     public static event Action OnDash;
     public static event Action<Transform, float, bool> OnHitLanded;
 
-    public static event Action<Transform, CurrencyType> OnSpawnCurrency;
+    public static event Action<Transform, VFXPickups.PickupType> OnSpawnPickup;
 
 
 
@@ -302,7 +302,7 @@ public class DashNAttack : MonoBehaviour
         {
             if (!hitObject.CompareTag("TrainingDummy"))
             {
-                HandleSpawnCurrency(hitObject.transform, CurrencyType.GOLD);
+                HandleSpawnPickup(hitObject.transform);
             }
         }
 
@@ -324,7 +324,7 @@ public class DashNAttack : MonoBehaviour
         {
             _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
         }
-        HandleSpawnCurrency(hitTransform, CurrencyType.SOULS, enemyHandler);
+        HandleSpawnPickup(hitTransform, VFXPickups.PickupType.Soul, enemyHandler);
     }
 
     private IEnumerator HandleDamaging(float outDamage, float radius, float delay, Vector3 pos, bool shake = false)
@@ -359,7 +359,7 @@ public class DashNAttack : MonoBehaviour
             {
                 if (!hitColliders[i].CompareTag("TrainingDummy"))
                 {
-                    HandleSpawnCurrency(hitColliders[i].transform, CurrencyType.GOLD);
+                    HandleSpawnPickup(hitColliders[i].transform);
                 }
             }
 
@@ -381,22 +381,33 @@ public class DashNAttack : MonoBehaviour
             {
                 _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
             }
-            HandleSpawnCurrency(hitTransform, CurrencyType.SOULS, enemyHandler);
+            HandleSpawnPickup(hitTransform, VFXPickups.PickupType.Soul, enemyHandler);
         }
     }
     
-    private void HandleSpawnCurrency(Transform hitTransform, CurrencyType currencyType, EnemyHandler enemyHandler = null)
+    private void HandleSpawnPickup(Transform hitTransform, VFXPickups.PickupType pickupType = VFXPickups.PickupType.Gold, EnemyHandler enemyHandler = null)
     {
- 
-        if (currencyType == CurrencyType.GOLD)
+        VFXPickups.PickupType tempType;
+        
+        // not enemy
+        if (enemyHandler == null)
         {
-            if(OnSpawnCurrency != null) OnSpawnCurrency.Invoke(hitTransform, CurrencyType.GOLD);
+            VFXPickups.PickupType type = hitTransform.GetComponent<EarnPickups>().Type;
+
+            tempType = type;
+            if(OnSpawnPickup != null) OnSpawnPickup.Invoke(hitTransform, type);
         }
+        // enemy
         else
         {
             if (!enemyHandler.EnemyStats.isDead) return;
-            if(OnSpawnCurrency != null) OnSpawnCurrency.Invoke(hitTransform, CurrencyType.SOULS);
+            
+            tempType = pickupType;
+            if(OnSpawnPickup != null) OnSpawnPickup.Invoke(hitTransform, pickupType);
         }
+        
+        print($"Hit: {hitTransform.name}, PickupType: {tempType}");
+
     }
 
     private bool IsEnemy(Transform hitTransform)

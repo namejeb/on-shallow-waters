@@ -149,6 +149,19 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
             HandleSoulShopUpgrades(itemType);
         }
     }
+
+    public void Heal(int amtToHeal)
+    {
+        if (currHp + amtToHeal <= MaxHp)
+        {
+            currHp += amtToHeal;
+        }
+        else
+        {
+            currHp = MaxHp;
+        }
+    }
+    
     public bool TrySpendCurrency(CurrencyType currencyType, int amountToSpend)
     {
         if (CurrencySystem.currencyDict[currencyType] > amountToSpend)

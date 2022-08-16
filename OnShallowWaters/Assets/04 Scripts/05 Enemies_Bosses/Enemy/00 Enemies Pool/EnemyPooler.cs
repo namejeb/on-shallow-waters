@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+
 
 public enum EnemyPoolType { enemy1, enemy2, enemy3 }
 public enum ProjectileType { PlayerSKB5, Boss1Shoot, Boss1Slam, Boss1Shield, Enemy3Ball }
-public enum VFXCurrencyType { Gold, Soul }
+
 
 public class EnemyPooler : MonoBehaviour
 {
@@ -33,19 +32,19 @@ public class EnemyPooler : MonoBehaviour
 	}
 	
 	[System.Serializable]
-	public class CurrencyPoolInfo
+	public class PickupPoolInfo
 	{
-		public VFXCurrencyType type;
+		public VFXPickups.PickupType type;
 		public int amount;
 		public Transform vfxCurrencyPrefab;
 		public Transform container;
 
-		public List<Transform> vfxCurrencyPoolList = new List<Transform>();
+		public List<Transform> vfxPickupPoolList = new List<Transform>();
 	}
 
 	[SerializeField] private List<EnemyPoolInfo> listOfPool;
 	[SerializeField] private List<ProjectilePoolInfo> projectilePool;
-	[SerializeField] private List<CurrencyPoolInfo> currencyPool;
+	[SerializeField] private List<PickupPoolInfo> pickupPool;
 
 	public static EnemyPooler Instance;
 
@@ -66,9 +65,9 @@ public class EnemyPooler : MonoBehaviour
 			FillProjectilePool(projectilePool[i]);
 		}
 		
-		for (int i = 0; i < currencyPool.Count; i++)
+		for (int i = 0; i < pickupPool.Count; i++)
 		{
-			FillCurrencyPool(currencyPool[i]);
+			FillCurrencyPool(pickupPool[i]);
 		}
 	}
 	
@@ -92,13 +91,13 @@ public class EnemyPooler : MonoBehaviour
 		}
 	}
 
-	private void FillCurrencyPool(CurrencyPoolInfo info)
+	private void FillCurrencyPool(PickupPoolInfo info)
 	{
 		for (int i = 0; i < info.amount; i++)
 		{
 			Transform newCurrencyVFX = Instantiate(info.vfxCurrencyPrefab, info.container);
 			newCurrencyVFX.gameObject.SetActive(false);
-			info.vfxCurrencyPoolList.Add(newCurrencyVFX);
+			info.vfxPickupPoolList.Add(newCurrencyVFX);
 		}
 	}
 
@@ -136,20 +135,20 @@ public class EnemyPooler : MonoBehaviour
 		return newProjectile;
 	}
 	
-	public Transform GetFromPool(VFXCurrencyType type)
+	public Transform GetFromPool(VFXPickups.PickupType type)
 	{
-		CurrencyPoolInfo pool = GetPoolByType(type);
+		PickupPoolInfo pool = GetPoolByType(type);
 
-		for (int i = 0; i < pool.vfxCurrencyPoolList.Count; i++)
+		for (int i = 0; i < pool.vfxPickupPoolList.Count; i++)
 		{
-			if (!pool.vfxCurrencyPoolList[i].gameObject.activeInHierarchy)
+			if (!pool.vfxPickupPoolList[i].gameObject.activeInHierarchy)
 			{
-				return pool.vfxCurrencyPoolList[i];
+				return pool.vfxPickupPoolList[i];
 			}
 		}
 
 		Transform newCurrencyVFX = Instantiate(pool.vfxCurrencyPrefab, pool.container);
-		pool.vfxCurrencyPoolList.Add(newCurrencyVFX);
+		pool.vfxPickupPoolList.Add(newCurrencyVFX);
 		return newCurrencyVFX;
 	}
 
@@ -179,13 +178,13 @@ public class EnemyPooler : MonoBehaviour
 		return null;
 	}
 	
-	CurrencyPoolInfo GetPoolByType(VFXCurrencyType poolType)
+	PickupPoolInfo GetPoolByType(VFXPickups.PickupType poolType)
 	{
-		for (int i = 0; i < currencyPool.Count; i++)
+		for (int i = 0; i < pickupPool.Count; i++)
 		{
-			if (poolType == currencyPool[i].type)
+			if (poolType == pickupPool[i].type)
 			{
-				return currencyPool[i];
+				return pickupPool[i];
 			}
 		}
 

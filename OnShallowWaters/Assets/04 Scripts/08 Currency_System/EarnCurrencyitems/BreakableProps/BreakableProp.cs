@@ -1,20 +1,18 @@
 using UnityEngine;
 
-public class BreakableProp : EarnCurrencyItems, IDamageable
+public class BreakableProp : EarnHealth, IDamageable
 {
     [SerializeField] private Transform brokenVerPrefab;
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
     public SoundData BreakableSFX;
-    private VFXCurrency _vfxCurrency;
 
     public const string BREAKABLE_KEY = "BreakableCoins";
     private void Awake()
     {
         _meshRenderer =GetComponent<MeshRenderer>();
         _collider = GetComponent<Collider>();
-        _vfxCurrency = GetComponent<VFXCurrency>();
     }
 
     private void OnEnable()
@@ -42,7 +40,9 @@ public class BreakableProp : EarnCurrencyItems, IDamageable
         //play sound
       
         //function
-        EarnGold(minMaxAmount.x, minMaxAmount.y);
+        // EarnGold(minMaxAmount.x, minMaxAmount.y);
+        HealPlayer();
+        
         
         //visual
   

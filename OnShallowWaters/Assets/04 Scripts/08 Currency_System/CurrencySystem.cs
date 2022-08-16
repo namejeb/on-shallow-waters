@@ -28,7 +28,7 @@ public class CurrencySystem : MonoBehaviour
     private void Start()
     {
         _goldSoulAmount.x =  PlayerPrefs.GetInt(TreasureChest.TREASURE_KEY);
-    //    Debug.Log("GEt::" +_goldSoulAmount.x);
+    
         currencyDict.Add(CurrencyType.GOLD, _goldSoulAmount.x);
         currencyDict.Add(CurrencyType.SOULS, 0);
 
@@ -47,6 +47,7 @@ public class CurrencySystem : MonoBehaviour
     public static void AddCurrency(CurrencyType currencyType, int minAmount, int maxAmount)
     {
         int amountToAdd = UnityEngine.Random.Range(minAmount, maxAmount);
+        UpdateVector2Int();
         AddCurrency(currencyType, amountToAdd);
     }
     
