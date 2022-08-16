@@ -15,6 +15,7 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerStats stats;
     [SerializeField] private Button dashButton;
+    [SerializeField] private GameObject chargingVFX;
 
     [SerializeField] private float dashDuration = 3f;
     [SerializeField] private float speed = 5f;
@@ -50,10 +51,10 @@ public class DashNAttack : MonoBehaviour
     private BM_DmgWhenArmorBreak _dmgWhenShieldBreak;
 
     //Tutorial Event
-    public static event Action OnAttack;
     public static event Action OnDash;
-    
     public static event Action<Transform, float, bool> OnHitLanded;
+
+    public static event Action<Transform, CurrencyType> OnSpawnCurrency;
 
 
 
@@ -92,9 +93,7 @@ public class DashNAttack : MonoBehaviour
     private void Dash()
     {
         animator.SetTrigger("Dash");
-        if (OnDash != null){
-            OnDash();
-        }
+
 
         playerMovement.Move(transform.forward, speed, true);
         if (Time.time > _endTime)
@@ -107,38 +106,52 @@ public class DashNAttack : MonoBehaviour
 
     public void ActivateDash()
     {
-
+        if (OnDash != null){
+            OnDash();
+        }
         dashButton.interactable = false;
         _isDash = true;
         playerMovement.enabled = false;
         
         _endTime = Time.time + dashDuration * Time.timeScale;
         //multiply timeScale to account for SlowMo 
-        
     }
 
     public void Update()
     {
-        if(pressedButton.isPressed)
-           chargedTimer += Time.deltaTime;
-
-        if(resetAttackTimer <= Time.time)
-        {
-            attackSequence = 0;
-        }
-
         // calculation for charge attacks here
 
         // slash
         float slashTimerStart = .5f / stats.AtkSpeed;
-        float slashTimerEnd = 1f / stats.AtkSpeed;
-        
+        float slashTimerEnd = 1.2f / stats.AtkSpeed;
+
         // slam
-        float slamTimerStart = 1f / stats.AtkSpeed;
-  
+        float slamTimerStart = 1.2f / stats.AtkSpeed;
+
+
+        if (pressedButton.isPressed)
+        {
+            chargedTimer += Time.unscaledDeltaTime;
+            if (chargedTimer >= slashTimerStart && chargedTimer < slashTimerEnd)
+            {
+                chargingVFX.SetActive(true);
+            }
+
+            //else if (chargedTimer >= slamTimerStart)
+            //{
+
+            //}
+        }
+
+        if(resetAttackTimer <= Time.unscaledTime)
+        {
+            attackSequence = 0;
+        }
 
         if (pressedButton.isPressed == false)
         {
+            chargingVFX.SetActive(false);
+
             if (chargedTimer >= slashTimerStart && chargedTimer < slashTimerEnd)
             {
                 isSlash = true;
@@ -166,10 +179,10 @@ public class DashNAttack : MonoBehaviour
     private void HeavySlash()
     {
         isSlash = false;
-        playerMovement.enabled = false;
+        playerMovement.canMove = false;
         
         animator.SetTrigger("slashATK");
-        
+        SoundManager.instance.PlaySFX(attkSFX, "Attack 4");
         // dmg calculation + application
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent;
@@ -180,16 +193,16 @@ public class DashNAttack : MonoBehaviour
         StartCoroutine(HandleDamaging(tempOutDamage, 3.3f, .3f, pos));
         
         //attackSequence = 0;
-        StartCoroutine(EnableMove(0.8f/stats.AtkSpeed));
+        StartCoroutine(EnableMove(1/stats.AtkSpeed));
     }
 
     private void HeavySlam()
     {
         isSlam = false;
-        playerMovement.enabled = false;
+        playerMovement.canMove = false;
         
         animator.SetTrigger("slamATK");
-        
+        SoundManager.instance.PlaySFX(attkSFX, "Attack 5");
         // dmg calculation + application
         float baseAtk = stats.Atk.CurrentValue;
         float atkPercent = stats.AtkPercent;
@@ -198,7 +211,7 @@ public class DashNAttack : MonoBehaviour
         StartCoroutine(HandleDamaging(tempOutDamage, 4f, .65f, transform.position, true));
         
         //attackSequence = 0;
-        StartCoroutine(EnableMove(0.8f / stats.AtkSpeed));
+        StartCoroutine(EnableMove(1 / stats.AtkSpeed));
     }
 
     public void ShakeCamera()
@@ -226,42 +239,45 @@ public class DashNAttack : MonoBehaviour
         {
             tempOutDamage = (float) (80f / 100f) * ((baseAtk + 0) * atkPercent);
             
-            playerMovement.enabled = false;
+            playerMovement.canMove = false;
             animator.SetTrigger("Attack");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 1");
             
             attackSequence++;
-            timeTillNextAtk = 1f;
-            resetAttackTimer = Time.time + 2;
+            timeTillNextAtk = .6f;
+            resetAttackTimer = Time.unscaledTime + 2;
         }
         else if ( attackSequence == 1 )
         {
             tempOutDamage = (float) (90f / 100f) * ((baseAtk + 0) * atkPercent) ;
 
-            playerMovement.enabled = false;
+            playerMovement.canMove = false;
             animator.SetTrigger("Attack2");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 2");
             attackSequence++;
-            timeTillNextAtk = 1f;
-            resetAttackTimer = Time.time + 2;
+            timeTillNextAtk = .8f;
+            resetAttackTimer = Time.unscaledTime + 2;
         }
         else if ( attackSequence == 2 )
         {
             tempOutDamage = (float) (100f / 100f) * ((baseAtk + 0) * atkPercent) ;
 
-            playerMovement.enabled = false;
+            playerMovement.canMove = false;
             animator.SetTrigger("Attack3");
             SoundManager.instance.PlaySFX(attkSFX, "Attack 3");
             attackSequence = 0;
-            timeTillNextAtk = 1.2f;
-            resetAttackTimer = Time.time + 2;
+            timeTillNextAtk = 1f;
+            resetAttackTimer = Time.unscaledTime + 2;
         }
         
-        nextAttack =  (Time.time + timeTillNextAtk) / stats.AtkSpeed;
+        nextAttack =  (Time.unscaledTime + timeTillNextAtk) / stats.AtkSpeed;
         
+        //StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
+
+
+        StartCoroutine(EnableAttack(timeTillNextAtk + 0.1f / stats.AtkSpeed));
         StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
-        StartCoroutine(EnableAttack(timeTillNextAtk / stats.AtkSpeed));
-        
+
         outDamage = Mathf.RoundToInt(tempOutDamage);
     }
 
@@ -270,6 +286,7 @@ public class DashNAttack : MonoBehaviour
     {
         IDamageable damagable = hitObject.GetComponent<IDamageable>();
         if (damagable == null) return;
+        
         
         EnemyHandler enemyHandler = null;
         if (hitObject.CompareTag("Enemy"))
@@ -281,7 +298,14 @@ public class DashNAttack : MonoBehaviour
             }
             _skBlessing.AddSoul(2);
         }
-        
+        else
+        {
+            if (!hitObject.CompareTag("TrainingDummy"))
+            {
+                HandleSpawnCurrency(hitObject.transform, CurrencyType.GOLD);
+            }
+        }
+
         bool isCrit = CheckIfCrit();
         if (isCrit)
         {
@@ -292,13 +316,15 @@ public class DashNAttack : MonoBehaviour
         damagable.Damage( outDamage );
         
         // display damage text
-        if(OnHitLanded != null) OnHitLanded.Invoke(hitObject.transform, outDamage, isCrit);
+        Transform hitTransform = hitObject.transform;
+        HandleDamageText(hitTransform, outDamage, isCrit);
         
         if (enemyHandler == null) return;
         if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
         {
             _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
         }
+        HandleSpawnCurrency(hitTransform, CurrencyType.SOULS, enemyHandler);
     }
 
     private IEnumerator HandleDamaging(float outDamage, float radius, float delay, Vector3 pos, bool shake = false)
@@ -316,8 +342,8 @@ public class DashNAttack : MonoBehaviour
              
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
             if (damagable == null) continue;
-    
-             
+            
+            
             //if hit an enemy
             EnemyHandler enemyHandler = null;
             if (hitColliders[i].CompareTag("Enemy"))
@@ -328,6 +354,13 @@ public class DashNAttack : MonoBehaviour
                     outDamage = HandleBoonDmgModifications(outDamage, enemyHandler);
                 }
                 _skBlessing.AddSoul(2);
+            }
+            else
+            {
+                if (!hitColliders[i].CompareTag("TrainingDummy"))
+                {
+                    HandleSpawnCurrency(hitColliders[i].transform, CurrencyType.GOLD);
+                }
             }
 
             bool isCrit = CheckIfCrit();
@@ -340,14 +373,43 @@ public class DashNAttack : MonoBehaviour
             damagable.Damage( (int) outDamage );
              
             // display damage text
-            if(OnHitLanded != null) OnHitLanded.Invoke(hitColliders[i].transform, outDamage, isCrit);
-            
+            Transform hitTransform = hitColliders[i].transform;
+            HandleDamageText(hitTransform, outDamage, isCrit);
+
             if (enemyHandler == null) continue;
             if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
             {
                 _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
             }
+            HandleSpawnCurrency(hitTransform, CurrencyType.SOULS, enemyHandler);
         }
+    }
+    
+    private void HandleSpawnCurrency(Transform hitTransform, CurrencyType currencyType, EnemyHandler enemyHandler = null)
+    {
+ 
+        if (currencyType == CurrencyType.GOLD)
+        {
+            if(OnSpawnCurrency != null) OnSpawnCurrency.Invoke(hitTransform, CurrencyType.GOLD);
+        }
+        else
+        {
+            if (!enemyHandler.EnemyStats.isDead) return;
+            if(OnSpawnCurrency != null) OnSpawnCurrency.Invoke(hitTransform, CurrencyType.SOULS);
+        }
+    }
+
+    private bool IsEnemy(Transform hitTransform)
+    {
+        return !hitTransform.CompareTag("BreakableProps") && !hitTransform.CompareTag("TreasureChest");
+    }
+
+    private void HandleDamageText(Transform hitTransform, float outDamage, bool isCrit)
+    {
+        bool isEnemy = IsEnemy(hitTransform);
+
+        if (!isEnemy) return;
+        if(OnHitLanded != null) OnHitLanded.Invoke(hitTransform, outDamage, isCrit);
     }
 
     public float HandleBoonDmgModifications(float outDamage, EnemyHandler e)
@@ -383,7 +445,7 @@ public class DashNAttack : MonoBehaviour
     private IEnumerator EnableMove(float timer)
     {
         yield return new WaitForSeconds(timer);
-        playerMovement.enabled = true;
+        playerMovement.canMove = true;
     }
     
     private IEnumerator EnableAttack(float duration)

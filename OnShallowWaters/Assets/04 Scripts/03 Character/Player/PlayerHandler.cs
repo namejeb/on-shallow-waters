@@ -26,6 +26,11 @@ public class PlayerHandler : MonoBehaviour
         get => _boonEffectsManager;
     }
 
+    public static PlayerMovement PlayerMovement
+    {
+        get => _playerMovement;
+    }
+
 
     public static PlayerHandler Instance;
 

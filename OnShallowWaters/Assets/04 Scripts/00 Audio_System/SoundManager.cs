@@ -9,9 +9,15 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource SFX_Source, BGM_Source;
 
-
+    [SerializeField] AudioMixer mixer;
     [SerializeField] float bgmVolume;
     [SerializeField] float sfxVolume;
+     public AudioSource track01, track02, track03;
+    private bool isPlayingPreviousTrack;
+    public AudioClip introClip, gameplayClip, bossClip;
+    public const string MASTER_KEY = "MasterVolume";
+    public const string SFX_KEY = "SFXVolume";
+    public const string MUSIC_KEY = "BGMVolume";
 
     void Awake()
     {
@@ -19,19 +25,57 @@ public class SoundManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+
+        LoadVolume();
     }
 
-    public void SetVolume()
+    private void Start()
     {
-        PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
-        SFX_Source.volume = sfxVolume;
+        track01 = gameObject.AddComponent<AudioSource>();
+        track02 = gameObject.AddComponent<AudioSource>();
+        track03 = gameObject.AddComponent<AudioSource>();
+        track01.loop = true;
+        track02.loop = true;
+        track01.volume= bgmVolume;
+        track02.volume = bgmVolume;
+        isPlayingPreviousTrack = true;
+    
     }
 
-    public void SetBGMVolume()
+    public void SwapTrack(AudioClip newClip)
     {
-        PlayerPrefs.SetFloat("BGMVolume", bgmVolume);
-        BGM_Source.volume = bgmVolume;
+        if (isPlayingPreviousTrack)
+        {
+            track02.clip = newClip;
+            track02.Play();
+            track01.Stop();
+        }
+        else
+        {
+            track01.clip = newClip;
+            track01.Play();
+            track02.Stop();
+        }
+        isPlayingPreviousTrack = !isPlayingPreviousTrack;
     }
+
+    public void Resume()
+    {
+        SwapTrack(introClip);
+    }
+
+    public void LoadVolume() // Volume saced in VolumeSettings Script
+    {
+        float masterVolume = PlayerPrefs.GetFloat(MASTER_KEY);
+        float sfcVolume = PlayerPrefs.GetFloat(SFX_KEY);
+        float bgmVolume = PlayerPrefs.GetFloat(MUSIC_KEY);
+
+        mixer.SetFloat(VolumeSettings.MIXER_Master,Mathf.Log10(masterVolume)* 20 );
+        mixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(sfxVolume) * 20);
+        mixer.SetFloat(VolumeSettings.MIXER_Music, Mathf.Log10(bgmVolume) * 20);
+    }
+
+   
 
     SoundFile GetSound(SoundData _soundType, string _name)
     {

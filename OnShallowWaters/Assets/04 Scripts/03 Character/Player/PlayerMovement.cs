@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public Joystick joystick;
     public Animator animator;
 
+    public float controllerAngle;
     public float speed = 6f;
     public float rotationSpeed = 10f;
     public bool canMove = true;
@@ -28,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
             float horizontal = joystick.Horizontal;
             float vertical = joystick.Vertical;
             _moveDir = new Vector3(horizontal, 0f, vertical).normalized;
-            
+            _moveDir = IsoVector(_moveDir);
         }
         else
             _moveDir = Vector3.zero;
@@ -44,8 +45,17 @@ public class PlayerMovement : MonoBehaviour
             //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
             //transform.rotation = Quaternion.Euler(0f, angle, 0f);
             animator.SetBool("IsMoving", true);
+            _moveDir = IsoVector(_moveDir);
             RotateTowards();
         }
+    }
+
+    private Vector3 IsoVector(Vector3 vec)
+    {
+        Quaternion rotation = Quaternion.Euler(0f, controllerAngle, 0f);
+        Matrix4x4 isoMatrix = Matrix4x4.Rotate(rotation);
+        Vector3 result = isoMatrix.MultiplyPoint3x4(vec);
+        return result;
     }
 
     private void RotateTowards()

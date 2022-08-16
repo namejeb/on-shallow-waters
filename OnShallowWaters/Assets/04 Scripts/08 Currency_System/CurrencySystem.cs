@@ -14,22 +14,24 @@ public class CurrencySystem : MonoBehaviour
     public static Dictionary<CurrencyType, int> currencyDict = new Dictionary<CurrencyType, int>();
 
     public static event Action<Vector2Int> OnCurrencyChanged;
+    
     private static Vector2Int _goldSoulAmount;
+    public static Vector2Int GoldSoulAmount { get => _goldSoulAmount; }
     
     private void Awake()
     {
         currencyDict.Clear();
         
-        //initialise dictionary
-        for (int i = 0; i < 2; i++)
-        {
-            currencyDict.Add((CurrencyType) i, 0);
-        }
+     
     }
 
     private void Start()
     {
-        _goldSoulAmount = Vector2Int.zero;
+        _goldSoulAmount.x =  PlayerPrefs.GetInt(TreasureChest.TREASURE_KEY);
+    //    Debug.Log("GEt::" +_goldSoulAmount.x);
+        currencyDict.Add(CurrencyType.GOLD, _goldSoulAmount.x);
+        currencyDict.Add(CurrencyType.SOULS, 0);
+
         if (OnCurrencyChanged != null)  OnCurrencyChanged.Invoke(_goldSoulAmount); 
     }
 
@@ -69,5 +71,9 @@ public class CurrencySystem : MonoBehaviour
     {
         _goldSoulAmount.x = currencyDict[CurrencyType.GOLD];
         _goldSoulAmount.y = currencyDict[CurrencyType.SOULS];
+
+        int gold = currencyDict [CurrencyType.GOLD];
+
+        PlayerPrefs.SetInt(TreasureChest.TREASURE_KEY, gold);
     }
 }

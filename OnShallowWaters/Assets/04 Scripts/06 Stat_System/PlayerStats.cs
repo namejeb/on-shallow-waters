@@ -18,6 +18,9 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     [SerializeField] private float stunLockTimer = 1.5f;
     private float _nextStunLockTime;
     
+    //Godmode
+    private bool _godMode = false;
+    
     
     // Animation
     private Animator _anim;
@@ -53,8 +56,13 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     public float CritDamage { get => _critDamage; }
 
     public float DamageReduction { get => _damageReduction; }
-    
 
+
+    public void GodMode()
+    {
+        _godMode = !_godMode;
+    }
+    
     private new void Awake()
     {
         currHp = MaxHp;
@@ -62,6 +70,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
 
         // Animation
         _anim = GetComponent<Animator>();
+
     }
     
     protected override void Die()
@@ -196,6 +205,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     
     public void Damage(int damageAmount)
     {
+        if (_godMode) return;
+        
         if (Time.time > _nextStunLockTime)
         {
             _anim.SetTrigger("hitTrigger");
@@ -204,6 +215,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
+
         playerHealthBar.SetHealth(currHp);
     }
 

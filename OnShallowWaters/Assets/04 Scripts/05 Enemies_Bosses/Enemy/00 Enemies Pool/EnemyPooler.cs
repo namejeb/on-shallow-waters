@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum EnemyPoolType { enemy1, enemy2, enemy3 }
-public enum ProjectileType { PlayerSKB5, Boss1Shoot, Boss1Slam }
+public enum ProjectileType { PlayerSKB5, Boss1Shoot, Boss1Slam, Boss1Shield, Enemy3Ball }
+public enum VFXCurrencyType { Gold, Soul }
 
 public class EnemyPooler : MonoBehaviour
 {
@@ -30,9 +31,28 @@ public class EnemyPooler : MonoBehaviour
 
 		public List<Transform> projectilePoolList = new List<Transform>();
 	}
+	
+	[System.Serializable]
+	public class CurrencyPoolInfo
+	{
+		public VFXCurrencyType type;
+		public int amount;
+		public Transform vfxCurrencyPrefab;
+		public Transform container;
+
+		public List<Transform> vfxCurrencyPoolList = new List<Transform>();
+	}
 
 	[SerializeField] private List<EnemyPoolInfo> listOfPool;
 	[SerializeField] private List<ProjectilePoolInfo> projectilePool;
+	[SerializeField] private List<CurrencyPoolInfo> currencyPool;
+
+	public static EnemyPooler Instance;
+
+	void Awake()
+	{
+		Instance = this;
+	}
 
 	void Start()
 	{
@@ -44,6 +64,11 @@ public class EnemyPooler : MonoBehaviour
 		for (int i = 0; i < projectilePool.Count; i++)
 		{
 			FillProjectilePool(projectilePool[i]);
+		}
+		
+		for (int i = 0; i < currencyPool.Count; i++)
+		{
+			FillCurrencyPool(currencyPool[i]);
 		}
 	}
 	
@@ -64,6 +89,16 @@ public class EnemyPooler : MonoBehaviour
 			Transform newEnemy = Instantiate(info.projectilePrefab, info.container);
 			newEnemy.gameObject.SetActive(false);
 			info.projectilePoolList.Add(newEnemy);
+		}
+	}
+
+	private void FillCurrencyPool(CurrencyPoolInfo info)
+	{
+		for (int i = 0; i < info.amount; i++)
+		{
+			Transform newCurrencyVFX = Instantiate(info.vfxCurrencyPrefab, info.container);
+			newCurrencyVFX.gameObject.SetActive(false);
+			info.vfxCurrencyPoolList.Add(newCurrencyVFX);
 		}
 	}
 
@@ -100,6 +135,23 @@ public class EnemyPooler : MonoBehaviour
 		pool.projectilePoolList.Add(newProjectile);
 		return newProjectile;
 	}
+	
+	public Transform GetFromPool(VFXCurrencyType type)
+	{
+		CurrencyPoolInfo pool = GetPoolByType(type);
+
+		for (int i = 0; i < pool.vfxCurrencyPoolList.Count; i++)
+		{
+			if (!pool.vfxCurrencyPoolList[i].gameObject.activeInHierarchy)
+			{
+				return pool.vfxCurrencyPoolList[i];
+			}
+		}
+
+		Transform newCurrencyVFX = Instantiate(pool.vfxCurrencyPrefab, pool.container);
+		pool.vfxCurrencyPoolList.Add(newCurrencyVFX);
+		return newCurrencyVFX;
+	}
 
 	EnemyPoolInfo GetPoolByType(EnemyPoolType poolType)
 	{
@@ -121,6 +173,19 @@ public class EnemyPooler : MonoBehaviour
 			if (poolType == projectilePool[i].type)
 			{
 				return projectilePool[i];
+			}
+		}
+
+		return null;
+	}
+	
+	CurrencyPoolInfo GetPoolByType(VFXCurrencyType poolType)
+	{
+		for (int i = 0; i < currencyPool.Count; i++)
+		{
+			if (poolType == currencyPool[i].type)
+			{
+				return currencyPool[i];
 			}
 		}
 

@@ -8,25 +8,26 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
 
         [SerializeField] private Transform loadingScreen;
 
+        public static float LoadingBuffer = 1f;
+
+
         private void Start()
         {
             loadingScreen.gameObject.SetActive(false);
         }
 
-        public void StartGame(){
+        public void Play(){
             PlayLoadingScreen();
 
-            if (GameManager.IsFirstPlayThrough)
-            {
-                StartCoroutine(LoadSceneWithDelay( SceneData.CutsceneScene ));
-                return;
-            }
-            
             // Game settings
             GameManager.SetIsTutorial(false);
             GameManager.SetIsRetry(false);
-            
-            // LoadLevelScene();
+
+            if (GameManager.IsFirstPlayThrough)
+            {
+                StartCoroutine(LoadSceneWithDelay(SceneData.CutsceneScene));
+                return;
+            }
             StartCoroutine(LoadSceneWithDelay( SceneData.LevelScene ));
         }
 
@@ -41,8 +42,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             // Game settings
             GameManager.SetIsTutorial(true);
             GameManager.SetIsRetry(false);
-            
-            //LoadLevelScene();
+
             StartCoroutine(LoadSceneWithDelay( SceneData.LevelScene ));
         }
         
@@ -53,7 +53,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
         
         private IEnumerator LoadSceneWithDelay(SceneData sceneData)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds( LoadingBuffer );
             LoadScene(sceneData);
         }
 

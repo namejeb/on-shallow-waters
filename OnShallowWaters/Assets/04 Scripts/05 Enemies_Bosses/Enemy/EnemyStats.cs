@@ -14,6 +14,8 @@ public class EnemyStats : CharacterStats, IDamageable
     [SerializeField] private Stat defense;
     private float _defPercent = 1f;
     
+    //  private float _movementSpeed = 1f;
+    //  private float _attackSpeed = 1f;
     
     [SerializeField] private new Collider collider;
     public Stat Defense { get => defense; }

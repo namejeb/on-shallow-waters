@@ -5,7 +5,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
     public class PauseButton : MonoBehaviour{
         public GameObject pauseMenu;
         public bool isPaused;
-
+        public SoundData UISFX;
         private void Start(){
             pauseMenu.SetActive(false);
             isPaused = false;
@@ -16,6 +16,8 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             pauseMenu.SetActive(true);
             Time.timeScale = 0f;
             isPaused = true;
+            SoundManager.instance.PlaySFX(UISFX, "UISFX");
+         
         }
         
         public void ResumeGame(){
@@ -23,6 +25,7 @@ namespace _04_Scripts._01_Event_System.Start_Pause {
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
             isPaused = false;
+
         }
 
         public void ReturnMainMenu(){

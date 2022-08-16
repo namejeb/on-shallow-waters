@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
-using NaughtyAttributes;
 
 public class SkBlessing : MonoBehaviour
 {
     [SerializeField] private Image soulMeter;
     [SerializeField] private Button soulButton;
-    private Image soulButtonImage;
+    [SerializeField] private Button mainButton;
+    [SerializeField] private Button interactButton;
+
 
     [Header("SKB 1")]
     [SerializeField] private int atkAdd;
@@ -38,6 +39,8 @@ public class SkBlessing : MonoBehaviour
     private TimeManager timeManager;
     private CinemachineImpulseSource impulse;
     private EnemyPooler pooler;
+    public Button MainButton { get { return mainButton; } set { mainButton = value; } }
+    public Button InteractButton { get { return interactButton; } set { interactButton = value; } }
 
     public float Skb2Duration
     {
@@ -62,17 +65,16 @@ public class SkBlessing : MonoBehaviour
         timeManager = FindObjectOfType<TimeManager>();
         impulse = FindObjectOfType<CinemachineImpulseSource>();
         pooler = FindObjectOfType<EnemyPooler>();
-        soulButtonImage = soulButton.GetComponent<Image>();
     }
 
     private void Start()
     {
         soulButton.interactable = false;
 
-        // this is default settings for skb, currently is skb3
-        duration = 5;
-        requiredSoul = 100;
-        soulButton.onClick.AddListener(SKB3);
+        // this is default settings for skb, currently is skb1
+        duration = 10;
+        requiredSoul = 50;
+        soulButton.onClick.AddListener(SKB1);
     }
 
     private void Update()
@@ -92,7 +94,7 @@ public class SkBlessing : MonoBehaviour
 
     private bool CanSpendSoul()
     {
-        if (CurrencySystem.currencyDict[CurrencyType.SOULS] - 100 >= 0)
+        if (CurrencySystem.currencyDict[CurrencyType.SOULS] - 45 >= 0)
         {
             return true;
         }
@@ -105,14 +107,9 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         skb1_vfx.SetActive(true);
-        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         playerStats.Atk.AddModifier(atkAdd);
@@ -126,14 +123,9 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         skb2_vfx.SetActive(true);
-        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         duration = regenPerSec * regenAmount;
         timer = duration;
@@ -141,19 +133,13 @@ public class SkBlessing : MonoBehaviour
         startCountdown = true;
     }
 
-    [Button]
     public void SKB3()
     {
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
-        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -166,15 +152,10 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         skb4_vfx.SetActive(true);
         impulse.GenerateImpulse();
-        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -196,7 +177,7 @@ public class SkBlessing : MonoBehaviour
                 e.Damage(damage);
             }
         }
-        StartCoroutine(CloseSKB4());
+        StartCoroutine(DisableSKB_Obj(skb4_vfx));
     }
 
     public void SKB5()
@@ -204,14 +185,9 @@ public class SkBlessing : MonoBehaviour
         if (startCountdown)
             return;
 
-        //if (CanSpendSoul())
-        //{
-        //    CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 100);
-        //}
-        //else return;
+        CurrencySystem.RemoveCurrency(CurrencyType.SOULS, 45);
 
         impulse.GenerateImpulse();
-        soulButtonImage.color = Color.HSVToRGB(210, 0, 100);
         currSoul = 0;
         timer = duration;
         startCountdown = true;
@@ -224,19 +200,20 @@ public class SkBlessing : MonoBehaviour
                 if (enemy.gameObject.activeInHierarchy)
                 {
                     Transform vfx = pooler.GetFromPool(ProjectileType.PlayerSKB5);
-                    vfx.position = new Vector3(enemy.transform.position.x, vfx.position.y, enemy.transform.position.z);
+                    vfx.position = new Vector3(enemy.transform.position.x, 0.2f, enemy.transform.position.z);
                     vfx.gameObject.SetActive(true);
                     enemy.GetComponent<IDamageable>().Damage(skb5Damage);
+                    StartCoroutine(DisableSKB_Obj(vfx.gameObject));
                 }
             }
         }
         
     }
 
-    IEnumerator CloseSKB4()
+    IEnumerator DisableSKB_Obj(GameObject sfx)
     {
         yield return new WaitForSeconds(1);
-        skb4_vfx.SetActive(false);
+        sfx.SetActive(false);
     }
     
     IEnumerator ResetCharacter(float waitTime)
@@ -256,7 +233,7 @@ public class SkBlessing : MonoBehaviour
     {
         if (startCountdown)
             return;
-        soul = 100; // debug purpose
+        //soul = 100; // debug purpose
         if (!soulButton.interactable)
         {
             if (currSoul >= requiredSoul)
@@ -267,10 +244,10 @@ public class SkBlessing : MonoBehaviour
         }
         
 
-        if (currSoul >= requiredSoul)
+        if (currSoul >= requiredSoul && CanSpendSoul())
         {
             soulButton.interactable = true;
-            soulButtonImage.color = Color.HSVToRGB(210, 100, 100);
+            //soulButtonImage.color = Color.HSVToRGB(230, 100, 100, true);
         }
     }
 }

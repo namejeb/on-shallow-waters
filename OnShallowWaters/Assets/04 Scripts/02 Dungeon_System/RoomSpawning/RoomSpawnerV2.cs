@@ -37,6 +37,12 @@ public class RoomSpawnerV2 : MonoBehaviour
     private bool _sShopSpawnedInCurrLevel;
     
     [Space][Space]
+    [Header("System:")]
+    [SerializeField] private Transform tutorialContainer;
+
+    
+    [Space][Space]
+    [Header("Rooms:")]
     [SerializeField] private List<Room> bossRooms;
     [SerializeField] private List<Level> levelList = new List<Level>();
     private int _levelCounter = 0;
@@ -56,7 +62,11 @@ public class RoomSpawnerV2 : MonoBehaviour
         ExitRoomTrigger.OnExitRoom -= SpawnRoom;
         _roomFinishedCount = -1;
     }
-    
+    private void Awake()
+    {
+        tutorialContainer.gameObject.SetActive(false);
+    }
+
     private void Start()
     {
         if (GameManager.IsRetry)
@@ -80,6 +90,11 @@ public class RoomSpawnerV2 : MonoBehaviour
         IsBossRoom = false;
     }
 
+    private void EnableTutorialContainer()
+    {
+        tutorialContainer.gameObject.SetActive(true);
+    }
+
     private void HandleInitialRooms()
     {
         if (GameManager.IsTutorial)
@@ -87,6 +102,8 @@ public class RoomSpawnerV2 : MonoBehaviour
             // spawn tutorial room
             SetRoomActive(rTutorial.transform, true);
             _prevRoom = rTutorial.transform;
+            
+            Invoke(nameof(EnableTutorialContainer), 2f);
         }
         else
         {
@@ -94,6 +111,7 @@ public class RoomSpawnerV2 : MonoBehaviour
             SetRoomActive(rBasic.transform, true);
             _prevRoom = rBasic.transform;
         }
+        TriggerTransitionFinish();
         if (OnResetPlayerPos != null) OnResetPlayerPos.Invoke(Room.FindSpawnPoint(_prevRoom));
     }
 
@@ -143,7 +161,7 @@ public class RoomSpawnerV2 : MonoBehaviour
             //after 5 rooms, spawn boss
             bool isBossStage = (_roomFinishedCount == 5); 
             
-            // isBossStage = true; //boss room debug
+            //isBossStage = true; //boss room debug
             HandleSpawnRoom(isBossStage, dir);
 
             return;

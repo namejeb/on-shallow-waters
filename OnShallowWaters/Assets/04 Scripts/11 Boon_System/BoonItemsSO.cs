@@ -14,6 +14,7 @@ public class BoonItem
     public string description;
     public int maxUsageCount;
     public bool isPercentage = true;
+    public bool minusHundred = true;
     public Sprite icon;
     public BoonType boonType;
 }

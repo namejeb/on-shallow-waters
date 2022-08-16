@@ -11,13 +11,8 @@ public sealed class FastShooter : EnemiesCore {
         [Space][Space]
         [Header("Fire Attributes: ")]
         private EnemiesProjectile _enemiesProjectile;
-        private Transform transRecord;
-        private Quaternion _rotation;
-        private Vector3 _position, _direct;
-
-        public Transform fireSpawn;
         private bool isPrepared;
-        private int bulletFired;
+        public int bulletFired;
         
         [Space]
         [Header("Orbit Rotation: ")]
@@ -25,7 +20,7 @@ public sealed class FastShooter : EnemiesCore {
         private float posX, posZ, angle1;
         private Vector3 _offset;
         public float randomRadius;
-
+        public SoundData crabShootSFX;
         protected override void Start(){
             base.Start();
             isPrepared = true;
@@ -34,32 +29,27 @@ public sealed class FastShooter : EnemiesCore {
         }
 
         protected override void Movement(){
+            anim.SetBool("isWalk", true);
+            
             if (RaycastSingle() && isPrepared){
-                anim.SetBool("isWalk", false);
                 behaviour = CoreStage.Attack;
                 isPrepared = false;
             } else {
-                anim.SetBool("isWalk", true);
                 RotateMovement();
             }
         }
 
-        protected override void Attack(){ 
-            anim.SetTrigger("isAttack2");
-            var position = puppet.position;
-            Vector3 rotation3 = new Vector3(position.x, transform.position.y, position.z);
-
-            (transRecord = transform).LookAt(rotation3);
-            
-            _direct = position - transRecord.position;
-            _rotation = Quaternion.LookRotation(_direct);
-            Quaternion rotation1 = _rotation;
-            
+        protected override void Attack(){
+            anim.SetBool("isWalk", false);
+           
             if (Time.time >= timeToFire) {
+            //print("Fire");
+            //SoundManager.instance.PlaySFX(crabShootSFX, "MiniCrabShoot");
+            anim.SetTrigger("isAttack2"); 
+           
                 timeToFire = Time.time + 1 / _enemiesProjectile.fireRate;
-                Instantiate(projectile, fireSpawn.position, rotation1);
-                bulletFired += 1;
-            }
+            } 
+          
 
             if (bulletFired != 3) return;
             behaviour = CoreStage.Move;
@@ -89,7 +79,6 @@ public sealed class FastShooter : EnemiesCore {
         private void RotateMovement(){
             var position13 = puppet.position;
 
-            //Here
             _offset.Set(
                 Mathf.Cos(angle1) * randomRadius,
                 0,
@@ -100,8 +89,13 @@ public sealed class FastShooter : EnemiesCore {
             angle1 += Time.deltaTime * angularSpeed;
             StartCoroutine(Delay());
 
-            if (angle >= 360f){
-                angle = 0f;
+            if (angle1 >= 360f){
+                angle1 = 0f;
             }
+        }
+
+        private void OnDisable(){
+            bulletFired = 0;
+            isPrepared = true;
         }
     }
