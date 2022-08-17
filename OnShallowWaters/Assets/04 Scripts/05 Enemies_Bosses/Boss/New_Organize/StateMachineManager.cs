@@ -22,6 +22,9 @@ public class StateMachineManager : MonoBehaviour
     public bool startBattle;
     public List<State> stateList;
     public List<State> passiveStates;
+    public List<Transform> teleportPoints;
+    private Material mat;
+    private BoxCollider boxCollider;
 
     float velocity = 100;
 
@@ -60,6 +63,8 @@ public class StateMachineManager : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         impSource = FindObjectOfType<CinemachineImpulseSource>();
         pooler = FindObjectOfType<EnemyPooler>();
+        mat = GetComponentInChildren<Renderer>().material;
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     private void Start()
@@ -132,7 +137,7 @@ public class StateMachineManager : MonoBehaviour
 
         while (_currentState == stateList[1] && randNum == 4)
         {
-            int[] num = { 0, 2, 3 };
+            int[] num = { 2, 3, 5, 6 };
             randNum = Random.Range(0, num.Length);
             randNum = num[randNum];
         }
@@ -191,6 +196,46 @@ public class StateMachineManager : MonoBehaviour
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
+    [Button]
+    public void TeleportMove()
+    {
+        StartCoroutine(Dissolving());
+    }
+
+    public IEnumerator Dissolving()
+    {
+        float timer = 0;
+        while (mat.GetFloat("_Dissolver") < 1.5f)
+        {
+            timer += Time.deltaTime;
+            mat.SetFloat("_Dissolver", timer/1.5f);
+            yield return null;
+        }
+
+        boxCollider.enabled = false;
+        teleportPoints.Sort((x, y) => Vector3.Distance(transform.position, x.transform.position).CompareTo(Vector3.Distance(transform.position, y.transform.position)));
+        Vector3 teleportPos = Vector3.zero;
+        int num = Mathf.CeilToInt(teleportPoints.Count / 2);
+        Vector3 pos = teleportPoints[num].position;
+        teleportPos = new Vector3(pos.x, transform.position.y, pos.z);
+        transform.position = teleportPos;
+
+        RotateTowards();
+        while (mat.GetFloat("_Dissolver") > 0f)
+        {
+            timer -= Time.deltaTime;
+            mat.SetFloat("_Dissolver", timer / 1.5f);
+            yield return null;
+        }
+        boxCollider.enabled = true;
+        yield return new WaitForSeconds(1.5f);
+
+        int[] rand = { 2, 3, 5 };
+        int randNum = Random.Range(0, rand.Length);
+        randNum = rand[randNum];
+        SetState(stateList[randNum]);
     }
 
     public void PlaySFX(string soundName)
