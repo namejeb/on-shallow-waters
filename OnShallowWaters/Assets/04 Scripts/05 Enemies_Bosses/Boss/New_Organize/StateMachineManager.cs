@@ -174,6 +174,18 @@ public class StateMachineManager : MonoBehaviour
         bullet.gameObject.SetActive(true);
     }
 
+    public void SpawnBomb(int count)
+    {
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        for (int i = 0; i < count; i++)
+        {
+            Transform bullet = pooler.GetFromPool(ProjectileType.Boss1Bally);
+            bullet.position = pos;
+            bullet.gameObject.SetActive(true);
+        }
+    }
+
     public void RotateTowards()
     {
         Vector3 direction = (target.position - transform.position).normalized;
