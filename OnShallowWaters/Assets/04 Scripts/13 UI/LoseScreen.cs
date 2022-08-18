@@ -32,7 +32,9 @@ public class LoseScreen : MonoBehaviour
         loseScreenContainer.gameObject.SetActive(true);
         GetComponent<Animator>().SetTrigger("fadeTrigger");
         
+        GameManager.SetIsTutorial(false);
         GameManager.SetIsRetry(true);
+        
         Invoke(nameof(TriggerTransition), reloadDelay - 2f);
         Invoke(nameof(LoadLevelScene), reloadDelay);
     }

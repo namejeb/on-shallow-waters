@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using VLB;
 
 public class TutorialTracker : MonoBehaviour
 {
@@ -28,17 +27,20 @@ public class TutorialTracker : MonoBehaviour
     [SerializeField] private DummyStatsWithHp dummyStatsWithHp;
     
     
+    
 
     void Start()
     {
         _tm = GetComponent<TutorialManager>();
         
         actionOn = false;
-        //DashNAttack.OnAttack += Attack;
+
         DummyStatsWithHp.OnAttacked += Attack;
         
         Destination.OnMove += NextAction; 
         IntroManager.SwitchStage += ActionActivated;
+
+        ExitRoomTrigger_Tutorial.OnExitTutorial += DisableLastObject;
         
         dummyStatsWithHp.SetHealth(10000);
     }
@@ -141,11 +143,17 @@ public class TutorialTracker : MonoBehaviour
 
     void OnDestroy(){
         actionOn = false;
-      //  DashNAttack.OnAttack -= Attack;
+        
         DummyStatsWithHp.OnAttacked -= Attack;
         DummyStatsWithHp.OnDeath -= NextAction;
         DashNAttack.OnDash -= Dash;
         Destination.OnMove -= NextAction; 
         IntroManager.SwitchStage -= ActionActivated;
+        ExitRoomTrigger_Tutorial.OnExitTutorial -= DisableLastObject;
+    }
+
+    private void DisableLastObject()
+    {
+        InIt();
     }
 }
