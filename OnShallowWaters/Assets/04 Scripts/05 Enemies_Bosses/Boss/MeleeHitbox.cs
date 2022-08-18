@@ -7,19 +7,28 @@ public class MeleeHitbox : MonoBehaviour
 {
     public int damage;
     public float delayBox, offBoxTime;
-    public bool slam, isDamaged;
+    public bool slam, isDamaged, needDelay;
 
     BoxCollider bc;
 
     private void Awake()
     {
         bc = GetComponent<BoxCollider>();
+    }
 
+    private void OnEnable()
+    {
         if (slam)
         {
             bc.enabled = false;
             StartCoroutine(EnableColldier());
-        } 
+        }
+
+        if (needDelay)
+        {
+            bc.enabled = false;
+            StartCoroutine(EnableColldier());
+        }
     }
 
     private void OnTriggerEnter(Collider col)

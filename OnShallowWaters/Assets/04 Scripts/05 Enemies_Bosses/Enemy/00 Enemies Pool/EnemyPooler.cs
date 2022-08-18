@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 public enum EnemyPoolType { enemy1, enemy2, enemy3 }
-public enum ProjectileType { PlayerSKB5, Boss1Shoot, Boss1Slam, Boss1Shield, Enemy3Ball }
+public enum ProjectileType { PlayerSKB5, Boss1Shoot, Boss1Slam, Boss1Shield, Enemy3Ball, Boss1Bally, Boss1Bom }
 
 
 public class EnemyPooler : MonoBehaviour
