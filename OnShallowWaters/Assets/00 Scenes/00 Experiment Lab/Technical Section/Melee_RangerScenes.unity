@@ -235,6 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 15
   enemy: {fileID: 458021150}
+  meleeHitSFX: {fileID: 0}
 --- !u!1 &245654983
 GameObject:
   m_ObjectHideFlags: 0
@@ -2004,6 +2005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 15
   enemy: {fileID: 638743560}
+  meleeHitSFX: {fileID: 0}
 --- !u!65 &1004430560
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2416,10 +2418,12 @@ MonoBehaviour:
   one: 0
   vfx: {fileID: 0}
   projectile: {fileID: 5108699635585412751, guid: 6d0798f33ec067945ba3a4638f6f7ae6, type: 3}
+  repositioning: 0
   bulletFired: 0
   rotationRadius: 5
   angularSpeed: 1
   randomRadius: 0
+  crabShootSFX: {fileID: 0}
 --- !u!1 &1621004740
 GameObject:
   m_ObjectHideFlags: 0
@@ -7576,10 +7580,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LA_Shark
       objectReference: {fileID: 0}
-    - target: {fileID: 6723508662131914625, guid: a5aaff12227f87646a3b189b43134756, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5aaff12227f87646a3b189b43134756, type: 3}
 --- !u!1001 &2858016399131078533
@@ -7637,10 +7637,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fishmen_Attack
       objectReference: {fileID: 0}
-    - target: {fileID: 3127995219417853248, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a9e2dbc5d1e3f346809dfd6b827a67f, type: 3}
 --- !u!1001 &3873353127569914034
@@ -7650,13 +7646,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2990638536519869174, guid: 57ff9dd05956ae940ae6f131592b8a94, type: 3}
+      propertyPath: repositioning
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7479611737059045414, guid: 57ff9dd05956ae940ae6f131592b8a94, type: 3}
       propertyPath: m_Name
       value: rangedcrab_idle
-      objectReference: {fileID: 0}
-    - target: {fileID: 7479611737059045414, guid: 57ff9dd05956ae940ae6f131592b8a94, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7820284783175363228, guid: 57ff9dd05956ae940ae6f131592b8a94, type: 3}
       propertyPath: m_RootOrder

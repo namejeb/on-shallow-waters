@@ -5,7 +5,7 @@ using UnityEngine;
 public sealed class FastShooter : EnemiesCore {
         [Header("Basic Attributes: ")]
         [SerializeField] private GameObject projectile;
-        private float repositioning;
+        [SerializeField] private float repositioning;
         private float timeToFire;
         
         [Space][Space]
