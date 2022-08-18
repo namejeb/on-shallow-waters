@@ -87,7 +87,7 @@ public class EnemyStats : CharacterStats, IDamageable
 
         collider.enabled = false;
         
-        Invoke(nameof(DisableSelf), 1f);
+        Invoke(nameof(DisableSelf), 2.5f);
     }
 
     //change to call in animation?
