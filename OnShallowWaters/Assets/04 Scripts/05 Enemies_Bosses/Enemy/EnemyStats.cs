@@ -37,6 +37,7 @@ public class EnemyStats : CharacterStats, IDamageable
         healthBar.UpdateHealthBar(CurrHpPercentage);
         isDead = false;
         collider.enabled = true;
+        _enemiesCore.enabled = true;
     }
     
     public void Damage(int damageAmount)
@@ -86,6 +87,7 @@ public class EnemyStats : CharacterStats, IDamageable
         }
 
         collider.enabled = false;
+        _enemiesCore.enabled = false;
         
         Invoke(nameof(DisableSelf), 2.5f);
     }
