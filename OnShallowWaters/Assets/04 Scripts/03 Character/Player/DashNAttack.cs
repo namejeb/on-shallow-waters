@@ -26,7 +26,7 @@ public class DashNAttack : MonoBehaviour
     [SerializeField] private int attackSequence = 0;
     [SerializeField] private float nextAttack = 0;
     public float tempOutDamage = 0f;
-    [SerializeField] public int outDamage;
+    public int _outDamage;
     [SerializeField] private AttackButtonUI pressedButton;
     private bool _canAttack = true;
     [SerializeField] private float resetAttackTimer;
@@ -58,8 +58,7 @@ public class DashNAttack : MonoBehaviour
     public static event Action<Transform, float, bool> OnHitLanded;
 
     public static event Action<Transform, VFXPickups.PickupType> OnSpawnPickup;
-
-
+    
 
     public LayerMask DamageableLayer { get => damageableLayer; }
     
@@ -96,8 +95,7 @@ public class DashNAttack : MonoBehaviour
     private void Dash()
     {
         animator.SetTrigger("Dash");
-
-
+        
         playerMovement.Move(transform.forward, speed, true);
         if (Time.time > _endTime)
         {
@@ -172,6 +170,7 @@ public class DashNAttack : MonoBehaviour
             chargedTimer = 0;
         }
     }
+    
     private void HeavySlash()
     {
         isSlash = false;
@@ -179,19 +178,19 @@ public class DashNAttack : MonoBehaviour
         
         animator.SetTrigger("slashATK");
         SoundManager.instance.PlaySFX(attkSFX, "Attack 4");
+        
         // dmg calculation + application
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent;
-        float tempOutDamage = 0f;
-        tempOutDamage = (float)(170f / 100f) * ((baseAtk + 0) * atkPercent);
-
-        Vector3 pos = transform.position + (transform.forward * 1.2f);
-        StartCoroutine(HandleDamaging(tempOutDamage, 3.3f, .3f, pos));
-
-        if(OnHeavySlash != null) OnHeavySlash.Invoke();
+        _outDamage =(int) ( (170f / 100f) * ((baseAtk + 0) * atkPercent));
         
+        Vector3 pos = transform.position + (transform.forward * 1.2f);
+        
+        StartCoroutine(HandleDamaging(_outDamage, 3.3f, .3f, pos));
+        if(OnHeavySlash != null) OnHeavySlash.Invoke();
         StartCoroutine(EnableMove(1/stats.AtkSpeed));
     }
+    
 
     private void HeavySlam()
     {
@@ -203,15 +202,14 @@ public class DashNAttack : MonoBehaviour
         // dmg calculation + application
         float baseAtk = stats.Atk.CurrentValue;
         float atkPercent = stats.AtkPercent;
-        float tempOutDamage = 0f;
-        tempOutDamage = (200f / 100f) * ((baseAtk + 0) * atkPercent);
-        StartCoroutine(HandleDamaging(tempOutDamage, 4f, .65f, transform.position, true));
+        _outDamage = (int) ((200f / 100f) * ((baseAtk + 0) * atkPercent));
         
+        StartCoroutine(HandleDamaging(_outDamage, 4f, .65f, transform.position, true));
         if(OnHeavySlam != null) OnHeavySlam.Invoke();
-   
         StartCoroutine(EnableMove(1 / stats.AtkSpeed));
     }
 
+    
     public void ShakeCamera()
     {
         impulseSource.GenerateImpulseWithForce(.3f);
@@ -276,7 +274,7 @@ public class DashNAttack : MonoBehaviour
         StartCoroutine(EnableAttack(timeTillNextAtk + 0.1f / stats.AtkSpeed));
         StartCoroutine(EnableMove(timeTillNextAtk / stats.AtkSpeed));
 
-        outDamage = Mathf.RoundToInt(tempOutDamage);
+        _outDamage = Mathf.RoundToInt(tempOutDamage);
     }
 
 
@@ -292,7 +290,7 @@ public class DashNAttack : MonoBehaviour
             enemyHandler = hitObject.GetComponent<EnemyHandler>();
             if (enemyHandler != null) // if still null, meaning its a boss
             {
-                outDamage = (int) HandleBoonDmgModifications( outDamage, enemyHandler);
+                _outDamage = (int) HandleBoonDmgModifications( _outDamage, enemyHandler);
             }
             _skBlessing.AddSoul(2);
         }
@@ -307,15 +305,15 @@ public class DashNAttack : MonoBehaviour
         bool isCrit = CheckIfCrit();
         if (isCrit)
         {
-            outDamage = (int) ApplyCrit(outDamage);
+            _outDamage = (int) ApplyCrit(_outDamage);
         }
-
-        outDamage = (int) damagable.GetReceivedDamage( outDamage);
-        damagable.Damage( outDamage );
+        _outDamage = (int) damagable.GetReceivedDamage( _outDamage);
+        damagable.Damage( _outDamage );
+        
         
         // display damage text
         Transform hitTransform = hitObject.transform;
-        HandleDamageText(hitTransform, outDamage, isCrit);
+        HandleDamageText(hitTransform, _outDamage, isCrit);
         
         if (enemyHandler == null) return;
         if ( _dmgWhenShieldBreak.Activated && enemyHandler.EnemiesCore != null)
@@ -325,9 +323,12 @@ public class DashNAttack : MonoBehaviour
         HandleSpawnPickup(hitTransform, VFXPickups.PickupType.Soul, enemyHandler);
     }
 
+  
     private IEnumerator HandleDamaging(float outDamage, float radius, float delay, Vector3 pos, bool shake = false)
     {
         yield return new WaitForSeconds(delay);
+
+        float initialDamage = _outDamage;
         
         if(shake)
             ShakeCamera();
@@ -335,7 +336,9 @@ public class DashNAttack : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(pos, radius, damageableLayer);
          
         for (int i = 0; i < hitColliders.Length; i++)
-        {
+        {  
+            _outDamage = (int) initialDamage;
+            
             if (hitColliders[i] == null) continue;  //skip if null
              
             IDamageable damagable = hitColliders[i].GetComponent<IDamageable>();
@@ -349,7 +352,7 @@ public class DashNAttack : MonoBehaviour
                 enemyHandler = hitColliders[i].GetComponent<EnemyHandler>();
                 if (enemyHandler != null) // if still null, meaning its a boss
                 {
-                    outDamage = HandleBoonDmgModifications(outDamage, enemyHandler);
+                    _outDamage = (int)HandleBoonDmgModifications(outDamage, enemyHandler);
                 }
                 _skBlessing.AddSoul(2);
             }
@@ -364,12 +367,12 @@ public class DashNAttack : MonoBehaviour
             bool isCrit = CheckIfCrit();
             if (isCrit)
             {
-                outDamage = ApplyCrit(outDamage);
+               _outDamage = (int) ApplyCrit(outDamage);
             }
-            
-            outDamage = (int) damagable.GetReceivedDamage( outDamage);
-            damagable.Damage( (int) outDamage );
+            _outDamage = (int) damagable.GetReceivedDamage( outDamage);
+            damagable.Damage( (int) _outDamage );
              
+            
             // display damage text
             Transform hitTransform = hitColliders[i].transform;
             HandleDamageText(hitTransform, outDamage, isCrit);
@@ -379,7 +382,7 @@ public class DashNAttack : MonoBehaviour
             {
                 _dmgWhenShieldBreak.ApplyEffect(enemyHandler);
             }
-            HandleSpawnPickup(hitTransform, VFXPickups.PickupType.Soul, enemyHandler);
+            HandleSpawnPickup(hitTransform, VFXPickups.PickupType.Soul, enemyHandler);  
         }
     }
     
@@ -418,7 +421,7 @@ public class DashNAttack : MonoBehaviour
     }
 
     public float HandleBoonDmgModifications(float outDamage, EnemyHandler e)
-    {
+    {   
         for (int j = 0; j < _boonAttackList.Count; j++)
         { 
             Boon_Attack b = _boonAttackList[j];
@@ -466,6 +469,4 @@ public class DashNAttack : MonoBehaviour
         yield return new WaitForSeconds(timer);
         dashButton.interactable = true;
     }
-
-
 }
