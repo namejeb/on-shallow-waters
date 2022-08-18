@@ -39,7 +39,6 @@ public class TutorialTracker : MonoBehaviour
     
 
     
-    
     void Start()
     {
         _tm = GetComponent<TutorialManager>();

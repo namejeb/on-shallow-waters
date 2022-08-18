@@ -36,8 +36,8 @@ public class DummyStatsWithHp : DummyStats, IDamageable
             Die();
             if(OnDeath != null) OnDeath.Invoke();
         }
-       
     }
+    
     public void SetHealth(float hp)
     {
         currHp = hp;
