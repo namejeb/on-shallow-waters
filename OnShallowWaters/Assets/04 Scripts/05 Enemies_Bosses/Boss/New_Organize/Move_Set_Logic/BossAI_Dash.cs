@@ -17,6 +17,7 @@ public class BossAI_Dash : State
 
     public override void EnterState(StateMachineManager sm)
     {
+        sm.inStateTimer = 0;
         sm.Agent.enabled = false;
         sm.Anim.SetTrigger(chargeAnimation);
     }
@@ -36,7 +37,7 @@ public class BossAI_Dash : State
 
         if (sm.inStateTimer > dashStartTime && sm.inStateTimer <= dashTimeout)
         {
-            sm.Anim.SetTrigger(dashAnimation);
+            //sm.Anim.SetTrigger(dashAnimation);
             sm.Rb.isKinematic = false;
             sm.Rb.AddForce(new Vector3(_direction.x, 0, _direction.z) * dashForce);
         }
@@ -44,7 +45,7 @@ public class BossAI_Dash : State
         if (sm.inStateTimer > dashTimeout)
         {
             isDashing = false;
-            sm.Anim.ResetTrigger("isDash");
+            //sm.Anim.ResetTrigger("isDash");
             sm.Anim.SetTrigger("toNormal");
             sm.inStateTimer = 0;
             sm.HitBoxOff(2);
