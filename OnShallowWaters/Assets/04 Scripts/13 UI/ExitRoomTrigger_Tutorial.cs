@@ -6,7 +6,7 @@ public class ExitRoomTrigger_Tutorial : MonoBehaviour
 {
     [SerializeField] private MainMenu mainMenu;
 
-    public static event Action OnExitTutorial;
+   public static event Action OnExitTutorial;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,7 +15,6 @@ public class ExitRoomTrigger_Tutorial : MonoBehaviour
             if (GameManager.IsTutorial)
             {
                 if(OnExitTutorial != null) OnExitTutorial.Invoke();
-                RoomSpawnerV2.TriggerTransitionStart();
                 mainMenu.Play();
             }
         }
