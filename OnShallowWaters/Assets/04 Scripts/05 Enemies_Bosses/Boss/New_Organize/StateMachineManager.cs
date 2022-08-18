@@ -192,6 +192,7 @@ public class StateMachineManager : MonoBehaviour
             bullet.position = pos;
             bullet.gameObject.SetActive(true);
         }
+        StartCoroutine(PlaySound());
     }
 
     public void RotateTowards()
@@ -207,9 +208,18 @@ public class StateMachineManager : MonoBehaviour
         StartCoroutine(Dissolving());
     }
 
+    private IEnumerator PlaySound()
+    {
+        yield return new WaitForSeconds(5f);
+        PlaySFX("suck");
+        yield return new WaitForSeconds(2.8f);
+        PlaySFX("bomb");
+    }
+
     public IEnumerator Dissolving()
     {
         float timer = 0;
+        PlaySFX("vanish");
         while (mat.GetFloat("_Dissolver") < 1.5f)
         {
             timer += Time.deltaTime;
@@ -225,7 +235,7 @@ public class StateMachineManager : MonoBehaviour
         teleportPos = new Vector3(pos.x, transform.position.y, pos.z);
         transform.position = teleportPos;
 
-        RotateTowards();
+        PlaySFX("appear");
         while (mat.GetFloat("_Dissolver") > 0f)
         {
             timer -= Time.deltaTime;
@@ -274,5 +284,11 @@ public class StateMachineManager : MonoBehaviour
     public void Slice()
     {
         SetState(stateList[2]);
+    }
+
+    [Button]
+    public void Bomb()
+    {
+        SetState(stateList[5]);
     }
 }

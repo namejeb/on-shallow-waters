@@ -20,6 +20,15 @@ public class BossAI_Teleport : State
 
     public override void UpdateState(StateMachineManager sm)
     {
-        
+        if (!sm.Stats.armState)
+        {
+            sm.inStateTimer += Time.deltaTime;
+
+            if (sm.inStateTimer > 4)
+            {
+                sm.inStateTimer = 0;
+                sm.BossRandomState();
+            }
+        }
     }
 }
