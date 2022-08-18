@@ -171,8 +171,6 @@ public class DashNAttack : MonoBehaviour
 
             chargedTimer = 0;
         }
-            
-       
     }
     private void HeavySlash()
     {
