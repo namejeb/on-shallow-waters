@@ -147,7 +147,7 @@ public class TutorialTracker : MonoBehaviour
         if (_descCounter == 6)
         {
             DummyStatsWithHp.OnDeath += NextAction;
-            dummyStatsWithHp.SetHealth(380);
+            dummyStatsWithHp.SetHealth(320);
         }
 
 
