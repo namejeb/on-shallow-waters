@@ -296,14 +296,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3170820654809758879}
-  m_LocalRotation: {x: 0.7206797, y: -0.000000014901159, z: 0.000000029802319, w: 0.6932682}
-  m_LocalPosition: {x: 11.493456, y: 13.837842, z: 8.218077}
+  m_LocalRotation: {x: 0.7193398, y: 0, z: 0, w: 0.6946584}
+  m_LocalPosition: {x: 11, y: 31, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4135260441240522608}
   m_RootOrder: 161
-  m_LocalEulerAnglesHint: {x: 1.564, y: -5.344, z: 27.839}
+  m_LocalEulerAnglesHint: {x: 92, y: 0, z: 0}
 --- !u!108 &1347770700391347266
 Light:
   m_ObjectHideFlags: 0
@@ -316,9 +316,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.9433962, g: 0.9376144, b: 0.8045568, a: 1}
-  m_Intensity: 0.27
-  m_Range: 17.2
-  m_SpotAngle: 55.6
+  m_Intensity: 0.1
+  m_Range: 60
+  m_SpotAngle: 40
   m_InnerSpotAngle: 8.13
   m_CookieSize: 10
   m_Shadows:
@@ -412,11 +412,11 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   intensityFromLight: 1
   intensityModeAdvanced: 0
-  intensityInside: 0.27
-  intensityOutside: 0.27
+  intensityInside: 0.1
+  intensityOutside: 0.1
   blendingMode: 0
   spotAngleFromLight: 1
-  spotAngle: 55.6
+  spotAngle: 40
   coneRadiusStart: 0
   shaderAccuracy: 0
   geomMeshType: 0
@@ -428,13 +428,13 @@ MonoBehaviour:
   fallOffEndFromLight: 1
   attenuationEquation: 1
   attenuationCustomBlending: 0.5
-  fallOffStart: 6.28
-  fallOffEnd: 17.2
+  fallOffStart: 5.99
+  fallOffEnd: 60
   depthBlendDistance: 2
   cameraClippingDistance: 0.5
   glareFrontal: 0.5
   glareBehind: 0.5
-  fresnelPow: 6.6
+  fresnelPow: 10
   noiseMode: 1
   noiseIntensity: 1
   noiseScaleUseGlobal: 1
@@ -614,7 +614,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1620,7 +1620,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8144498123426883559}
   m_LocalRotation: {x: 0.7206797, y: -0.000000014901159, z: 0.000000029802319, w: 0.6932682}
-  m_LocalPosition: {x: -0.08, y: 14.26, z: -2.6}
+  m_LocalPosition: {x: -1, y: 31, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1639,9 +1639,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.9433962, g: 0.9376144, b: 0.8045568, a: 1}
-  m_Intensity: 0.27
-  m_Range: 17.2
-  m_SpotAngle: 55.6
+  m_Intensity: 0.1
+  m_Range: 60
+  m_SpotAngle: 40
   m_InnerSpotAngle: 8.13
   m_CookieSize: 10
   m_Shadows:
@@ -1735,11 +1735,11 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   intensityFromLight: 1
   intensityModeAdvanced: 0
-  intensityInside: 0.27
-  intensityOutside: 0.27
+  intensityInside: 0.1
+  intensityOutside: 0.1
   blendingMode: 0
   spotAngleFromLight: 1
-  spotAngle: 55.6
+  spotAngle: 40
   coneRadiusStart: 0
   shaderAccuracy: 0
   geomMeshType: 0
@@ -1751,13 +1751,13 @@ MonoBehaviour:
   fallOffEndFromLight: 1
   attenuationEquation: 1
   attenuationCustomBlending: 0.5
-  fallOffStart: 6.28
-  fallOffEnd: 17.2
+  fallOffStart: 5.99
+  fallOffEnd: 60
   depthBlendDistance: 2
   cameraClippingDistance: 0.5
   glareFrontal: 0.5
   glareBehind: 0.5
-  fresnelPow: 6.6
+  fresnelPow: 10
   noiseMode: 1
   noiseIntensity: 1
   noiseScaleUseGlobal: 1
@@ -1902,7 +1902,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -2114,7 +2114,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
