@@ -13,6 +13,7 @@ public class BossAI_Teleport : State
         }
         else
         {
+            sm.Agent.ResetPath();
             sm.StartCoroutine(sm.Dissolving());
         }
     }

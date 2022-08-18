@@ -63,5 +63,7 @@ public class MeleeHitbox : MonoBehaviour
         bc.enabled = true;
         yield return new WaitForSeconds(offBoxTime);
         bc.enabled = false;
+        yield return new WaitForSeconds(5);
+        gameObject.SetActive(false);
     }
 }
