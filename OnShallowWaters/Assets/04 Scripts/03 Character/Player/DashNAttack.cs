@@ -51,6 +51,9 @@ public class DashNAttack : MonoBehaviour
     private BM_DmgWhenArmorBreak _dmgWhenShieldBreak;
 
     //Tutorial Event
+    public static event Action OnHeavySlash;
+    public static event Action OnHeavySlam;
+    
     public static event Action OnDash;
     public static event Action<Transform, float, bool> OnHitLanded;
 
@@ -136,11 +139,6 @@ public class DashNAttack : MonoBehaviour
             {
                 chargingVFX.SetActive(true);
             }
-
-            //else if (chargedTimer >= slamTimerStart)
-            //{
-
-            //}
         }
 
         if(resetAttackTimer <= Time.unscaledTime)
@@ -191,8 +189,9 @@ public class DashNAttack : MonoBehaviour
 
         Vector3 pos = transform.position + (transform.forward * 1.2f);
         StartCoroutine(HandleDamaging(tempOutDamage, 3.3f, .3f, pos));
+
+        if(OnHeavySlash != null) OnHeavySlash.Invoke();
         
-        //attackSequence = 0;
         StartCoroutine(EnableMove(1/stats.AtkSpeed));
     }
 
@@ -210,7 +209,8 @@ public class DashNAttack : MonoBehaviour
         tempOutDamage = (200f / 100f) * ((baseAtk + 0) * atkPercent);
         StartCoroutine(HandleDamaging(tempOutDamage, 4f, .65f, transform.position, true));
         
-        //attackSequence = 0;
+        if(OnHeavySlam != null) OnHeavySlam.Invoke();
+   
         StartCoroutine(EnableMove(1 / stats.AtkSpeed));
     }
 

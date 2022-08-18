@@ -16,9 +16,15 @@ public class TutorialTracker : MonoBehaviour
     // Action
     public static event Action changePunchBagMode;
     public int numAttack = 0;
+    public int numSlash = 0;
+    public int numSlam = 0;
+    
     public int numDash = 0;
 
     public TextMeshProUGUI attackCount;
+    public TextMeshProUGUI heavySlashCount;
+    public TextMeshProUGUI heavySlamCount;
+    
     public TextMeshProUGUI dashCount;
 
     [Header("Location To Move Towards:")]
@@ -36,6 +42,8 @@ public class TutorialTracker : MonoBehaviour
         actionOn = false;
 
         DummyStatsWithHp.OnAttacked += Attack;
+        DashNAttack.OnHeavySlash += HeavySlash;
+        DashNAttack.OnHeavySlam += HeavySlam;
         
         Destination.OnMove += NextAction; 
         IntroManager.SwitchStage += ActionActivated;
@@ -57,15 +65,41 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 1) return;
 
         numAttack++;
-        attackCount.text = numAttack + " / 3";
+        attackCount.text = $"{numAttack} / 3";
         if (numAttack == 3){
+            NextAction();
+        }
+    }
+
+    public void HeavySlash()
+    {
+        if (!actionOn) return;
+        if (actionStage != 2) return;
+
+        numSlash++;
+        heavySlashCount.text = $"{numSlash} / 3";
+        if (numSlash == 3)
+        {
+            NextAction();
+        }
+    }
+    
+    public void HeavySlam()
+    {
+        if (!actionOn) return;
+        if (actionStage != 3) return;
+
+        numSlam++;
+        heavySlamCount.text = $"{numSlam} / 3";
+        if (numSlam == 3)
+        {
             NextAction();
         }
     }
 
     public void Dash(){
         if (!actionOn) return;
-        if (actionStage != 2) return;
+        if (actionStage != 4) return;
 
         numDash++;
         dashCount.text = numDash + " / 3";
@@ -76,14 +110,14 @@ public class TutorialTracker : MonoBehaviour
 
     public void Kill(){
         if (!actionOn) return;
-        if (actionStage != 3) return;
+        if (actionStage != 5) return;
      
       //  NextAction();
     }
 
     public void Exit(){
         if (!actionOn) return;
-        if (actionStage != 4) return;
+        if (actionStage != 6) return;
         NextAction();
     }
 
@@ -102,11 +136,10 @@ public class TutorialTracker : MonoBehaviour
             DashNAttack.OnDash += Dash;
         }
 
-        if (_descCounter == 3)
+        if (_descCounter == 5)
         {
             DummyStatsWithHp.OnDeath += NextAction;
             dummyStatsWithHp.SetHealth(380);
-
         }
 
 
@@ -145,6 +178,9 @@ public class TutorialTracker : MonoBehaviour
         actionOn = false;
         
         DummyStatsWithHp.OnAttacked -= Attack;
+        DashNAttack.OnHeavySlash -= HeavySlash;
+        DashNAttack.OnHeavySlam -= HeavySlam;
+        
         DummyStatsWithHp.OnDeath -= NextAction;
         DashNAttack.OnDash -= Dash;
         Destination.OnMove -= NextAction; 
