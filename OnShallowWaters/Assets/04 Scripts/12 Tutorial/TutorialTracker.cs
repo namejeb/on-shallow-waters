@@ -21,20 +21,25 @@ public class TutorialTracker : MonoBehaviour
     
     public int numDash = 0;
 
-    public TextMeshProUGUI attackDesc;
-    public TextMeshProUGUI heavySlashDesc;
-    public TextMeshProUGUI heavySlamDesc;
+    public TextMeshProUGUI attackCount;
+    public TextMeshProUGUI heavySlashCount;
+    public TextMeshProUGUI heavySlamCount;
     
-    public TextMeshProUGUI dashDesc;
+    public TextMeshProUGUI dashCount;
 
+    [Space][Space]
     [Header("Location To Move Towards:")]
     [SerializeField] private Transform destinationVFX;
-
     [SerializeField] private DummyStatsWithHp dummyStatsWithHp;
     
-    
+    [Space][Space]
+    [Header("Breakable Props: ")] 
+    [SerializeField] private Transform breakablePropsContainer;
+
     
 
+    
+    
     void Start()
     {
         _tm = GetComponent<TutorialManager>();
@@ -49,8 +54,10 @@ public class TutorialTracker : MonoBehaviour
         IntroManager.SwitchStage += ActionActivated;
 
         ExitRoomTrigger_Tutorial.OnExitTutorial += DisableLastObject;
+        BreakableProps_Tutorial.OnAllPropsBroken += NextAction;
         
         dummyStatsWithHp.SetHealth(10000);
+        breakablePropsContainer.gameObject.SetActive( false );
     }
 
     public void Move(){
@@ -65,7 +72,7 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 1) return;
 
         numAttack++;
-        attackDesc.text = $"Perform Light attack (tap): {numAttack} / 3";
+        attackCount.text = $"{numAttack} / 3";
         if (numAttack == 3){
             NextAction();
         }
@@ -77,7 +84,7 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 2) return;
 
         numSlash++;
-        heavySlashDesc.text = $"Perform Heavy Slash (hold until sword glows yellow): {numSlash} / 3";
+        heavySlashCount.text = $"{numSlash} / 3";
         if (numSlash == 3)
         {
             NextAction();
@@ -90,7 +97,7 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 3) return;
 
         numSlam++;
-        heavySlamDesc.text = $"Perform Heavy Slam (hold until sword glows red): {numSlam} / 3";
+        heavySlamCount.text = $"{numSlam} / 3";
         if (numSlam == 3)
         {
             NextAction();
@@ -102,11 +109,13 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 4) return;
 
         numDash++;
-        dashDesc.text =  $"Perform Dash (tap): {numDash} / 3";
+        dashCount.text =  $"{numDash} / 3";
         if (numDash == 3){
             NextAction();
+            breakablePropsContainer.gameObject.SetActive( true );
         }
     }
+
 
     public void Kill(){
         if (!actionOn) return;
@@ -136,7 +145,7 @@ public class TutorialTracker : MonoBehaviour
             DashNAttack.OnDash += Dash;
         }
 
-        if (_descCounter == 5)
+        if (_descCounter == 6)
         {
             DummyStatsWithHp.OnDeath += NextAction;
             dummyStatsWithHp.SetHealth(380);
@@ -168,9 +177,9 @@ public class TutorialTracker : MonoBehaviour
         for(int i = 0; i < descriptionTexts.Length; i++){
             SetObjectActive(descriptionTexts[i], false);
         }
-        attackDesc.text = $"Perform Light attack (tap): {numAttack} / 3";
-        heavySlashDesc.text = $"Perform Heavy Slash (hold until sword glows yellow): {numSlash} / 3";
-        heavySlamDesc.text = $"Perform Heavy Slam (hold until sword glows red): {numSlam} / 3";
+        attackCount.text = $"{numAttack} / 3";
+        heavySlashCount.text = $"{numSlash} / 3";
+        heavySlamCount.text = $"{numSlam} / 3";
     }
 
     void SetObjectActive(Transform transformUI, bool status){
@@ -189,6 +198,8 @@ public class TutorialTracker : MonoBehaviour
         Destination.OnMove -= NextAction; 
         IntroManager.SwitchStage -= ActionActivated;
         ExitRoomTrigger_Tutorial.OnExitTutorial -= DisableLastObject;
+        
+        BreakableProps_Tutorial.OnAllPropsBroken -= NextAction;
     }
 
     private void DisableLastObject()

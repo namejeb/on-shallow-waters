@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class BreakableProp : EarnHealth, IDamageable
 {
-    [SerializeField] private Transform brokenVerPrefab;
+    [SerializeField] protected Transform brokenVerPrefab;
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
     public SoundData BreakableSFX;
 
     public const string BREAKABLE_KEY = "BreakableCoins";
+
+    
     private void Awake()
     {
         _meshRenderer =GetComponent<MeshRenderer>();
@@ -35,14 +37,15 @@ public class BreakableProp : EarnHealth, IDamageable
         throw new System.NotImplementedException();
     }
     
-    private void Break()
+    protected virtual void Break()
     {
         //play sound
       
         //function
-        // EarnGold(minMaxAmount.x, minMaxAmount.y);
-        HealPlayer();
-        
+        if (Dropped)
+        {
+            HealPlayer();
+        }
         
         //visual
   
@@ -55,7 +58,7 @@ public class BreakableProp : EarnHealth, IDamageable
         SoundManager.instance.PlaySFX(BreakableSFX,"Barrel SFX");
     }
 
-    private void SetPropActive(bool status)
+    protected void SetPropActive(bool status)
     {
         _meshRenderer.enabled = status;
         _collider.enabled = status;
