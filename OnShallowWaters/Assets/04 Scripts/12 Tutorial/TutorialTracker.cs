@@ -21,11 +21,11 @@ public class TutorialTracker : MonoBehaviour
     
     public int numDash = 0;
 
-    public TextMeshProUGUI attackCount;
-    public TextMeshProUGUI heavySlashCount;
-    public TextMeshProUGUI heavySlamCount;
+    public TextMeshProUGUI attackDesc;
+    public TextMeshProUGUI heavySlashDesc;
+    public TextMeshProUGUI heavySlamDesc;
     
-    public TextMeshProUGUI dashCount;
+    public TextMeshProUGUI dashDesc;
 
     [Header("Location To Move Towards:")]
     [SerializeField] private Transform destinationVFX;
@@ -65,7 +65,7 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 1) return;
 
         numAttack++;
-        attackCount.text = $"{numAttack} / 3";
+        attackDesc.text = $"Perform Light attack (tap): {numAttack} / 3";
         if (numAttack == 3){
             NextAction();
         }
@@ -77,7 +77,7 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 2) return;
 
         numSlash++;
-        heavySlashCount.text = $"{numSlash} / 3";
+        heavySlashDesc.text = $"Perform Heavy Slash (hold until sword glows yellow): {numSlash} / 3";
         if (numSlash == 3)
         {
             NextAction();
@@ -90,7 +90,7 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 3) return;
 
         numSlam++;
-        heavySlamCount.text = $"{numSlam} / 3";
+        heavySlamDesc.text = $"Perform Heavy Slam (hold until sword glows red): {numSlam} / 3";
         if (numSlam == 3)
         {
             NextAction();
@@ -102,7 +102,7 @@ public class TutorialTracker : MonoBehaviour
         if (actionStage != 4) return;
 
         numDash++;
-        dashCount.text = numDash + " / 3";
+        dashDesc.text =  $"Perform Dash (tap): {numDash} / 3";
         if (numDash == 3){
             NextAction();
         }
@@ -168,6 +168,9 @@ public class TutorialTracker : MonoBehaviour
         for(int i = 0; i < descriptionTexts.Length; i++){
             SetObjectActive(descriptionTexts[i], false);
         }
+        attackDesc.text = $"Perform Light attack (tap): {numAttack} / 3";
+        heavySlashDesc.text = $"Perform Heavy Slash (hold until sword glows yellow): {numSlash} / 3";
+        heavySlamDesc.text = $"Perform Heavy Slam (hold until sword glows red): {numSlam} / 3";
     }
 
     void SetObjectActive(Transform transformUI, bool status){
@@ -190,6 +193,8 @@ public class TutorialTracker : MonoBehaviour
 
     private void DisableLastObject()
     {
-        InIt();
+        for(int i = 0; i < descriptionTexts.Length; i++){
+            SetObjectActive(descriptionTexts[i], false);
+        }
     }
 }
