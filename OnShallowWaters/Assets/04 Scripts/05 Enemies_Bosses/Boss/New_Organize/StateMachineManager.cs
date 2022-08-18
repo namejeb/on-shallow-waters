@@ -25,6 +25,7 @@ public class StateMachineManager : MonoBehaviour
     public List<Transform> teleportPoints;
     private Material mat;
     private BoxCollider boxCollider;
+    private Boss_Stats stats;
 
     float velocity = 100;
 
@@ -55,6 +56,7 @@ public class StateMachineManager : MonoBehaviour
     public Rigidbody Rb { get { return rb; } set { rb = value; } }
     public List<GameObject> MH { get { return meleeHitbox; } set { meleeHitbox = value; } }
     public State CurrentState { get { return _currentState; } }
+    public Boss_Stats Stats { get { return stats; } set { stats = value; } }
 
     private void Awake()
     {
@@ -65,6 +67,7 @@ public class StateMachineManager : MonoBehaviour
         pooler = FindObjectOfType<EnemyPooler>();
         mat = GetComponentInChildren<Renderer>().material;
         boxCollider = GetComponent<BoxCollider>();
+        stats = GetComponent<Boss_Stats>();
     }
 
     private void Start()

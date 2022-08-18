@@ -7,7 +7,14 @@ public class BossAI_Teleport : State
 {
     public override void EnterState(StateMachineManager sm)
     {
-        sm.StartCoroutine(sm.Dissolving());
+        if (sm.Stats.armState)
+        {
+            sm.BossRandomState();
+        }
+        else
+        {
+            sm.StartCoroutine(sm.Dissolving());
+        }
     }
 
     public override void UpdateState(StateMachineManager sm)

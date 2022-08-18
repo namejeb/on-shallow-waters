@@ -161,7 +161,7 @@ public class RoomSpawnerV2 : MonoBehaviour
             //after 5 rooms, spawn boss
             bool isBossStage = (_roomFinishedCount == 5); 
             
-            //isBossStage = true; //boss room debug
+            isBossStage = true; //boss room debug
             HandleSpawnRoom(isBossStage, dir);
 
             return;
@@ -177,7 +177,7 @@ public class RoomSpawnerV2 : MonoBehaviour
             //after 5 rooms, spawn boss
             bool isBossStage = (_roomFinishedCount == 5); 
             
-            // isBossStage = true; //boss room debug
+            isBossStage = true; //boss room debug
             HandleSpawnRoom(isBossStage, dir);
         }
     }
