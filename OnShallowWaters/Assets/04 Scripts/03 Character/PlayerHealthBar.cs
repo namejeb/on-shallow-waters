@@ -24,7 +24,7 @@ public class PlayerHealthBar : MonoBehaviour
     private Transform _hpBarContainer;
     
 
-    private void OnDestroy()
+    private void Awake()
     {
         LeanTween.reset();
     }
@@ -64,7 +64,7 @@ public class PlayerHealthBar : MonoBehaviour
 
     private void TryShake()
     {
-        float rate = 1;
+        float rate = .3f;
         float rng = Random.Range(0f, 1f);
         if (rng < rate)
         {
