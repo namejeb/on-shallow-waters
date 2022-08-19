@@ -182,7 +182,7 @@ public class DashNAttack : MonoBehaviour
         // dmg calculation + application
         float baseAtk = (float)stats.Atk.CurrentValue;
         float atkPercent = (float)stats.AtkPercent;
-        _outDamage =(int) ( (170f / 100f) * ((baseAtk + 0) * atkPercent));
+        _outDamage =(int) ( (120f / 100f) * ((baseAtk + 0) * atkPercent));
         
         Vector3 pos = transform.position + (transform.forward * 1.2f);
         
@@ -202,7 +202,7 @@ public class DashNAttack : MonoBehaviour
         // dmg calculation + application
         float baseAtk = stats.Atk.CurrentValue;
         float atkPercent = stats.AtkPercent;
-        _outDamage = (int) ((200f / 100f) * ((baseAtk + 0) * atkPercent));
+        _outDamage = (int) ((150f / 100f) * ((baseAtk + 0) * atkPercent));
         
         StartCoroutine(HandleDamaging(_outDamage, 4f, .65f, transform.position, true));
         if(OnHeavySlam != null) OnHeavySlam.Invoke();
