@@ -79,7 +79,7 @@ public class VFXPickups : MonoBehaviour
         switch (pickupType)
         {
             case PickupType.Health:
-                _playerHealthBar.SetHealth( _playerStats.Currhp );
+                _playerHealthBar.SetHealth( _playerStats.Currhp, true );
                 break;
             case PickupType.Soul:
                  _updateCurrencies.UpdateUI();

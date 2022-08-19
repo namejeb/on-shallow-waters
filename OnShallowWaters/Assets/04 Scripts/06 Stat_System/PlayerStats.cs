@@ -199,8 +199,8 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
             {
                 currHp += regenHp;
             }
-            playerHealthBar.SetHealth(currHp);
-            Debug.Log(currHp);
+            playerHealthBar.SetHealth(currHp, true);
+            //Debug.Log(currHp);
         }
         vfx.SetActive(false);
     }
@@ -213,7 +213,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
-        playerHealthBar.SetHealth(currHp);
+        playerHealthBar.SetHealth(currHp, false);
     }
     
     public void Damage(int damageAmount)
@@ -229,7 +229,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
         int effectiveDmg = (int) ReceiveIncomingDmg(damageAmount);
         TakeDamage(effectiveDmg);
 
-        playerHealthBar.SetHealth(currHp);
+        playerHealthBar.SetHealth(currHp, false);
     }
 
     public float GetReceivedDamage(float outDamage)
@@ -262,7 +262,7 @@ public class PlayerStats : CharacterStats, IShopCustomer, IDamageable
     public void DamageTest(int damage)
     {
         currHp -= damage;
-        playerHealthBar.SetHealth(currHp);
+        playerHealthBar.SetHealth(currHp, false);
     }
     
     // void Update()
