@@ -1,9 +1,10 @@
 
 public enum SceneData
 {   
-    MainMenu = 0,
-    LevelScene = 1,
-    WinScene = 2,
-    CutsceneScene = 3
+    LogoScene = 0,
+    MainMenu = 1,
+    LevelScene = 2,
+    WinScene = 3,
+    CutsceneScene = 4,
 }
  

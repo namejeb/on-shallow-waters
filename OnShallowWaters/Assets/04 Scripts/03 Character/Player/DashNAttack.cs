@@ -391,12 +391,8 @@ public class DashNAttack : MonoBehaviour
         // not enemy
         if (enemyHandler == null)
         {
-            EarnHealth e = hitTransform.GetComponent<EarnHealth>();
-            if (e != null)
-            {
-                if (!e.Dropped) return;
-                if(OnSpawnPickup != null) OnSpawnPickup.Invoke(hitTransform, e.Type);
-            }
+            VFXPickups.PickupType type = hitTransform.GetComponent<EarnPickups>().Type;
+            if(OnSpawnPickup != null) OnSpawnPickup.Invoke(hitTransform, type);
         }
         // enemy
         else

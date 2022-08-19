@@ -88,7 +88,7 @@ public class EnemyStats : CharacterStats, IDamageable
 
         collider.enabled = false;
         _enemiesCore.enabled = false;
-        
+
         Invoke(nameof(DisableSelf), 2.5f);
     }
 

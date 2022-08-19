@@ -16,7 +16,7 @@ public class ExitRoomTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (RoomSpawnerV2.IsBossRoom)
-                SceneManager.LoadScene( (int) SceneData.WinScene);
+                SceneManager.LoadScene( (int) SceneData.WinScene );
             else
                 if (OnExitRoom != null) OnExitRoom.Invoke(nextRoomEntranceDir);
         }
